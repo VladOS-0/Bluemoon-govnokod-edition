@@ -40484,9 +40484,6 @@
 /turf/open/floor/festive/wooden/wooden1,
 /area/commons/lounge)
 "bUU" = (
-/obj/machinery/computer/libraryconsole{
-	pixel_y = 8
-	},
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/festive/wooden/wooden1,
 /area/commons/lounge)

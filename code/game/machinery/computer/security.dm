@@ -1,5 +1,5 @@
 /obj/machinery/computer/secure_data//TODO:SANITY
-	name = "Security Records Console"
+	name = "security records console"
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"

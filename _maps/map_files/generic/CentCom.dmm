@@ -21833,7 +21833,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/pizzabox/infinite,
 /obj/item/book/granter/martial/carp{
 	pixel_x = 3;
@@ -22196,7 +22195,6 @@
 /turf/open/floor/iron/white,
 /area/centcom/holding)
 "dFM" = (
-/obj/structure/glowshroom/glowcap,
 /obj/structure/table/wood,
 /obj/item/kitchen/knife/rainbowknife,
 /turf/open/floor/wood,
@@ -22496,7 +22494,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/glowshroom/shadowshroom,
 /obj/item/reagent_containers/pill/shadowtoxin,
 /turf/open/floor/plasteel/bluespace,
 /area/centcom)
@@ -23495,7 +23492,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/glowshroom/shadowshroom,
 /obj/machinery/anomalous_crystal,
 /turf/open/floor/plasteel/bluespace,
 /area/centcom)
@@ -23756,20 +23752,6 @@
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/iron/dark,
 /area/shuttle/inteq/collosus)
-"fJv" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/glowshroom/single,
-/turf/open/floor/plasteel/bluespace,
-/area/centcom)
 "fKI" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/light{
@@ -23821,20 +23803,6 @@
 	light_range = 50
 	},
 /area/centcom/holding)
-"fPj" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/glowshroom/glowcap,
-/turf/open/floor/plasteel/bluespace,
-/area/centcom)
 "fRP" = (
 /obj/machinery/button/door{
 	id = "ghostcafecabin3";
@@ -24437,7 +24405,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/sharpener/super,
 /obj/item/sharpener/super,
 /turf/open/floor/plasteel,
@@ -25345,7 +25312,6 @@
 /turf/open/floor/iron/white,
 /area/centcom/holding)
 "hWm" = (
-/obj/structure/glowshroom/single,
 /obj/structure/table/wood,
 /obj/item/slime_extract/rainbow,
 /obj/item/slime_extract/rainbow{
@@ -27844,7 +27810,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/wisp_lantern{
 	pixel_x = 3;
 	pixel_y = 3
@@ -28417,7 +28382,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/upgradescroll/unlimited{
 	pixel_x = 3;
 	pixel_y = 3
@@ -28655,20 +28619,6 @@
 /obj/item/gun/ballistic/revolver/golden,
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween,
 /turf/open/floor/plasteel,
-/area/centcom)
-"mzV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/glowshroom/single,
-/turf/open/floor/plasteel/bluespace,
 /area/centcom)
 "mAD" = (
 /obj/effect/turf_decal/tile/blue{
@@ -29326,20 +29276,6 @@
 	},
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
-"nAK" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/glowshroom/shadowshroom,
-/turf/open/floor/plasteel/bluespace,
-/area/centcom)
 "nAR" = (
 /obj/structure/table/wood,
 /turf/open/floor/grass/grass1,
@@ -32693,7 +32629,6 @@
 /area/centcom/holding)
 "sCR" = (
 /obj/structure/table/wood,
-/obj/structure/glowshroom/single,
 /obj/item/storage/backpack/holding{
 	pixel_x = 3;
 	pixel_y = 3
@@ -33746,7 +33681,6 @@
 /turf/open/floor/plating,
 /area/centcom)
 "uwH" = (
-/obj/structure/glowshroom/single,
 /obj/structure/table/wood,
 /obj/item/gun/magic/wand/death,
 /obj/item/gun/magic/wand/door,
@@ -35189,7 +35123,10 @@
 /area/syndicate_mothership/control)
 "wsJ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fax,
+/obj/machinery/fax{
+	fax_name = "Intern Fax Machine";
+	name = "Intern Fax Machine"
+	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "wsN" = (
@@ -98321,7 +98258,7 @@ kjn
 iAf
 fFI
 cbC
-fPj
+cbC
 cbC
 cbC
 cbC
@@ -98582,7 +98519,7 @@ uJy
 hWm
 ozW
 qwn
-mzV
+cbC
 fvw
 unK
 sKx
@@ -99093,7 +99030,7 @@ unK
 xZT
 cbC
 cbC
-mzV
+cbC
 cbC
 cbC
 cbC
@@ -99610,7 +99547,7 @@ cHF
 lBk
 wZB
 jNh
-nAK
+cbC
 dvb
 unK
 sKx
@@ -99864,7 +99801,7 @@ iAf
 vjV
 cbC
 cbC
-fPj
+cbC
 cbC
 cbC
 cbC
@@ -100637,7 +100574,7 @@ cbC
 cbC
 cbC
 cbC
-fPj
+cbC
 cbC
 gHb
 unK
@@ -101148,7 +101085,7 @@ unK
 unK
 kqY
 sXc
-fJv
+sXc
 sXc
 sXc
 sXc

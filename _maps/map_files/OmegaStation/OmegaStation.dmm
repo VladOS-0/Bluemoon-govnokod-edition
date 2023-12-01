@@ -23101,7 +23101,6 @@
 /area/service/library)
 "aSc" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /turf/open/floor/plasteel/dark,
 /area/service/library)
 "aSd" = (
@@ -41893,7 +41892,6 @@
 /area/service/bar/atrium)
 "vPQ" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},

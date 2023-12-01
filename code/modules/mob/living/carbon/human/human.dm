@@ -123,104 +123,6 @@
 		profile.ui_interact(usr)
 
 ///////HUDs///////
-//	if(href_list["criminal"])
-//		if(hasHUD(usr, DATA_HUD_SECURITY_BASIC))
-//			if(usr.incapacitated())
-//				return
-//			var/found_record = 0
-//			var/perpname = get_visible_name(TRUE)
-//
-//			if(perpname != "Unknown")
-//				for(var/datum/data/record/E in GLOB.data_core.general)
-//					if(E.fields["name"] == perpname)
-//						for(var/datum/data/record/R in GLOB.data_core.security)
-//							if(R.fields["id"] == E.fields["id"])
-//
-//								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list(SEC_RECORD_STATUS_NONE, SEC_RECORD_STATUS_ARREST, SEC_RECORD_STATUS_SEARCH, SEC_RECORD_STATUS_MONITOR, SEC_RECORD_STATUS_DEMOTE, SEC_RECORD_STATUS_INCARCERATED, SEC_RECORD_STATUS_PAROLLED, SEC_RECORD_STATUS_RELEASED, SEC_RECORD_STATUS_DISCHARGED, "Cancel")
-//								var/t1 = copytext(trim(sanitize(input("Enter Reason:", "Security HUD", null, null) as text)), 1, MAX_MESSAGE_LEN)
-//								if(!t1)
-//									t1 = "(none)"
-//
-//								if(hasHUD(usr, DATA_HUD_SECURITY_ADVANCED) && setcriminal != "Cancel")
-//									found_record = 1
-//									if(R.fields["criminal"] == SEC_RECORD_STATUS_EXECUTE)
-//										to_chat(usr, "<span class='warning'>Unable to modify the sec status of a person with an active Execution order. Use a security computer instead.</span>")
-//									else
-//										var/rank
-//										if(ishuman(usr))
-//											var/mob/living/carbon/human/U = usr
-//											rank = U.get_assignment()
-//										else if(iscyborg(usr))
-//											var/mob/living/silicon/robot/U = usr
-//											rank = "[U.designation] [U.braintype]"
-//										else if(isAI(usr))
-//											rank = "AI"
-//										set_criminal_status(usr, R, setcriminal, t1, rank)
-//								break // Git out of the securiy records loop!
-//						if(found_record)
-//							break // Git out of the general records
-//
-//			if(!found_record)
-//				to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
-//
-//	if(href_list["secrecord"])
-//		if(hasHUD(usr, DATA_HUD_SECURITY_BASIC))
-//			if(usr.incapacitated())
-//				return
-//			var/perpname = get_visible_name(TRUE)
-//			var/read = 0
-//
-//			for(var/datum/data/record/E in GLOB.data_core.general)
-//				if(E.fields["name"] == perpname)
-//					for(var/datum/data/record/R in GLOB.data_core.security)
-//						if(R.fields["id"] == E.fields["id"])
-//							if(hasHUD(usr, DATA_HUD_SECURITY_BASIC))
-//								to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
-//								to_chat(usr, "<b>Minor Crimes:</b> [R.fields["mi_crim"]]")
-//								to_chat(usr, "<b>Details:</b> [R.fields["mi_crim_d"]]")
-//								to_chat(usr, "<b>Major Crimes:</b> [R.fields["ma_crim"]]")
-//								to_chat(usr, "<b>Details:</b> [R.fields["ma_crim_d"]]")
-//								to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
-//								to_chat(usr, "<a href='?src=[UID()];secrecordComment=`'>\[View Comment Log\]</a>")
-//								read = 1
-//
-//			if(!read)
-//				to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
-//
-//	if(href_list["secrecordComment"])
-//		if(hasHUD(usr, DATA_HUD_SECURITY_BASIC))
-//			if(usr.incapacitated() && !isobserver(usr)) //give the ghosts access to "View Comment Log" while they can't manipulate it
-//				return
-//			var/perpname = get_visible_name(TRUE)
-//			var/read = 0
-//
-//			for(var/datum/data/record/E in GLOB.data_core.general)
-//				if(E.fields["name"] == perpname)
-//					for(var/datum/data/record/R in GLOB.data_core.security)
-//						if(R.fields["id"] == E.fields["id"])
-//							if(hasHUD(usr, DATA_HUD_SECURITY_BASIC))
-//								read = 1
-//								if(LAZYLEN(R.fields["comments"]))
-//									for(var/c in R.fields["comments"])
-//										to_chat(usr, c)
-//								else
-//									to_chat(usr, "<span class='warning'>No comments found</span>")
-//								if(hasHUD(usr, DATA_HUD_SECURITY_ADVANCED))
-//									to_chat(usr, "<a href='?src=[UID()];secrecordadd=`'>\[Add comment\]</a>")
-//
-//			if(!read)
-//				to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
-//
-//	if(href_list["secrecordadd"])
-//		if(usr.incapacitated() || !hasHUD(usr, DATA_HUD_SECURITY_ADVANCED))
-//			return
-//		var/raw_input = input("Add Comment:", "Security records", null, null) as message
-//		var/sanitized = copytext(trim(sanitize(raw_input)), 1, MAX_MESSAGE_LEN)
-//		if(!sanitized || usr.stat || usr.restrained() || !hasHUD(usr,  DATA_HUD_SECURITY_ADVANCED))
-//			return
-//		add_comment(usr, "security", sanitized)
-
-	///////HUDs///////
 	if(href_list["hud"])
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
@@ -254,12 +156,9 @@
 									allowed_access = H.get_authentification_name()
 						else
 							allowed_access = "@%&ERROR_%$*"
-
-
 						if(!allowed_access)
 							to_chat(H, "<span class='warning'>ERROR: Invalid Access</span>")
 							return
-
 						if(perpname)
 							R = find_record("name", perpname, GLOB.data_core.security)
 							if(R)
@@ -273,7 +172,6 @@
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return
-
 								if(href_list["view"])
 									if(R)
 										if(!H.canUseHUD())
@@ -295,7 +193,6 @@
 											to_chat(usr, "----------")
 										to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 									return
-
 								if(href_list["add_crime"])
 									switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
@@ -330,7 +227,6 @@
 													investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
-
 								if(href_list["view_comment"])
 									if(R)
 										if(!H.canUseHUD())
@@ -344,7 +240,6 @@
 											to_chat(usr, "----------")
 											counter++
 										return
-
 								if(href_list["add_comment"])
 									if(R)
 										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
@@ -811,6 +706,11 @@
 	..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+	// BLUEMOON ADD START - роботы не блюют
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		return TRUE
+	// BLUEMOON ADD END
+
 	if(blood && dna?.species && (NOBLOOD in dna.species.species_traits))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \

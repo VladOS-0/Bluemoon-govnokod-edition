@@ -3786,11 +3786,6 @@
 /obj/item/storage/book/bible/booze,
 /turf/open/floor/carpet/royalblue,
 /area/eventmap/inside)
-"alo" = (
-/obj/structure/table/wood/fancy/red,
-/obj/machinery/computer/libraryconsole,
-/turf/open/floor/carpet/royalblue,
-/area/eventmap/inside)
 "alp" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -63883,7 +63878,7 @@ aOE
 ajy
 akk
 akE
-alo
+akD
 alD
 akz
 amS

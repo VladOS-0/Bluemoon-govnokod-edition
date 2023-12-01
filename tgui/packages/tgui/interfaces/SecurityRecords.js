@@ -60,9 +60,9 @@ export const SecurityRecords = (properties, context) => {
         <LoginInfo />
         <TemporaryNotice />
         <SecurityRecordsNavigation />
-        <Section height="100%" flexGrow="1">
+        {/* <Section height="100%" flexGrow="1">
           {body}
-        </Section>
+        </Section> */}
       </Window.Content>
     </Window>
   );

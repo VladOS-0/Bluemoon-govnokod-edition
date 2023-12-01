@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(economy)
 	var/earning_report
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
-	var/market_crashing = FALSE
+	// var/market_crashing = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -95,8 +95,8 @@ SUBSYSTEM_DEF(economy)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
-	if(!market_crashing)
-		price_update()
+	// if(!market_crashing)
+		// price_update()
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
@@ -170,21 +170,6 @@ SUBSYSTEM_DEF(economy)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
-
-/**
- * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
- *
- * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
- **/
-/datum/controller/subsystem/economy/proc/price_update()
-	for(var/obj/machinery/vending/V in GLOB.machines)
-		if(istype(V, /obj/machinery/vending/custom))
-			continue
-		if(!is_station_level(V.z))
-			continue
-		V.reset_prices(V.product_records, V.coin_records)
-	earning_report = "<b>Экономический отчет сектора</b><br><br> В настоящее время цены поставщиков в секторе <b>[SSeconomy.inflation_value()*100]%</b>.<br><br> Расходная мощность станции в настоящее время <b>[station_total] кредит[get_num_string(station_total)]</b>, а целевое довольствие экипажа составляет <b>[station_target] кредит[get_num_string(station_target)]</b>.<br><br> Это всё от <i>Отдел экономистов NanoTrasen</i>."
-	GLOB.news_network.SubmitArticle(earning_report, "Экономический Отчет Сектора", "Станционные Объявления", null)
 
 /**
  * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.

@@ -40,7 +40,7 @@
 			// General
 			"name" = "Please input new name:",
 			"id" = "Please input new ID:",
-			"sex" = "Please select new sex:",
+			"gender" = "Please select new gender:",
 			"age" = "Please input new age:",
 			"fingerprint" = "Please input new fingerprint hash:",
 			// Security
@@ -53,7 +53,7 @@
 		)
 		field_edit_choices = list(
 			// General
-			"sex" = list("Male", "Female"),
+			"gender" = list("Male", "Female", "Other"),
 			// Security
 			"criminal" = list(SEC_RECORD_STATUS_NONE, SEC_RECORD_STATUS_ARREST, SEC_RECORD_STATUS_EXECUTE, SEC_RECORD_STATUS_INCARCERATED, SEC_RECORD_STATUS_RELEASED, SEC_RECORD_STATUS_PAROLLED, SEC_RECORD_STATUS_DEMOTE, SEC_RECORD_STATUS_SEARCH, SEC_RECORD_STATUS_MONITOR),
 		)
@@ -120,7 +120,7 @@
 					general["fields"] = list(
 						SEC_FIELD("Name", 				gen_fields["name"], 		"name",			FALSE),
 						SEC_FIELD("ID", 				gen_fields["id"], 			"id",			TRUE),
-						SEC_FIELD("Sex", 				gen_fields["sex"], 			"sex",			FALSE),
+						SEC_FIELD("Gender", 			gen_fields["gender"], 		"gender",		FALSE),
 						SEC_FIELD("Age", 				gen_fields["age"], 			"age",			TRUE),
 						SEC_FIELD("Assignment", 		gen_fields["rank"], 		null,			FALSE),
 						SEC_FIELD("Fingerprint", 		gen_fields["fingerprint"], 	"fingerprint",	TRUE),
@@ -129,10 +129,10 @@
 						SEC_FIELD("Important Notes", 	gen_fields["notes"], 		null,			FALSE),
 					)
 					general["photos"] = list(
-						gen_fields["photo-south"],
-						gen_fields["photo-west"],
+						gen_fields["photo_front"],
+						gen_fields["photo_side"],
 					)
-					general["has_photos"] = (gen_fields["photo-south"] || gen_fields["photo-west"]) ? TRUE : FALSE
+					general["has_photos"] = (gen_fields["photo_front"] || gen_fields["photo_side"]) ? TRUE : FALSE
 					general["empty"] = FALSE
 				else
 					general["empty"] = TRUE
@@ -201,8 +201,7 @@
 			G.fields["name"] = "New Record"
 			G.fields["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7)), 6)]"
 			G.fields["rank"] = "Unassigned"
-			G.fields["real_rank"] = "Unassigned"
-			G.fields["sex"] = "Male"
+			G.fields["gender"]  = "Male"
 			G.fields["age"] = "Unknown"
 			G.fields["fingerprint"] = "Unknown"
 			G.fields["p_stat"] = "Active"
@@ -219,15 +218,15 @@
 			if(!record_general || record_security)
 				return
 			var/datum/data/record/S = new /datum/data/record()
-			S.fields["name"] = record_general.fields["name"]
-			S.fields["id"] = record_general.fields["id"]
+			S.fields["name"] 			= record_general.fields["name"]
+			S.fields["id"] 				= record_general.fields["id"]
 			S.name = "Security Record #[S.fields["id"]]"
-			S.fields["criminal"] = SEC_RECORD_STATUS_NONE
-			S.fields["mi_crim"] = "None"
-			S.fields["mi_crim_d"] = "No minor crime convictions."
-			S.fields["ma_crim"] = "None"
-			S.fields["ma_crim_d"] = "No major crime convictions."
-			S.fields["notes"] = "No notes."
+			S.fields["criminal"] 		= SEC_RECORD_STATUS_NONE
+			S.fields["mi_crim"] 		= "None"
+			S.fields["mi_crim_d"]		= "No minor crime convictions."
+			S.fields["ma_crim"] 		= "None"
+			S.fields["ma_crim_d"] 		= "No major crime convictions."
+			S.fields["notes"] 			= "No notes."
 			GLOB.data_core.security += S
 			record_security = S
 			update_all_mob_security_hud()
@@ -477,7 +476,7 @@
 				if(1)
 					R.fields["name"] = pick("[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]", "[pick(GLOB.first_names_female)] [pick(GLOB.last_names_female)]")
 				if(2)
-					R.fields["sex"] = pick("Male", "Female")
+					R.fields["sex"] = pick("Male", "Female", "Other")
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)

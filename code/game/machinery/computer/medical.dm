@@ -12,7 +12,7 @@
 	desc = "This can be used to check medical records."
 	icon_keyboard = "med_key"
 	icon_screen = "medcomp"
-	req_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
 	var/screen = null
 	var/datum/data/record/active1 = null
@@ -32,7 +32,7 @@
 	..()
 	field_edit_questions = list(
 		// General
-		"sex" = "Please select new sex:",
+		"gender" = "Please select new gender:",
 		"age" = "Please input new age:",
 		"fingerprint" = "Please input new fingerprint hash:",
 		"p_stat" = "Please select new physical status:",
@@ -52,7 +52,7 @@
 	)
 	field_edit_choices = list(
 		// General
-		"sex" = list("Male", "Female"),
+		"gender" = list("Male", "Female", "Other"),
 		"p_stat" = list("*Deceased*", "*SSD*", "Active", "Physically Unfit", "Disabled"),
 		"m_stat" = list("*Insane*", "*Unstable*", "*Watch*", "Stable"),
 		// Medical
@@ -109,16 +109,16 @@
 					general["fields"] = fields
 					fields[++fields.len] = FIELD("Name", active1.fields["name"], null)
 					fields[++fields.len] = FIELD("ID", active1.fields["id"], null)
-					fields[++fields.len] = FIELD("Sex", active1.fields["sex"], "sex")
+					fields[++fields.len] = FIELD("Gender", active1.fields["gender"], "gender")
 					fields[++fields.len] = FIELD("Age", active1.fields["age"], "age")
 					fields[++fields.len] = FIELD("Fingerprint", active1.fields["fingerprint"], "fingerprint")
 					fields[++fields.len] = FIELD("Physical Status", active1.fields["p_stat"], "p_stat")
 					fields[++fields.len] = FIELD("Mental Status", active1.fields["m_stat"], "m_stat")
 					var/list/photos = list()
 					general["photos"] = photos
-					photos[++photos.len] = active1.fields["photo-south"]
-					photos[++photos.len] = active1.fields["photo-west"]
-					general["has_photos"] = (active1.fields["photo-south"] || active1.fields["photo-west"] ? 1 : 0)
+					photos[++photos.len] = active1.fields["photo_front"]
+					photos[++photos.len] = active1.fields["photo_side"]
+					general["has_photos"] = (active1.fields["photo_front"] || active1.fields["photo_side"] ? 1 : 0)
 					general["empty"] = 0
 				else
 					general["empty"] = 1
@@ -435,7 +435,7 @@
 				if(1)
 					R.fields["name"] = pick("[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]", "[pick(GLOB.first_names_female)] [pick(GLOB.last_names_female)]")
 				if(2)
-					R.fields["sex"] = pick("Male", "Female")
+					R.fields["gender"] = pick("Male", "Female", "Other")
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
