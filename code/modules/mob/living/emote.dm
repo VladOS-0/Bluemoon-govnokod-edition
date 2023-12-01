@@ -111,9 +111,13 @@
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params)
     var/mob/living/simple_animal/S = user
+	// BLUEMOON ADD - пользовательский эмоут смерти
+    if(user?.client?.prefs?.features["custom_deathgasp"])
+        message = user.client.prefs.features["custom_deathgasp"]
     if(istype(S) && S.deathmessage)
         message_simple = S.deathmessage
     . = ..()
+    message = initial(message)
     message_simple = initial(message_simple)
     if(. && user.deathsound)
         if(isliving(user))
