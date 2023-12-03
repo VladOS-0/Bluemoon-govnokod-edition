@@ -101,7 +101,7 @@
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80
-#define MAX_DEATHGASP_LEN		256
+#define MAX_DEATHGASP_LEN		256 // BLUEMOON ADD - пользовательский эмоут смерти
 
 //Bark defines
 #define BARK_DEFAULT_MINPITCH 0.6
