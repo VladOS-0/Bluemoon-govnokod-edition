@@ -1268,7 +1268,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	features["flavor_text"]	= copytext_char(features["flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["naked_flavor_text"] = copytext_char(features["naked_flavor_text"], 1, MAX_FLAVOR_LEN) //SPLURT edit
-	features["custom_deathgasp"] = copytext_char(features["custom_deathgasp"], 1, MAX_FLAVOR_LEN) // BLUEMOON ADD - пользовательский эмоут смерти
+	features["custom_deathgasp"] = copytext_char(features["custom_deathgasp"], 1, MAX_DEATHGASP_LEN) // BLUEMOON ADD - пользовательский эмоут смерти
 	features["silicon_flavor_text"] = copytext_char(features["silicon_flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["custom_species_lore"] = copytext_char(features["custom_species_lore"], 1, MAX_FLAVOR_LEN) //SPLURT edit
 	features["ooc_notes"] = copytext_char(features["ooc_notes"], 1, MAX_FLAVOR_LEN)
