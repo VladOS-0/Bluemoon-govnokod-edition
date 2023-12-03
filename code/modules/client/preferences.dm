@@ -668,7 +668,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					// BLUEMOON ADD START - пользовательский эмоут смерти
 					dat += "<h2>Custom Deathgasp</h2>"
 					dat += "<a href='?_src_=prefs;preference=custom_deathgasp;task=input'><b>Set Custom Deathgasp</b></a><br>"
-					if(length(features["custom_deathgasp"]) <= MAX_FLAVOR_LEN)
+					if(length(features["custom_deathgasp"]) <= MAX_FLAVOR_PREVIEW_LEN)
 						if(!length(features["custom_deathgasp"]))
 							dat += "\[...\]<BR>"
 						else
@@ -2346,7 +2346,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("custom_deathgasp")
 					var/msg = input(usr, "Задайте эмоцию, которая будет проигрываться при смерти вашего персонажа!", "Сообщение О Смерти", features["custom_deathgasp"]) as message|null
 					if(!isnull(msg))
-						features["custom_deathgasp"] = strip_html_simple(msg, MAX_FLAVOR_LEN, TRUE)
+						features["custom_deathgasp"] = strip_html_simple(msg, MAX_DEATHGASP_LEN, TRUE)
 				// BLUEMOON ADD END
 				if("ooc_notes")
 					var/msg = stripped_multiline_input(usr, "Установите всегда видимые OOC-заметки, связанные с вашими предпочтениями.", "ООС-Заметки", html_decode(features["ooc_notes"]), MAX_FLAVOR_LEN, TRUE)
