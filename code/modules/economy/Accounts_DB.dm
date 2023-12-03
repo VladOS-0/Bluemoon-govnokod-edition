@@ -44,10 +44,10 @@ GLOBAL_VAR(current_date_string)
 	"}
 
 /obj/machinery/computer/account_database/attackby(obj/O, mob/user, params)
-	if(ui_login_attackby(O, user))
-		add_fingerprint(user)
-		return
-	return ..()
+//	if(ui_login_attackby(O, user))
+//		add_fingerprint(user)
+//		return
+	return// ..()
 
 /obj/machinery/computer/account_database/attack_hand(mob/user)
 	if(..())

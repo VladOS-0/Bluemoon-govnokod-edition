@@ -28667,8 +28667,8 @@
 /area/security/execution/education)
 "cmy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance";
-	req_access_txt = "5"
+	req_one_access_txt = "12;5;9";
+	name = "Medbay Maintenance"
 	},
 /turf/open/floor/plating,
 /area/medical/medbay/central)
@@ -31437,7 +31437,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;5;9"
+	req_one_access_txt = "12;5;9";
+	name = "Medbay Maintenance"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -31831,7 +31832,7 @@
 /area/medical/genetics)
 "ctC" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Genetics Maintenance";
+	name = "Medbay Maintenance";
 	req_access_txt = "9"
 	},
 /obj/structure/disposalpipe/segment,
@@ -55778,7 +55779,6 @@
 /area/service/bar)
 "hsi" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /turf/open/floor/wood,
 /area/service/library)
 "hsq" = (
@@ -72424,7 +72424,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/space)
+/area/security/brig)
 "pdm" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -82125,7 +82125,9 @@
 /area/engineering/atmos)
 "tzv" = (
 /obj/structure/sink/puddle,
-/turf/open/floor/plating/dirt,
+/turf/open/floor/plating/dirt/dark/jungle{
+	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
+	},
 /area/hallway/primary/central)
 "tAl" = (
 /obj/machinery/hydroponics/soil,

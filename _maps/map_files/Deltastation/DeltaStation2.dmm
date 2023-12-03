@@ -124143,7 +124143,6 @@
 /area/security/brig)
 "vHl" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /obj/machinery/light_switch{
 	pixel_y = 26
 	},

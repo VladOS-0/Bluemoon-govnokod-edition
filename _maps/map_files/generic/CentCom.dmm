@@ -21833,7 +21833,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/pizzabox/infinite,
 /obj/item/book/granter/martial/carp{
 	pixel_x = 3;
@@ -22196,7 +22195,6 @@
 /turf/open/floor/iron/white,
 /area/centcom/holding)
 "dFM" = (
-/obj/structure/glowshroom/glowcap,
 /obj/structure/table/wood,
 /obj/item/kitchen/knife/rainbowknife,
 /turf/open/floor/wood,
@@ -22496,7 +22494,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/glowshroom/shadowshroom,
 /obj/item/reagent_containers/pill/shadowtoxin,
 /turf/open/floor/plasteel/bluespace,
 /area/centcom)
@@ -22750,6 +22747,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/plasteel,
 /area/centcom)
+"eyk" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "eyr" = (
 /turf/closed/wall,
 /area/syndicate_mothership/control)
@@ -23495,7 +23496,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/glowshroom/shadowshroom,
 /obj/machinery/anomalous_crystal,
 /turf/open/floor/plasteel/bluespace,
 /area/centcom)
@@ -23756,20 +23756,6 @@
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/iron/dark,
 /area/shuttle/inteq/collosus)
-"fJv" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/glowshroom/single,
-/turf/open/floor/plasteel/bluespace,
-/area/centcom)
 "fKI" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/light{
@@ -23821,20 +23807,6 @@
 	light_range = 50
 	},
 /area/centcom/holding)
-"fPj" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/glowshroom/glowcap,
-/turf/open/floor/plasteel/bluespace,
-/area/centcom)
 "fRP" = (
 /obj/machinery/button/door{
 	id = "ghostcafecabin3";
@@ -23973,6 +23945,11 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/centcom/holding)
+"gaW" = (
+/obj/effect/decal/cleanable/semen,
+/obj/effect/custom_portal/Hotel,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "gbs" = (
 /obj/structure/chair/wood/wings{
 	dir = 4
@@ -24437,7 +24414,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/sharpener/super,
 /obj/item/sharpener/super,
 /turf/open/floor/plasteel,
@@ -25088,6 +25064,11 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/syndicate_mothership/control)
+"hGV" = (
+/obj/structure/destructible/cult/pylon,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "hHm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -25345,7 +25326,6 @@
 /turf/open/floor/iron/white,
 /area/centcom/holding)
 "hWm" = (
-/obj/structure/glowshroom/single,
 /obj/structure/table/wood,
 /obj/item/slime_extract/rainbow,
 /obj/item/slime_extract/rainbow{
@@ -26254,6 +26234,10 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
+"jmA" = (
+/obj/structure/destructible/cult/pylon,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "jmE" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/brown{
@@ -27844,7 +27828,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/wisp_lantern{
 	pixel_x = 3;
 	pixel_y = 3
@@ -28417,7 +28400,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/structure/glowshroom/single,
 /obj/item/upgradescroll/unlimited{
 	pixel_x = 3;
 	pixel_y = 3
@@ -28655,20 +28637,6 @@
 /obj/item/gun/ballistic/revolver/golden,
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween,
 /turf/open/floor/plasteel,
-/area/centcom)
-"mzV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/glowshroom/single,
-/turf/open/floor/plasteel/bluespace,
 /area/centcom)
 "mAD" = (
 /obj/effect/turf_decal/tile/blue{
@@ -29326,20 +29294,6 @@
 	},
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
-"nAK" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/glowshroom/shadowshroom,
-/turf/open/floor/plasteel/bluespace,
-/area/centcom)
 "nAR" = (
 /obj/structure/table/wood,
 /turf/open/floor/grass/grass1,
@@ -30360,6 +30314,10 @@
 /obj/item/storage/fancy/cigarettes/cigpack_inteq,
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
+"pha" = (
+/obj/effect/decal/cleanable/semen/femcum,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "phg" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -30542,6 +30500,10 @@
 /obj/item/paper_bin,
 /turf/open/floor/carpet/royalblack,
 /area/centcom/holding)
+"puU" = (
+/obj/effect/mob_spawn/qareen,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "puY" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -31496,6 +31458,9 @@
 "qWj" = (
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
+"qWG" = (
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "qXD" = (
 /obj/structure/chair/office/dark{
 	dir = 4
@@ -32693,7 +32658,6 @@
 /area/centcom/holding)
 "sCR" = (
 /obj/structure/table/wood,
-/obj/structure/glowshroom/single,
 /obj/item/storage/backpack/holding{
 	pixel_x = 3;
 	pixel_y = 3
@@ -33211,6 +33175,10 @@
 "tzq" = (
 /turf/open/floor/carpet/purple,
 /area/centcom/holding)
+"tzG" = (
+/obj/effect/decal/cleanable/semen,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "tAx" = (
 /obj/effect/turf_decal/bluemoon_decals/enclave/top/right,
 /turf/open/floor/iron/dark,
@@ -33589,6 +33557,9 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/inteq/collosus)
+"uhH" = (
+/turf/open/indestructible/cobble,
+/area/horny_antags)
 "uiZ" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -33746,7 +33717,6 @@
 /turf/open/floor/plating,
 /area/centcom)
 "uwH" = (
-/obj/structure/glowshroom/single,
 /obj/structure/table/wood,
 /obj/item/gun/magic/wand/death,
 /obj/item/gun/magic/wand/door,
@@ -35189,7 +35159,10 @@
 /area/syndicate_mothership/control)
 "wsJ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fax,
+/obj/machinery/fax{
+	fax_name = "Intern Fax Machine";
+	name = "Intern Fax Machine"
+	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "wsN" = (
@@ -35394,6 +35367,9 @@
 	light_range = 50
 	},
 /area/centcom/holding)
+"wIy" = (
+/turf/closed/indestructible/necropolis,
+/area/horny_antags/qareen)
 "wJH" = (
 /turf/closed/wall,
 /area/centcom/holding)
@@ -35858,6 +35834,10 @@
 	},
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
+"xmU" = (
+/obj/effect/custom_portal/Station,
+/turf/open/indestructible/boss,
+/area/horny_antags/qareen)
 "xna" = (
 /obj/structure/table/wood,
 /obj/item/kitchen/rollingpin{
@@ -49901,15 +49881,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
 aaa
 aDi
 aDi
@@ -50158,15 +50138,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+uhH
+wIy
+wIy
+wIy
+wIy
+wIy
+uhH
+uhH
 aaa
 aDi
 aQe
@@ -50415,15 +50395,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+wIy
+qWG
+gaW
+qWG
+wIy
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -50672,15 +50652,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+jmA
+qWG
+qWG
+qWG
+jmA
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -50929,15 +50909,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+eyk
+qWG
+qWG
+tzG
+qWG
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -51186,15 +51166,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+puU
+qWG
+eyk
+qWG
+puU
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -51443,15 +51423,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+qWG
+pha
+qWG
+qWG
+qWG
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -51700,15 +51680,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+hGV
+qWG
+qWG
+qWG
+jmA
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -51957,15 +51937,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+wIy
+wIy
+qWG
+xmU
+qWG
+wIy
+wIy
+uhH
 aaa
 aDi
 aQe
@@ -52214,15 +52194,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+uhH
+wIy
+wIy
+wIy
+wIy
+wIy
+uhH
+uhH
 aaa
 aDi
 aQe
@@ -52471,15 +52451,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
+uhH
 aaa
 aDi
 aQe
@@ -98321,7 +98301,7 @@ kjn
 iAf
 fFI
 cbC
-fPj
+cbC
 cbC
 cbC
 cbC
@@ -98582,7 +98562,7 @@ uJy
 hWm
 ozW
 qwn
-mzV
+cbC
 fvw
 unK
 sKx
@@ -99093,7 +99073,7 @@ unK
 xZT
 cbC
 cbC
-mzV
+cbC
 cbC
 cbC
 cbC
@@ -99610,7 +99590,7 @@ cHF
 lBk
 wZB
 jNh
-nAK
+cbC
 dvb
 unK
 sKx
@@ -99864,7 +99844,7 @@ iAf
 vjV
 cbC
 cbC
-fPj
+cbC
 cbC
 cbC
 cbC
@@ -100637,7 +100617,7 @@ cbC
 cbC
 cbC
 cbC
-fPj
+cbC
 cbC
 gHb
 unK
@@ -101148,7 +101128,7 @@ unK
 unK
 kqY
 sXc
-fJv
+sXc
 sXc
 sXc
 sXc

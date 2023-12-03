@@ -41441,7 +41441,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bZC" = (
-/obj/machinery/computer/libraryconsole,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/service/library)

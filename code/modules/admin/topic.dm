@@ -189,13 +189,14 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a revenant.")
-			if("qareen")
-				if(src.makeQareen())
-					message_admins("[key_name(usr)] created a qareen.")
-					log_admin("[key_name(usr)] created a qareen.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a qareen. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a qareen.")
+
+//			if("qareen")	Temporary removed. - Gardelin0
+//				if(src.makeQareen())
+//					message_admins("[key_name(usr)] created a qareen.")
+//					log_admin("[key_name(usr)] created a qareen.")
+//				else
+//				message_admins("[key_name_admin(usr)] tried to create a qareen. Unfortunately, there were no candidates available.")
+//					log_admin("[key_name(usr)] failed to create a qareen.")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -2548,6 +2549,15 @@
 					log_query_debug("[usr.key] | [response]")
 		else if(answer == "no")
 			log_query_debug("[usr.key] | Reported no server hang")
+
+	else if(href_list["show_paper"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/item/paper/paper_to_show = locate(href_list["show_paper"])
+		if(!paper_to_show)
+			return
+		paper_to_show.ui_interact(usr)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

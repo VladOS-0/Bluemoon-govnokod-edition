@@ -15,6 +15,14 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/prisoner/management/New()
+ 	GLOB.prisoncomputer_list += src
+ 	return ..()
+
+/obj/machinery/computer/prisoner/management/Destroy()
+ 	GLOB.prisoncomputer_list -= src
+ 	return ..()
+
 /obj/machinery/computer/prisoner/management/ui_interact(mob/user)
 	. = ..()
 	if(isliving(user))

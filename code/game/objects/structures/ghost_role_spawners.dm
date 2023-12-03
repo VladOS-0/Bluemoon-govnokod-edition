@@ -428,14 +428,13 @@
 	job_description = "Hotel Staff"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
 	outfit = /datum/outfit/hotelstaff
-	short_desc = "You are a staff member of a top-of-the-line space hotel!"
-	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and make sure the manager doesn't fire you."
-	important_info = "DON'T leave the hotel"
+	short_desc = "Вы - член обслуживающего персонала космического отеля."
+	flavour_text = "Вы нанялись в качестве персонала общего профиля для уборки, готовки, обслуживания гостей и всего, что прикажет менеджер на время пребывания на борту космического отеля. Ни в коем случае не грубите, не хамите и не ругайтесь с посетителями. Помните, что в вашем случае, клиент всегда прав."
+	important_info = "Персоналу отеля запрещается покидать его (кроме неординарных случаев или установки телепада)."
 	assignedrole = "Hotel Staff"
 	canloadappearance = TRUE
 	loadout_enabled = TRUE
@@ -454,11 +453,9 @@
 	mob_name = "hotel security member"
 	job_description = "Hotel Security"
 	outfit = /datum/outfit/hotelstaff/security
-	short_desc = "You are a peacekeeper."
-	flavour_text = "You have been assigned to this hotel to protect the interests of the company while keeping the peace between \
-		guests and the staff."
-	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
-	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+	short_desc = "Вы - охранник космического отеля."
+	flavour_text = "Вы были назначены в этот отель, чтобы защищать интересы компании Nanotrasen, недавно выкупившей его. Ведите себя вежливо, не размахивайте оружием и бронёй, не грубите посетителям - в первую очередь, вы не должны мешать наслаждаться пребыванием и отпугивать адекватных клиентов."
+	important_info = "Персоналу отеля запрещается покидать его (кроме неординарных случаев или установки телепада). Не ведите себя как СБ со станции - вы обычный гражданский и не обучены для борьбы с террористами, предателями, аномалиями и другими неординарными сущностями."
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Secuirty"
@@ -636,6 +633,15 @@
 	head = /obj/item/clothing/head/HoS/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+
+// BLUEMOON ADD START - командная коробочка для командира
+/datum/outfit/syndicate_empty/battlecruiser/assault/captain/pre_equip(mob/living/carbon/human/H, visualsOnly, client/preference_source)
+	. = ..()
+	var/list/extra_backpack_items = list(
+		/obj/item/storage/box/pinpointer_squad
+	)
+	LAZYADD(backpack_contents, extra_backpack_items)
+// BLUEMOON ADD END
 
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec
@@ -1177,6 +1183,7 @@
 	random = TRUE
 	canloadappearance = TRUE
 	loadout_enabled = TRUE
+	use_outfit_name = TRUE
 	computer_area = /area/ruin/space/has_grav/bluemoon/deepspacetwo/service/dorms
 
 /obj/effect/mob_spawn/human/ds2/prisoner

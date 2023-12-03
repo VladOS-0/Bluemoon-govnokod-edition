@@ -259,6 +259,11 @@ effective or pretty fucking useless.
 	if(on)
 		charge = max(0, charge - 1500)
 
+/obj/item/shadowcloak/check_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = ATTACK_TYPE_MELEE)
+	. = ..()
+	if(on)
+		charge = max(0, charge - 1500)
+
 /obj/item/jammer
 	name = "radio jammer"
 	desc = "Device used to disrupt nearby radio communication."

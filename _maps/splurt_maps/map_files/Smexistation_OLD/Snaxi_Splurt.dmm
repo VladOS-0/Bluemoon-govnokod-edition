@@ -25543,7 +25543,6 @@
 /area/service/hydroponics/garden)
 "jTc" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/service/library)

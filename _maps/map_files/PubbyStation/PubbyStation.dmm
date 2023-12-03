@@ -45956,7 +45956,6 @@
 /area/maintenance/department/engine)
 "ckX" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /turf/open/floor/plasteel/dark,
 /area/service/library/lounge)
 "clb" = (
