@@ -8,6 +8,7 @@
 		return
 
 	var/choice = tgui_alert(usr, "Select Gender.", "Gender", list("Both", "Male", "Female", "None"))
+
 	switch(choice)
 		if("Both")
 			has_penis = TRUE
