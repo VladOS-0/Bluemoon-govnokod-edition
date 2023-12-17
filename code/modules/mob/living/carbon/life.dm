@@ -711,13 +711,15 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			to_chat(src, "<span class='synth'>Ваши манипуляторы подрагивают, а в вашем позитронном мозге роятся невероятные идеи о превосходстве синтетической расы... Нужно построить больше роботов!</span>")
 
 		if(drunkenness >= 41)
+			Dizzy(5)
 			if(prob(5))
 				emote(
 					pick("ping", "beep", "buzz", "buzz2")
 				)
 			if(prob(15))
 				do_fake_sparks(2, TRUE, src)
-			Dizzy(10)
+			if(prob(20))
+				jitteriness += 3
 			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
 				if(prob(5))
 					to_chat(src, "<span class='synth'>Перегрузка системы, вызванная выпитой жидкостью, ещё сильнее ускоряет процессы саморемонта...</span>")

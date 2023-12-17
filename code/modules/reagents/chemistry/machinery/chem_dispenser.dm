@@ -656,6 +656,8 @@
 	icon_state = "booze_dispenser"
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
+		/datum/reagent/consumable/synthdrink/synthanol/database_dropper,
+		/datum/reagent/consumable/synthdrink/synthanol/ultralube,
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/whiskey,
