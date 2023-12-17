@@ -456,7 +456,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(slurring)
 		if (isrobotic(src))
-			message = Gibberish(message, FALSE, slurring) // BLUEMOON ADD - теперь синтетики заикаются более с%инт$тич!ески
+			message = Gibberish(message, FALSE, round(slurring / 2)) // BLUEMOON ADD - теперь синтетики заикаются более с%инт$тич!ески
 		else
 			message = slur(message,slurring)
 

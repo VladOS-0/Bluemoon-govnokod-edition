@@ -688,7 +688,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
 			drunkenness = max(drunkenness - 0.2, 0)
 
-		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
+		if(mind?.assigned_role == "Scientist" || mind?.assigned_role == "Research Director")
 			if (prob(5))
 				to_chat(src, "<span class='synth'>Вы ощущаете разгон своих аналитических процессоров...</span>")
 			if(SSresearch.science_tech)
@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
 						say(pick(GLOB.ballmer_windows_me_msg), forced = "ballmer")
 
-		if(mind && mind.assigned_role == "Roboticist" && prob(5))
+		if(mind?.assigned_role == "Roboticist" && prob(5))
 			to_chat(src, "<span class='synth'>Ваши манипуляторы подрагивают, а в вашем позитронном мозге роятся невероятные идеи о превосходстве синтетической расы... Нужно построить больше роботов!</span>")
 
 		if(drunkenness >= 41)

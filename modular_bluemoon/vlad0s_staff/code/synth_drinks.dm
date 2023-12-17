@@ -127,7 +127,7 @@
 	synthetic_taste = "попойки на роботостроительном заводе..."
 	glass_name = "glass of Synthanol"
 	glass_desc = "An interesting mixture capable of inducing a positronic mind into a state similar to alcohol intoxication"
-	var/boozepwr = 70
+	var/boozepwr = 95
 	accelerant_quality = 5
 
 /datum/reagent/consumable/synthdrink/synthanol/synthetic_on_life(mob/living/carbon/human/M)
@@ -163,7 +163,7 @@
 	synthetic_taste = "низкоуровневого программирования."
 	glass_name = "glass of Robot Tears"
 	glass_desc = "No robots were hurt in the making of this drink."
-	boozepwr = 65
+	boozepwr = 85
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary
 	name = "Trinary"
@@ -173,7 +173,7 @@
 	synthetic_taste = "низкоуровневого программирования."
 	glass_name = "glass of Trinary"
 	glass_desc = "Some kind of a liquid vocabulary of the machine code."
-	boozepwr = 30
+	boozepwr = 50
 	var/knew_encoded = TRUE
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary/synthetic_on_add(mob/living/carbon/human/M)
@@ -205,7 +205,7 @@
 	synthetic_taste = "открытого исходного кода"
 	glass_name = "Code Libre"
 	glass_desc = "Synthetic booze with open-source recipe. Does this sound like Linus Torvalds was involved it this?"
-	boozepwr = 45
+	boozepwr = 85
 	value = REAGENT_VALUE_VERY_RARE
 	quality = DRINK_VERYGOOD
 
@@ -219,10 +219,10 @@
 	description = "Pact with the Syndicate granted us this fantastic drink, smelling of sweet telecrystals..."
 	color = "#d9ff00"
 	glass_icon_state = "uplink"
-	synthetic_taste = "проведения EMAGом по вашему позитронному мозгу..."
+	synthetic_taste = "проведения EMAGом по позитронному мозгу..."
 	glass_name = "glass of Uplink"
 	glass_desc = "Pact with the Syndicate granted us this fantastic drink, smelling of sweet telecrystals..."
-	boozepwr = 55
+	boozepwr = 90
 	value = REAGENT_VALUE_RARE
 	quality = DRINK_VERYGOOD
 	var/is_traitor = FALSE
@@ -238,16 +238,16 @@
 			is_traitor = TRUE
 			uplink_code = T.uplink.unlock_code ? T.uplink.unlock_code : null
 			if (uplink_code) // Реальный код от аплинка :trollface:
-				to_chat(M, "<span class='warning'>Этот напиток наводит вас на мысль, что все вокруг должны знать, насколько вы крутой агент! Ваш код от аплинка - [uplink_code], да?</span>")
+				to_chat(M, "<span class='warning'>Почему бы не похвастать перед собутыльниками своими телекристаллами? Какой там код от аплинка? [uplink_code]?</span>")
 	if (!uplink_code) // Рандомный код от аплинка, чтобы по этому напитку не определяли антагов (хотя...)
 		uplink_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 	to_chat(M, "<span class='syndradio'>Вы чувствуете какой-то предательский вайб...</span>")
 
 /datum/reagent/consumable/synthdrink/synthanol/uplink/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if (HAS_TRAIT(M, TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return
-	if (prob(min(current_cycle/3,10)))
+	if(prob(min(current_cycle/3,10)))
 		var/random = rand(1,4)
 		switch(random)
 			if(1)
@@ -258,12 +258,13 @@
 				M.say("Ребята, никто не знает, что такое [uplink_code]?", forced = "synthetic booze")
 			if(4)
 				M.say("Хорошо работать в InteQ...", forced = "synthetic booze")
-		if(is_traitor)
+	if(is_traitor && prob(min(current_cycle/2,20)))
+		M.adjustBruteLoss(-1)
+		M.adjustFireLoss(-1)
+		M.adjustToxLoss(-1)
+		M.adjustStaminaLoss(-5)
+		if(prob(20))
 			to_chat(M, "<span class='syndradio'>Преданность нанимателю переполняет вас, ваш корпус ощущается более крепким, чем был раньше!</span>")
-			M.adjustBruteLoss(-1)
-			M.adjustFireLoss(-1)
-			M.adjustToxLoss(-1)
-			M.adjustStaminaLoss(-5)
 
 /datum/reagent/consumable/synthdrink/synthanol/liquid_emp
 	name = "Liquid EMP"
@@ -273,7 +274,7 @@
 	synthetic_taste = "проливания газировки на процессор... Ауч!"
 	glass_name = "glass of Liquid EMP"
 	glass_desc = "You're pretty sure, that this will end up in the Robotics..."
-	boozepwr = 220 // Почти Бахус, но для роботов
+	boozepwr = 280 // Почти Бахус, но для роботов
 	value = REAGENT_VALUE_RARE
 	quality = DRINK_FANTASTIC
 
@@ -334,8 +335,12 @@
 				M.emote("ping")
 				to_chat(M, "<span class='boldnotice'>Перезагрузка завершена. Приятного дня!</span>")
 				reloading = FALSE
+			else // Ой, кажется, кто-то сейчас не проснётся
+				var/time_till_wake = volume * metabolization_rate * M.metabolism_efficiency
+				to_chat(M, "<span class='userdanger'>Производится обновление систем, не включайте позитронный мозг до окончания установки! Осталось примерно: [time_till_wake] секунд.</span>")
+				to_chat(M, "<span class='warning'>Это определённо была плохая идея...</span>")
 	if(reloading) // Чтобы синт не просыпался до окончания перезагрузки
-		M.Sleeping(10)
+		M.SetSleeping(50)
 
 /datum/reagent/consumable/synthdrink/synthanol/restart/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -349,7 +354,7 @@
 /datum/reagent/consumable/synthdrink/synthanol/restart/hard
 	description = "Sometimes you just need to start anew... Welp, this one comes with BIOS update, oh shit."
 	color = "#0095ff"
-	synthetic_taste = "перезагрузки с обновлением, это будет долго..."
+	synthetic_taste = "перезагрузки с установкой дополнительного ПО? Оу, это будет долго..."
 	glass_desc = "Sometimes you just need to start anew... Welp, this one comes with BIOS update, oh shit."
 	soft = FALSE
 
@@ -366,13 +371,13 @@
 
 /datum/reagent/consumable/synthdrink/synthanol/synthignon/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if(current_cycle >= 10 && prob(5))
+	if(current_cycle >= 10 && prob(3))
 		var/shakespeare = pick(
 			"Любовь бежит от тех, кто гонится за нею, а тем, кто прочь бежит, кидается на шею.",
 			"Одним взглядом можно убить любовь, одним же взглядом можно воскресить её.",
 			"Всякое препятствие любви только усиливает её.",
 			"Не трать свою любовь на кого-то, кто не ценит ее.",
-			"Влюбиться можно в красоту, но полюбить – лишь только <UNHANDLED_EXCEPTION: variable 'Душа' is undefined>",
+			"Влюбиться можно в красоту, но полюбить – лишь только UNHANDLED_EXCEPTION: variable 'Душа' is undefined!",
 			"Мы знаем, кто мы есть, но не знаем, кем мы можем быть.")
 		to_chat(M, "<span class='love'>В вашем позитронном мозге резонирует что-то возвышенное...\n«[shakespeare]»</span>")
 
@@ -382,10 +387,10 @@
 	description = "Hey, why the heck you want to fuck a robot?"
 	color = "#782301"
 	glass_icon_state = "wockyslush" // TODO: добавить иконку
-	synthetic_taste = "техобслуживания... мхмх... не по инструкции~"
+	synthetic_taste = "техобслуживания... мхмх... <span class='userlove'>не по инструкции~</span>"
 	glass_name = "glass of Ultra Lube"
 	glass_desc = "Hey, why the heck you want to fuck a robot?"
-	boozepwr = 5 // Слабое...
+	boozepwr = 10 // Слабое...
 	value = REAGENT_VALUE_VERY_RARE
 	quality = DRINK_NICE
 
@@ -422,19 +427,21 @@
 	synthetic_taste = "SQL-инъекции..."
 	glass_name = "glass of Database Dropper"
 	glass_desc = "Fancy tool for roboticist, who just got tired of disrobing synthetics for a surgery... Or, perhaps, it has another goal..."
-	boozepwr = 25
+	boozepwr = 35
 	value = REAGENT_VALUE_VERY_RARE
 	quality = DRINK_VERYGOOD
 
 /datum/reagent/consumable/synthdrink/synthanol/database_dropper/synthetic_on_add(mob/living/carbon/human/M)
 	. = ..()
 	if(M.client?.prefs.erppref == "No" || M.client?.prefs.cit_toggles & NO_APHRO)
-		to_chat(M, "<span class='warning'>Вы зафиксировали попытку очень странного взлома, но ваш антивирус справился...</span>")
+		to_chat(M, "<span class='warning'>Вы зафиксировали попытку очень странного взлома, но она была остановлена вашим антивирусом.</span>")
 		return
 
 /datum/reagent/consumable/synthdrink/synthanol/database_dropper/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if(M.client && M.client?.prefs.erppref == "No" || M.client?.prefs.cit_toggles & NO_APHRO)
+	if(!M.client)
+		return
+	if(M.client.prefs.erppref == "No" || M.client.prefs.cit_toggles & NO_APHRO)
 		return
 	if (prob(30))
 		// Скопированная из clothing_burst() проверка на то, есть ли закрывающие части тела предметы одежды
