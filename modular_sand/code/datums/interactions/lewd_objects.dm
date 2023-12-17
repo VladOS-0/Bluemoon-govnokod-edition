@@ -14,12 +14,14 @@
 			if(BODY_ZONE_PRECISE_GROIN)
 				switch(hole)
 					if(CUM_TARGET_VAGINA)
-						if(M.has_vagina(REQUIRE_EXPOSED))
+						var/has_vagina = M.has_vagina()
+						if(has_vagina == TRUE || has_vagina == HAS_EXPOSED_GENITAL)
 							message = (user == M) ? pick("крепко обхватывает '\the [src]' и начинает пихать это прямо в свою киску.", "запихивает '\the [src]' в свою киску", "постанывает и садится на '\the [src]'.") : pick("трахает <b>[M]</b> прямо в киску с помощью '\the [src]'", "засовывает '\the [src]' прямо в киску <b>[M]</b>.")
 							lust_amt = NORMAL_LUST
 							organ = CUM_TARGET_VAGINA //SPLURT edit
 					if(CUM_TARGET_ANUS)
-						if(M.has_anus(REQUIRE_EXPOSED))
+						var/has_anus = M.has_anus()
+						if(has_anus == TRUE || has_anus == HAS_EXPOSED_GENITAL)
 							message = (user == M) ? pick("крепко обхватывает '\the [src]' и начинает пихать это прямо в свою попку.","запихивает '\the [src]' прямо в свою собственную попку.", "постанывает и садится на '\the [src]'.") : pick("трахает <b>[M]</b> прямо в попку '\the [src]'", "активно суёт '\the [src]' прямо в попку <b>[M]</b>.")
 							lust_amt = NORMAL_LUST
 							organ = CUM_TARGET_ANUS //SPLURT edit

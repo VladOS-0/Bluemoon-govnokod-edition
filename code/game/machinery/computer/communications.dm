@@ -44,6 +44,9 @@
 	/// Whether syndicate mode is enabled or not.
 	var/syndicate = FALSE
 
+	/// Cooldown between printing announcement papers
+	COOLDOWN_DECLARE(report_print_cooldown)
+
 /obj/machinery/computer/communications/syndicate
 	name = "Syndicate Communications Console"
 	icon_screen = "commsyndie"
@@ -182,6 +185,14 @@
 			deadchat_broadcast(" сменил уровень угрозы [params["newSecurityLevel"]] с помощью [src] в [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
 
 			alert_level_tick += 1
+		if ("printMessage")
+			if (!authenticated(usr))
+				return
+			var/message_index = text2num(params["message"])
+			if (!message_index)
+				return
+			var/datum/comm_message/message = LAZYACCESS(messages, message_index)
+			print_report(message.content, message.title)
 		if ("deleteMessage")
 			if (!authenticated(usr))
 				return
@@ -538,6 +549,7 @@
 						data["shuttleLastCalled"] = format_text(SSshuttle.emergencyLastCallLoc.name)
 			if (STATE_MESSAGES)
 				data["messages"] = list()
+				data["printerCooldown"] = report_print_cooldown
 
 				if (messages)
 					for (var/_message in messages)
@@ -698,6 +710,18 @@
 
 /obj/machinery/computer/communications/proc/add_message(datum/comm_message/new_message)
 	LAZYADD(messages, new_message)
+
+/obj/machinery/computer/communications/proc/print_report(message, title)
+	if(!COOLDOWN_FINISHED(src, report_print_cooldown))
+		say("Printer on cooldown!")
+		return
+	COOLDOWN_START(src, report_print_cooldown, 30 SECONDS)
+	var/obj/item/paper/P = new /obj/item/paper(loc)
+	P.name = "paper - '[title]'"
+	var/report_text = message
+	P.add_raw_text(report_text)
+	P.update_appearance()
+	playsound(src, 'sound/effects/printer.ogg', 50, FALSE)
 
 /datum/comm_message
 	var/title
