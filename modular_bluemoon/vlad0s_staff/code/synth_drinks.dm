@@ -1,7 +1,12 @@
 /**
- * Напитки для синтетиков
+ * НАПИТКИ ДЛЯ СИНТЕТИКОВ
+ *
+ * Если хотите добавить новый, наследуйте его от synthdrink, если он безалкогольный, и от synthanol, если он алкогольный
+ * Особые эффекты пишите в synthetic_on_life(), synthetic_on_life() и другие synthetic_ проки.
+ * Оверрайдите on_mob_add() и другие подобные проки только если хотите добавить уникальные эффекты для органиков
 **/
 
+// Базовый напиток без особых эффектов, в основном чтобы добавить раздельную реакцию органиков и синтов
 /datum/reagent/consumable/synthdrink
 	name = "Positronic Oil"
 	description = "A strange mixture of oils, intended for robots. It may have interesting effects on positronic brain's mechanisms when mixed with other reagents..."
@@ -90,6 +95,12 @@
 /datum/reagent/consumable/synthdrink/proc/synthetic_on_add(mob/living/carbon/M)
 	return
 
+/**
+ * АЛКОГОЛЬНЫЕ НАПИТКИ
+ *
+ * Наследуются от синтанола и в synthetic_on_life() нужно не забывать прописывать волшебные ..(), чтобы напиток опьянял
+ */
+
 /datum/reagent/consumable/synthdrink/synthanol
 	name = "Synthanol"
 	description = "Some kind of oily substance, smelling of ethanol"
@@ -102,7 +113,7 @@
 
 /datum/reagent/consumable/synthdrink/synthanol/synthetic_on_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_TOXIC_ALCOHOL))
-		M.adjustToxLoss((boozepwr/25)*REM,forced = TRUE)
+		M.adjustToxLoss((boozepwr/25)*REM, TRUE, FALSE, TOX_SYSCORRUPT)
 		if(prob(3) && !HAS_TRAIT(src, TRAIT_AGEUSIA))
 			to_chat(M, "<span class='warning'>Ваш процессор реагентов сообщает о присутствии вредоносной смеси в системе. Рекомендована срочная очистка во избежание коррозийных процессов.</span>")
 	else if(M.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
