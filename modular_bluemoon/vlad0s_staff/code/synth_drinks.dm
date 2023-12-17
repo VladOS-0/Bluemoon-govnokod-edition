@@ -314,6 +314,7 @@
 		if(11)
 			if(!reloading)
 				to_chat(M, "<span class='userdanger'>Инициирована перезагрузка...</span>")
+				emote("me", EMOTE_VISIBLE, "уходит на перезагрузку!")
 				playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-shutdown.ogg', 75, FALSE)
 				M.Sleeping(200)
 				reloading = TRUE
