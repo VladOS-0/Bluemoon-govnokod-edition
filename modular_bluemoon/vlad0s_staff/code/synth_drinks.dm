@@ -319,7 +319,8 @@
 				reloading = TRUE
 		if(21)
 			if(reloading)
-				playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-wakeup.ogg', 75, FALSE)
+				if(soft)
+					playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-wakeup.ogg', 75, FALSE)
 		if(22)
 			if(soft)
 				M.reagents.remove_reagent(src, volume)
@@ -330,6 +331,8 @@
 				M.emote("ping")
 				to_chat(M, "<span class='boldnotice'>Перезагрузка завершена. Приятного дня!</span>")
 				reloading = FALSE
+	if(reloading) // Чтобы синт не просыпался до окончания перезагрузки
+		M.Sleeping(10)
 
 /datum/reagent/consumable/synthdrink/synthanol/restart/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -359,7 +362,7 @@
 	quality = DRINK_GOOD
 
 /datum/reagent/consumable/synthdrink/synthanol/synthignon/synthetic_on_life(mob/living/carbon/human/M)
-	if(current_cycle >= 10 && pick(5))
+	if(current_cycle >= 10 && prob(5))
 		var/shakespeare = pick(
 			"Любовь бежит от тех, кто гонится за нею, а тем, кто прочь бежит, кидается на шею.",
 			"Одним взглядом можно убить любовь, одним же взглядом можно воскресить её.",
