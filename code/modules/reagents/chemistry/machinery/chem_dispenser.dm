@@ -656,19 +656,6 @@
 	icon_state = "booze_dispenser"
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
-		// Убрать после тестирования отсюда
-		/datum/reagent/consumable/synthdrink/synthanol/database_dropper,
-		/datum/reagent/consumable/synthdrink/synthanol/ultralube,
-		/datum/reagent/consumable/synthdrink/synthcoffee,
-		/datum/reagent/consumable/synthdrink/synthanol/codelibre,
-		/datum/reagent/consumable/synthdrink/synthanol/liquid_emp,
-		/datum/reagent/consumable/synthdrink/synthanol/synthignon,
-		/datum/reagent/consumable/synthdrink/synthanol/synthnsoda,
-		/datum/reagent/consumable/synthdrink/synthanol/uplink,
-		/datum/reagent/consumable/synthdrink/synthanol/robottears,
-		/datum/reagent/consumable/synthdrink/synthanol/trinary,
-		/datum/reagent/consumable/synthdrink/synthanol/restart/hard,
-		// И до сюда
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/whiskey,
