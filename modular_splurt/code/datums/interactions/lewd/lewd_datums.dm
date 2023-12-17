@@ -788,21 +788,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/interaction/lewd/unholy
-	unholy = TRUE
-
-/datum/interaction/lewd/unholy/do_facefart
 	description = "Напердеть на лицо."
 	required_from_target_exposed = NONE
 	required_from_target_unexposed = NONE
 	required_from_user_exposed = INTERACTION_REQUIRE_ANUS
 	required_from_user_unexposed = NONE
+	unholy = TRUE
 	max_distance = 1
 	interaction_sound = null
 	write_log_target = "на его промежность напердел"
 	write_log_user = "перданул на лицо"
 	interaction_flags = INTERACTION_FLAG_ADJACENT | INTERACTION_FLAG_OOC_CONSENT | INTERACTION_FLAG_EXTREME_CONTENT
 
-/datum/interaction/lewd/unholy/do_facefart/display_interaction(mob/living/user, mob/living/target)
+/datum/interaction/lewd/unholy/display_interaction(mob/living/user, mob/living/target)
 	user.do_facefart(target)
 
 /datum/interaction/lewd/unholy/do_crotchfart

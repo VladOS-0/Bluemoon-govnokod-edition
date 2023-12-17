@@ -10,7 +10,7 @@
 	partner.handle_post_sex(NORMAL_LUST, null, user, "anus") //SPLURT edit
 
 /datum/interaction/lewd/lickfeet
-	description = "Нога. Вылизать."
+	description = "Нижняя конечность. Вылизать."
 	interaction_sound = null
 	required_from_user = INTERACTION_REQUIRE_MOUTH
 	required_from_target_exposed = INTERACTION_REQUIRE_FEET

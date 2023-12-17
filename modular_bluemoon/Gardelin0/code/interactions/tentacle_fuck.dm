@@ -1,4 +1,11 @@
 /datum/interaction/lewd/tentacle
+	description = "Затентаклить!"
+	required_from_user = NONE
+	required_from_target_exposed = NONE
+	required_from_target_unexposed = INTERACTION_REQUIRE_VAGINA
+	required_from_user_exposed = NONE
+	required_from_user_unexposed = NONE
+	require_user_tentacles = TRUE
 	var/require_user_tentacles
 
 /datum/interaction/lewd/tentacle/evaluate_user(mob/living/user, silent = TRUE, action_check = TRUE)
@@ -93,9 +100,9 @@
 	description = "Затентаклить его!"
 	required_from_user = NONE
 	required_from_target_exposed = NONE
-	required_from_target_unexposed = NONE
+	required_from_target_unexposed = INTERACTION_REQUIRE_PENIS
 	required_from_user_exposed = NONE
-	required_from_user_unexposed = INTERACTION_REQUIRE_PENIS
+	required_from_user_unexposed = NONE
 	require_user_tentacles = TRUE
 	write_log_user = "tentacled"
 	write_log_target = "was tentacled by"
