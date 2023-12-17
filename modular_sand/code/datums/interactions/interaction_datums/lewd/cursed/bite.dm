@@ -1,12 +1,15 @@
 /datum/interaction/lewd/bite
 	description = "Убийственно. Искусать."
 	interaction_sound = null
-	require_user_mouth = TRUE
-	require_target_hands = TRUE
+	required_from_user = NONE
+	required_from_target_exposed = NONE
+	required_from_target_unexposed = NONE
+	required_from_user_exposed = NONE
+	required_from_user_unexposed = NONE
 	max_distance = 1
 	write_log_user = "bite"
 	write_log_target = "had their body bited by"
-	extreme = TRUE
+	interaction_flags = INTERACTION_FLAG_ADJACENT | INTERACTION_FLAG_OOC_CONSENT | INTERACTION_FLAG_EXTREME_CONTENT
 
 /datum/interaction/lewd/bite/display_interaction(mob/living/user, mob/living/partner)
 	var/message
