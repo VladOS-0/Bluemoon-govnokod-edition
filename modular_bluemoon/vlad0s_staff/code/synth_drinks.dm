@@ -278,6 +278,7 @@
 	quality = DRINK_FANTASTIC
 
 /datum/reagent/consumable/synthdrink/synthanol/liquid_emp/synthetic_on_life(mob/living/carbon/human/M)
+	. = ..()
 	if(current_cycle >= 10 && prob(20))
 		to_chat(M, "<span class='warning'>Ваши системы горят изнутри от этого напитка!</span>")
 		var/random = rand(1,3)
@@ -306,6 +307,7 @@
 	quality = DRINK_FANTASTIC
 
 /datum/reagent/consumable/synthdrink/synthanol/restart/synthetic_on_life(mob/living/carbon/human/M)
+	. = ..()
 	switch(current_cycle)
 		if(5 to 10)
 			if(prob(10))
@@ -363,6 +365,7 @@
 	quality = DRINK_GOOD
 
 /datum/reagent/consumable/synthdrink/synthanol/synthignon/synthetic_on_life(mob/living/carbon/human/M)
+	. = ..()
 	if(current_cycle >= 10 && prob(5))
 		var/shakespeare = pick(
 			"Любовь бежит от тех, кто гонится за нею, а тем, кто прочь бежит, кидается на шею.",

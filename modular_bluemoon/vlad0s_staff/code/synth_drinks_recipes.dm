@@ -34,7 +34,7 @@
 	id = /datum/reagent/consumable/synthdrink/synthanol/trinary
 	results = list(/datum/reagent/consumable/synthdrink/synthanol/trinary = 20)
 	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol = 5, /datum/reagent/consumable/applejuice = 5, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/grapejuice = 5)
-	mix_message = "Смесь в стакане, кажется, издаёт тихо попискивание"
+	mix_message = "Смесь в стакане, кажется, издаёт тихое попискивание"
 
 /datum/chemical_reaction/uplink
 	name = "Uplink"
