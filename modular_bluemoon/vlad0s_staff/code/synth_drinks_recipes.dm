@@ -4,7 +4,7 @@
 	results = list(/datum/reagent/consumable/synthdrink = 15)
 	required_reagents = list(/datum/reagent/oil = 5, /datum/reagent/lube = 5, /datum/reagent/acetone = 5)
 
-/datum/chemical_reaction/synthcoffe
+/datum/chemical_reaction/synthcoffee
 	name = "Robotic Coffee"
 	id = /datum/reagent/consumable/synthdrink/synthcoffee
 	results = list(/datum/reagent/consumable/synthdrink/synthcoffee = 10)
