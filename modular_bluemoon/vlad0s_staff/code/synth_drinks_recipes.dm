@@ -19,7 +19,7 @@
 	mix_message = "Смесь испускает несколько искр, неожиданно принимая голубоватый цвет"
 
 /datum/chemical_reaction/synthanol_without_ethanol // До улучшения раздатчика количество этанола сильно ограничено у бармена
-	name = "Synthanol"
+	name = "Liquor Synthanol"
 	id = /datum/reagent/consumable/synthdrink/synthanol
 	results = list(/datum/reagent/consumable/synthdrink/synthanol = 10)
 	required_reagents = list(/datum/reagent/consumable/synthdrink = 5, /datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/ethanol/tequila = 5)
