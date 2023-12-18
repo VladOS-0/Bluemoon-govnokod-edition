@@ -9,12 +9,21 @@
 	id = /datum/reagent/consumable/synthdrink/synthcoffee
 	results = list(/datum/reagent/consumable/synthdrink/synthcoffee = 10)
 	required_reagents = list(/datum/reagent/consumable/synthdrink = 5, /datum/reagent/consumable/coffee = 5)
+	mix_message = "Смесь в стакане испускает что-то похожее на уставшее жужжание"
 
 /datum/chemical_reaction/synthanol
 	name = "Synthanol"
 	id = /datum/reagent/consumable/synthdrink/synthanol
 	results = list(/datum/reagent/consumable/synthdrink/synthanol = 10)
 	required_reagents = list(/datum/reagent/consumable/synthdrink = 5, /datum/reagent/consumable/ethanol = 5)
+	mix_message = "Смесь испускает несколько искр, неожиданно принимая голубоватый цвет"
+
+/datum/chemical_reaction/synthanol_without_ethanol // До улучшения раздатчика количество этанола сильно ограничено у бармена
+	name = "Synthanol"
+	id = /datum/reagent/consumable/synthdrink/synthanol
+	results = list(/datum/reagent/consumable/synthdrink/synthanol = 10)
+	required_reagents = list(/datum/reagent/consumable/synthdrink = 5, /datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/ethanol/tequila = 5)
+	mix_message = "Внезапно большая часть ликёров испаряется из ёмкости, оставляя в ней смесь спирта и масел, приобретающую ярко-синий цвет..."
 
 /datum/chemical_reaction/synthnsoda
 	name = "Synth 'n Soda"
@@ -33,7 +42,7 @@
 	name = "Trinary"
 	id = /datum/reagent/consumable/synthdrink/synthanol/trinary
 	results = list(/datum/reagent/consumable/synthdrink/synthanol/trinary = 20)
-	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol = 5, /datum/reagent/consumable/applejuice = 5, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/grapejuice = 5)
+	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol = 5, /datum/reagent/consumable/applejuice = 5, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/limejuice = 5)
 	mix_message = "Смесь в стакане, кажется, издаёт тихое попискивание"
 
 /datum/chemical_reaction/uplink
@@ -74,7 +83,7 @@
 	name = "Ultra Lube"
 	id = /datum/reagent/consumable/synthdrink/synthanol/ultralube
 	results = list(/datum/reagent/consumable/synthdrink/synthanol/ultralube = 15)
-	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol = 5, /datum/reagent/drug/aphrodisiac = 5, /datum/reagent/lube = 5)
+	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol/synthignon = 5, /datum/reagent/drug/aphrodisiac = 5, /datum/reagent/lube = 5)
 	mix_message = "Жидкость в стакане начинает яростно бурлить, поблёскивая розоватыми брызгами..."
 
 /datum/chemical_reaction/database_dropper
