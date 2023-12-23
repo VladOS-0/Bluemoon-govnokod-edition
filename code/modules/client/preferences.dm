@@ -1339,14 +1339,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 											extra_loadout_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'><font color='[color_hex2num(loadout_color_non_poly) < 200 ? "FFFFFF" : "000000"]'>[loadout_color_non_poly]</font></span>"
 											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_HSV=1;loadout_gear_name=[html_encode(gear.name)];'>HSV Color</a>" // SPLURT EDIT
 										if(gear.loadout_flags & LOADOUT_CAN_NAME)
-											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;C=1;loadout_gear_name=[html_encode(gear.name)];'>Name</a> [loadout_item[LOADOUT_CUSTOM_NAME] ? loadout_item[LOADOUT_CUSTOM_NAME] : "N/A"]"
+											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_rename=1;loadout_gear_name=[html_encode(gear.name)];'>Name</a> [loadout_item[LOADOUT_CUSTOM_NAME] ? loadout_item[LOADOUT_CUSTOM_NAME] : "N/A"]"
 										if(gear.loadout_flags & LOADOUT_CAN_DESCRIPTION)
 											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_redescribe=1;loadout_gear_name=[html_encode(gear.name)];'>Description</a>"
 										// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
 										if(loadout_item[LOADOUT_IS_HEIRLOOM])
-											extra_loadout_data += "<BR><a class='linkOn' href='?_src_=prefs;preference=gear;loadout_removeheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a>"
+											extra_loadout_data += "<BR><a class='linkOn' href='?_src_=prefs;preference=gear;loadout_removeheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a><BR>"
 										else
-											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_addheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a>"
+											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_addheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a><BR>"
 										// BLUEMOON ADD END
 									else if((gear_points - gear.cost) < 0)
 										class_link = "style='white-space:normal;' class='linkOff'"
@@ -1369,9 +1369,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 												dat += gear.restricted_roles.Join(";")
 												dat += "</font>"
 									if(!istype(gear, /datum/gear/unlockable))
-										var/is_heirloom_string = loadout_item ? (loadout_item[LOADOUT_IS_HEIRLOOM] ? "Ваша семейная ценность!" : "") : "" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
+										var/is_heirloom_string = loadout_item ? (loadout_item[LOADOUT_IS_HEIRLOOM] ? "<br><br><center><b>Ваша семейная реликвия!</b></center>" : "") : "" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
 										// the below line essentially means "if the loadout item is picked by the user and has a custom description, give it the custom description, otherwise give it the default description"
-										dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description]</i> <b>[is_heirloom_string]</b></font></td></tr>" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
+										dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description]</i> [is_heirloom_string]</font></td></tr>" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
 									else
 										//we add the user's progress to the description assuming they have progress
 										var/datum/gear/unlockable/unlockable = gear
@@ -4180,6 +4180,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
 			if(!toggle && has_loadout_gear(loadout_slot, "[G.type]"))//toggling off and the item effectively is in chosen gear)
+				var/gear = has_loadout_gear(loadout_slot, "[G.type]")
+				// BLUEMOON EDIT START - выбор вещей из лодаута как family heirloom
+				if (gear[LOADOUT_IS_HEIRLOOM])
+					gear[LOADOUT_IS_HEIRLOOM] = FALSE
+					selected_heirloom = null
+				// BLUEMOON EDIT END - выбор вещей из лодаута как family heirloom
 				remove_gear_from_loadout(loadout_slot, "[G.type]")
 			else if(toggle && !(has_loadout_gear(loadout_slot, "[G.type]")))
 				if(!is_loadout_slot_available(G.category))
@@ -4272,10 +4278,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
 			if(href_list["loadout_addheirloom"])
 				if(!selected_heirloom)
-					user_gear[LOADOUT_IS_HEIRLOOM] = 1
+					user_gear[LOADOUT_IS_HEIRLOOM] = TRUE
 					selected_heirloom = G
+				else
+					to_chat(user, "<font color='red'>У вас уже выбрано [selected_heirloom] как ваша семейная реликвия!</font>")
 			if(href_list["loadout_removeheirloom"])
-				user_gear[LOADOUT_IS_HEIRLOOM] = 0
+				user_gear[LOADOUT_IS_HEIRLOOM] = FALSE
 				selected_heirloom = null
 			// BLUEMOON ADD END
 	ShowChoices(user)
