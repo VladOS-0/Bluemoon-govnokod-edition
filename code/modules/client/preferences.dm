@@ -1344,9 +1344,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_redescribe=1;loadout_gear_name=[html_encode(gear.name)];'>Description</a>"
 										// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
 										if(loadout_item[LOADOUT_IS_HEIRLOOM])
-											extra_loadout_data += "<BR><a class='linkOff' href='?_src_=prefs;preference=gear;loadout_removeheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Unselect as Heirloom</a>"
+											extra_loadout_data += "<BR><a class='linkOn' href='?_src_=prefs;preference=gear;loadout_removeheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a>"
 										else
-											extra_loadout_data += "<BR><a class='linkOn' href='?_src_=prefs;preference=gear;loadout_addheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a>"
+											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_addheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a>"
 										// BLUEMOON ADD END
 									else if((gear_points - gear.cost) < 0)
 										class_link = "style='white-space:normal;' class='linkOff'"
@@ -1371,7 +1371,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									if(!istype(gear, /datum/gear/unlockable))
 										var/is_heirloom_string = loadout_item ? (loadout_item[LOADOUT_IS_HEIRLOOM] ? "Ваша семейная ценность!" : "") : "" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
 										// the below line essentially means "if the loadout item is picked by the user and has a custom description, give it the custom description, otherwise give it the default description"
-										dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description] [is_heirloom_string]</i></font></td></tr>" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
+										dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description]</i> <b>[is_heirloom_string]</b></font></td></tr>" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
 									else
 										//we add the user's progress to the description assuming they have progress
 										var/datum/gear/unlockable/unlockable = gear
