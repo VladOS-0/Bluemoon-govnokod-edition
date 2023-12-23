@@ -4166,6 +4166,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
+			selected_heirloom = null // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 			loadout_data["SAVE_[loadout_slot]"] = list()
 			save_preferences()
 		if(href_list["select_category"])
