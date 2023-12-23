@@ -1,11 +1,10 @@
 /***
- * Убирает все реагенты из системы синтетика, что может очень помочь, например, в передозировки систем клинером
- * (или алкашкой для роботов)
+ * Убирает все реагенты из ((крови)) синтетика, что может очень помочь, например, в передозировке систем клинером / синтанолом
 ***/
 
 /datum/surgery/robot_purge_reagents
-	name = "Очистка системы переработки реагентов"
-	desc = "Операция по удалению всех лишних реагентов в системе робота на случай загрязнения инородными субстанциями."
+	name = "Emergency Reagents Disposal"
+	desc = "Операция по удалению всех реагентов в системе робота на случай загрязнения инородными субстанциями."
 	requires_bodypart_type = BODYPART_ROBOTIC
 	steps = list(
 			/datum/surgery_step/mechanic_open,
@@ -63,7 +62,7 @@
 	if(!IS_ROBOTIC_ORGAN(liver))
 		user.visible_message("<span class='warning'>[user] обнаруживает несовместимость обработчика реагентов [target] с известными методиками очистки...", "<span class='warning'>Вы понимаете, что система обработки реагентов [target] не подходит для очистки.</span>")
 		return FALSE
-	display_results(user, target, "<span class='notice'>Ваша отвёртка срывается и [target] вздрагивает всем корпусом, когда в [target.ru_na()] обработчике реагентов появляется новая пробоина...</span>",
+	display_results(user, target, "<span class='warning'>Ваша отвёртка срывается и [target] вздрагивает всем корпусом, когда в [target.ru_na()] обработчике реагентов появляется новая пробоина...</span>",
 	"[user] неудачно отсверливает клапан у обработчика реагентов [target], повреждая [target.ru_na()] систему.",
 	"[user] completes the surgery on [target].")
 	target.adjustOrganLoss(ORGAN_SLOT_LIVER, 20)
