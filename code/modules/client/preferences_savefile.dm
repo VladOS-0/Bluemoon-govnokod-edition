@@ -1123,8 +1123,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		loadout_data = safe_json_decode(S["loadout"])
 	else
 		loadout_data = list()
-
-	S["selected_heirloom"] >> selected_heirloom // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
+	// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
+	if(S["selected_heirloom"])
+		S["selected_heirloom"] >> selected_heirloom
+	// BLUEMOON ADD END - выбор вещей из лодаута как family heirloom
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
 	if(needs_update >= 0)
