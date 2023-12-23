@@ -366,6 +366,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
+	var/selected_heirloom = null // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -1338,9 +1339,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 											extra_loadout_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'><font color='[color_hex2num(loadout_color_non_poly) < 200 ? "FFFFFF" : "000000"]'>[loadout_color_non_poly]</font></span>"
 											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_HSV=1;loadout_gear_name=[html_encode(gear.name)];'>HSV Color</a>" // SPLURT EDIT
 										if(gear.loadout_flags & LOADOUT_CAN_NAME)
-											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_rename=1;loadout_gear_name=[html_encode(gear.name)];'>Name</a> [loadout_item[LOADOUT_CUSTOM_NAME] ? loadout_item[LOADOUT_CUSTOM_NAME] : "N/A"]"
+											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;C=1;loadout_gear_name=[html_encode(gear.name)];'>Name</a> [loadout_item[LOADOUT_CUSTOM_NAME] ? loadout_item[LOADOUT_CUSTOM_NAME] : "N/A"]"
 										if(gear.loadout_flags & LOADOUT_CAN_DESCRIPTION)
 											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_redescribe=1;loadout_gear_name=[html_encode(gear.name)];'>Description</a>"
+										// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
+										if(loadout_item[LOADOUT_IS_HEIRLOOM])
+											extra_loadout_data += "<BR><a class='linkOff' href='?_src_=prefs;preference=gear;loadout_removeheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Unselect as Heirloom</a>"
+										else
+											extra_loadout_data += "<BR><a class='linkOn' href='?_src_=prefs;preference=gear;loadout_addheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a>"
+										// BLUEMOON ADD END
 									else if((gear_points - gear.cost) < 0)
 										class_link = "style='white-space:normal;' class='linkOff'"
 									else if(donoritem)
@@ -1362,8 +1369,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 												dat += gear.restricted_roles.Join(";")
 												dat += "</font>"
 									if(!istype(gear, /datum/gear/unlockable))
+										var/is_heirloom_string = loadout_item ? (loadout_item[LOADOUT_IS_HEIRLOOM] ? "Ваша семейная ценность!" : "") : "" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
 										// the below line essentially means "if the loadout item is picked by the user and has a custom description, give it the custom description, otherwise give it the default description"
-										dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description]</i></font></td></tr>"
+										dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description] [is_heirloom_string]</i></font></td></tr>" // BLUEMOON EDIT - выбор вещей из лодаута как family heirloom
 									else
 										//we add the user's progress to the description assuming they have progress
 										var/datum/gear/unlockable/unlockable = gear
@@ -4203,7 +4211,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					sanitize_current_slot.Remove(list(entry))
 					break
 
-		if(href_list["loadout_color"] || href_list["loadout_color_polychromic"] || href_list["loadout_color_HSV"] || href_list["loadout_rename"] || href_list["loadout_redescribe"])
+		if(href_list["loadout_color"] || href_list["loadout_color_polychromic"] || href_list["loadout_color_HSV"] || href_list["loadout_rename"] || href_list["loadout_redescribe"] || href_list["loadout_addheirloom"] || href_list["loadout_removeheirloom"])
 			//if the gear doesn't exist, or they don't have it, ignore the request
 			var/name = html_decode(href_list["loadout_gear_name"])
 			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
@@ -4261,7 +4269,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/new_description = stripped_input(user, "Enter new description for item. Maximum 500 characters.", "Loadout Item Redescribing", null, 500)
 				if(new_description)
 					user_gear[LOADOUT_CUSTOM_DESCRIPTION] = new_description
-
+			// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
+			if(href_list["loadout_addheirloom"])
+				if(!selected_heirloom)
+					user_gear[LOADOUT_IS_HEIRLOOM] = 1
+					selected_heirloom = G
+			if(href_list["loadout_removeheirloom"])
+				user_gear[LOADOUT_IS_HEIRLOOM] = 0
+				selected_heirloom = null
+			// BLUEMOON ADD END
 	ShowChoices(user)
 	return 1
 
