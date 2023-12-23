@@ -1124,6 +1124,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		loadout_data = list()
 
+	S["selected_heirloom"] >> selected_heirloom // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
 	if(needs_update >= 0)
@@ -1611,6 +1612,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["headshot"], features["headshot_link"])
 	//SPLURT EDIT END
 
+	WRITE_FILE(S["selected_heirloom"], selected_heirloom) // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 	//gear loadout
 	if(length(loadout_data))
 		S["loadout"] << safe_json_encode(loadout_data)
