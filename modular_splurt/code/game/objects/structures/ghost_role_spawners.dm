@@ -153,7 +153,7 @@
 	icon_state = "sleeper_s"
 	short_desc = "Вы - Оперативник Авангарда ИнтеКью на старом корабле, застрявшем во враждебном космосе."
 	flavour_text = "Ваш корабль причалил после долгого перерыва где-то во враждебном пространстве, сообщив о неисправности. Вы застряли здесь, зная, что рядом находится станция Nanotrasen. Почините корабль, найдите способ обеспечить его энергией и выполняйте приказы Капитана."
-	important_info = "Выполняйте приказы своего капитана. Не позвольте кораблю попасть в руки врага!"
+	important_info = "Выполняйте приказы своего капитана. Не позвольте кораблю попасть в руки врага! | Экста - грубоватые наёмники, не знающие положения дел в Туманности Синие Луны. Динамика - полноценные оперативники ИнтеКью с поставленной задачей."
 	canloadappearance = TRUE
 	outfit = /datum/outfit/inteqspace/inteq_crew
 	assignedrole = ROLE_GHOSTROLE_INTEQ
@@ -162,13 +162,14 @@
 	H.faction |= ROLE_INTEQ
 
 /obj/effect/mob_spawn/human/inteqspace/special(mob/living/new_spawn)
+	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
 /obj/effect/mob_spawn/human/inteqspace/captain
 	name = "InteQ Ship Captain"
 	short_desc = "Вы - Лидер Авангарда ИнтеКью на старом корабле, застрявшем во враждебном космосе."
 	flavour_text = "Ваш корабль причалил после долгого перерыва где-то во враждебном пространстве, сообщив о неисправности. Вы застряли здесь, зная, что рядом находится станция Nanotrasen. Командуйте своим экипажем и исследуйте свой территорию, чтобы закрепить свое местоположение."
-	important_info = "Защитите корабль и секретные документы в рюкзаке ценой своей жизни."
+	important_info = "Защитите корабль и секретные документы в рюкзаке ценой своей жизни. | Экста - грубоватые наёмники, не знающие положения дел в Туманности Синие Луны. Динамика - полноценные оперативники ИнтеКью с поставленной задачей."
 	canloadappearance = TRUE
 	outfit = /datum/outfit/inteqspace/inteq_captain
 
@@ -180,7 +181,7 @@
 	return ..()
 
 /datum/outfit/inteqspace
-	implants = list(/obj/item/implant/weapons_auth)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor)
 	back = /obj/item/storage/backpack/duffelbag/syndie/inteq
 
 /datum/outfit/inteqspace/inteq_crew
