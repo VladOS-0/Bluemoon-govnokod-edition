@@ -418,9 +418,9 @@
 	if(prob(min(current_cycle/4,10)))
 		var/aroused_message = pick("Вы ощущаете лёгкий перегрев...", "Ваши актюаторы работают в ускоренном режиме...", "Ваши гормональные протоколы дают сбой...", "Ваш корпус подрагивает от желания...")
 		to_chat(M, "<span class='userlove'>[aroused_message]</span>")
-		if(isipcperson(src))
-			dna.features["ipc_screen"] = "Heart"
-			update_body()
+		if(isipcperson(M))
+			M.dna.features["ipc_screen"] = "Heart"
+			M.update_body()
 	if(prob(min(current_cycle/5,10)))
 		var/list/genits = M.adjust_arousal(current_cycle, "crocin", aphro = TRUE)
 		for(var/g in genits)
