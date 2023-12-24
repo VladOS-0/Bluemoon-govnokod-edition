@@ -18449,7 +18449,7 @@
 "aSl" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
-	req_one_access_txt = "150"
+	req_one_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership)
@@ -18604,7 +18604,7 @@
 "aSQ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Barracks";
-	req_access_txt = "150"
+	req_access_txt = "152"
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -22871,7 +22871,7 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/door/airlock/centcom{
 	name = "Engineering";
-	req_one_access_txt = "150"
+	req_one_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
@@ -22943,7 +22943,7 @@
 	},
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
-	req_one_access_txt = "150"
+	req_one_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
@@ -23321,7 +23321,7 @@
 "fpC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Barracks";
-	req_access_txt = "150"
+	req_access_txt = "152"
 	},
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
@@ -23828,7 +23828,6 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/door/airlock/centcom{
 	name = "Nuke Ops Equipment Room";
-	req_one_access_txt = "150";
 	req_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
@@ -24160,7 +24159,6 @@
 "gvo" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Nuke Ops Equipment Room";
-	req_one_access_txt = "150";
 	req_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
@@ -24359,7 +24357,7 @@
 "gIn" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Engineering";
-	req_one_access_txt = "150"
+	req_one_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
@@ -24367,7 +24365,7 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/door/airlock/public/glass{
 	name = "Fore Primary Hallway";
-	req_access_txt = "150"
+	req_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
@@ -24663,7 +24661,7 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/door/airlock/centcom{
 	name = "Engineering";
-	req_one_access_txt = "150"
+	req_one_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
@@ -28056,7 +28054,7 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/door/airlock/public/glass{
 	name = "Fore Primary Hallway";
-	req_access_txt = "150"
+	req_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
@@ -28906,7 +28904,6 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/machinery/door/airlock/centcom{
 	name = "Nuke Ops Equipment Room";
-	req_one_access_txt = "150";
 	req_access_txt = "152"
 	},
 /turf/open/floor/iron/dark,
@@ -29244,6 +29241,7 @@
 "nBf" = (
 /obj/structure/closet/syndicate/inteq,
 /obj/machinery/light/small,
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "nBl" = (
@@ -29547,6 +29545,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
 "oet" = (
@@ -29959,7 +29958,9 @@
 /turf/open/space/basic,
 /area/centcom)
 "oHX" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "152"
+	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
 "oJk" = (
@@ -29986,7 +29987,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/holding)
 "oLP" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "152"
+	},
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "oMr" = (
@@ -31119,6 +31122,7 @@
 /obj/structure/sign/poster/contraband/inteq/random{
 	pixel_x = -32
 	},
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/wood/wood_parquet,
 /area/syndicate_mothership/control)
 "qBD" = (
@@ -31410,7 +31414,6 @@
 "qYy" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Leader's Room";
-	req_one_access_txt = "151";
 	req_access_txt = "153"
 	},
 /turf/open/floor/wood/wood_parquet,
@@ -31977,7 +31980,7 @@
 "rPA" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Barracks";
-	req_access_txt = "150"
+	req_access_txt = "152"
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -32046,6 +32049,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "rVI" = (
@@ -32056,14 +32060,14 @@
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
 "rVK" = (
-/obj/machinery/door/airlock/external{
-	req_one_access_txt = "150";
-	req_access_txt = "152"
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/machinery/door/airlock/centcom{
+	name = "Nuke Ops Barracks";
+	req_access_txt = "152"
+	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
 "rVN" = (
@@ -32570,7 +32574,7 @@
 "sCs" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
-	req_one_access_txt = "150"
+	req_one_access_txt = "152"
 	},
 /obj/structure/barricade/wooden,
 /turf/open/floor/iron/dark,
@@ -32801,6 +32805,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "sSk" = (
@@ -52043,7 +52048,7 @@ uZh
 uZh
 uZh
 jAc
-rVK
+siW
 jAc
 uZh
 uZh
@@ -52823,7 +52828,7 @@ ncY
 mXC
 mXC
 mXC
-cnU
+rVK
 wiU
 wiU
 wiU
