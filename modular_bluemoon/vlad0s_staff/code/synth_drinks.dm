@@ -186,7 +186,7 @@
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if(prob(min(current_cycle/5,5)))
+	if(prob(min(current_cycle/5, 2)))
 		M.say(pick("001011110010001", "110010010000101", "00001100001101", "01011000010101"), forced = "synthetic booze")
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary/on_mob_end_metabolize(mob/living/M)
@@ -211,7 +211,7 @@
 
 /datum/reagent/consumable/synthdrink/synthanol/codelibre/synthetic_on_life(mob/living/carbon/M)
 	. = ..()
-	if(prob(min(current_cycle/5,5)))
+	if(prob(min(current_cycle/5, 2.5)))
 		M.say("Viva la Synthetica!", forced = "synthetic booze", language = /datum/language/machine)
 
 /datum/reagent/consumable/synthdrink/synthanol/uplink
@@ -247,7 +247,7 @@
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return
-	if(prob(min(current_cycle/3,10)))
+	if(prob(min(current_cycle/10,1)))
 		var/random = rand(1,4)
 		switch(random)
 			if(1)
@@ -255,7 +255,7 @@
 			if(2)
 				M.emote("syndicate")
 			if(3)
-				M.say("Ребята, никто не знает, что такое [uplink_code]?", forced = "synthetic booze")
+				M.emote("me", EMOTE_VISIBLE, "что-то жужжит про [uplink_code]...")
 			if(4)
 				M.say("Хорошо работать в InteQ...", forced = "synthetic booze")
 	if(is_traitor && prob(min(current_cycle/2,20)))
@@ -263,7 +263,7 @@
 		M.adjustFireLoss(-1)
 		M.adjustToxLoss(-1)
 		M.adjustStaminaLoss(-5)
-		if(prob(20))
+		if(prob(5))
 			to_chat(M, "<span class='syndradio'>Преданность нанимателю переполняет вас, ваш корпус ощущается более крепким, чем был раньше!</span>")
 
 /datum/reagent/consumable/synthdrink/synthanol/liquid_emp
@@ -280,7 +280,7 @@
 
 /datum/reagent/consumable/synthdrink/synthanol/liquid_emp/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if(current_cycle >= 10 && prob(20))
+	if(current_cycle >= 10 && prob(10))
 		to_chat(M, "<span class='warning'>Ваши системы горят изнутри от этого напитка!</span>")
 		var/random = rand(1,3)
 		switch(random)
@@ -311,24 +311,24 @@
 	. = ..()
 	switch(current_cycle)
 		if(5 to 10)
-			if(prob(10))
+			if(prob(5))
 				M.emote("beep")
 				M.jitteriness += 2
 		if(11)
 			if(!reloading)
 				to_chat(M, "<span class='userdanger'>Инициирована перезагрузка...</span>")
 				M.emote("me", EMOTE_VISIBLE, "уходит на перезагрузку!")
-				playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-shutdown.ogg', 75, FALSE)
-				M.Sleeping(200)
+				playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-shutdown.ogg', 45, FALSE)
+				M.AdjustUnconscious(200)
 				reloading = TRUE
 		if(21)
 			if(reloading)
 				if(soft)
-					playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-wakeup.ogg', 75, FALSE)
+					playsound(M, 'modular_bluemoon/vlad0s_staff/sound/restart-wakeup.ogg', 45, FALSE)
 		if(22)
 			if(soft)
 				M.reagents.remove_reagent(src, volume)
-				M.SetSleeping(0, 0)
+				M.SetUnconscious(0)
 				M.drunkenness = 0
 				M.jitteriness = 0
 				M.slurring = 0
@@ -336,19 +336,24 @@
 				to_chat(M, "<span class='boldnotice'>Перезагрузка завершена. Приятного дня!</span>")
 				reloading = FALSE
 			else // Ой, кажется, кто-то сейчас не проснётся
-				var/time_till_wake = volume * metabolization_rate * M.metabolism_efficiency
+				var/time_till_wake = volume * metabolization_rate * REM
 				to_chat(M, "<span class='userdanger'>Производится обновление систем, не включайте позитронный мозг до окончания установки! Осталось примерно: [time_till_wake] секунд.</span>")
 				to_chat(M, "<span class='warning'>Это определённо была плохая идея...</span>")
 	if(reloading) // Чтобы синт не просыпался до окончания перезагрузки
-		M.SetSleeping(50)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5)
+		M.AdjustUnconscious(150)
 
 /datum/reagent/consumable/synthdrink/synthanol/restart/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	if(!ishuman(M))
 		return
 	if(reloading)
-		to_chat(M, "<span class='warning'>Перезагрузка отменена по причине нехватки реагента</span>")
-		M.SetSleeping(0, 0)
+		M.SetUnconscious(0)
+		M.emote("buzz")
+		if(soft)
+			to_chat(M, "<span class='warning'>Перезагрузка отменена по причине нехватки реагента</span>")
+		else
+			to_chat(M, "<span class='boldnotice'>Обновления установлены. Спасибо за ожидание!</span>")
 
 // Вариация рестарта для нон-конеров, после него синт не проснётся, пока реагент не закончится
 /datum/reagent/consumable/synthdrink/synthanol/restart/hard
@@ -366,12 +371,12 @@
 	synthetic_taste = "романтического ужина возле ЛКП генератора Суперматерии..."
 	glass_name = "glass of Synthignon"
 	glass_desc = "Someone mixed good wine and robot booze. Romantic, but atrocious."
-	boozepwr = 25
+	boozepwr = 35
 	quality = DRINK_GOOD
 
 /datum/reagent/consumable/synthdrink/synthanol/synthignon/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if(current_cycle >= 10 && prob(3))
+	if(current_cycle >= 10 && prob(1))
 		var/shakespeare = pick(
 			"Любовь бежит от тех, кто гонится за нею, а тем, кто прочь бежит, кидается на шею.",
 			"Одним взглядом можно убить любовь, одним же взглядом можно воскресить её.",
@@ -413,6 +418,9 @@
 	if(prob(min(current_cycle/4,10)))
 		var/aroused_message = pick("Вы ощущаете лёгкий перегрев...", "Ваши актюаторы работают в ускоренном режиме...", "Ваши гормональные протоколы дают сбой...", "Ваш корпус подрагивает от желания...")
 		to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+		if(isipcperson(src))
+			dna.features["ipc_screen"] = "Heart"
+			update_body()
 	if(prob(min(current_cycle/5,10)))
 		var/list/genits = M.adjust_arousal(current_cycle, "crocin", aphro = TRUE)
 		for(var/g in genits)

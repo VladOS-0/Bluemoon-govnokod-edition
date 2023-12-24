@@ -677,7 +677,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
-				if(prob(5))
+				if(prob(2.5))
 					to_chat(src, "<span class='synth'>Вы фиксируете лёгкое уменьшение повреждений вашего корпуса под действием употреблённой жидкости...</span>")
 				adjustBruteLoss(-0.12, FALSE)
 				adjustFireLoss(-0.06, FALSE)
@@ -689,7 +689,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			drunkenness = max(drunkenness - 0.2, 0)
 
 		if(mind?.assigned_role == "Scientist" || mind?.assigned_role == "Research Director")
-			if (prob(5))
+			if (prob(3))
 				to_chat(src, "<span class='synth'>Вы ощущаете разгон своих аналитических процессоров...</span>")
 			if(SSresearch.science_tech)
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
 						say(pick(GLOB.ballmer_windows_me_msg), forced = "ballmer")
 
-		if(mind?.assigned_role == "Roboticist" && prob(5))
+		if(mind?.assigned_role == "Roboticist" && prob(3))
 			to_chat(src, "<span class='synth'>Ваши манипуляторы подрагивают, а в вашем позитронном мозге роятся невероятные идеи о превосходстве синтетической расы... Нужно построить больше роботов!</span>")
 
 		if(drunkenness >= 41)
@@ -716,9 +716,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				emote(
 					pick("ping", "beep", "buzz", "buzz2")
 				)
-			if(prob(15))
+			if(prob(10))
 				do_fake_sparks(2, TRUE, src)
-			if(prob(20))
+			if(prob(15))
 				jitteriness += 3
 			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
 				if(prob(5))
@@ -738,32 +738,36 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(5))
 				to_chat(src, "<span class='warning'>Вы испускаете сноп искр, теряя заряд!</span>")
 				do_sparks(4, TRUE, src)
-				adjust_nutrition(-20)
+				adjust_nutrition(-40)
 
 		if(drunkenness >= 81)
 			if (prob(5))
 				to_chat(src, "<span class='warning'>Употреблённая жидкость вызывает критические ошибки в вашей системе...</span>")
-			adjustToxLoss(0.5, TRUE, FALSE, TOX_SYSCORRUPT)
+			adjustToxLoss(1, TRUE, FALSE, TOX_SYSCORRUPT)
 			if(prob(5) && !stat)
 				to_chat(src, "<span class='userdanger'>ОШИБ%!№...</span>")
 				emote("malf")
 				drowsyness += 2
 				Dizzy(10)
-				Sleeping(60)
+				AdjustUnconscious(60)
 
 		if(drunkenness >= 91)
 			if (prob(5))
 				to_chat(src, "<span class='warning'>Вы фиксируете каскадные повреждения своего позитронного мозга!</span>")
-			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4, 60)
-			adjustToxLoss(0.5, TRUE, FALSE, TOX_SYSCORRUPT)
+			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.8, 60)
+			adjustToxLoss(1.2, TRUE, FALSE, TOX_SYSCORRUPT)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z))
-					to_chat(src, "<span class='warning'>Ваша система фиксирует прибытие шаттла и переходит в режим овердрайва, чтобы не отключиться от перегрузки синтанолом...</span>")
+					if(prob(10))
+						to_chat(src, "<span class='warning'>Ваша система фиксирует прибытие шаттла и переходит в режим овердрайва, чтобы не отключиться от перегрузки синтанолом...</span>")
 				else
-					playsound(src, 'modular_splurt/sound/misc/connection_terminated.ogg', 75, FALSE)
+					playsound(src, 'modular_splurt/sound/misc/connection_terminated.ogg', 40, FALSE)
 					emote("me", EMOTE_VISIBLE, "с громким щелчком выключается, падая на пол!")
 					to_chat(src, "<span class='userdanger'>Обновление операционной системы, пожалуйста, ожи%@#$$!</span>")
-					Sleeping(900)
+					AdjustUnconscious(900)
+					if(isipcperson(src))
+						dna.features["ipc_screen"] = "BSOD"
+						update_body()
 	// BLUEMOON ADD END
 
 //used in human and monkey handle_environment()
