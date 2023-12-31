@@ -885,11 +885,11 @@
 /area/ruin/space/has_grav/inteq_forgotten_ship)
 "cz" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 80, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
 	dir = 4;
 	name = "InteQ Ship Turret";
-	on = 0;
-	shot_delay = 10
+	shot_delay = 10;
+	faction = list("InteQ")
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/inteq_forgotten_ship)
@@ -5553,7 +5553,6 @@
 "Xw" = (
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/inteq_forgotten_ship";
-	enabled = 0;
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Ship turret control panel";
