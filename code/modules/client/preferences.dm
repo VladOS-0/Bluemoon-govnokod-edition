@@ -366,7 +366,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
-	var/selected_heirloom = null // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -4166,7 +4165,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
-			selected_heirloom = null // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 			loadout_data["SAVE_[loadout_slot]"] = list()
 			save_preferences()
 		if(href_list["select_category"])
@@ -4185,7 +4183,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				// BLUEMOON EDIT START - выбор вещей из лодаута как family heirloom
 				if (gear[LOADOUT_IS_HEIRLOOM])
 					gear[LOADOUT_IS_HEIRLOOM] = FALSE
-					selected_heirloom = null
 				// BLUEMOON EDIT END - выбор вещей из лодаута как family heirloom
 				remove_gear_from_loadout(loadout_slot, "[G.type]")
 			else if(toggle && !(has_loadout_gear(loadout_slot, "[G.type]")))
@@ -4278,14 +4275,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					user_gear[LOADOUT_CUSTOM_DESCRIPTION] = new_description
 			// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
 			if(href_list["loadout_addheirloom"])
-				if(!selected_heirloom)
+				// Выбран ли какой-либо другой предмет как семейная реликвия, и если да, то какой?
+				var/existing = find_gear_with_property(loadout_slot, LOADOUT_IS_HEIRLOOM, TRUE)
+				if(!existing)
 					user_gear[LOADOUT_IS_HEIRLOOM] = TRUE
-					selected_heirloom = G
 				else
-					to_chat(user, "<font color='red'>У вас уже выбрано [selected_heirloom] как ваша семейная реликвия!</font>")
+					to_chat(user, "<font color='red'>У вас уже выбрана ваша семейная реликвия!</font>")
 			if(href_list["loadout_removeheirloom"])
 				user_gear[LOADOUT_IS_HEIRLOOM] = FALSE
-				selected_heirloom = null
 			// BLUEMOON ADD END
 	ShowChoices(user)
 	return 1
@@ -4534,6 +4531,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else
 			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
+
+// BLUEMOON ADD START - выбор вещей из лодаута как семейной реликвии
+///Searching for loadout item which `property` ([LOADOUT_ITEM], [LOADOUT_COLOR], etc) equals to `value`; returns this items, or FALSE if no gear matched conditions
+/datum/preferences/proc/find_gear_with_property(save_slot, property, value)
+	var/list/gear_list = loadout_data["SAVE_[save_slot]"]
+	for(var/loadout_gear in gear_list)
+		if(loadout_gear[property] == value)
+			return loadout_gear
+	return FALSE
 
 /datum/preferences/proc/has_loadout_gear(save_slot, gear_type)
 	var/list/gear_list = loadout_data["SAVE_[save_slot]"]
