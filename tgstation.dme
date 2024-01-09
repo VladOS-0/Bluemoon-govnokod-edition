@@ -4383,6 +4383,7 @@
 #include "modular_bluemoon\vlad0s_staff\code\synthdrinks\synth_drinks.dm"
 #include "modular_bluemoon\vlad0s_staff\code\synthdrinks\synth_drinks_containers.dm"
 #include "modular_bluemoon\vlad0s_staff\code\synthdrinks\synth_drinks_recipes.dm"
+#include "modular_bluemoon\vlad0s_staff\code\robot_purge_reagents.dm"
 #include "modular_citadel\code\datums\components\souldeath.dm"
 #include "modular_citadel\code\datums\status_effects\chems.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\souldeath.dm"
