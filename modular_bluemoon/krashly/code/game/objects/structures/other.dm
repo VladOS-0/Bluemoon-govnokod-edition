@@ -28,7 +28,7 @@
 	icon = 'modular_bluemoon/krashly/icons/obj/structures.dmi'
 	icon_state = "table-bell"
 	layer = OBJ_LAYER
-	anchored = FALSE
+	anchored = TRUE
 	pass_flags = PASSTABLE
 	max_integrity = 5000
 	var/times_rang = 0

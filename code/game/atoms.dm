@@ -1581,6 +1581,14 @@
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
+	var/auxiliary_name = ""
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
+			var/obj/item/clothing/neck/petcollar/collar = H.wear_neck
+			if(collar.tagname)
+				auxiliary_name = "\[[collar.tagname]\]"
 
 	if ((isliving(user) || isovermind(user) || isaicamera(user)) && (user.client.prefs.screentip_pref != SCREENTIP_PREFERENCE_NO_CONTEXT))
 		var/obj/item/held_item = user.get_active_held_item()
@@ -1651,7 +1659,7 @@
 		active_hud.screentip_text.maptext = ""
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [user.client.prefs.screentip_color]'>[name][extra_context]</span>"
+		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [user.client.prefs.screentip_color]'>[name] [auxiliary_name][extra_context]</span>"
 
 /**
  * Recursive getter method to return a list of all ghosts orbitting this atom

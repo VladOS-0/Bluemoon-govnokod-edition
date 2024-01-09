@@ -529,3 +529,6 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
+
+/datum/quirk/cursed/remove(client/client_source)
+	qdel(quirk_holder.GetComponent(/datum/component/omen/quirk))

@@ -860,6 +860,7 @@
 	set_module = /obj/item/robot_module/syndicate/inteq
 	cell = /obj/item/stock_parts/cell/hyper
 	typing_indicator_state = /obj/effect/overlay/typing_indicator/additional/syndbot
+	upgrades = list(/obj/item/borg/upgrade/vtec)
 
 /mob/living/silicon/robot/modules/inteq/Initialize(mapload)
 	. = ..()

@@ -1003,7 +1003,7 @@
 	job_description = "Oldstation Crew"
 	canloadappearance = TRUE
 	loadout_enabled = TRUE
-	computer_area = /area/ruin/space/has_grav/port_tarkon/centerhall
+	computer_area = /area/ruin/space/has_grav/bluemoon/port_tarkon/centerhall
 
 	give_cooler_to_mob_if_synth = TRUE
 

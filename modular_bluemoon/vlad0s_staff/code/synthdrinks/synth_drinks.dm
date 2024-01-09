@@ -82,6 +82,7 @@
 			else
 				to_chat(M, "<span class='warning'>Вы чувствуете неприятное ощущение у себя в животе...</span>")
 				M.adjustToxLoss(5)
+		return
 	// Синтетики
 	synthetic_on_life(M)
 

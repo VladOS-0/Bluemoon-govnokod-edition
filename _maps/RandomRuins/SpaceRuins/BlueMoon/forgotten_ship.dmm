@@ -4473,13 +4473,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/inteq_forgotten_outpost)
-"MM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 6
-	},
-/obj/machinery/spaceship_navigation_beacon/invion,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/inteq_forgotten_outpost)
 "MR" = (
 /turf/open/floor/mineral/plastitanium/yellow,
 /area/ruin/space/has_grav/inteq_forgotten_outpost)
@@ -9309,7 +9302,6 @@ VR
 VR
 VR
 VR
-MM
 Um
 LK
 Um
