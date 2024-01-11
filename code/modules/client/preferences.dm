@@ -290,6 +290,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
+	// BLUEMOON ADD START - настройки для квирков
+	///List of all options for all quirks
+	var/list/quirk_options = list()
+	// BLUEMOON ADD END
+
 	//Quirk category currently selected
 	var/quirk_category = QUIRK_POSITIVE // defaults to positive, the first tab!
 
@@ -2034,6 +2039,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/quirk_cost = initial(T.value) * -1
 			var/lock_reason = "This trait is unavailable."
 			var/quirk_conflict = FALSE
+			var/options_string_class = "style='white-space:normal;' class='linkOff'"  // BLUEMOON ADD - настройки для квирков
 			for(var/_V in all_quirks)
 				if(_V == quirk_name)
 					has_quirk = TRUE
@@ -2051,16 +2057,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/font_color = "#AAAAFF"
 			if(initial(T.value) != 0)
 				font_color = value > 0 ? "#AAFFAA" : "#FFAAAA"
+			// BLUEMOON ADD START - настройки для квирков
+			if(T.quirk_options.len > 0)
+				options_string_class = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=trait;task=setup_options;trait=[quirk_name]'"
+			// BLUEMOON ADD END
 			if(quirk_conflict)
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
 				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
 			else
 				if(has_quirk)
-					dat += "<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
+					// BLUEMOON EDIT START - настройки для квирков
+					dat += "<a [options_string_class]>⚙️</a>\
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
 					<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)]<br>"
 				else
-					dat += "<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
+					dat += "<a [options_string_class]>⚙️</a>\
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
 					<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)]<br>"
+					// BLUEMOON EDIT END
 		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Quirks</a></center>"
 
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Quirk Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
@@ -2193,6 +2207,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("reset")
 				all_quirks = list()
 				SetQuirks(user)
+			// BLUEMOON ADD START - настройки для квирков
+			if("setup_options")
+				var/quirk = href_list["trait"]
+				var/datum/quirk/quirk_datum = SSquirks.quirks[quirk]
+				var/list/quirk_options_names = list()
+				for(var/datum/quirk_option/opt in quirk_datum.quirk_options)
+					quirk_options_names += opt.options_show_title
+				var/selected_option = input(user, "Выберите одну из опций квирка, чтобы настроить", "Выбор опции") as null|anything in quirk_options_names
+				if(!selected_option)
+					return
+				var/datum/quirk_option/selected_option_datum = null
+				for(var/datum/quirk_option/opt in quirk_datum.quirk_options)
+					if(opt.options_show_title == selected_option)
+						selected_option_datum = opt
+				if(!selected_option_datum)
+					return
+				var/new_option = selected_option_datum.prefs_show_options(user)
+				if(!new_option)
+					return
+				var/new_quirk_options = selected_option_datum.find_n_replace(quirk_options, new_option)
+				if(!new_quirk_options)
+					return
+				quirk_options = new_quirk_options
+			// BLUEMOON ADD END
 			else
 				SetQuirks(user)
 		return TRUE

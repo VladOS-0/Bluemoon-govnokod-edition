@@ -17,6 +17,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
 		SetupQuirks()
+		SetupQuirkOptions() // BLUEMOON ADD - настройки для квирков
+
 		quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic"),list("Ageusia","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"),list("Alcohol Tolerance","Alcohol Intolerance"),list("Alcohol Intolerance","Drunken Resilience"))
 	return ..()
 
@@ -29,6 +31,19 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks[initial(T.name)] = T
 		quirk_points[initial(T.name)] = initial(T.value)
 		quirk_names_by_path[T] = initial(T.name)
+
+// BLUEMOON ADD START- настройки для квирков
+///Links quirk with its options
+/datum/controller/subsystem/processing/quirks/proc/SetupQuirkOptions()
+	var/list/quirk_options = subtypesof(/datum/quirk_option)
+
+	for(var/datum/quirk_option/option in quirk_options)
+		var/datum/quirk/Q = quirks[initial(option.quirk.name)]
+		if(!Q)
+			continue
+		option.quirk = Q
+		Q.quirk_options += option
+// BLUEMOON ADD END
 
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects, roundstart = FALSE, datum/job/job, silent = FALSE, mob/to_chat_target)
 	var/badquirk = FALSE

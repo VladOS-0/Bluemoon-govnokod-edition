@@ -978,7 +978,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_preferences"] >> job_preferences
 
 	//Quirks
-	S["all_quirks"] >> all_quirks
+	S["all_quirks"] >> all_quirks // BLUEMOON ADD - настройки для квирков
+	S["quirk_options"] >> quirk_options
 
 	S["language"] >> language
 
@@ -1319,6 +1320,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			job_preferences -= j
 
 	all_quirks = SANITIZE_LIST(all_quirks)
+	quirk_options = SANITIZE_LIST(quirk_options)  // BLUEMOON ADD - настройки для квирков
 
 	language = SANITIZE_LIST(language)
 
@@ -1580,6 +1582,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
+	WRITE_FILE(S["quirk_options"]		, quirk_options)  // BLUEMOON ADD - настройки для квирков
 	//SKYRAT ADDITION - additional language
 	WRITE_FILE(S["language"]			, language)
 	//

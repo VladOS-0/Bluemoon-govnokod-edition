@@ -15,12 +15,17 @@
 	var/on_spawn_immediate = TRUE
 	var/mob/living/quirk_holder
 	var/processing_quirk = FALSE
+	var/list/quirk_options = list()
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
 		qdel(src)
 		return
 	quirk_holder = quirk_mob
+	// BLUEMOON ADD START - настройки для квирков
+	for(var/datum/quirk_option/option in quirk_options)
+		option.apply() // Каждая настройка применяет свои эффекты к датуму квирка
+	// BLUEMOON ADD END
 	SSquirks.quirk_objects += src
 	if(gain_text)
 		to_chat(quirk_holder, gain_text)
