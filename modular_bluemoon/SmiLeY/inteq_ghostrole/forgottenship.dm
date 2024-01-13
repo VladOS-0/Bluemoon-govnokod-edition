@@ -341,9 +341,11 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	rapid_melee = 1
 	retreat_distance = 2
 	minimum_distance = 4
+	melee_damage_lower = 15
+	melee_damage_upper = 30
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/heavy_shot_suppressed.ogg'
-	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier, /obj/item/gun/ballistic/automatic/pistol/m1911, /obj/item/ammo_box/magazine/m45, /obj/item/ammo_box/magazine/m45)
 
 /mob/living/simple_animal/hostile/nanotrasen/elite
 	name = "Nanotrasen Elite Assault Officer"
@@ -351,10 +353,10 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon = 'modular_bluemoon/SmiLeY/inteq_ghostrole/simple_human.dmi'
 	icon_state = "nanotrasen_ert"
 	icon_living = "nanotrasen_ert"
-	maxHealth = 150
-	health = 150
-	melee_damage_lower = 13
-	melee_damage_upper = 18
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 20
+	melee_damage_upper = 40
 	ranged = TRUE
 	rapid = 3
 	rapid_fire_delay = 5
@@ -365,7 +367,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	minbodytemp = 0
 	projectiletype = /obj/item/projectile/beam/laser
 	projectilesound = 'sound/weapons/laser.ogg'
-	loot = list(/obj/effect/gibspawner/human)
+	loot = list(/obj/effect/gibspawner/human, /obj/item/gun/energy/e_gun/stun)
 	faction = list(ROLE_DEATHSQUAD)
 
 /mob/living/simple_animal/hostile/nanotrasen/elite/akins
@@ -374,10 +376,10 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon = 'modular_bluemoon/SmiLeY/inteq_ghostrole/simple_human.dmi'
 	icon_state = "nanotrasen_ert"
 	icon_living = "nanotrasen_ert"
-	maxHealth = 250
-	health = 250
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	maxHealth = 350
+	health = 350
+	melee_damage_lower = 30
+	melee_damage_upper = 50
 	ranged = TRUE
 	rapid = 3
 	rapid_fire_delay = 5
@@ -390,3 +392,19 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	projectilesound = 'sound/weapons/Gunshot_silenced.ogg'
 	loot = list(/obj/effect/gibspawner/human, /obj/item/paper/fluff/ruins/forgottenship/nanostrasen, /obj/item/gun/ballistic/automatic/ar, /obj/item/ammo_box/magazine/m556, /obj/item/ammo_box/magazine/m556)
 	faction = list(ROLE_DEATHSQUAD)
+
+/obj/item/radio/headset/ghost_inteq
+	name = "InteQ Headset"
+	desc = "Стандартный наушник InteQ."
+	icon_state = "inteq_headset"
+	item_state = "inteq_headset"
+
+/obj/item/radio/headset/ghost_inteq/leader
+	name = "InteQ Headset"
+	desc = "Боевые наушники InteQ. Защищает уши от громких звуков."
+	icon_state = "inteq_headset_alt"
+	item_state = "inteq_headset_alt"
+	bowman = TRUE
+	icon = 'modular_bluemoon/kovac_shitcode/icons/solfed/obj_sol_head.dmi'
+	mob_overlay_icon = 'modular_bluemoon/kovac_shitcode/icons/solfed/mob_sol_head.dmi'
+	radiosound = 'modular_bluemoon/kovac_shitcode/sound/radio.ogg'

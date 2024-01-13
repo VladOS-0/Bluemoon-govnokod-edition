@@ -18,7 +18,12 @@
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(L, TRAIT_INVISIBLE_MAN))
 			obscure_name = TRUE
-	. = list("<span class='info'>Это - <EM>[!obscure_name ? name : "Неизвестный"]</EM>!")
+	var/collar_tagname = ""
+	if(istype(wear_neck, /obj/item/clothing/neck/petcollar))
+		var/obj/item/clothing/neck/petcollar/collar = wear_neck
+		if(collar.tagname)
+			collar_tagname = " \[[collar.tagname]\]"
+	. = list("<span class='info'>Это - <EM>[!obscure_name ? name : "Неизвестный"][collar_tagname]</EM>!")
 	if(skipface || get_visible_name() == "Unknown")
 		. += "Вы не можете разобрать, к какому виду относится находящееся перед вами существо."
 	else
@@ -416,19 +421,34 @@
 
 	if(!appears_dead)
 		if(drunkenness && !skipface) //Drunkenness
-			switch(drunkenness)
-				if(11 to 21)
-					msg += "[t_on] немного пьян[t_a].\n"
-				if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
-					msg += "[t_on] пьян[t_a].\n"
-				if(41.01 to 51)
-					msg += "[t_on] довольно пьян[t_a] и от н[t_ego] чувствуется запах алкоголя.\n"
-				if(51.01 to 61)
-					msg += "Очень пьян[t_a] и от н[t_ego] несёт перегаром.\n"
-				if(61.01 to 91)
-					msg += "[t_on] в стельку.\n"
-				if(91.01 to INFINITY)
-					msg += "[t_on] в говно!\n"
+			// BLUEMOON EDIT START - опьянение для роботов
+			if(!isrobotic(src))
+				switch(drunkenness)
+					if(11 to 21)
+						msg += "[t_on] немного пьян[t_a].\n"
+					if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
+						msg += "[t_on] пьян[t_a].\n"
+					if(41.01 to 51)
+						msg += "[t_on] довольно пьян[t_a] и от н[t_ego] чувствуется запах алкоголя.\n"
+					if(51.01 to 61)
+						msg += "Очень пьян[t_a] и от н[t_ego] несёт перегаром.\n"
+					if(61.01 to 91)
+						msg += "[t_on] в стельку.\n"
+					if(91.01 to INFINITY)
+						msg += "[t_on] в говно!\n"
+			else
+				switch(drunkenness)
+					if(11 to 21)
+						msg += "[t_on] показывает лёгкие признаки употребления синтанола.\n"
+					if(21.01 to 41)
+						msg += "[t_on] изредка вздрагивает под воздействием употреблённых жидкостей.\n"
+					if(41.01 to 61)
+						msg += "От н[t_ego] очень сильно пахнет машинным маслом, а [t_ego] движения кажутся \"пьяными\".\n"
+					if(61.01 to 91)
+						msg += "[t_on] выдаёт множественные ошибки, постоянно зависая.\n"
+					if(91.01 to INFINITY)
+						msg += "[t_on], судя по всему, вот-вот отключится..\n"
+			// BLUEMOON EDIT END
 
 		if(reagents.has_reagent(/datum/reagent/fermi/astral))
 			if(mind)

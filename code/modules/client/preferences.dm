@@ -366,7 +366,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
-	var/selected_heirloom = null // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -599,7 +598,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 					dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
-					dat += "<a href='?_src_=prefs;preference=hide_ckey;task=input'><b>Hide ckey: [hide_ckey ? "Enabled" : "Disabled"]</b></a><br>"
 					dat += "</td>"
 
 					dat += "<td valign='top'>"
@@ -1347,7 +1345,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 										// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
 										if(loadout_item[LOADOUT_IS_HEIRLOOM])
 											extra_loadout_data += "<BR><a class='linkOn' href='?_src_=prefs;preference=gear;loadout_removeheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a><BR>"
-										// BLUEMOON ADD END
+										else
+											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_addheirloom=1;loadout_gear_name=[html_encode(gear.name)];'>Select as Heirloom</a><BR>"
+										if(ispath(gear.path, /obj/item/clothing/neck/petcollar)) //"name tag" sounds better for me, but in petcollar code "tagname" is used so let it be.
+											extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_tagname=1;loadout_gear_name=[html_encode(gear.name)];'>Name tag</a> [loadout_item["loadout_custom_tagname"] ? loadout_item["loadout_custom_tagname"] : "Name tag is visible for everyone looking at wearer."]"
+									  // BLUEMOON ADD END
 									else if((gear_points - gear.cost) < 0)
 										class_link = "style='white-space:normal;' class='linkOff'"
 									else if(donoritem)
@@ -4166,7 +4168,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
-			selected_heirloom = null // BLUEMOON ADD - выбор вещей из лодаута как family heirloom
 			loadout_data["SAVE_[loadout_slot]"] = list()
 			save_preferences()
 		if(href_list["select_category"])
@@ -4185,7 +4186,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				// BLUEMOON EDIT START - выбор вещей из лодаута как family heirloom
 				if (gear[LOADOUT_IS_HEIRLOOM])
 					gear[LOADOUT_IS_HEIRLOOM] = FALSE
-					selected_heirloom = null
 				// BLUEMOON EDIT END - выбор вещей из лодаута как family heirloom
 				remove_gear_from_loadout(loadout_slot, "[G.type]")
 			else if(toggle && !(has_loadout_gear(loadout_slot, "[G.type]")))
@@ -4218,7 +4218,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					sanitize_current_slot.Remove(list(entry))
 					break
 
-		if(href_list["loadout_color"] || href_list["loadout_color_polychromic"] || href_list["loadout_color_HSV"] || href_list["loadout_rename"] || href_list["loadout_redescribe"] || href_list["loadout_addheirloom"] || href_list["loadout_removeheirloom"])
+		if(href_list["loadout_color"] || href_list["loadout_color_polychromic"] || href_list["loadout_color_HSV"] || href_list["loadout_rename"] || href_list["loadout_redescribe"] || href_list["loadout_addheirloom"] || href_list["loadout_removeheirloom"] || href_list["loadout_tagname"])
+
 			//if the gear doesn't exist, or they don't have it, ignore the request
 			var/name = html_decode(href_list["loadout_gear_name"])
 			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
@@ -4278,15 +4279,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					user_gear[LOADOUT_CUSTOM_DESCRIPTION] = new_description
 			// BLUEMOON ADD START - выбор вещей из лодаута как family heirloom
 			if(href_list["loadout_addheirloom"])
-				if(!selected_heirloom)
+				// Выбран ли какой-либо другой предмет как семейная реликвия, и если да, то какой?
+				var/existing = find_gear_with_property(loadout_slot, LOADOUT_IS_HEIRLOOM, TRUE)
+				if(!existing)
 					user_gear[LOADOUT_IS_HEIRLOOM] = TRUE
-					selected_heirloom = G
 				else
-					to_chat(user, "<font color='red'>У вас уже выбрано [selected_heirloom] как ваша семейная реликвия!</font>")
+					to_chat(user, "<font color='red'>У вас уже выбрана ваша семейная реликвия!</font>")
 			if(href_list["loadout_removeheirloom"])
 				user_gear[LOADOUT_IS_HEIRLOOM] = FALSE
-				selected_heirloom = null
 			// BLUEMOON ADD END
+
+			//for collars with tagnames
+			if(href_list["loadout_tagname"])
+				var/new_tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", null, MAX_NAME_LEN)
+				if(new_tagname)
+					user_gear["loadout_custom_tagname"] = new_tagname
+
 	ShowChoices(user)
 	return 1
 
@@ -4534,6 +4542,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else
 			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
+
+// BLUEMOON ADD START - выбор вещей из лодаута как семейной реликвии
+///Searching for loadout item which `property` ([LOADOUT_ITEM], [LOADOUT_COLOR], etc) equals to `value`; returns this items, or FALSE if no gear matched conditions
+/datum/preferences/proc/find_gear_with_property(save_slot, property, value)
+	var/list/gear_list = loadout_data["SAVE_[save_slot]"]
+	for(var/loadout_gear in gear_list)
+		if(loadout_gear[property] == value)
+			return loadout_gear
+	return FALSE
 
 /datum/preferences/proc/has_loadout_gear(save_slot, gear_type)
 	var/list/gear_list = loadout_data["SAVE_[save_slot]"]

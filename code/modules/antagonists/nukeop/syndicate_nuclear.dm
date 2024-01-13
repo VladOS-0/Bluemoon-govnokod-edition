@@ -44,10 +44,6 @@
 	else
 		H.equipOutfit(nukeop_outfit)
 
-	if(name == "Lone Operative")
-		H.canloadappearance = TRUE
-		H.checkloadappearance()
-
 	return TRUE
 
 /datum/antagonist/syndicate_op/greet()

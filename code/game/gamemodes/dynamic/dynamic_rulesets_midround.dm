@@ -189,7 +189,7 @@
 	name = "InteQ Sleeper Agent"
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = "traitor mid"
-	protected_roles = list("Prisoner", "Shaft Miner", "NanoTrasen Representative", "Lawyer", "Blueshield", "Peacekeeper", "Brig Physician", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")  //BLUEMOON CHANGES
+	protected_roles = list("Expeditor", "Prisoner", "Shaft Miner", "NanoTrasen Representative", "Lawyer", "Blueshield", "Peacekeeper", "Brig Physician", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")  //BLUEMOON CHANGES
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	required_candidates = 1
 	required_round_type = list(ROUNDTYPE_DYNAMIC_HARD, ROUNDTYPE_DYNAMIC_MEDIUM, ROUNDTYPE_DYNAMIC_LIGHT) // BLUEMOON ADD
@@ -377,7 +377,7 @@
 	antag_flag = "wizard mid crew"
 	antag_flag_override = ROLE_WIZARD
 	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
-	restricted_roles = list("AI", "Cyborg")
+	restricted_roles = list("AI", "Cyborg", "Positronic Brain")
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
 	weight = 0
@@ -1074,10 +1074,32 @@
 	send_pirate_threat()
 	return ..()
 
-/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
-#undef MALF_ION_PROB
-/// The probability to replace an existing law with an ion law instead of adding a new ion law.
-#undef REPLACE_LAW_WITH_ION_PROB
+//////////////////////////////////////////////
+//                                          //
+//            InteQ Raiders                 //
+//                                          //
+//////////////////////////////////////////////
+/datum/dynamic_ruleset/midround/raiders
+	name = "InteQ Raiders"
+	antag_flag = "InteQ Raiders"
+	required_type = /mob/dead/observer
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
+	required_candidates = 0
+	required_round_type = list(ROUNDTYPE_DYNAMIC_HARD, ROUNDTYPE_DYNAMIC_MEDIUM, ROUNDTYPE_DYNAMIC_TEAMBASED) // BLUEMOON ADD
+	weight = 4
+	cost = 15
+	requirements = list(101,101,101,40,30,20,10,10,10,10)
+	repeatable = FALSE
+
+/datum/dynamic_ruleset/midround/raiders/acceptable(population=0, threat=0)
+	if (!SSmapping.empty_space)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/raiders/execute()
+	send_raider_threat()
+	return ..()
 
 // BLUEMOON ADD START
 
@@ -1093,7 +1115,7 @@
 	antag_flag_override = ROLE_BLOODSUCKER
 	antag_datum = /datum/antagonist/bloodsucker
 	protected_roles = list("Prisoner", "NanoTrasen Representative", "Lawyer", "Security Officer", "Blueshield", "Peacekeeper", "Brig Physician", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("AI", "Cyborg")
+	restricted_roles = list("AI", "Cyborg", "Positronic Brain")
 	enemy_roles = list("Blueshield", "Peacekeeper", "Brig Physician", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //BLUEMOON CHANGES
 	required_enemies = 3
 	required_candidates = 1
@@ -1135,3 +1157,8 @@
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = antag_flag
 	return TRUE
+
+/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
+#undef MALF_ION_PROB
+/// The probability to replace an existing law with an ion law instead of adding a new ion law.
+#undef REPLACE_LAW_WITH_ION_PROB

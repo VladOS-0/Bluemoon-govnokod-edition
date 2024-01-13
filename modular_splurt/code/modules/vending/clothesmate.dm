@@ -49,22 +49,27 @@
 		/obj/item/clothing/head/helmet/goner/officer/fake/poly = 10
 	)
 
-	if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
-		extra_products += list(
-			/obj/item/clothing/accessory/sweater/uglyxmas = 3,
-			/obj/item/clothing/under/costume/christmas = 3,
-			/obj/item/clothing/under/costume/christmas/green = 3,
-			/obj/item/clothing/under/costume/christmas/croptop = 3,
-			/obj/item/clothing/under/costume/christmas/croptop/green = 3,
-			/obj/item/clothing/suit/hooded/wintercoat/christmascoatr = 3,
-			/obj/item/clothing/suit/hooded/wintercoat/christmascoatg = 3,
-			/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg = 3,
-			/obj/item/clothing/head/christmashat = 3,
-			/obj/item/clothing/head/christmashatg = 3,
-			/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
-			/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
-			/obj/item/clothing/shoes/winterboots/santaboots = 3,
-		)
+	// if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
+	// 	extra_products += list(
+	// 		/obj/item/clothing/accessory/sweater/uglyxmas = 3,
+	// 		/obj/item/clothing/head/beanie/christmas = 3,
+	// 		/obj/item/clothing/neck/scarf/christmas = 3,
+	// 		/obj/item/clothing/under/costume/christmas = 3,
+	// 		/obj/item/clothing/under/costume/christmas/green = 3,
+	// 		/obj/item/clothing/under/costume/christmas/croptop = 3,
+	// 		/obj/item/clothing/under/costume/christmas/croptop/green = 3,
+	// 		/obj/item/clothing/suit/hooded/wintercoat/christmascoatr = 3,
+	// 		/obj/item/clothing/suit/hooded/wintercoat/christmascoatg = 3,
+	// 		/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg = 3,
+	// 		/obj/item/clothing/head/christmashat = 3,
+	// 		/obj/item/clothing/head/christmashatg = 3,
+	// 		/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
+	// 		/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
+	// 		/obj/item/clothing/shoes/winterboots/santaboots = 3,
+	// 		/obj/item/clothing/underwear/socks/thigh/christmas = 3,
+	// 		/obj/item/clothing/underwear/socks/christmas = 3,
+	// 		/obj/item/clothing/underwear/socks/knee/christmas = 3,
+	// 	)
 
 	LAZYADD(products, extra_products)
 	LAZYADD(contraband, extra_contraband)

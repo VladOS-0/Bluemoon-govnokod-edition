@@ -8,7 +8,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/western
 	job_description = "Western Ashwalker's"
-	short_desc = "Вы магмовый скиталец женского пола. Ваше племя поклоняется материнскому Тендрилу."
+	short_desc = "Вы магмовый скиталец ЖЕНСКОГО пола. Ваше племя поклоняется материнскому Тендрилу."
 	flavour_text = "Ваш прошлый дом и материнский Тендрил были разрушены чужаками с Холодных Звёзд и те из ваших сородичей, кто остались \
 	в живых, покинули южные моря на поиски нового дома. Эти земли хороши для вашего нового дома, ибо обилие Тендрилов дарует этим землям \
 	изобилие пищи и материалов для выживания, а также восстановления утерянных знаний и взращивание нового потомства. Однако вы здесь не \
@@ -22,7 +22,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/eastern
 	job_description = "Eastern Ashwalker's"
-	short_desc = "Вы магмовый скиталец мужского пола. Ваше племя поклоняется материнскому Тендрилу."
+	short_desc = "Вы магмовый скиталец МУЖСКОГО пола. Ваше племя поклоняется материнскому Тендрилу."
 	flavour_text = "Ваше племя поклоняется матери Некрополю, как вашей Спасительнице и Наставнице. Священные стены дворца Некрополя \
 	дали вашему Тендрилу и вашему Роду защиту. Испокон веков, ваша священная обитель дарует вам Дар Перерождения, из цикла в цикл за \
 	жертвоприношения матери Некрополю, ради продолжения Великой Охоты. Однако не так давно на ваши земли вторглось Чужеродное Племя. \
@@ -34,6 +34,34 @@
 	mob_species = /datum/species/lizard/ashwalker/eastern
 	gender_bias = MALE
 	canloadappearance = TRUE
+
+/obj/effect/mob_spawn/human/ash_walkers_slave
+	name = "Ashwalkers Slave"
+	mob_name = "Ashwalkers Slave"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "oldpod"
+	short_desc = "Вы раб или рабыня Пепельных Ящеров с Лаваленда."
+	flavour_text = "Вам всё нравится."
+	important_info = "Выполняйте ЛЮБЫЕ требования Эшей. Желание сбежать на станцию должно быть минимальным."
+	assignedrole = "Ash Walker"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	canloadappearance = TRUE
+	loadout_enabled = FALSE
+
+/obj/effect/mob_spawn/human/ash_walkers_slave/special_post_appearance(mob/living/new_spawn)
+	. = ..()
+	new_spawn.grant_language(/datum/language/draconic, TRUE, TRUE, LANGUAGE_MIND)
+	if(!HAS_TRAIT(new_spawn, TRAIT_ROBOTIC_ORGANISM))
+		var/obj/item/organ/lungs/ashwalker/lungs = new /obj/item/organ/lungs/ashwalker()
+		lungs.Insert(new_spawn, drop_if_replaced = FALSE)
+		var/obj/item/organ/eyes/night_vision/eyes = new /obj/item/organ/eyes/night_vision()
+		eyes.Insert(new_spawn, drop_if_replaced = FALSE)
+	else
+		if(!new_spawn.put_in_hands(new /obj/item/device/cooler/lavaland/charged(new_spawn)))
+			to_chat(new_spawn, span_reallybig("Не забудьте забрать охладитель под собой.")) // чтобы не упустили из виду при резком спавне
+		new_spawn.put_in_hands(new /obj/item/stock_parts/cell/bluespace(new_spawn))
 
 //Portable dangerous-environment sleepers: Spawns in exposed to ash storms shelter.
 //Characters in this role could have been conscious for a long time, surviving on the planet. They may also know Draconic language by contacting with ashwalkers.
@@ -153,7 +181,7 @@
 	icon_state = "sleeper_s"
 	short_desc = "Вы - Оперативник Авангарда ИнтеКью на старом корабле, застрявшем во враждебном космосе."
 	flavour_text = "Ваш корабль причалил после долгого перерыва где-то во враждебном пространстве, сообщив о неисправности. Вы застряли здесь, зная, что рядом находится станция Nanotrasen. Почините корабль, найдите способ обеспечить его энергией и выполняйте приказы Капитана."
-	important_info = "Выполняйте приказы своего капитана. Не позвольте кораблю попасть в руки врага! | Экста - грубоватые наёмники, не знающие положения дел в Туманности Синие Луны. Динамика - полноценные оперативники ИнтеКью с поставленной задачей."
+	important_info = "Выполняйте приказы своего капитана. Не позвольте кораблю попасть в руки врага! | Экста - грубоватые наёмники, не знающие положения дел в Туманности Синие Луны. Динамика - полноценные оперативники ИнтеКью с поставленной задачей на защиту своего корабля и сектора."
 	canloadappearance = TRUE
 	outfit = /datum/outfit/inteqspace/inteq_crew
 	assignedrole = ROLE_GHOSTROLE_INTEQ
@@ -161,27 +189,43 @@
 /datum/outfit/inteqspace/inteq_crew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_INTEQ
 
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_GHOST_INTEQ)
+	R.freqlock = TRUE
+	R.independent = TRUE
+
 /obj/effect/mob_spawn/human/inteqspace/special(mob/living/new_spawn)
 	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+
+	var/obj/item/implant/anchor/ghost_anchor = new
+	ghost_anchor.allowed_z_levels = list(1, 6, 12, src.z) // dynamic набор: цк, ксено межшатолье, инфдормы, сектор имплантации
+	if(GLOB.master_mode == "Extended")
+		ghost_anchor.allowed_z_levels.Add(2,5) // экстовая добавка: станционный, шахта
+	ghost_anchor.implant(new_spawn, null, TRUE)
 
 /obj/effect/mob_spawn/human/inteqspace/captain
 	name = "InteQ Ship Captain"
 	short_desc = "Вы - Лидер Авангарда ИнтеКью на старом корабле, застрявшем во враждебном космосе."
 	flavour_text = "Ваш корабль причалил после долгого перерыва где-то во враждебном пространстве, сообщив о неисправности. Вы застряли здесь, зная, что рядом находится станция Nanotrasen. Командуйте своим экипажем и исследуйте свой территорию, чтобы закрепить свое местоположение."
-	important_info = "Защитите корабль и секретные документы в рюкзаке ценой своей жизни. | Экста - грубоватые наёмники, не знающие положения дел в Туманности Синие Луны. Динамика - полноценные оперативники ИнтеКью с поставленной задачей."
+	important_info = "Защитите корабль и секретные документы в рюкзаке ценой своей жизни. | Экста - грубоватые наёмники, не знающие положения дел в Туманности Синие Луны. Динамика - полноценные оперативники ИнтеКью с поставленной задачей на защиту своего корабля и сектора."
 	canloadappearance = TRUE
 	outfit = /datum/outfit/inteqspace/inteq_captain
 
 /datum/outfit/inteqspace/inteq_captain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_INTEQ
 
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_GHOST_INTEQ)
+	R.freqlock = TRUE
+	R.independent = TRUE
+
 /obj/effect/mob_spawn/human/inteqspace/captain/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
 	return ..()
 
 /datum/outfit/inteqspace
-	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor)
+	implants = list(/obj/item/implant/weapons_auth)
 	back = /obj/item/storage/backpack/duffelbag/syndie/inteq
 
 /datum/outfit/inteqspace/inteq_crew
@@ -194,7 +238,7 @@
 
 	head = /obj/item/clothing/head/helmet/swat/inteq
 	mask = /obj/item/clothing/mask/balaclava/breath/inteq
-	ears = /obj/item/radio/headset/inteq/alt
+	ears = /obj/item/radio/headset/ghost_inteq
 	belt = /obj/item/storage/belt/military/assault/inteq_crew
 
 	l_pocket = /obj/item/extinguisher/mini
@@ -213,7 +257,7 @@
 
 	head = /obj/item/clothing/head/HoS/pmc_leader_beret
 	mask = /obj/item/clothing/mask/balaclava/breath/inteq
-	ears = /obj/item/radio/headset/inteq/alt/leader
+	ears = /obj/item/radio/headset/ghost_inteq/leader
 	belt = /obj/item/storage/belt/military/assault/inteq_captain
 
 	l_pocket = /obj/item/extinguisher/mini

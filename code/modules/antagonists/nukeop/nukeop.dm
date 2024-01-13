@@ -7,6 +7,7 @@
 	threat = 10
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	show_to_ghosts = TRUE
+	hijack_speed = 3
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
@@ -51,6 +52,8 @@
 		H.canloadappearance = TRUE
 		H.checkloadappearance()
 
+	give_alias()
+
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
@@ -59,7 +62,6 @@
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/on_gain()
-	give_alias()
 	forge_objectives()
 	. = ..()
 	equip_op()
