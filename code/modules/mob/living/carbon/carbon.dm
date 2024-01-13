@@ -184,9 +184,6 @@
 
 	var/obj/item/held_item = get_active_held_item()
 
-	if(!held_item)
-		return
-
 	var/atom/movable/thrown_thing
 	var/mob/living/throwable_mob
 

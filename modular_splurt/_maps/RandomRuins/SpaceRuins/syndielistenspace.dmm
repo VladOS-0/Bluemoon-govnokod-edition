@@ -1428,16 +1428,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/bluemoon/listeningstation)
-"Ly" = (
-/obj/machinery/spaceship_navigation_beacon/invion,
-/turf/closed/wall,
-/area/ruin/space/has_grav/bluemoon/listeningstation)
 "LL" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -1994,7 +1987,7 @@ ac
 aS
 ac
 ac
-Ly
+ac
 ac
 ac
 ac

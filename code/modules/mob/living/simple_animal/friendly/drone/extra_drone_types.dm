@@ -18,7 +18,8 @@
 	health = 120
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	initial_language_holder = /datum/language_holder/synthetic
-	faction = list(ROLE_TRAITOR, ROLE_SYNDICATE)
+	access_card = /obj/item/card/id/syndicate
+	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
 	heavy_emp_damage = 10
@@ -219,11 +220,10 @@
 /obj/item/paper/guides/antag/guardian/inteq_drone
 	name = "Руководство по работе с Дроном"
 	default_raw_text = {"<b>Последняя разработка - Дрон ИнтеКью</b><br>
-
- <br>
- <b>Дрон InteQ</b>: Поздравляем, ведь в своё пользование вы получили максимально удобную для использования машинку со своеобразным радиоуправлением. Постарайтесь обойтись с ней как можно более аккуратно, ибо дрона легко уничтожить.<br>
- <br>
-"}
+							<br>
+							<b>Дрон InteQ</b>: Поздравляем, ведь в своё пользование вы получили максимально удобную для использования машинку со своеобразным радиоуправлением. Постарайтесь обойтись с ней как можно более аккуратно, ибо дрона легко уничтожить.<br>
+							<br>
+						"}
 
 /datum/uplink_item/bundles_tc/inteq_drone
 	name = "InteQ Drone Kit"
@@ -250,8 +250,10 @@
 	icon_state = "drone_inteq"
 	icon_living = "drone_inteq"
 	default_hatmask = /obj/item/clothing/head/helmet/space/syndicate/contract
-	default_storage = /obj/item/inteq/uplink/radio/nuclear
+	default_storage = /obj/item/inteq/uplink/radio
 	initial_language_holder = /datum/language_holder/synthetic
+	faction = list(ROLE_INTEQ)
+	access_card = /obj/item/card/id/syndicate/anyone/inteq
 	radio = /obj/item/radio/borg/inteq
 	laws = \
 	"1. Активировавший тебя Оперативник становится Мастером. Первый, кого ты увидишь - Мастер.\n"+\

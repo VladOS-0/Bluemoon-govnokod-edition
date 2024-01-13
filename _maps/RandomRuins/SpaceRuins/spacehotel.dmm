@@ -5017,10 +5017,6 @@
 /obj/structure/pool/Lboard,
 /turf/open/pool,
 /area/ruin/space/has_grav/bluemoon/hotel/pool)
-"pV" = (
-/obj/machinery/spaceship_navigation_beacon/invion,
-/turf/closed/wall,
-/area/ruin/space/has_grav/bluemoon/hotel/guestroom/room_4)
 "sN" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/cable/yellow{
@@ -7317,7 +7313,7 @@ aa
 ab
 ac
 ag
-pV
+ap
 ap
 ap
 ap
