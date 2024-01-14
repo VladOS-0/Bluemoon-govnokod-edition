@@ -20,7 +20,6 @@
 		if(!current_choice)
 			current_choice = default_option
 	// Здесь мог бы быть ваш код
-	return
 
 /datum/quirk_option/proc/prefs_show_options(user)
 	var/user_input = input(user, options_show_desc, options_show_title) as null|anything in options
@@ -34,8 +33,7 @@
 			to_chat(user, "<span class='warning'>[restrictions]</span>")
 			return FALSE
 		if(converted_prefs_string)
-			current_choice = converted_prefs_string
-			return current_choice
+			return converted_prefs_string
 	return FALSE
 
 /datum/quirk_option/proc/check_restrictions(user, user_input)
@@ -86,3 +84,16 @@
 			if(option_parameters[3])
 				return option_parameters[3]
 	return ""
+
+/datum/quirk_option/headpat_hater_toggle
+	quirk = /datum/quirk/headpat_hater
+	name = "headpat_hater_toggle"
+	options_show_title = "Выбор поведения"
+	options_show_desc = "Будете ли вы с начала раунда агрессивно реагировать на поглаживания?"
+	list/options = list("Да" = "YES", "Нет" = "NO")
+	default_option = "YES"
+
+/datum/quirk_option/headpat_hater_toggle/apply()
+	. = ..()
+	var/datum/quirk/headpat_hater/headpat_hater_quirk = quirk
+	headpat_hater_quirk.aggresive_mode = current_choice == "YES" ? TRUE : FALSE

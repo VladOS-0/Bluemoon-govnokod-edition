@@ -43,11 +43,13 @@
 	gain_text = span_notice("Чужие прикосновения раздражают вас...")
 	lose_text = span_notice("Теперь поглаживания не кажутся настолько уж плохими...")
 	medical_record_text = "Пациента мало заботят или раздражают чужие прикосновения."
+	var/aggresive_mode = FALSE
 
 /datum/quirk/headpat_hater/add()
 
 	var/mob/living/carbon/human/quirk_mob = quirk_holder
-
+	if(!aggresive_mode)
+		REMOVE_TRAIT(quirk_mob, TRAIT_DISTANT, ROUNDSTART_TRAIT)
 	var/datum/action/cooldown/toggle_distant/act_toggle = new
 	act_toggle.Grant(quirk_mob)
 
