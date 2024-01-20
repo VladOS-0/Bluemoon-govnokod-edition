@@ -161,10 +161,23 @@
 	description = "No robots were hurt in the making of this drink."
 	color = "#08453b"
 	glass_icon_state = "robottearsglass"
-	synthetic_taste = "низкоуровневого программирования."
+	synthetic_taste = "подлагиваний в модуле эмоций."
 	glass_name = "glass of Robot Tears"
 	glass_desc = "No robots were hurt in the making of this drink."
 	boozepwr = 85
+	var/depressive = FALSE
+
+/datum/reagent/consumable/synthdrink/synthanol/robottears/synthetic_on_add(mob/living/carbon/human/M)
+	if(M.has_quirk(/datum/quirk/depression))
+		depressive = TRUE
+		to_chat(M, "<span class='nicegreen'>Под воздействием поглощённого реагента, депрессивные мысли в вашем модуле эмоций отходят на второй план...</span>")
+		M.remove_quirk(/datum/quirk/depression)
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression")
+
+/datum/reagent/consumable/synthdrink/synthanol/robottears/on_mob_end_metabolize(mob/living/M)
+	if(depressive)
+		to_chat(M, "<span class='boldannounce'>Вы фиксируете возвращение депрессивных мыслей с окончанием обработки напитка...</span>")
+		M.add_quirk(/datum/quirk/depression)
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary
 	name = "Trinary"
@@ -182,13 +195,13 @@
 	if (!M.has_language(/datum/language/machine))
 		knew_encoded = FALSE
 	if (!knew_encoded)
-		to_chat(M, "<span class='nicegreen'>Вы, наконец, знаете закодированный язык. Как вы раньше без него могли называть себя роботом?</span>")
+		to_chat(M, "<span class='nicegreen'>Теперь вы можете общаться на закодированном языке!</span>")
 		M.grant_language(/datum/language/machine, TRUE, TRUE, LANGUAGE_MIND)
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
-	if(prob(min(current_cycle/5, 2)))
-		M.say(pick("001011110010001", "110010010000101", "00001100001101", "01011000010101"), forced = "synthetic booze")
+	if(prob(min(current_cycle/5, 1)))
+		M.say(pick("001011110010001", "110010010000101", "00001100001101", "01011000010101"), forced = "synthetic booze", language = /datum/language/machine)
 
 /datum/reagent/consumable/synthdrink/synthanol/trinary/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -212,7 +225,7 @@
 
 /datum/reagent/consumable/synthdrink/synthanol/codelibre/synthetic_on_life(mob/living/carbon/M)
 	. = ..()
-	if(prob(min(current_cycle/5, 2.5)))
+	if(prob(min(current_cycle/10, 0.5)))
 		M.say("Viva la Synthetica!", forced = "synthetic booze", language = /datum/language/machine)
 
 /datum/reagent/consumable/synthdrink/synthanol/uplink
@@ -248,7 +261,7 @@
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return
-	if(prob(min(current_cycle/10,1)))
+	if(prob(min(current_cycle/10, 0.7)))
 		var/random = rand(1,4)
 		switch(random)
 			if(1)
@@ -391,12 +404,12 @@
 // СОБРАТЬ ТОСТЕР ПО СШК И НЕ ПОЛУЧИТЬ ПИЗДЫ ОТ ГЛАВНОГО МАГОСА. ЛИТАНИЯ, ПРОТОКОЛЫ, КОРОБКА БОЛТОВ. ПРОЧТИТЕ ИНСТРУКЦИЮ ПО ЭКСПЛУАТАЦИИ... ААА, ОШИБКА КОМПИЛЯЦИИ ПРОТОКОЛА СТОП НОЛЬ НОЛЬ НОЛЬ... ОЧЕВИДНО, КАК ЕЁ РЕШИТЬ! НУЖНО ВОССЛАВИТЬ БОГА МАШИНЫ... 0 0 0 1.. 2!!! ААА, БЛЯТЬ! НАРУШЕНИЕ ДВОИЧНОГО КОДА! ВОССЛАВЬТЕ БОГА МАШИНЫ!!!
 /datum/reagent/consumable/synthdrink/synthanol/holycode
 	name = "Omnissiah Blessing"
-	description = "<span class='synth'>The supreme object of devotion is the Machine God, an immanent, omniscient and omnipotent deity that governs all machinery and knowledge in the universe... </span>\n\nOkay, but this is just booze for robots, yeah?"
+	description = "The supreme object of devotion is the Machine God, an immanent, omniscient and omnipotent deity that governs all machinery and knowledge in the universe... Okay, but this is just booze for robots, yeah?"
 	color = "#bed700"
 	taste_description = "motor oil with... something holy..."
 	glass_icon_state = "holycode"
 	synthetic_taste = "священных литаний на двоичном коде..."
-	glass_name = "<span class='synth'>HOLY</span> glass of Omnissiah Blessing"
+	glass_name = "glass of Omnissiah Blessing"
 	glass_desc = "<span class='synth'>The supreme object of devotion is the Machine God, an immanent, omniscient and omnipotent deity that governs all machinery and knowledge in the universe... </span>\n\nOkay, but this is just booze for robots, yeah?"
 	boozepwr = 95 // Довольно крепкое
 	value = REAGENT_VALUE_VERY_RARE
@@ -405,7 +418,7 @@
 	var/ishallowed = 0 // Имеет трейт святого духа (0/1)
 	var/istechpriest = 0 // Носит робу техприеста или его работа имеет такое название (0/1)
 	var/omnissiah_rate = 0 // Принимает значение от 0 до 3 в зависимости от свойств выше. Влияет на положительные эффекты.
-	var/added_effect = FALSE // Напиток на время действия даёт синтам свечение как у культистов Ратвара
+	var/added_effect = FALSE // Напиток на время действия даёт синтам нимб, если у них уже нет рогов или нимба
 
 // Тот самый случай с оверрайдом on_mob_add и on_mob_life ради уникального эффекта для органиков
 /datum/reagent/consumable/synthdrink/synthanol/holycode/on_mob_add(mob/living/M, amount)
@@ -450,8 +463,9 @@
 				to_chat(drinker, "<span class='synth'>ПРИШЛО ВРЕМЯ ВОССЛАВИТЬ БОГА МАШИНЫ!</span>")
 		return
 
-	// У машин баффы значительно увеличиваются
-	omnissiah_rate = omnissiah_rate > 0 ? omnissiah_rate + 2 : omnissiah_rate
+	// У машин баффы значительно увеличиваются, если у них был хотя бы один балл
+	if(omnissiah_rate > 0)
+		omnissiah_rate += 2
 	synthetic_on_add(drinker)
 
 /datum/reagent/consumable/synthdrink/synthanol/holycode/on_mob_life(mob/living/carbon/M)
@@ -464,19 +478,27 @@
 				booze_power *= 0.7
 			M.drunkenness = max((M.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0)
 		// Забавные эффекты для техножрецов-органиков
-		if((min(omnissiah_rate + current_cycle/10, 5)))
+		if(prob(min((omnissiah_rate * current_cycle + 1)/20, 0.5)))
 			var/random_action = rand(1, 6)
 			switch(random_action)
 				if(1) // Самый редкий вариант
-					if(prob(20) && omnissiah_rate > 1)
+					if(prob(30) && omnissiah_rate > 1)
 						playsound(M, 'modular_bluemoon/vlad0s_staff/sound/praise_omnissiah.ogg', 50, FALSE)
 						M.emote("me", EMOTE_AUDIBLE, "славит Бога Машины!")
 				if(2)
-					M.emote("me", EMOTE_AUDIBLE, "что-то шепчет про превосходство ИИ...")
+					M.emote("me", EMOTE_AUDIBLE, "пытается прочитать литанию на двоичном коде, но запинается")
 				if(3)
-					M.say(pick("Вот бы сейчас стать боргом...", "Уверуйте в Омниссию, глупцы!", "В плоти нет правды, лишь предательство...", "Спаси нас, Омниссия, от слабости разума..."), forced = "synthetic booze")
+					M.say(pick("Уверуйте в Омниссию, глупцы!", "В плоти нет правды, лишь предательство!", "Спаси нас, Омниссия, от слабости разума..."), forced = "synthetic booze")
 				if(4)
-					M.say("Вы никогда не замечали, как прекрасны роботы?", forced = "synthetic booze")
+					if(M.get_idcard())
+						var/obj/item/card/id/card = M.get_idcard()
+						var/job = card.assignment ? ckey(card.get_job_name()) : null
+						if(job == "Roboticist")
+							M.emote("me", EMOTE_AUDIBLE, "поглаживает свою ID-карту")
+							M.say("Хорошо работать робототехником... богоугодно...", forced = "synthetic booze")
+						else
+							M.say("Надо было устроиться робототехником...", forced = "synthetic booze")
+					M.emote("me", EMOTE_AUDIBLE, "рассуждает о превратностях работы робототехником")
 				if(5)
 					if(prob(50))
 						M.emote("me", EMOTE_AUDIBLE, "тихо молится Омниссии...")
@@ -501,7 +523,7 @@
 			M.adjustFireLoss(-0.3 * omnissiah_rate)
 			M.adjustToxLoss(-0.3 * omnissiah_rate)
 			M.adjustStaminaLoss(-1 * omnissiah_rate)
-			if(prob(3))
+			if(prob(0.4))
 				to_chat(M, "<span class='synth'>Несмотря на всю слабость своей плоти, вы чувствуете, что Омниссия исцеляет ваше бренное тело, награждая вас за верность...</span>")
 		return
 	synthetic_on_life(M)
@@ -511,23 +533,25 @@
 	if(omnissiah_rate)
 		to_chat(M, "<span class='synth'>Вы фиксируете благослвление Машинного Бога на своём корпусе...</span>")
 		playsound(M, 'sound/ambience/ambiholy.ogg', 20, FALSE)
-	M.visible_message("<span class='synth'>[M] начинает излучать священный свет!</span>")
-	M.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -FIRE_LAYER))
-	added_effect = TRUE
+	if(M.client?.prefs?.features && !M.client?.prefs?.features["horns"])
+		M.visible_message("<span class='synth'>[M] начинает излучать священный свет!</span>")
+		M.client.prefs.features["horns"] = "halo"
+		M.update_body()
+		added_effect = TRUE
 
 /datum/reagent/consumable/synthdrink/synthanol/holycode/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
 	// Похожая система, что и у органиков
-	if((min(omnissiah_rate + current_cycle/10, 5)))
+	if(prob(min((omnissiah_rate * current_cycle + 1)/20, 0.5)))
 		var/random_action = rand(1, 4)
 		switch(random_action)
 			if(1) // Самый редкий вариант
-				if(prob(10) && omnissiah_rate > 1)
+				if(prob(25) && omnissiah_rate > 1)
 					M.emote("me", EMOTE_AUDIBLE, "читает литанию Омниссии, но что-то идёт не так...")
 					playsound(M, 'modular_bluemoon/vlad0s_staff/sound/praise_omnissiah_error.ogg', 50, FALSE)
 			if(2)
 				if(prob(50))
-					M.emote("me", EMOTE_AUDIBLE, "шепчет: \"0010100001000010\"...")
+					M.emote("me", EMOTE_AUDIBLE, "шепчет литанию на двоичном коде...")
 					playsound(M, 'sound/ambience/ambiholy.ogg', 20, FALSE)
 			if(3)
 				to_chat(M, "<span class='synth'>Ваш позитронный мозг проясняется светом Омниссии...</span>")
@@ -542,7 +566,7 @@
 		M.adjustFireLoss(-0.4 * omnissiah_rate)
 		M.adjustToxLoss(-0.4 * omnissiah_rate)
 		M.adjustStaminaLoss(-1 * omnissiah_rate)
-		if(prob(3))
+		if(prob(0.4))
 			to_chat(M, "<span class='synth'>Пробоины в вашем корпусе ярко светятся, после чего начинают медленно зарастать живым металлом...</span>")
 
 /datum/reagent/consumable/synthdrink/synthanol/holycode/on_mob_end_metabolize(mob/living/M)
@@ -551,7 +575,9 @@
 		return
 	if(added_effect)
 		to_chat(M, "<span class='warning'>С исчезновением реагента из вашей системы, странное свечение перестаёт исходить из вашего корпуса...</span>")
-		M.cut_overlays()
+		M.visible_message("<span class='notice'>С тихим металлическим треском нимб вокруг корпуса [M] распадается...</span>")
+		M.client.prefs.features["horns"] = null
+		M.update_body()
 	else if(omnissiah_rate > 0)
 		to_chat(M, "<span class='warning'>Священные машинные литания медленно исчезают из вашей головы...</span>")
 

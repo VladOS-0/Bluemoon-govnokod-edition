@@ -457,7 +457,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(slurring)
 		// BLUEMOON EDIT START - теперь синтетики заикаются более с%инт$тич!ески
 		if (isrobotic(src))
-			var/replace_characters = slurring > 60 ? TRUE : FALSE
+			var/replace_characters = (slurring > 60)
 			message = machine_slur(message, replace_characters, slurring)
 		// BLUEMOON EDIT END
 		else

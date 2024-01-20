@@ -197,15 +197,17 @@
 	var/chance_for_big_bullshit = strength / 8
 	message = html_decode(message)
 	var/leng = length(message)
+	var/rawchar = ""
+	var/char = ""
 	var/final_text = ""
-	for(var/i = 1, i < leng, i++)
-		var/char = message[i]
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = char = message[i]
 		if(prob(strength))
 			if(replace_characters)
 				char = ""
-			char += pick("^", "??", "$", "#", "@", "#$@", "&", "!!")
+			char += "[pick("'", "??", "$", "#", "@", "#$@", "&", "!!")]"
 			if(prob(chance_for_big_bullshit))
-				char += pick("...bzzz...",  "SSSSSS", "... ERROR: MICROPHONE FAILURE...", "..beep...")
+				char += "[pick("...bzzz...",  "SSSSSS", "... ERROR: MICROPHONE FAILURE...", "..beep...")]"
 		final_text += char
 	return sanitize(final_text)
 // BLUEMOON ADD END
