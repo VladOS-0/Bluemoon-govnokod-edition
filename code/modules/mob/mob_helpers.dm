@@ -190,6 +190,25 @@
 		message = stutter(message)
 	return message
 
+// BLUEMOON ADD START - заикание для роботов
+///Slur proc for robotic humans
+/proc/machine_slur(message, replace_characters = FALSE, strength = 20)
+	strength = min(strength, 40)
+	var/chance_for_big_bullshit = strength / 8
+	message = html_decode(message)
+	var/leng = length(message)
+	var/final_text = ""
+	for(var/i = 1, i < leng, i++)
+		var/char = message[i]
+		if(prob(strength))
+			if(replace_characters)
+				char = ""
+			char += pick("^", "??", "$", "#", "@", "#$@", "&", "!!")
+			if(prob(chance_for_big_bullshit))
+				char += pick("...bzzz...",  "SSSSSS", "... ERROR: MICROPHONE FAILURE...", "..beep...")
+		final_text += char
+	return sanitize(final_text)
+// BLUEMOON ADD END
 
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
 	text = html_decode(text)

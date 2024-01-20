@@ -79,6 +79,13 @@
 	results = list(/datum/reagent/consumable/synthdrink/synthanol/synthignon = 10)
 	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol = 5, /datum/reagent/consumable/ethanol/wine = 5)
 
+/datum/chemical_reaction/holycode
+	name = "Omnissiah Blessing"
+	id = /datum/reagent/consumable/synthdrink/synthanol/holycode
+	results = list(/datum/reagent/consumable/synthdrink/synthanol/holycode = 15)
+	required_reagents = list(/datum/reagent/consumable/synthdrink/synthanol/synthignon = 5, /datum/reagent/water/holywater = 5, /datum/reagent/gold = 5)
+	mix_message = "Смесь испускает звуки машинных литаний..."
+
 /datum/chemical_reaction/ultralube
 	name = "Ultra Lube"
 	id = /datum/reagent/consumable/synthdrink/synthanol/ultralube
