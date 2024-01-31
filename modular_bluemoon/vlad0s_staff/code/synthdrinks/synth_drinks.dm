@@ -466,7 +466,7 @@
 	// У машин баффы значительно увеличиваются, если у них был хотя бы один балл
 	if(omnissiah_rate > 0)
 		omnissiah_rate += 2
-	synthetic_on_add(drinker)
+	. = ..()
 
 /datum/reagent/consumable/synthdrink/synthanol/holycode/on_mob_life(mob/living/carbon/M)
 	current_cycle++
@@ -525,15 +525,15 @@
 			M.adjustStaminaLoss(-1 * omnissiah_rate)
 			if(prob(0.4))
 				to_chat(M, "<span class='synth'>Несмотря на всю слабость своей плоти, вы чувствуете, что Омниссия исцеляет ваше бренное тело, награждая вас за верность...</span>")
-		return
-	synthetic_on_life(M)
+	else
+		synthetic_on_life(M)
 
 /datum/reagent/consumable/synthdrink/synthanol/holycode/synthetic_on_add(mob/living/carbon/human/M)
 	. = ..()
 	if(omnissiah_rate)
 		to_chat(M, "<span class='synth'>Вы фиксируете благослвление Машинного Бога на своём корпусе...</span>")
 		playsound(M, 'sound/ambience/ambiholy.ogg', 20, FALSE)
-	if(M.client?.prefs?.features && !M.client?.prefs?.features["horns"])
+	if(M.client?.prefs?.features && !M.client.prefs.features["horns"])
 		M.visible_message("<span class='synth'>[M] начинает излучать священный свет!</span>")
 		M.client.prefs.features["horns"] = "halo"
 		M.update_body()
