@@ -12,7 +12,8 @@
 	embedding = list("pain_mult" = 6, "embed_chance" = 50, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	resistance_flags = FIRE_PROOF
 	custom_materials = list(/datum/material/iron=12000, /datum/material/bluespace=4000, /datum/material/titanium=2000)
-	force = 5
+	slot_flags = ITEM_SLOT_POCKETS | ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	force = 5 // Не поощряем удары в лицо
 	throwforce = 5
 	wound_bonus = 4
 	bare_wound_bonus = 3
@@ -54,6 +55,7 @@
 
 /obj/item/kitchen/knife/backstabber/attack_self(mob/user)
 	if(istype(user, /mob/living/carbon) && can_transform)
+		// Жёстко накопипастил с нуллродов, целый прок говнокода
 		var/obj/item/kitchen/knife/backstabber/new_knife
 		var/list/possible_knives = subtypesof(/obj/item/kitchen/knife/backstabber)
 		var/list/display_names = list()
@@ -157,10 +159,6 @@
 				if(istype(gear, stylish_gear))
 					style_rate *= 0.9
 	style_rate = clamp(style_rate, 0.5, 2)
-	if(style_rate < 1)
-		to_chat(murderer, "<span class='notice'>\"Это было стильно! Даю этому убийству [round((1 - style_rate) * 100)] очков!\"</span>")
-	if(style_rate > 1)
-		to_chat(murderer, "<span class='notice'>\"Фу! Настоящие профессионалы не делают это в простой грязной одежде! Минус [round((style_rate - 1) * 100)] очков!\"</span>")
 	return style_rate
 
 /obj/item/kitchen/knife/backstabber/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -177,6 +175,9 @@
 		to_chat(user, "<span class='warning'>Я слишком ПРОФЕССИОНАЛЕН, чтобы порезаться собственным кинжалом!</span>")
 		return
 	user.DelayNextAction(CLICK_CD_MELEE) // На всякий
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>В издевательствах над трупами нет шарма!</span>")
+		return
 	if(user.lying || (M.dir != user.dir && !M.lying)) // Чтобы мамины робустеры не абузили ползки
 		to_chat(user, "<span class='warning'>Какой позорный удар! Настоящие профессионалы бьют В СПИНУ!</span>")
 		. = ..()
@@ -274,6 +275,11 @@
 	var/style = check_style(user)
 	if(!silent_backstab && !speech_after_backstab)
 		style *= 1.1 // Без фразы не так стильно!
+	if(style < 1)
+		to_chat(user, "<span class='notice'>\"Это было стильно! Даю этому убийству [round((1 - style) * 100)] очков!\"</span>")
+	if(style > 1)
+		to_chat(user, "<span class='notice'>\"Фу! Настоящие профессионалы не делают это в простой грязной одежде! Минус [round((style - 1) * 100)] очков!\"</span>")
+	// Уходим на кулдаун
 	go_on_cooldown(style)
 
 /obj/item/kitchen/knife/backstabber/proc/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
