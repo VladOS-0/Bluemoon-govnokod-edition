@@ -53,7 +53,7 @@
 	visor_flags = STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEJUMPSUIT
 	item_flags = IMMUTABLE_SLOW
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/device/cooler)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	mutantrace_variation = STYLE_DIGITIGRADE
