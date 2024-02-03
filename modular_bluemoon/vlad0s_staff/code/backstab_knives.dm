@@ -39,12 +39,17 @@
 		new_desc += "\n\n<span class='warning'>It's unlikely that this knife can stab anyone right now... give it some time</span>"
 	if(silent_backstab)
 		new_desc += "\n\n<span class='notice'>Apparently, this knife is VERY good for covert killings</span>"
+	else
+		if(speech_after_backstab)
+			new_desc += "\n\n<span class='notice'>It seems, that after-backstab-speech subsystem is currently <span class='boldnotice'>ON</span> and can be toggled with <span class='boldnotice'>Alt+Click!</span></span>"
+		else
+			new_desc += "\n\n<span class='notice'>It seems, that after-backstab-speech subsystem is currently <span class='boldnotice'>OFF</span> and can be toggled with <span class='boldnotice'>Alt+Click!</span></span>"
 	if(peaceful)
 		new_desc += "\n\n<span class='notice'>Don't you think this knife is uncapable of killing someone at all?</span>"
 	desc = new_desc
 
 /obj/item/kitchen/knife/backstabber/attack_self(mob/user)
-	if(user.mind && istype(user, /mob/living/carbon) && can_transform)
+	if(istype(user, /mob/living/carbon) && can_transform)
 		var/obj/item/kitchen/knife/backstabber/new_knife
 		var/list/possible_knives = subtypesof(/obj/item/kitchen/knife/backstabber)
 		var/list/display_names = list()
@@ -66,10 +71,31 @@
 
 		if(new_knife)
 			new_knife.can_transform = FALSE
+			new_knife.update_description()
 			qdel(src)
 			user.put_in_active_hand(new_knife)
 	else
 		return ..()
+
+/obj/item/kitchen/knife/backstabber/AltClick(mob/living/carbon/user)
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	toggle_speaker()
+	return TRUE
+
+/obj/item/kitchen/knife/backstabber/proc/toggle_speaker()
+	if(speech_after_backstab)
+		if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
+			var/mob/living/carbon/user = loc
+			to_chat(user, "<span class='boldnotice'>Вы отключаете воспроизведение фраз после убийства у [src.name]. Ассоциация разочарована в вас.</span>")
+		speech_after_backstab = FALSE
+	else
+		if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
+			var/mob/living/carbon/user = loc
+			to_chat(user, "<span class='boldnotice'>Вы вновь включаете воспроизведение фраз после убийства у [src.name]. Так держать!</span>")
+		speech_after_backstab = TRUE
+	update_description()
 
 /obj/item/kitchen/knife/backstabber/proc/go_on_cooldown(cooldown_multiplier = 1)
 	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
@@ -117,7 +143,7 @@
 		else
 			for(var/stylish_gear in stylish_clothes)
 				if(istype(gear, stylish_gear))
-					style_rate *= 0.8
+					style_rate *= 0.9
 	style_rate = clamp(style_rate, 0.5, 2)
 	if(style_rate < 1)
 		to_chat(murderer, "<span class='notice'>\"Это было стильно! Даю этому убийству [round((1 - style_rate) * 100)] очков!\"</span>")
@@ -138,7 +164,8 @@
 	if(user == M)
 		to_chat(user, "<span class='warning'>Я слишком ПРОФЕССИОНАЛЕН, чтобы порезаться собственным кинжалом!</span>")
 		return
-	if(M.dir != user.dir && !M.lying)
+	user.DelayNextAction(CLICK_CD_MELEE)
+	if(user.lying || (M.dir != user.dir && !M.lying))
 		to_chat(user, "<span class='warning'>Какой позорный удар! Настоящие профессионалы бьют В СПИНУ!</span>")
 		. = ..()
 		return
@@ -195,13 +222,13 @@
 		var/job_on_the_card = ""
 		if(victim.get_idcard())
 			var/obj/item/card/id/card = victim.get_idcard()
-			job_on_the_card = card.assignment ? card.assignment : ""
+			job_on_the_card = card.assignment ? ckey(card.get_job_name()) : ""
 			job_on_the_card = lowertext(job_on_the_card)
 		if(HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY_SUPER) || HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY))
 			spy_phrases = list(
 				"Это ЖИРНАЯ точка в твоей жизни!",
 				"Ну, толстяк, даже не ловко как-то!")
-		if(findtext(job_on_the_card, "security") || findtext(job_on_the_card, "detective"))
+		if(findtext(job_on_the_card, "security") || findtext(job_on_the_card, "detective") || findtext(job_on_the_card, "detective"))
 			spy_phrases = list(
 				"Может быть, в следующий раз пришлют настоящего бойца!",
 				"Тебе поставят памятник \"Зелёный Салага\"!")
@@ -211,6 +238,8 @@
 				"Судя по вашей кардиограмме... вы мертвы!")
 		user.say(pick(spy_phrases), forced = "backstab")
 	var/style = check_style(user)
+	if(!silent_backstab && !speech_after_backstab)
+		style *= 1.1
 	go_on_cooldown(style)
 
 /obj/item/kitchen/knife/backstabber/proc/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
@@ -359,7 +388,7 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	name = "Мануал искусства ударов в спину"
 	desc = "Довольно подозрительно, не так ли?"
 	default_raw_text = {"<h1>Пояснительная записка к устройству RSCW "Нож"</h1>© InteQ, все права защищены
-	<p>Поздравляю с новой работой, ассасин! У тебя в руках оружие невероятной силы, однако любым оружием нужно уметь
+	<p>Поздравляю с новой работой, агент! У тебя в руках оружие невероятной силы, однако любым оружием нужно уметь
 	пользоваться! Нож, который ты можешь найти в этой коробке, не такой простой, каким кажется на первый взгляд. Один удар
 	в спину или в лежачего противника - и обидчик, скорее всего отправится к праотцам (если, конечно, такие у него имеются). Удары же во все остальные
 	места - довольно позорная для доблестного агента ошибка и особого успеха не принесут. Также у всех ножей есть время перезарядки,
@@ -370,7 +399,8 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	резню в окровавленных скафандрах, Ассоциация Ассасинов InteQ ввела требования к дресскоду для своих скрытных сотрудников:
 	отныне хождение в окровавленных обмотках будет повышать время перезарядки, а красивый костюм - понижать! В комплекте идёт
 	несколько стильных вещей для максимально красивых убийств! Для того, чтобы его носитель и звучал как джентльмен, нож будет
-	выдавать реплику от имени агента после каждого удара в спину... по крайней мере, большинство ножей.</p>
+	выдавать реплику от имени агента после каждого удара в спину... по крайней мере, большинство ножей. Ты всегда можешь
+	выключить эту функцию, но это немного повысит время перезарядки!</p>
 	<br>
 	<h3>Разновидности</h3>
 	<p>Использовав нож в руке, ты можешь выбрать желаемый его образ. У всех их есть свои особенности!</p><ol>
