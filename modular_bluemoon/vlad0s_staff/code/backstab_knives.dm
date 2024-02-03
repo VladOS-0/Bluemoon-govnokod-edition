@@ -1,4 +1,7 @@
-// МГЕ МУЖИКИ!!!
+/**
+ * (МГЕ, МУЖИКИ!)
+ * Несколько ножей, мгновенно убивающих жертв в спину.
+ */
 
 /obj/item/kitchen/knife/backstabber
 	name = "Strange Butterfly Knife"
@@ -15,22 +18,23 @@
 	bare_wound_bonus = 3
 	attack_verb = list("facestabbed")
 	bayonet = FALSE
-	var/can_transform = TRUE
-	var/unique = FALSE
-	var/cooldown_icon_state = "butterflyknife"
-	var/start_cooldown_message = "складывается с тихим щелчком"
-	var/end_cooldown_message = "внезапно сам собой раскладывается, готовый к новым убийствам"
-	var/cooldown_time = 30 SECONDS
-	var/is_on_cooldown = FALSE
-	var/silent_backstab = FALSE
-	var/peaceful = FALSE
-	var/speech_after_backstab = TRUE
-	var/custom_backstab_sound = ""
+	var/can_transform = TRUE // Может ли быть превращён в другой нож. Изменяется на FALSE после превращения.
+	var/unique = FALSE // Уникальная вариация. В неё нельзя превратить другой нож.
+	var/cooldown_icon_state = "butterflyknife" // Иконка ножа, пока он находится на кулдауне.
+	var/start_cooldown_message = "складывается с тихим щелчком" // Сообщение при начале кулдауна, воспроизводится носителю
+	var/end_cooldown_message = "внезапно сам собой раскладывается, готовый к новым убийствам" // при окончании кулдауна
+	var/cooldown_time = 30 SECONDS // Время кулдауна
+	var/is_on_cooldown = FALSE // Находится ли нож сейчас на кулдауне
+	var/silent_backstab = FALSE // Убивает ли полностью бесшумно
+	var/peaceful = FALSE // Не является мирной вариацией, которая не может навредить
+	var/speech_after_backstab = TRUE // Воспроизводятся ли фразы шпиона™ после убийства. Если активен silent_backstab, то они в любом случае воспроизводиться не будут. Может переключаться игроком.
+	var/custom_backstab_sound = "" // Кастомный звук удара в спину (без него будет воспроизводиться звук крита из TF2)
 
 /obj/item/kitchen/knife/backstabber/Initialize(mapload)
 	. = ..()
 	update_description()
 
+// Позволяет узнать состояние ножа
 /obj/item/kitchen/knife/backstabber/proc/update_description()
 	var/new_desc = initial(desc)
 	if(can_transform)
@@ -39,7 +43,7 @@
 		new_desc += "\n\n<span class='warning'>It's unlikely that this knife can stab anyone right now... give it some time</span>"
 	if(silent_backstab)
 		new_desc += "\n\n<span class='notice'>Apparently, this knife is VERY good for covert killings</span>"
-	else
+	else // Если он убивает тихо, то не важно, включен ли спикер
 		if(speech_after_backstab)
 			new_desc += "\n\n<span class='notice'>It seems, that after-backstab-speech subsystem is currently <span class='boldnotice'>ON</span> and can be toggled with <span class='boldnotice'>Alt+Click!</span></span>"
 		else
@@ -71,7 +75,11 @@
 
 		if(new_knife)
 			new_knife.can_transform = FALSE
+			if(is_on_cooldown)
+				new_knife.go_on_cooldown()
+			new_knife.speech_after_backstab = speech_after_backstab
 			new_knife.update_description()
+			to_chat(user, "<span class='warning'>[src.name] загорается ярким светом и исчезает, а в руках у вас появляется новенький [new_knife]!</span>")
 			qdel(src)
 			user.put_in_active_hand(new_knife)
 	else
@@ -79,14 +87,14 @@
 
 /obj/item/kitchen/knife/backstabber/AltClick(mob/living/carbon/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE) || silent_backstab)
 		return
 	toggle_speaker()
 	return TRUE
 
 /obj/item/kitchen/knife/backstabber/proc/toggle_speaker()
 	if(speech_after_backstab)
-		if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
+		if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon)) // Воспроизводится только тому, у кого он в инвентаре
 			var/mob/living/carbon/user = loc
 			to_chat(user, "<span class='boldnotice'>Вы отключаете воспроизведение фраз после убийства у [src.name]. Ассоциация разочарована в вас.</span>")
 		speech_after_backstab = FALSE
@@ -97,16 +105,19 @@
 		speech_after_backstab = TRUE
 	update_description()
 
+// Запуск кулдауна. Время может быть умножено на соответствующий мультипликатор
 /obj/item/kitchen/knife/backstabber/proc/go_on_cooldown(cooldown_multiplier = 1)
 	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
 		var/mob/living/carbon/user = loc
 		to_chat(user, "<span class='boldnotice'>[src.name] [start_cooldown_message].</span>")
-	if(cooldown_icon_state)
+	if(cooldown_icon_state) // Меняем иконку на кулдауновую, если таковая имеется
 		icon_state = cooldown_icon_state
 	is_on_cooldown = TRUE
 	update_description()
+	// Возвращаем в исходное положение по окончанию кулдауна с учётом мультипликатора
 	addtimer(CALLBACK(src, .proc/end_stab_cooldown), cooldown_time * cooldown_multiplier)
 
+// Окончание кулдауна
 /obj/item/kitchen/knife/backstabber/proc/end_stab_cooldown()
 	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
 		var/mob/living/carbon/user = loc
@@ -116,6 +127,7 @@
 	is_on_cooldown = FALSE
 	update_description()
 
+// Проверка одежды носителя. Возвращает множитель стиля, на который после будет умножено время кулдауна
 /obj/item/kitchen/knife/backstabber/proc/check_style(mob/living/carbon/murderer)
 	var/style_rate = 1
 	var/list/stylish_clothes = list(
@@ -164,31 +176,45 @@
 	if(user == M)
 		to_chat(user, "<span class='warning'>Я слишком ПРОФЕССИОНАЛЕН, чтобы порезаться собственным кинжалом!</span>")
 		return
-	user.DelayNextAction(CLICK_CD_MELEE)
-	if(user.lying || (M.dir != user.dir && !M.lying))
+	user.DelayNextAction(CLICK_CD_MELEE) // На всякий
+	if(user.lying || (M.dir != user.dir && !M.lying)) // Чтобы мамины робустеры не абузили ползки
 		to_chat(user, "<span class='warning'>Какой позорный удар! Настоящие профессионалы бьют В СПИНУ!</span>")
 		. = ..()
 		return
+	// Летальные ножи нельзя использовать, будучи пацифистом
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !peaceful)
 		to_chat(user, "<span class='warning'>Ты не можешь заставить себя сделать это!</span>")
 		if(!silent_backstab)
 			user.visible_message("<span class='boldwarning'>[user] заносит [src.name] над спиной [M], но вовремя останавливается! </span>")
 		return
-	if(!silent_backstab)
+	if(!silent_backstab) // Воспроизводим сообщение об ударе в спину, если нож не тихий
 		user.visible_message("<span class='boldwarning'>[M] не успевает и обернуться, как [user] с невероятной точностью вонзает [src.name] [M.ru_emu()] в спину! </span>")
+	// Жертва бессмертна
 	if((M.status_flags & GODMODE || HAS_TRAIT(M, TRAIT_NODEATH)) && !peaceful)
 		if(!silent_backstab)
 			M.visible_message("<span class='warning'>[src.name] необъяснимым образом рикошетит от спины жертвы...</span>")
 		return
-	backstab(M, user)
+	// Какие-то имбовые мобы
+	if(M.health > 300 && !peaceful)
+		if(!silent_backstab)
+			M.visible_message("<span class='warning'>[src.name] наносит страшный удар, который, однако, не может убить [M]!</span>")
+			user.do_attack_animation(M)
+		M.apply_damage(250, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
+		playsound(M, 'sound/weapons/slash.ogg', 100, 1)
+		go_on_cooldown()
+		return
+	backstab(M, user) // Собственно, наносим удар в спину
 
 /obj/item/kitchen/knife/backstabber/proc/backstab(mob/living/carbon/victim, mob/living/carbon/user)
+	// Бессмертный моб. При суициде он всё ещё может пройти проверки выше
 	if((victim.status_flags & GODMODE || HAS_TRAIT(victim, TRAIT_NODEATH)) && !peaceful)
 		return
+	// Логи
 	if(victim == user)
 		log_admin("[user] ([key_name(user)]) suicided, backstabbing himself with [src.name]")
 	else
 		log_admin("[user] ([key_name(user)]) backstabbed [victim] ([key_name(victim)]) with [src.name]")
+	// Звук и анимация убийства, а также крик жертвы с определённым шансом
 	if(!silent_backstab)
 		if(user != victim)
 			user.do_attack_animation(victim)
@@ -204,14 +230,17 @@
 					victim.emote("moan")
 				else
 					victim.emote(pick("scream", "realagony"))
+	// deathgasp тут немного мешался, так что я решил его убрать с помощью комы. Не самое лучшее решение, даа
 	var/enforced_deathcoma = FALSE
 	if(!peaceful && !HAS_TRAIT(victim, TRAIT_DEATHCOMA))
 		ADD_TRAIT(victim, TRAIT_DEATHCOMA, "backstab")
 		enforced_deathcoma = TRUE
-	apply_backstab_effect(victim, user)
+	apply_backstab_effect(victim, user) // Сам эффект ножа, убивающий жертву
 	if(enforced_deathcoma)
 		REMOVE_TRAIT(victim, TRAIT_DEATHCOMA, "backstab")
+	// Произносим фразу, если спикер включён
 	if(!silent_backstab && speech_after_backstab && !user.mind?.miming)
+		// Общие фразы
 		var/list/spy_phrases = list(
 			"Вы испачкали мне костюм!",
 			"О, извините!",
@@ -219,27 +248,32 @@
 			"Спасибо, что были так любезны...",
 			"Простите, что без приглашения!",
 			"Обычный рабочий день...")
+		// Узнаём работу по карточке жертвы
 		var/job_on_the_card = ""
 		if(victim.get_idcard())
 			var/obj/item/card/id/card = victim.get_idcard()
 			job_on_the_card = card.assignment ? ckey(card.get_job_name()) : ""
 			job_on_the_card = lowertext(job_on_the_card)
+		// Рофлы над сверхтяжёлыми
 		if(HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY_SUPER) || HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY))
 			spy_phrases = list(
 				"Это ЖИРНАЯ точка в твоей жизни!",
 				"Ну, толстяк, даже не ловко как-то!")
-		if(findtext(job_on_the_card, "security") || findtext(job_on_the_card, "detective") || findtext(job_on_the_card, "detective"))
+		// Рофлы над офицерами
+		if(findtext(job_on_the_card, "security") || findtext(job_on_the_card, "detective") || findtext(job_on_the_card, "warden"))
 			spy_phrases = list(
 				"Может быть, в следующий раз пришлют настоящего бойца!",
 				"Тебе поставят памятник \"Зелёный Салага\"!")
+		// Рофлы над медиками
 		if(findtext(job_on_the_card, "medic") || findtext(job_on_the_card, "doctor") || findtext(job_on_the_card, "virolog") || findtext(job_on_the_card, "geneti"))
 			spy_phrases = list(
 				"Всё-таки смех - лучшее лекарство!",
 				"Судя по вашей кардиограмме... вы мертвы!")
 		user.say(pick(spy_phrases), forced = "backstab")
+	// Проверка то, насколько стильным было убийство, чтобы изменить итоговый кулдаун
 	var/style = check_style(user)
 	if(!silent_backstab && !speech_after_backstab)
-		style *= 1.1
+		style *= 1.1 // Без фразы не так стильно!
 	go_on_cooldown(style)
 
 /obj/item/kitchen/knife/backstabber/proc/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
@@ -251,7 +285,7 @@
 /obj/item/kitchen/knife/backstabber/suicide_act(mob/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		user.visible_message("<span class='suicide'>[user] заносит над собой [src.name], но не решается нанести удар, падая на землю и начиная плакать от беспомощности!</span>")
-		user.emote("cry")
+		user.emote("cry") // gonna cry?
 		return (SHAME)
 	if(peaceful || is_on_cooldown)
 		if(!silent_backstab)
@@ -262,6 +296,7 @@
 	backstab(user, user)
 	return (BRUTELOSS)
 
+// Супер-стелсовый нож
 /obj/item/kitchen/knife/backstabber/silent
 	name = "Your Eternal Reward"
 	desc  = "It seems to be a REALLY stealthy knife"
@@ -278,20 +313,22 @@
 	if(victim != user)
 		to_chat(user, "<span class='boldwarning'>Ты с невероятной точностью вонзаешь [src.name] в спину [victim], после чего [victim.ru_ego()] тело оседает на землю в беззвучном крике и становится невидимым!</span>")
 	var/initial_alpha = victim.alpha
-	animate(victim, alpha = 0, time = 1 SECONDS)
+	animate(victim, alpha = 0, time = 1 SECONDS) // жертва исчезает
 	victim.apply_damage(75, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 	victim.death(FALSE)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(victim_fade_in), victim, initial_alpha, 0.3 SECONDS), 10 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(victim_fade_in), victim, initial_alpha, 0.3 SECONDS), 10 SECONDS) // появляется через 10 секунд
 
+// Такая себе реализация через глобальный прок, но мне было лень придумывать более адекватное решение, не привязанное к ножу
 proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	animate(target, alpha = required_alpha, time = fade_time)
 	target.visible_message("<span class='warning'>Тело [target] внезапно появляется...</span>")
 
+// Сосулька (фановое)
 /obj/item/kitchen/knife/backstabber/icicle
 	name = "Strange Icicle"
 	desc = "A very sharp piece of ice. Why this thing looks like you can stab someone in back with it?"
 	cooldown_icon_state = null
-	cooldown_time = 40 SECONDS
+	cooldown_time = 35 SECONDS
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "lollipop_stick"
 	item_state = "lollipop_stick"
@@ -300,8 +337,9 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 
 /obj/item/kitchen/knife/backstabber/icicle/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
 	victim.visible_message("<span class='warning'>[victim] внезапно застывает и превращается в ледяную статую!</span>")
+	// Создаём статую в виде жертвы
 	var/obj/structure/statue/custom/icicle_knife_statue/new_statue = new(get_turf(victim))
-	new_statue.alpha = 40
+	new_statue.alpha = 40 // Она сначала еле видима, потом становится почти полупрозрачной
 	new_statue.set_visuals(victim)
 	new_statue.set_custom_materials(list(/datum/material/snow=MINERAL_MATERIAL_AMOUNT*5))
 	var/mutable_appearance/ma = victim
@@ -309,22 +347,23 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	new_statue.name = "ice statue of [ma.name]"
 	new_statue.desc = "A statue depicting [ma.name], made from ice... This thing feels strange..."
 	new_statue.victim = victim
-	victim.forceMove(new_statue)
+	victim.forceMove(new_statue) // Прячем в статую жертву
 	victim.death(FALSE)
-	animate(new_statue, alpha = 160, time = 1 SECONDS)
+	animate(new_statue, alpha = 160, time = 1 SECONDS) // Статуя появляется
 
 /obj/structure/statue/custom/icicle_knife_statue
 	name = "ice statue"
-	var/mob/living/carbon/victim = null
+	var/mob/living/carbon/victim = null // Жертва внутри статуи
 
 /obj/structure/statue/custom/icicle_knife_statue/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/eject_victim), 1 MINUTES)
+	addtimer(CALLBACK(src, .proc/eject_victim), 1 MINUTES) // Плавится через одну минуту
 
 /obj/structure/statue/custom/icicle_knife_statue/proc/eject_victim(delete_statue = TRUE)
 	if(victim && !QDELETED(victim))
 		victim.forceMove(get_turf(src))
 		victim.visible_message("<span class='boldwarning'>[victim.name] выпадает из [name]!</span>")
+		playsound(src, "bodyfall", 30, 1)
 	if(delete_statue)
 		qdel(src)
 
@@ -337,10 +376,10 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(default_unfasten_wrench(user, W))
 			return
+		// Плавим горелкой
 		if(W.tool_behaviour == TOOL_WELDER)
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
-
 			user.visible_message("<span class='notice'>[user] начинает плавить [src.name].</span>", "<span class='notice'>Вы плавите [src.name]...</span>")
 			if(W.use_tool(src, user, 70, volume=50))
 				user.visible_message("<span class='notice'>[user] расплавляет [src.name].</span>", "<span class='notice'>Вы успешно расплавили [src.name]...</span>")
@@ -348,6 +387,7 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 			return
 	return ..()
 
+// Вампирический ножик
 /obj/item/kitchen/knife/backstabber/kunai
 	name = "Kunai"
 	desc = "A very sharp kunai, suitable for the finest of ninjas"
@@ -359,13 +399,16 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	end_cooldown_message = "снова удобно сидит в руке предприимчивого ниндзя"
 
 /obj/item/kitchen/knife/backstabber/kunai/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
+	// Лечим ввсе типы урона на 1/3 от здоровья жертвы
 	if(victim != user && victim.health > 0)
 		var/healing_amount = victim.health / 3
+		healing_amount = clamp(healing_amount, 0, 70)
 		user.heal_overall_damage(healing_amount, healing_amount, healing_amount, FALSE, FALSE, TRUE)
 		to_chat(user, "<span class='nicegreen'>Кажется, [src.name] направляет в ваше тело часть жизненной энергии жертвы!</span>")
 	victim.apply_damage(100, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 	victim.death(FALSE)
 
+// Коробка с ножом, мануалом к ножу и всякими безделушками
 /obj/item/storage/box/backstabber_kit
 	name = "assasination kit"
 	desc = "Suspicious as fuck..."
@@ -384,6 +427,7 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 
+// Мануал к ножу
 /obj/item/paper/guides/backstabber
 	name = "Мануал искусства ударов в спину"
 	desc = "Довольно подозрительно, не так ли?"
@@ -413,7 +457,7 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	<li><b>Сосулька</b> - грозное оружие, несмотря на своё название. Не наносит урона, но мгновенно убивает цель, тело которой
 	превращается в ледяную статую. Статуя сама собой растает через минуту, но также может быть расплавлена сваркой или просто
 	разбита, после чего тело жертвы выпадет из неё.
-	Перезарядка: <b>40 секунд</b></li>
+	Перезарядка: <b>35 секунд</b></li>
 	<li><b>Кунай</b> - орудие настоящих ниндзя. При ударе наносит 100 единиц физического урона и мгновенно убивает жертву, а
 	также крадёт часть её здоровья, которое у неё было до удара, излечивая носителя.
 	Перезарядка: <b>1 минута</b></li></ol>
