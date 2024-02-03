@@ -531,7 +531,7 @@
 /datum/reagent/consumable/synthdrink/synthanol/holycode/synthetic_on_add(mob/living/carbon/human/M)
 	. = ..()
 	if(omnissiah_rate)
-		to_chat(M, "<span class='synth'>Вы фиксируете благослвление Машинного Бога на своём корпусе...</span>")
+		to_chat(M, "<span class='synth'>Вы фиксируете благословение Машинного Бога на своём корпусе...</span>")
 		playsound(M, 'sound/ambience/ambiholy.ogg', 20, FALSE)
 	if(M.client?.prefs?.features && !M.client.prefs.features["horns"])
 		M.visible_message("<span class='synth'>[M] начинает излучать священный свет!</span>")
