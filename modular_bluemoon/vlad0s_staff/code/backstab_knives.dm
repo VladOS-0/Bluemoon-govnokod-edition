@@ -192,10 +192,23 @@
 			"Спасибо, что были так любезны...",
 			"Простите, что без приглашения!",
 			"Обычный рабочий день...")
+		var/job_on_the_card = ""
+		if(victim.get_idcard())
+			var/obj/item/card/id/card = victim.get_idcard()
+			job_on_the_card = card.assignment ? card.assignment : ""
+			job_on_the_card = lowertext(job_on_the_card)
 		if(HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY_SUPER) || HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY))
 			spy_phrases = list(
 				"Это ЖИРНАЯ точка в твоей жизни!",
 				"Ну, толстяк, даже не ловко как-то!")
+		if(findtext(job_on_the_card, "security") || findtext(job_on_the_card, "detective"))
+			spy_phrases = list(
+				"Может быть, в следующий раз пришлют настоящего бойца!",
+				"Тебе поставят памятник \"Зелёный Салага\"!")
+		if(findtext(job_on_the_card, "medic") || findtext(job_on_the_card, "doctor") || findtext(job_on_the_card, "virolog") || findtext(job_on_the_card, "geneti"))
+			spy_phrases = list(
+				"Всё-таки смех - лучшее лекарство!",
+				"Судя по вашей кардиограмме... вы мертвы!")
 		user.say(pick(spy_phrases), forced = "backstab")
 	var/style = check_style(user)
 	go_on_cooldown(style)
