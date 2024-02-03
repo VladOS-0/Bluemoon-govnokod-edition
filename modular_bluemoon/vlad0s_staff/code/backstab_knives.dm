@@ -15,6 +15,8 @@
 	bare_wound_bonus = 3
 	attack_verb = list("facestabbed")
 	bayonet = FALSE
+	var/can_transform = TRUE
+	var/unique = FALSE
 	var/cooldown_icon_state = "butterflyknife"
 	var/start_cooldown_message = "складывается с тихим щелчком"
 	var/end_cooldown_message = "внезапно сам собой раскладывается, готовый к новым убийствам"
@@ -31,6 +33,8 @@
 
 /obj/item/kitchen/knife/backstabber/proc/update_description()
 	var/new_desc = initial(desc)
+	if(can_transform)
+		new_desc += "\n\n<span class='notice'>It seems that the quick replacement system of this knife works, and you can choose a new murder weapon <span class='boldnotice'>by using it in your hand!</span></span>"
 	if(is_on_cooldown)
 		new_desc += "\n\n<span class='warning'>It's unlikely that this knife can stab anyone right now... give it some time</span>"
 	if(silent_backstab)
@@ -38,6 +42,34 @@
 	if(peaceful)
 		new_desc += "\n\n<span class='notice'>Don't you think this knife is uncapable of killing someone at all?</span>"
 	desc = new_desc
+
+/obj/item/kitchen/knife/backstabber/attack_self(mob/user)
+	if(user.mind && istype(user, /mob/living/carbon) && can_transform)
+		var/obj/item/kitchen/knife/backstabber/new_knife
+		var/list/possible_knives = subtypesof(/obj/item/kitchen/knife/backstabber)
+		var/list/display_names = list()
+		var/list/knife_icons = list()
+		for(var/k in possible_knives)
+			var/obj/item/kitchen/knife/backstabber/knife_type = k
+			if(!initial(knife_type.unique))
+				display_names[initial(knife_type.name)] = knife_type
+				knife_icons += list(initial(knife_type.name) = image(icon = initial(knife_type.icon), icon_state = initial(knife_type.icon_state)))
+
+		knife_icons = sort_list(knife_icons)
+
+		var/choice = show_radial_menu(user, src , knife_icons, radius = 42, require_near = TRUE)
+		if(!choice || !istype(user) || QDELETED(src) || !can_transform || user.incapacitated() || !user.is_holding(src))
+			return
+
+		var/A = display_names[choice]
+		new_knife = new A
+
+		if(new_knife)
+			new_knife.can_transform = FALSE
+			qdel(src)
+			user.put_in_active_hand(new_knife)
+	else
+		return ..()
 
 /obj/item/kitchen/knife/backstabber/proc/go_on_cooldown(cooldown_multiplier = 1)
 	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
@@ -64,18 +96,18 @@
 		/obj/item/clothing/accessory/waistcoat,
 		/obj/item/clothing/accessory/suitjacket,
 		/obj/item/clothing/under/suit,
-		/datum/gear/uniform/suit,
 		/obj/item/clothing/gloves/color/white,
 		/obj/item/clothing/gloves/color/black,
 		/obj/item/clothing/gloves/color/latex,
-		/datum/gear/gloves/evening,
-		/datum/gear/uniform/assistantformal,
-		/datum/gear/uniform/solfed_formal,
+		/obj/item/clothing/gloves/evening,
+		/obj/item/clothing/under/misc/assistantformal,
+		/obj/item/clothing/under/rank/security/officer/formal/sol/armorless,
 		/obj/item/clothing/under/rank/security/head_of_security/formal,
 		/obj/item/clothing/under/rank/security/officer/formal,
 		/obj/item/clothing/under/rank/security/warden/formal,
 		/obj/item/clothing/head/fedora,
-		/datum/gear/head/that
+		/obj/item/clothing/head/that,
+		/obj/item/clothing/shoes/laceup
 		)
 	var/list/items = murderer.get_contents()
 	for(var/gear in items)
@@ -85,7 +117,7 @@
 		else
 			for(var/stylish_gear in stylish_clothes)
 				if(istype(gear, stylish_gear))
-					style_rate *= 0.9
+					style_rate *= 0.8
 	style_rate = clamp(style_rate, 0.5, 2)
 	if(style_rate < 1)
 		to_chat(murderer, "<span class='notice'>\"Это было стильно! Даю этому убийству [round((1 - style_rate) * 100)] очков!\"</span>")
@@ -157,7 +189,9 @@
 			"Вы испачкали мне костюм!",
 			"О, извините!",
 			"О Боже, что я тут устроил[user.ru_a()]!",
-			"Спасибо, что были так любезны...")
+			"Спасибо, что были так любезны...",
+			"Простите, что без приглашения!",
+			"Обычный рабочий день...")
 		if(HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY_SUPER) || HAS_TRAIT(victim, TRAIT_BLUEMOON_HEAVY))
 			spy_phrases = list(
 				"Это ЖИРНАЯ точка в твоей жизни!",
@@ -193,7 +227,7 @@
 	icon_state = "buckknife"
 	silent_backstab = TRUE
 	cooldown_icon_state = null
-	cooldown_time = 2 MINUTES
+	cooldown_time = 1.5 MINUTES
 	start_cooldown_message = "потухает и становится холоднее на ощупь"
 	end_cooldown_message = "вновь загорается странным светом"
 
@@ -215,7 +249,7 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 	name = "Strange Icicle"
 	desc = "A very sharp piece of ice. Why this thing looks like you can stab someone in back with it?"
 	cooldown_icon_state = null
-	cooldown_time = 45 SECONDS
+	cooldown_time = 40 SECONDS
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "lollipop_stick"
 	item_state = "lollipop_stick"
@@ -284,8 +318,64 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 
 /obj/item/kitchen/knife/backstabber/kunai/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
 	if(victim != user && victim.health > 0)
-		var/healing_amount = victim.health / 4
+		var/healing_amount = victim.health / 3
 		user.heal_overall_damage(healing_amount, healing_amount, healing_amount, FALSE, FALSE, TRUE)
-		to_chat(user, "<span class='nicegreem'>Кажется, [src.name] направляет в ваше тело часть жизненной энергии жертвы!</span>")
+		to_chat(user, "<span class='nicegreen'>Кажется, [src.name] направляет в ваше тело часть жизненной энергии жертвы!</span>")
 	victim.apply_damage(100, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 	victim.death(FALSE)
+
+/obj/item/storage/box/backstabber_kit
+	name = "assasination kit"
+	desc = "Suspicious as fuck..."
+	icon_state = "syndiebox"
+	illustration = null
+
+/obj/item/storage/box/backstabber_kit/PopulateContents()
+	new /obj/item/kitchen/knife/backstabber(src)
+	new /obj/item/paper/guides/backstabber(src)
+	new /obj/item/lighter/black(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_robustgold(src)
+	new /obj/item/soap/inteq(src)
+	new /obj/item/clothing/head/fedora(src)
+	new /obj/item/clothing/under/suit/black_really(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/shoes/laceup(src)
+
+/obj/item/paper/guides/backstabber
+	name = "Мануал искусства ударов в спину"
+	desc = "Довольно подозрительно, не так ли?"
+	default_raw_text = {"<h1>Пояснительная записка к устройству RSCW "Нож"</h1>© InteQ, все права защищены
+	<p>Поздравляю с новой работой, ассасин! У тебя в руках оружие невероятной силы, однако любым оружием нужно уметь
+	пользоваться! Нож, который ты можешь найти в этой коробке, не такой простой, каким кажется на первый взгляд. Один удар
+	в спину или в лежачего противника - и обидчик, скорее всего отправится к праотцам (если, конечно, такие у него имеются). Удары же во все остальные
+	места - довольно позорная для доблестного агента ошибка и особого успеха не принесут. Также у всех ножей есть время перезарядки,
+	необходимое для восстановления блюспейс-механизмов, позволяющих ножу игнорировать любую броню и мгновенно убивать.
+	Большинство ножей при ударе издают довольно громкий звук, благодаря которому все вокруг узнают, что произошло, так что стоит быть осторожным!</p>
+	<br>
+	<p>Помни, что у настоящего шпиона есть СТИЛЬ! В связи с многочисленными жалобами на наших агентов, устраивающих мерзкую
+	резню в окровавленных скафандрах, Ассоциация Ассасинов InteQ ввела требования к дресскоду для своих скрытных сотрудников:
+	отныне хождение в окровавленных обмотках будет повышать время перезарядки, а красивый костюм - понижать! В комплекте идёт
+	несколько стильных вещей для максимально красивых убийств! Для того, чтобы его носитель и звучал как джентльмен, нож будет
+	выдавать реплику от имени агента после каждого удара в спину... по крайней мере, большинство ножей.</p>
+	<br>
+	<h3>Разновидности</h3>
+	<p>Использовав нож в руке, ты можешь выбрать желаемый его образ. У всех их есть свои особенности!</p><ol>
+	<li><b>Классика</b> - обычный нож-бабочка, который у тебя в руках. Наносит 200 единиц физического урона и мгновенно убивает цель
+	Перезарядка: <b>30 секунд</b></li>
+	<li><b>Вечный покой</b> - орудия для поистине скрытных убийств. Работает беззвучно, окружающие лишь услышат стук
+	трупа о плитку станции. Тело менее чем за секунду растворится в воздухе и станет невидимым, возвратив себе непрозрачность
+	лишь через 10 секунд. Наносит 75 единиц физического урона и мгновенно убивает цель.
+	Перезарядка: <b>1.5 минуты</b></li>
+	<li><b>Сосулька</b> - грозное оружие, несмотря на своё название. Не наносит урона, но мгновенно убивает цель, тело которой
+	превращается в ледяную статую. Статуя сама собой растает через минуту, но также может быть расплавлена сваркой или просто
+	разбита, после чего тело жертвы выпадет из неё.
+	Перезарядка: <b>40 секунд</b></li>
+	<li><b>Кунай</b> - орудие настоящих ниндзя. При ударе наносит 100 единиц физического урона и мгновенно убивает жертву, а
+	также крадёт часть её здоровья, которое у неё было до удара, излечивая носителя.
+	Перезарядка: <b>1 минута</b></li></ol>
+	<br>
+	<p>Помимо своего замечательного ножа вы также можете найти в наборе комплект одежды, этот мануал, зажигалку для уничтожения
+	документов, пачку сигарет и мыло™ для очистки следов и своей одежды от крови! Не забудь уничтожить коробку и эту бумагу!</p>
+	<br>
+	<b>Удачи, агент!</b>"}
