@@ -19,8 +19,10 @@
 	if(!..())
 		return FALSE
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	// BLUEMOON EDIT START - изменение неподходящих для синтетиков операций
+	if(!B || istype(B, /obj/item/organ/brain/ipc)) // Не через requires_bodypart_type, чтобы можно было проводить на аугментированных
 		return FALSE
+	// BLUEMOON EDIT END
 	return TRUE
 
 /datum/surgery_step/lobotomize

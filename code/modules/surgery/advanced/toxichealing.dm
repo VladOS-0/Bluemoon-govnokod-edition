@@ -15,6 +15,15 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
 
+// BLUEMOON EDIT START - изменение неподходящих для синтетиков операций
+/datum/surgery/advanced/toxichealing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
+	if(!..())
+		return FALSE
+	if(isrobotic(target)) // Не через requires_bodypart_type, чтобы можно было проводить на аугментированных
+		return FALSE
+	return TRUE
+// BLUEMOON EDIT END
+
 /datum/surgery_step/toxichealing
 	name = "Изъять Токсичную Субстанцию и Плоть"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)

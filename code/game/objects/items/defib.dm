@@ -425,6 +425,10 @@
 		do_harm(H, user)
 		return
 
+	if(isrobotic(H))
+		to_chat(user, "<span class='warning'>[src] is a robot! It can be rebooted via emergency reboot operation on brain!</span>")
+		return
+
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.

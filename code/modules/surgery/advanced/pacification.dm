@@ -17,8 +17,9 @@
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	. = ..()
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	if(!B || istype(B, /obj/item/organ/brain/ipc)) // BLUEMOON EDIT - изменение неподходящих для синтетиков операций
 		return FALSE
+	return TRUE
 
 /datum/surgery_step/pacify
 	name = "Провести Пацификацию"
@@ -46,3 +47,31 @@
 			"[user] completes the surgery on [target]'s brain.")
 	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	return FALSE
+
+// BLUEMOON ADD START - пацификация для синтетиков
+/datum/surgery/advanced/pacify/robotic
+	name = "Pacification Protocols Enforcement"
+	desc = "The operation that installs a filter on the I/O of the positronic brain, which automatically suppresses any attempts to harm others."
+	steps = list(
+				/datum/surgery_step/mechanic_open,
+				/datum/surgery_step/mechanic_unwrench,
+				/datum/surgery_step/pry_off_plating,
+				/datum/surgery_step/prepare_electronics,
+				/datum/surgery_step/pacify/robotic,
+				/datum/surgery_step/mechanic_close)
+
+/datum/surgery_step/pacify/robotic
+	name = "Установить Протоколы Пацификации (Мультитул)"
+	implements = list(TOOL_MULTITOOL = 100, /obj/item/disk = 30, /obj/item/modular_computer = 100, /obj/item/pda = 80)
+	time = 40
+	preop_sound = null
+	success_sound = null
+	failure_sound = null
+
+/datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
+	. = ..()
+	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B || !istype(B, /obj/item/organ/brain/ipc))
+		return FALSE
+	return TRUE
+// BLUEMOON ADD END
