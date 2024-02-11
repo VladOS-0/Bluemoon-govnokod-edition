@@ -41,8 +41,8 @@
 	var/tplus = world.time - target.timeofdeath
 	// BLUEMOON EDIT START - теперь нельзя реанимировать синтетиков без души
 	H.grab_ghost()
-	if(!H.get_ghost(FALSE))
-		if(H.get_ghost(TRUE)) // Если у синтетика ДНР или что-то такое
+	if(!H.mind)
+		if(H.get_ghost(TRUE) != H.get_ghost(FALSE)) // Если у синтетика ДНР или что-то такое
 				target.visible_message("<span class='warning'>Личностная матрица позитронного мозга [target] непоправимо повреждена. Вряд-ли перезагрузка сможет вернуть [target.ru_ego()] в рабочее состояние...</span>")
 		else
 			target.visible_message("<span class='warning'>Позитронный мозг [target] не отвечает. Возможно, будет неплохо попробовать через пару минут.</span>")
