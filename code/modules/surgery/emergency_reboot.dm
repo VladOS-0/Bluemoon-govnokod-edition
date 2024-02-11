@@ -43,7 +43,7 @@
 	target.grab_ghost()
 	if(!target.mind)
 		if(target.get_ghost(TRUE) != target.get_ghost(FALSE)) // Если у синтетика ДНР или что-то такое
-				target.visible_message("<span class='warning'>Личностная матрица позитронного мозга [target] непоправимо повреждена. Вряд-ли перезагрузка сможет вернуть [target.ru_ego()] в рабочее состояние...</span>")
+			target.visible_message("<span class='warning'>Личностная матрица позитронного мозга [target] непоправимо повреждена. Вряд-ли перезагрузка сможет вернуть [target.ru_ego()] в рабочее состояние...</span>")
 		else
 			target.visible_message("<span class='warning'>Позитронный мозг [target] не отвечает. Возможно, будет неплохо попробовать через пару минут.</span>")
 		return FALSE
