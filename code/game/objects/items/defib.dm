@@ -426,7 +426,7 @@
 		return
 
 	if(isrobotic(H))
-		to_chat(user, "<span class='warning'>[src] is a robot! It can be rebooted via emergency reboot operation on brain!</span>")
+		to_chat(user, "<span class='warning'>[H] is a robot! It can be rebooted via emergency reboot operation on brain!</span>")
 		return
 
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
