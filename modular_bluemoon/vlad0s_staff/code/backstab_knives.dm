@@ -205,17 +205,17 @@
 			M.visible_message("<span class='warning'>[src.name] необъяснимым образом рикошетит от спины жертвы...</span>")
 			playsound(user, 'sound/weapons/parry.ogg', 90, TRUE)
 			user.do_attack_animation(M)
-			go_on_cooldown()
+		go_on_cooldown()
 		return
 	// Какие-то имбовые мобы
 	if(M.health > 300 && !peaceful)
 		if(!silent_backstab)
 			M.visible_message("<span class='warning'>[src.name] наносит страшный удар, который, однако, не может убить [M]!</span>")
 			user.do_attack_animation(M)
+			playsound(M, 'sound/weapons/slash.ogg', 100, 1)
+			if(user != M)
+				user.do_attack_animation(M)
 		M.apply_damage(250, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
-		playsound(M, 'sound/weapons/slash.ogg', 100, 1)
-		if(user != M)
-			user.do_attack_animation(M)
 		go_on_cooldown()
 		return
 	backstab(M, user) // Собственно, наносим удар в спину
