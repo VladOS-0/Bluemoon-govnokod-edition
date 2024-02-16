@@ -198,6 +198,7 @@
 		user.do_attack_animation(M)
 		M.dropItemToGround(backpack)
 		go_on_cooldown()
+		return
 	// Жертва бессмертна
 	if((M.status_flags & GODMODE || HAS_TRAIT(M, TRAIT_NODEATH)) && !peaceful)
 		if(!silent_backstab)
