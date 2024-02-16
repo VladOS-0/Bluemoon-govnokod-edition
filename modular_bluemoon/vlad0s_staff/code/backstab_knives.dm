@@ -190,10 +190,21 @@
 		return
 	if(!silent_backstab) // Воспроизводим сообщение об ударе в спину, если нож не тихий
 		user.visible_message("<span class='boldwarning'>[M] не успевает и обернуться, как [user] с невероятной точностью вонзает [src.name] [M.ru_emu()] в спину! </span>")
+	// Щит на спине блокирует удар
+	var/obj/item/backpack = M.get_item_by_slot(ITEM_SLOT_BACK)
+	if(backpack && istype(backpack, /obj/item/shield))
+		user.visible_message("<span class='warning'>[src.name] рикошетит от [backpack] на [M.ru_emu()] спине, сбивая щит на пол!</span>")
+		playsound(user, 'sound/weapons/parry.ogg', 90, TRUE)
+		user.do_attack_animation(M)
+		M.dropItemToGround(backpack)
+		go_on_cooldown()
 	// Жертва бессмертна
 	if((M.status_flags & GODMODE || HAS_TRAIT(M, TRAIT_NODEATH)) && !peaceful)
 		if(!silent_backstab)
 			M.visible_message("<span class='warning'>[src.name] необъяснимым образом рикошетит от спины жертвы...</span>")
+			playsound(user, 'sound/weapons/parry.ogg', 90, TRUE)
+			user.do_attack_animation(M)
+			go_on_cooldown()
 		return
 	// Какие-то имбовые мобы
 	if(M.health > 300 && !peaceful)
@@ -202,6 +213,8 @@
 			user.do_attack_animation(M)
 		M.apply_damage(250, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 		playsound(M, 'sound/weapons/slash.ogg', 100, 1)
+		if(user != M)
+			user.do_attack_animation(M)
 		go_on_cooldown()
 		return
 	backstab(M, user) // Собственно, наносим удар в спину
