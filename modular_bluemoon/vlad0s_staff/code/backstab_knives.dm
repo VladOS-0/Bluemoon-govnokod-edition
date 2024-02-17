@@ -71,7 +71,6 @@
 			if(is_on_cooldown)
 				new_knife.go_on_cooldown()
 			new_knife.speech_after_backstab = speech_after_backstab
-			new_knife.update_description()
 			to_chat(user, "<span class='warning'>[src] загорается ярким светом и исчезает, а в руках у вас появляется новенький [new_knife]!</span>")
 			qdel(src)
 			user.put_in_active_hand(new_knife)
@@ -96,7 +95,6 @@
 			var/mob/living/carbon/user = loc
 			to_chat(user, "<span class='boldnotice'>Вы вновь включаете воспроизведение фраз после убийства у [src]. Так держать!</span>")
 		speech_after_backstab = TRUE
-	update_description()
 
 // Запуск кулдауна. Время может быть умножено на соответствующий мультипликатор
 /obj/item/kitchen/knife/backstabber/proc/go_on_cooldown(cooldown_multiplier = 1)
@@ -106,7 +104,6 @@
 	if(cooldown_icon_state) // Меняем иконку на кулдауновую, если таковая имеется
 		icon_state = cooldown_icon_state
 	is_on_cooldown = TRUE
-	update_description()
 	// Возвращаем в исходное положение по окончанию кулдауна с учётом мультипликатора
 	addtimer(CALLBACK(src, .proc/end_stab_cooldown), cooldown_time * cooldown_multiplier)
 
@@ -118,7 +115,6 @@
 	if(cooldown_icon_state)
 		icon_state = initial(icon_state)
 	is_on_cooldown = FALSE
-	update_description()
 
 // Проверка одежды носителя. Возвращает множитель стиля, на который после будет умножено время кулдауна
 /obj/item/kitchen/knife/backstabber/proc/check_style(mob/living/carbon/murderer)
