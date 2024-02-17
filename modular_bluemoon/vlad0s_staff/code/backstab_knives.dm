@@ -31,27 +31,18 @@
 	var/speech_after_backstab = TRUE // Воспроизводятся ли фразы шпиона™ после убийства. Если активен silent_backstab, то они в любом случае воспроизводиться не будут. Может переключаться игроком.
 	var/custom_backstab_sound = "" // Кастомный звук удара в спину (без него будет воспроизводиться звук крита из TF2)
 
-/obj/item/kitchen/knife/backstabber/Initialize(mapload)
+/obj/item/kitchen/knife/backstabber/examine(mob/user)
 	. = ..()
-	update_description()
-
-// Позволяет узнать состояние ножа
-/obj/item/kitchen/knife/backstabber/proc/update_description()
-	var/new_desc = initial(desc)
 	if(can_transform)
-		new_desc += "\n\n<span class='notice'>It seems that the quick replacement system of this knife works, and you can choose a new murder weapon <span class='boldnotice'>by using it in your hand!</span></span>"
+		. += "\n\n<span class='notice'>It seems that the quick replacement system of this knife works, and you can choose a new murder weapon <span class='boldnotice'>by using it in your hand!</span></span>"
 	if(is_on_cooldown)
-		new_desc += "\n\n<span class='warning'>It's unlikely that this knife can stab anyone right now... give it some time</span>"
+		. += "\n\n<span class='warning'>It's unlikely that this knife can stab anyone right now... give it some time</span>"
 	if(silent_backstab)
-		new_desc += "\n\n<span class='notice'>Apparently, this knife is VERY good for covert killings</span>"
+		. += "\n\n<span class='notice'>Apparently, this knife is VERY good for covert killings</span>"
 	else // Если он убивает тихо, то не важно, включен ли спикер
-		if(speech_after_backstab)
-			new_desc += "\n\n<span class='notice'>It seems, that after-backstab-speech subsystem is currently <span class='boldnotice'>ON</span> and can be toggled with <span class='boldnotice'>Alt+Click!</span></span>"
-		else
-			new_desc += "\n\n<span class='notice'>It seems, that after-backstab-speech subsystem is currently <span class='boldnotice'>OFF</span> and can be toggled with <span class='boldnotice'>Alt+Click!</span></span>"
+		. += "\n\n<span class='notice'>It seems, that after-backstab-speech subsystem is currently <span class='boldnotice'>[speech_after_backstab ? "ON" : "OFF"]</span> and can be toggled with <span class='boldnotice'>Alt+Click!</span></span>"
 	if(peaceful)
-		new_desc += "\n\n<span class='notice'>Don't you think this knife is uncapable of killing someone at all?</span>"
-	desc = new_desc
+		. += "\n\n<span class='notice'>Don't you think this knife is uncapable of killing someone at all?</span>"
 
 /obj/item/kitchen/knife/backstabber/attack_self(mob/user)
 	if(istype(user, /mob/living/carbon) && can_transform)
@@ -81,7 +72,7 @@
 				new_knife.go_on_cooldown()
 			new_knife.speech_after_backstab = speech_after_backstab
 			new_knife.update_description()
-			to_chat(user, "<span class='warning'>[src.name] загорается ярким светом и исчезает, а в руках у вас появляется новенький [new_knife]!</span>")
+			to_chat(user, "<span class='warning'>[src] загорается ярким светом и исчезает, а в руках у вас появляется новенький [new_knife]!</span>")
 			qdel(src)
 			user.put_in_active_hand(new_knife)
 	else
@@ -98,12 +89,12 @@
 	if(speech_after_backstab)
 		if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon)) // Воспроизводится только тому, у кого он в инвентаре
 			var/mob/living/carbon/user = loc
-			to_chat(user, "<span class='boldnotice'>Вы отключаете воспроизведение фраз после убийства у [src.name]. Ассоциация разочарована в вас.</span>")
+			to_chat(user, "<span class='boldnotice'>Вы отключаете воспроизведение фраз после убийства у [src]. Ассоциация разочарована в вас.</span>")
 		speech_after_backstab = FALSE
 	else
 		if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
 			var/mob/living/carbon/user = loc
-			to_chat(user, "<span class='boldnotice'>Вы вновь включаете воспроизведение фраз после убийства у [src.name]. Так держать!</span>")
+			to_chat(user, "<span class='boldnotice'>Вы вновь включаете воспроизведение фраз после убийства у [src]. Так держать!</span>")
 		speech_after_backstab = TRUE
 	update_description()
 
@@ -111,7 +102,7 @@
 /obj/item/kitchen/knife/backstabber/proc/go_on_cooldown(cooldown_multiplier = 1)
 	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
 		var/mob/living/carbon/user = loc
-		to_chat(user, "<span class='boldnotice'>[src.name] [start_cooldown_message].</span>")
+		to_chat(user, "<span class='boldnotice'>[src] [start_cooldown_message].</span>")
 	if(cooldown_icon_state) // Меняем иконку на кулдауновую, если таковая имеется
 		icon_state = cooldown_icon_state
 	is_on_cooldown = TRUE
@@ -123,7 +114,7 @@
 /obj/item/kitchen/knife/backstabber/proc/end_stab_cooldown()
 	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
 		var/mob/living/carbon/user = loc
-		to_chat(user, "<span class='boldnotice'>[src.name] [end_cooldown_message].</span>")
+		to_chat(user, "<span class='boldnotice'>[src] [end_cooldown_message].</span>")
 	if(cooldown_icon_state)
 		icon_state = initial(icon_state)
 	is_on_cooldown = FALSE
@@ -163,7 +154,7 @@
 
 /obj/item/kitchen/knife/backstabber/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(is_on_cooldown)
-		to_chat(user, "<span class='warning'>Твоему [src.name] нужно немного времени...</span>")
+		to_chat(user, "<span class='warning'>Твоему [src] нужно немного времени...</span>")
 		return
 	if(!istype(user, /mob/living/carbon))
 		. = ..()
@@ -186,14 +177,14 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !peaceful)
 		to_chat(user, "<span class='warning'>Ты не можешь заставить себя сделать это!</span>")
 		if(!silent_backstab)
-			user.visible_message("<span class='boldwarning'>[user] заносит [src.name] над спиной [M], но вовремя останавливается! </span>")
+			user.visible_message("<span class='boldwarning'>[user] заносит [src] над спиной [M], но вовремя останавливается! </span>")
 		return
 	if(!silent_backstab) // Воспроизводим сообщение об ударе в спину, если нож не тихий
-		user.visible_message("<span class='boldwarning'>[M] не успевает и обернуться, как [user] с невероятной точностью вонзает [src.name] [M.ru_emu()] в спину! </span>")
+		user.visible_message("<span class='boldwarning'>[M] не успевает и обернуться, как [user] с невероятной точностью вонзает [src] [M.ru_emu()] в спину! </span>")
 	// Щит на спине блокирует удар
 	var/obj/item/backpack = M.get_item_by_slot(ITEM_SLOT_BACK)
 	if(backpack && istype(backpack, /obj/item/shield))
-		user.visible_message("<span class='warning'>[src.name] рикошетит от [backpack] на [M.ru_emu()] спине, сбивая щит на пол!</span>")
+		user.visible_message("<span class='warning'>[src] рикошетит от [backpack] на [M.ru_emu()] спине, сбивая щит на пол!</span>")
 		playsound(user, 'sound/weapons/parry.ogg', 90, TRUE)
 		user.do_attack_animation(M)
 		M.dropItemToGround(backpack)
@@ -202,7 +193,7 @@
 	// Жертва бессмертна
 	if((M.status_flags & GODMODE || HAS_TRAIT(M, TRAIT_NODEATH)) && !peaceful)
 		if(!silent_backstab)
-			M.visible_message("<span class='warning'>[src.name] необъяснимым образом рикошетит от спины жертвы...</span>")
+			M.visible_message("<span class='warning'>[src] необъяснимым образом рикошетит от спины жертвы...</span>")
 			playsound(user, 'sound/weapons/parry.ogg', 90, TRUE)
 			user.do_attack_animation(M)
 		go_on_cooldown()
@@ -210,7 +201,7 @@
 	// Какие-то имбовые мобы
 	if(M.health > 300 && !peaceful)
 		if(!silent_backstab)
-			M.visible_message("<span class='warning'>[src.name] наносит страшный удар, который, однако, не может убить [M]!</span>")
+			M.visible_message("<span class='warning'>[src] наносит страшный удар, который, однако, не может убить [M]!</span>")
 			user.do_attack_animation(M)
 			playsound(M, 'sound/weapons/slash.ogg', 100, 1)
 			if(user != M)
@@ -226,9 +217,9 @@
 		return
 	// Логи
 	if(victim == user)
-		log_admin("[user] ([key_name(user)]) suicided, backstabbing himself with [src.name]")
+		log_admin("[user] ([key_name(user)]) suicided, backstabbing himself with [src]")
 	else
-		log_admin("[user] ([key_name(user)]) backstabbed [victim] ([key_name(victim)]) with [src.name]")
+		log_admin("[user] ([key_name(user)]) backstabbed [victim] ([key_name(victim)]) with [src]")
 	// Звук и анимация убийства, а также крик жертвы с определённым шансом
 	if(!silent_backstab)
 		if(user != victim)
@@ -304,15 +295,15 @@
 
 /obj/item/kitchen/knife/backstabber/suicide_act(mob/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		user.visible_message("<span class='suicide'>[user] заносит над собой [src.name], но не решается нанести удар, падая на землю и начиная плакать от беспомощности!</span>")
+		user.visible_message("<span class='suicide'>[user] заносит над собой [src], но не решается нанести удар, падая на землю и начиная плакать от беспомощности!</span>")
 		user.emote("cry") // gonna cry?
 		return (SHAME)
 	if(peaceful || is_on_cooldown)
 		if(!silent_backstab)
-			user.visible_message("<span class='suicide'>[user] безнадёжно пытается ударить себя своим [src.name], но это оружие оказывается неспособно [user.ru_ego()] убить!</span>")
+			user.visible_message("<span class='suicide'>[user] безнадёжно пытается ударить себя своим [src], но это оружие оказывается неспособно [user.ru_ego()] убить!</span>")
 		return (SHAME)
 	if(!silent_backstab)
-		user.visible_message("<span class='suicide'>[user] заворачивает руку под, казалось бы, невозможным углом, и ударяет себя в спину своим [src.name]!</span>")
+		user.visible_message("<span class='suicide'>[user] заворачивает руку под, казалось бы, невозможным углом, и ударяет себя в спину своим [src]!</span>")
 	backstab(user, user)
 	return (BRUTELOSS)
 
@@ -331,7 +322,7 @@
 /obj/item/kitchen/knife/backstabber/silent/apply_backstab_effect(mob/living/carbon/victim, mob/living/carbon/user)
 	to_chat(victim, "<span class='userdanger'>Стоп, что это б...</span>")
 	if(victim != user)
-		to_chat(user, "<span class='boldwarning'>Ты с невероятной точностью вонзаешь [src.name] в спину [victim], после чего [victim.ru_ego()] тело оседает на землю в беззвучном крике и становится невидимым!</span>")
+		to_chat(user, "<span class='boldwarning'>Ты с невероятной точностью вонзаешь [src] в спину [victim], после чего [victim.ru_ego()] тело оседает на землю в беззвучном крике и становится невидимым!</span>")
 	var/initial_alpha = victim.alpha
 	animate(victim, alpha = 0, time = 1 SECONDS) // жертва исчезает
 	victim.apply_damage(75, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
@@ -384,11 +375,13 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 		victim.forceMove(get_turf(src))
 		victim.visible_message("<span class='boldwarning'>[victim.name] выпадает из [name]!</span>")
 		playsound(src, "bodyfall", 30, 1)
+		victim = null
 	if(delete_statue)
 		qdel(src)
 
 /obj/structure/statue/custom/icicle_knife_statue/Destroy()
 	eject_victim(FALSE)
+	victim = null
 	return ..()
 
 /obj/structure/statue/custom/icicle_knife_statue/attackby(obj/item/W, mob/living/user, params)
@@ -400,9 +393,9 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 		if(W.tool_behaviour == TOOL_WELDER)
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
-			user.visible_message("<span class='notice'>[user] начинает плавить [src.name].</span>", "<span class='notice'>Вы плавите [src.name]...</span>")
+			user.visible_message("<span class='notice'>[user] начинает плавить [src].</span>", "<span class='notice'>Вы плавите [src]...</span>")
 			if(W.use_tool(src, user, 70, volume=50))
-				user.visible_message("<span class='notice'>[user] расплавляет [src.name].</span>", "<span class='notice'>Вы успешно расплавили [src.name]...</span>")
+				user.visible_message("<span class='notice'>[user] расплавляет [src].</span>", "<span class='notice'>Вы успешно расплавили [src]...</span>")
 				eject_victim(TRUE)
 			return
 	return ..()
@@ -424,7 +417,7 @@ proc/victim_fade_in(mob/target, required_alpha, fade_time)
 		var/healing_amount = victim.health / 3
 		healing_amount = clamp(healing_amount, 0, 70)
 		user.heal_overall_damage(healing_amount, healing_amount, healing_amount, FALSE, FALSE, TRUE)
-		to_chat(user, "<span class='nicegreen'>Кажется, [src.name] направляет в ваше тело часть жизненной энергии жертвы!</span>")
+		to_chat(user, "<span class='nicegreen'>Кажется, [src] направляет в ваше тело часть жизненной энергии жертвы!</span>")
 	victim.apply_damage(100, BRUTE, BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 	victim.death(FALSE)
 
