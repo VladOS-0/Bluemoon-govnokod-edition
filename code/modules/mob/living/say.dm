@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	set waitfor = FALSE
-	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	var/static/list/special_crit_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
 
@@ -143,9 +143,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
 		return
 
-	if(in_critical)
-		if(!(crit_allowed_modes[message_mode]))
-			return
 	else if(stat == UNCONSCIOUS)
 		if(!(unconscious_allowed_modes[message_mode]))
 			return
@@ -180,11 +177,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/succumbed = FALSE
 
 	var/fullcrit = InFullCritical()
-	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
+	if(in_critical && !(message_mode in special_crit_modes))
 		message_range = 1
 		message_mode = MODE_WHISPER
 		src.log_talk(message, LOG_WHISPER)
 		if(fullcrit)
+			var/confirm = alert("You are in full crit and can't talk, but you can whisper it in your last breath and succumb to death. Proceed?", "Last Breath", "Yes", "Cancel")
+			if(confirm == "Cancel")
+				return
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length_char(message)
