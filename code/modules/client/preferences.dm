@@ -279,7 +279,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/bark_pitch = 1
 	var/bark_variance = 0.2
 	COOLDOWN_DECLARE(bark_previewing)
-	COOLDOWN_DECLARE(deathsound_preview)
+	COOLDOWN_DECLARE(deathsound_preview) // BLUEMOON ADD - пользовательский эмоут смерти
 
 	/// Security record note section
 	var/security_records
