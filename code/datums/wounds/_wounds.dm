@@ -94,8 +94,7 @@
 	var/ru_name_r = ""
 
 /datum/wound/Destroy()
-	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
-		remove_wound()
+	remove_wound()
 	limb = null
 	victim = null
 	return ..()

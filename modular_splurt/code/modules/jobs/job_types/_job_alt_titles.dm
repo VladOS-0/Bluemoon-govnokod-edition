@@ -58,8 +58,7 @@
 		"Head of Slutcurity",
 		"Division Leader",
 		"Cerberus Leader",
-		"Syndicate Field Commander",
-		"Commissar"
+		"Syndicate Field Commander"
 	)
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		LAZYADD(extra_titles, "Head of Spookcurity")
@@ -147,12 +146,18 @@
 		"Bard",
 		"Snack",
 		"Stress Relief",
+		"Service Top",
+		"Service Bottom",
+		"Service Pred",
+		"Service Prey",
+		"Belly Massager",
 		"Freeloader",
 		"Syndicate Specialist",
 		"Station Pet",
 		"Whore",
 		"Slut",
-		"Slave"
+		"Slave",
+		"Pet"
 	)
 	LAZYADD(alt_titles, extra_titles)
 	. = ..()
@@ -214,6 +219,7 @@
 		"Chef De Sexe",
 		"Boss Of This Gym",
 		"Prey Prepper",
+		"Pred Prepper",
 		"Poissonier",
 		"Baker"
 	)
@@ -292,7 +298,9 @@
 		"Borgs Slut",
 		"Borgs Raper",
 		"Robo-Slut",
-		"Techpriest Biologis"
+		"Techpriest Biologis",
+		"MOD Mechanic",
+		"Synth Technician"
 	)
 	LAZYADD(alt_titles, extra_titles)
 	. = ..()
@@ -448,7 +456,8 @@
 		"Disposal Technician",
 		"Donk Co. Specialist",
 		"Logistics Technician",
-		"Cryptocurrency Technician"
+		"Cryptocurrency Technician",
+		"Package Handler"
 	)
 	LAZYADD(alt_titles, extra_titles)
 	. = ..()

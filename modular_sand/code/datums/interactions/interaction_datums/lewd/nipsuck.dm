@@ -1,11 +1,10 @@
 /datum/interaction/lewd/nipsuck
-	description = "Рот. Пососать соски."
-	require_target_breasts = REQUIRE_EXPOSED
-	require_user_mouth = TRUE
+	description = "Грудь. Пососать соски."
+	required_from_user = INTERACTION_REQUIRE_MOUTH
+	required_from_target_exposed = INTERACTION_REQUIRE_BREASTS
 	write_log_user = "sucked nipples"
 	write_log_target = "had their nipples sucked by"
 	interaction_sound = null
-	max_distance = 1
 
 /datum/interaction/lewd/nipsuck/display_interaction(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/genital/breasts/B = target.getorganslot(ORGAN_SLOT_BREASTS)
@@ -89,7 +88,8 @@
 						"<span class='lewd'>\The <b>[user]</b> поглаживает грудь партнёра и крепко хватается своими губами за [pick("сосок", "соски")] \the <b>[target]</b>.</span>",
 						"<span class='lewd'>\The <b>[user]</b> игриво облизывает [pick("сосок", "соски")] \the <b>[target]</b> и ехидно ухмыляется.</span>"))
 
-	if(prob(5 + target.get_lust()))
+	if(prob(50 + target.get_lust()))
+		target.handle_post_sex(NORMAL_LUST, null, user, ORGAN_SLOT_BREASTS)
 		if(target.a_intent == INTENT_HELP)
 			user.visible_message(
 				pick("<span class='lewd'>\The <b>[target]</b> дрожит от возбуждения.</span>",
@@ -99,7 +99,6 @@
 					"<span class='lewd'>\The <b>[target]</b> тихонько вздрагивает.</span>",
 					"<span class='lewd'>\The <b>[target]</b> возбуждённо проводит пальцем вдоль своей груди.</span>",
 					"<span class='lewd'>\The <b>[target]</b> дрожит от возбуждения и довольно выдыхает, когда \the <b>[user]</b> наслаждается содержимым грудей.</span>"))
-			target.handle_post_sex(LOW_LUST, null, user, ORGAN_SLOT_BREASTS)
 		if(target.a_intent == INTENT_DISARM)
 			if (target.restrained())
 				if(!target.has_breasts())
@@ -127,7 +126,6 @@
 							"<span class='lewd'>\The <b>[target]</b> хихикает, вырываясь из рук <b>[user]</b>.</span>",
 							"<span class='lewd'>\The <b>[target]</b> нежно проводит рукой <b>[user]</b>'s вдоль обнажённых грудей.</span>",
 							"<span class='lewd'>\The <b>[target]</b> толкает обнажённую грудь вперёд и дразняще проводит несколькими пальцами <b>[user]</b> по своему соску.</span>"))
-			target.handle_post_sex(LOW_LUST, null, user, ORGAN_SLOT_BREASTS)
 	if(target.a_intent == INTENT_GRAB)
 		user.visible_message(
 				pick("<span class='lewd'>\The <b>[target]</b> крепко сжимает запястье <b>[user]</b>.</span>",

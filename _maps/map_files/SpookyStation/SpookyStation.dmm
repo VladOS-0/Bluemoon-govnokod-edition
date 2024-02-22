@@ -213,7 +213,7 @@
 /turf/open/floor/spooktime/cobble/cornerNE,
 /area/eventmap/outside)
 "aaN" = (
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aaO" = (
 /obj/machinery/rnd/production/techfab/department/cargo,
@@ -501,7 +501,7 @@
 /area/eventmap/outside)
 "abL" = (
 /obj/structure/healingfountain,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "abM" = (
 /obj/structure/table/wood/fancy/red,
@@ -3921,7 +3921,7 @@
 /area/eventmap/inside)
 "alL" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "alM" = (
 /obj/item/chair/wood/wings{
@@ -4076,7 +4076,7 @@
 "aml" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/effect/wisp,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "amm" = (
 /obj/item/candle/infinite,
@@ -4283,7 +4283,7 @@
 /area/eventmap/outside)
 "amM" = (
 /obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "amN" = (
 /obj/item/candle/infinite,
@@ -5105,7 +5105,7 @@
 "aoY" = (
 /obj/structure/flora/rock/pile/icy,
 /obj/effect/wisp,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aoZ" = (
 /obj/structure/cable/yellow{
@@ -7551,7 +7551,7 @@
 /area/eventmap/inside)
 "avS" = (
 /obj/structure/fence,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "avT" = (
 /obj/structure/fluff/empty_cryostasis_sleeper,
@@ -8828,7 +8828,7 @@
 "azv" = (
 /obj/structure/flora/tree/jungle,
 /obj/structure/flora/tree/jungle,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "azw" = (
 /obj/machinery/autolathe,
@@ -8878,7 +8878,7 @@
 /area/eventmap/outside)
 "azE" = (
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "azF" = (
 /obj/effect/landmark/start/librarian,
@@ -8905,7 +8905,7 @@
 /area/eventmap/inside)
 "azK" = (
 /obj/structure/flora/grass/jungle/b,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "azL" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
@@ -9222,7 +9222,7 @@
 /area/eventmap/inside)
 "aAD" = (
 /obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aAE" = (
 /obj/structure/cable/white{
@@ -9573,7 +9573,7 @@
 /area/eventmap/mountaininside)
 "aBH" = (
 /obj/item/storage/pill_bottle/penis_enlargement,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aBI" = (
 /obj/structure/chair,
@@ -9992,7 +9992,7 @@
 "aCU" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/tree/spookytime,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aCV" = (
 /obj/structure/fluff/bus/dense{
@@ -10242,7 +10242,7 @@
 /area/eventmap/inside)
 "aDB" = (
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aDC" = (
 /obj/item/reagent_containers/food/snacks/spiderlollipop,
@@ -10274,7 +10274,7 @@
 "aDH" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aDI" = (
 /turf/closed/wall/r_wall,
@@ -10719,7 +10719,7 @@
 /area/eventmap/inside)
 "aEZ" = (
 /obj/item/storage/pill_bottle/breast_enlargement,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aFa" = (
 /obj/item/flashlight/glowstick/cyan,
@@ -10732,7 +10732,7 @@
 /area/eventmap/mountain)
 "aFc" = (
 /obj/structure/flora/tree/spookytimexl,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aFd" = (
 /turf/closed/wall/r_wall/rust,
@@ -11073,7 +11073,7 @@
 "aGg" = (
 /obj/structure/flora/rock/pile/icy,
 /obj/structure/flora/tree/spookytime,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aGh" = (
 /turf/closed/indestructible/riveted/boss,
@@ -11133,7 +11133,7 @@
 /area/eventmap/mountaininside)
 "aGr" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aGs" = (
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
@@ -11453,7 +11453,7 @@
 /area/eventmap/inside)
 "aHp" = (
 /obj/item/storage/box/snappops,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aHq" = (
 /obj/machinery/computer/prisoner/management,
@@ -11560,7 +11560,7 @@
 /area/eventmap/inside)
 "aHD" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aHE" = (
 /obj/structure/table/reinforced,
@@ -12021,7 +12021,7 @@
 /area/eventmap/inside)
 "aIV" = (
 /obj/structure/spacevine,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aIW" = (
 /obj/structure/chair/wood/wings,
@@ -12365,7 +12365,7 @@
 /area/eventmap/outside)
 "aJV" = (
 /obj/item/chair/wood,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aJW" = (
 /obj/structure/closet,
@@ -14147,7 +14147,7 @@
 /area/eventmap/mountaininside)
 "aPm" = (
 /obj/item/candle/infinite,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aPn" = (
 /obj/vehicle/sealed/vectorcraft/hop,
@@ -14428,7 +14428,7 @@
 	light_range = 5;
 	on = 1
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aQm" = (
 /obj/structure/table/wood/fancy/orange,
@@ -14636,7 +14636,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aRb" = (
 /obj/structure/cable/yellow{
@@ -14765,7 +14765,7 @@
 /area/eventmap/outside)
 "aRv" = (
 /obj/structure/flora/junglebush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aRw" = (
 /obj/machinery/door/airlock/wood,
@@ -14981,7 +14981,7 @@
 /area/eventmap/outside)
 "aSN" = (
 /obj/structure/bonfire,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aSO" = (
 /obj/effect/landmark/start/station_engineer,
@@ -15206,7 +15206,7 @@
 /obj/structure/flora/junglebush{
 	icon_state = "busha1"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aTS" = (
 /obj/structure/sign/departments/restroom{
@@ -15247,7 +15247,7 @@
 "aUf" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/tree/spookytimexl,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aUi" = (
 /obj/item/storage/pill_bottle/zoom,
@@ -15414,7 +15414,7 @@
 /area/eventmap/mountaininside)
 "aVq" = (
 /obj/item/gun/ballistic/shotgun/lethal,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aVr" = (
 /obj/structure/table/wood,
@@ -15423,11 +15423,11 @@
 /area/eventmap/mountaininside)
 "aVt" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aVu" = (
 /obj/item/ammo_box/magazine/wt550m9/wtrubber,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aVv" = (
 /obj/structure/table,
@@ -15441,7 +15441,7 @@
 /area/eventmap/inside)
 "aVz" = (
 /obj/item/gun/ballistic/automatic/wt550,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aVC" = (
 /obj/item/storage/box/handcuffs,
@@ -15522,7 +15522,7 @@
 /area/eventmap/inside)
 "aWs" = (
 /obj/structure/flora/tree/jungle,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aWt" = (
 /obj/structure/spacevine,
@@ -15536,7 +15536,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aWz" = (
 /obj/item/reagent_containers/pill/lsd,
@@ -15577,7 +15577,7 @@
 /area/eventmap/outside)
 "aWR" = (
 /obj/item/flashlight/seclite,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aWS" = (
 /turf/open/floor/carpet,
@@ -15720,7 +15720,7 @@
 /area/eventmap/mountaininside)
 "aXX" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/inside)
 "aXZ" = (
 /obj/item/paicard,
@@ -15798,7 +15798,7 @@
 /area/eventmap/mountain)
 "aYI" = (
 /obj/structure/flora/tree/spookytime,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aYJ" = (
 /obj/item/coin/diamond,
@@ -15977,7 +15977,7 @@
 /area/eventmap/mountain)
 "aZM" = (
 /obj/structure/flora/bush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "aZN" = (
 /obj/structure/fluff/broken_flooring,
@@ -16056,13 +16056,13 @@
 /obj/structure/fence/corner{
 	dir = 4
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "bbv" = (
 /obj/structure/fence{
 	dir = 8
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "bbx" = (
 /turf/open/floor/plasteel,
@@ -16104,11 +16104,11 @@
 /obj/structure/fence/corner{
 	dir = 1
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "bbK" = (
 /obj/structure/fence/corner,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "bbL" = (
 /obj/structure/fence{
@@ -16126,7 +16126,7 @@
 /obj/structure/fence/corner{
 	dir = 9
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "bbZ" = (
 /obj/structure/cable/white{
@@ -16502,7 +16502,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/eventmap/outside)
 "bgw" = (
 /obj/structure/sign/mining{
@@ -17039,7 +17039,7 @@
 /turf/open/floor/plasteel/dark,
 /area/eventmap/mountaininside)
 "kUJ" = (
-/obj/item/aiModule/reset/purge,
+/obj/item/ai_module/reset/purge,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "ldj" = (
@@ -17253,7 +17253,7 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "oKW" = (
-/obj/item/aiModule/supplied/freeform,
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "oWw" = (

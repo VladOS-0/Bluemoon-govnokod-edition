@@ -1,6 +1,6 @@
 //Uniform
 /datum/gear/donator/uniform/pentatop
-	name = "pentagram crop top"
+	name = "Pentagram Crop Top"
 	path = /obj/item/clothing/under/pentatop
 	cost = 1
 	ckeywhitelist = list()
@@ -8,7 +8,7 @@
 
 //Backpack
 /datum/gear/donator/backpack/crocinpen/plus
-	name = "Shot of concentrated lust"
+	name = "Shot of Concentrated Lust"
 	path = /obj/item/reagent_containers/hypospray/medipen/crocin/plus
 	ckeywhitelist = list()
 	donator_group_id = DONATOR_GROUP_TIER_1

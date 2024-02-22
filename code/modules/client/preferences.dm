@@ -111,6 +111,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/pda_skin = PDA_SKIN_ALT
 	var/pda_ringtone = "beep"
 
+	var/blood_color = "#ff0000"
+
 	var/uses_glasses_colour = 0
 
 	//character preferences
@@ -596,8 +598,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<a href='?_src_=prefs;preference=nameless'>Be nameless: [nameless ? "Yes" : "No"]</a><BR>"
 					dat += "<b>Always Random Name:</b><a style='display:block;width:30px' href='?_src_=prefs;preference=name'>[be_random_name ? "Yes" : "No"]</a><BR>"
 
-					dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 					dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
+					dat += "<b>Blood Color:</b> <span style='border:1px solid #161616; background-color: [blood_color];'><font color='[color_hex2num(blood_color) < 200 ? "FFFFFF" : "000000"]'>[blood_color]</font></span> <a href='?_src_=prefs;preference=blood_color;task=input'>Change</a><BR>"
 					dat += "</td>"
 
 					dat += "<td valign='top'>"
@@ -1840,7 +1842,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
-		for(var/datum/job/job in sortList(SSjob.occupations, /proc/cmp_job_display_asc))
+		for(var/datum/job/job in sort_list(SSjob.occupations, /proc/cmp_job_display_asc))
 
 			index += 1
 			if((index >= limit) || (job.title in splitJobs))
@@ -2023,6 +2025,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	else
 		dat += "<center><b>Choose quirk setup</b></center><br>"
+		// BLUEMOON ADD START - настройки для отдельных квирков
+		dat += "Настройки для отдельных квирков. Если нужный квирк не будет выставлен, то они работать не будут.<br>"
+		dat += "<a href='?_src_=prefs;preference=traits_setup;task=change_shriek_option'>([BLUEMOON_TRAIT_NAME_SHRIEK]) Тип Крика: [shriek_type]</a>"
+		dat += "<hr>"
+		// BLUEMOON ADD END
 		dat += "<div align='center'>Left-click to add or remove quirks. You need negative quirks to have positive ones.<br>\
 		Quirks are applied at roundstart and cannot normally be removed.</div>"
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
@@ -2183,7 +2190,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/L = V
 					for(var/Q in all_quirks)
 						if((quirk in L) && (Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
-							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
+							to_chat(user, "<span class='danger'>[quirk] имеет несовместимость с квирком [Q].</span>") //BLUEMOON EDIT перевод
 							return
 				var/value = SSquirks.quirk_points[quirk]
 				var/balance = GetQuirkBalance()
@@ -2193,7 +2200,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					all_quirks -= quirk
 				else
-					if(GetPositiveQuirkCount() >= MAX_QUIRKS)
+					if(GetPositiveQuirkCount() >= MAX_QUIRKS && value > 0)
 						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
 						return
 					if(balance - value < 0)
@@ -2206,6 +2213,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				SetQuirks(user)
 			else
 				SetQuirks(user)
+	// BLUEMOON ADD START - возможность настраивать квирки
+	else if(href_list["preference"] == "traits_setup")
+		switch(href_list["task"])
+			if("change_shriek_option") // изменение вида крика от квирка крикуна
+				var/client/C = usr.client
+				if(C)
+					var/new_shriek_type = input(user, "Choose your character's shriek type.", "Character Preference") as null|anything in GLOB.shriek_types
+					if(new_shriek_type)
+						shriek_type = new_shriek_type
+						SetQuirks(user)
+	// BLUEMOON ADD END
 		return TRUE
 
 	else if(href_list["quirk_category"])
@@ -2226,7 +2244,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return
 				if(!toggle_language(lang))
 					return
-				language = sortList(language)
+				language = sort_list(language)
 			if("reset")
 				language = list()
 		SetLanguage(user)
@@ -2951,13 +2969,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				//Genital code
 				if("lust_tolerance")
-					var/lust_tol = input(user, "Set how long you can last without climaxing. \n(75 = minimum, 200 = maximum.)", "Character Preference", lust_tolerance) as num|null
+					var/lust_tol = input(user, "Set how long you can last without climaxing. \n(25 = minimum, 200 = maximum.)", "Character Preference", lust_tolerance) as num|null
 					if(lust_tol)
-						lust_tolerance = clamp(lust_tol, 75, 200)
+						lust_tolerance = clamp(lust_tol, 25, 200)
 				if("sexual_potency")
-					var/sexual_pot = input(user, "Set your sexual potency. \n(10 = minimum, 25 = maximum.)", "Character Preference", sexual_potency) as num|null
+					var/sexual_pot = input(user, "Set your sexual potency. \n(-1 = minimum, 25 = maximum.) This determines the number of times your character can orgasm before becoming impotent, use -1 for no impotency.", "Character Preference", sexual_potency) as num|null
 					if(sexual_pot)
-						sexual_potency = clamp(sexual_pot, 10, 25)
+						sexual_potency = clamp(sexual_pot, -1, 25)
 
 				if("cock_color")
 					var/new_cockcolor = input(user, "Penis color:", "Character Preference","#"+features["cock_color"]) as color|null
@@ -3319,14 +3337,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in GLOB.available_ui_styles
 					if(pickedui)
 						UI_style = pickedui
-						if (parent && parent.mob && parent.mob.hud_used)
-							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
+						if (pickedui && parent && parent.mob && parent.mob.hud_used)
+							QDEL_NULL(parent.mob.hud_used)
+							parent.mob.create_mob_hud()
+							parent.mob.hud_used.show_hud(1, parent.mob)
+				if("blood_color")
+					var/pickedBloodColor = input(user, "Выбирайте цвет крови своего персонажа.", "Character Preference", blood_color) as color|null
+					if(!pickedBloodColor)
+						return
+					if(pickedBloodColor)
+						blood_color = pickedBloodColor
 				if("pda_style")
 					var/pickedPDAStyle = input(user, "Выбирайте стиль своего КПК.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
-					var/pickedPDAColor = input(user, "Выбирайте цвет интерфейса своего КПК.", "Character Preference",pda_color) as color|null
+					var/pickedPDAColor = input(user, "Выбирайте цвет интерфейса своего КПК.", "Character Preference", pda_color) as color|null
 					if(pickedPDAColor)
 						pda_color = pickedPDAColor
 				if("pda_skin")
@@ -3821,7 +3847,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if(!length(key_bindings[old_key]))
 								key_bindings -= old_key
 						key_bindings[full_key] += list(kb_name)
-						key_bindings[full_key] = sortList(key_bindings[full_key])
+						key_bindings[full_key] = sort_list(key_bindings[full_key])
 					if(href_list["special"])		// special keys need a full reset
 						user.client.ensure_keys_set(src)
 					user << browse(null, "window=capturekeypress")
@@ -3863,7 +3889,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					outline_enabled = !outline_enabled
 				if("outline_color")
 					var/pickedOutlineColor = input(user, "Choose your outline color.", "General Preference", outline_color) as color|null
-					if(pickedOutlineColor != pickedOutlineColor)
+					if(pickedOutlineColor != outline_color)
 						outline_color = pickedOutlineColor // nullable
 				if("screentip_pref")
 					var/choice = input(user, "Choose your screentip preference", "Screentipping?", screentip_pref) as null|anything in GLOB.screentip_pref_options
@@ -4112,7 +4138,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!findtext(usr_input, link_regex, 1, 29))
 						to_chat(usr, span_warning("The link needs to be an unshortened Gyazo or Discordapp link!"))
 						return
-					if(!findtext(usr_input, end_regex, -8))
+					if(!findtext(usr_input, end_regex))
 						to_chat(usr, span_warning("You need either \".png\", \".jpg\", or \".jpeg\" in the link!"))
 						return
 
@@ -4324,6 +4350,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.nameless = nameless
 	character.custom_species = custom_species
 
+	character.dna.species.exotic_blood_color = blood_color
 	character.gender = gender
 	character.age = age
 

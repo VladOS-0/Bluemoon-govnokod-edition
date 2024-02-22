@@ -1,7 +1,7 @@
 #define JOB_MODIFICATION_MAP_NAME "SpookyStation"
 
 /turf
-	baseturfs = /turf/open/floor/spooktime/spooktimegrass
+	baseturfs = /turf/open/misc/grass
 
 MAP_REMOVE_JOB(geneticist)
 MAP_REMOVE_JOB(virologist)

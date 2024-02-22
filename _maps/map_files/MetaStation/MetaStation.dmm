@@ -1962,7 +1962,7 @@
 /turf/closed/wall,
 /area/maintenance/fore)
 "agA" = (
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "agB" = (
 /obj/machinery/power/solar_control{
@@ -9757,10 +9757,10 @@
 /area/security/prison/cells)
 "aMG" = (
 /obj/structure/table,
-/obj/item/aiModule/core/full/asimov,
-/obj/effect/spawner/lootdrop/aimodule_harmless,
-/obj/effect/spawner/lootdrop/aimodule_lewd,
-/obj/item/aiModule/core/freeformcore,
+/obj/item/ai_module/core/full/asimov,
+/obj/effect/spawner/lootdrop/ai_module_harmless,
+/obj/effect/spawner/lootdrop/ai_module_lewd,
+/obj/item/ai_module/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -9769,8 +9769,8 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/effect/spawner/lootdrop/aimodule_neutral,
-/obj/item/aiModule/core/full/custom,
+/obj/effect/spawner/lootdrop/ai_module_neutral,
+/obj/item/ai_module/core/full/custom,
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_y = 24
@@ -9792,11 +9792,11 @@
 	id = "AI";
 	pixel_y = 24
 	},
-/obj/effect/spawner/lootdrop/aimodule_harmful,
-/obj/item/aiModule/supplied/oxygen,
-/obj/item/aiModule/supplied/protectStation,
-/obj/item/aiModule/zeroth/oneHuman,
-/obj/item/aiModule/reset/purge,
+/obj/effect/spawner/lootdrop/ai_module_harmful,
+/obj/item/ai_module/supplied/oxygen,
+/obj/item/ai_module/supplied/protectStation,
+/obj/item/ai_module/zeroth/oneHuman,
+/obj/item/ai_module/reset/purge,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aMJ" = (
@@ -10100,7 +10100,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/item/aiModule/supplied/quarantine,
+/obj/item/ai_module/supplied/quarantine,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aPu" = (
@@ -10120,7 +10120,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/item/aiModule/supplied/freeform,
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aPy" = (
@@ -10200,7 +10200,7 @@
 /area/maintenance/fore)
 "aQz" = (
 /obj/structure/table,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -12844,11 +12844,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"bao" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/barricade/wooden,
-/turf/open/space/basic,
-/area/maintenance/aft)
 "baz" = (
 /obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/delivery,
@@ -16718,7 +16713,7 @@
 "bro" = (
 /obj/structure/flora/rock/pile,
 /obj/machinery/vending/cola/buzz_fuzz,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "brp" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -27904,7 +27899,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "ckw" = (
 /obj/structure/table,
@@ -32010,7 +32005,7 @@
 	icon_state = "grassa1"
 	},
 /obj/structure/chair/pew/left,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "cuf" = (
 /obj/structure/closet,
@@ -35748,6 +35743,13 @@
 /area/medical/virology)
 "cBS" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plating,
 /area/medical/virology)
 "cBT" = (
@@ -37576,6 +37578,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
 /turf/open/floor/plating,
 /area/medical/virology)
 "cFL" = (
@@ -38091,6 +38096,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -40538,17 +40549,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cKY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -40556,9 +40561,6 @@
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -43998,10 +44000,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/commons/storage/primary)
+"cZS" = (
+/mob/living/simple_animal/pet/dog/corgi/moth,
+/turf/open/floor/plasteel/dark,
+/area/command/bridge)
 "cZU" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/maintenance/aft)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/medical/virology)
 "cZV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -46602,7 +46614,7 @@
 /area/cargo/storage)
 "dpg" = (
 /obj/structure/flora/tree/jungle/small,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "dpk" = (
 /obj/item/cigbutt,
@@ -48970,7 +48982,7 @@
 	icon_state = "bushb1"
 	},
 /obj/structure/chair/pew,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "edc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -49239,7 +49251,7 @@
 /area/security/prison/upper)
 "ejb" = (
 /obj/structure/flora/tree/jungle,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "ejd" = (
 /obj/structure/bookcase{
@@ -49746,7 +49758,7 @@
 /area/engineering/supermatter)
 "eyW" = (
 /obj/structure/flora/grass/jungle/b,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "ezp" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -51050,7 +51062,7 @@
 /area/space/nearstation)
 "fbk" = (
 /obj/structure/flora/rock/pile,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "fbn" = (
 /obj/structure/cable/yellow{
@@ -52078,7 +52090,7 @@
 /obj/structure/flora/grass/jungle/b{
 	icon_state = "grassa1"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "fCR" = (
 /obj/machinery/shower{
@@ -55334,7 +55346,7 @@
 	icon_state = "bushb1"
 	},
 /obj/machinery/vending/snack/random,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "hhA" = (
 /turf/open/floor/plasteel,
@@ -56892,7 +56904,7 @@
 	c_tag = "Park Area";
 	dir = 1
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "hOX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -57509,7 +57521,7 @@
 "iaF" = (
 /obj/item/clothing/head/hardhat/pumpkinhead,
 /obj/structure/table/wood,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "iaH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -59229,7 +59241,7 @@
 /obj/structure/chair/pew{
 	dir = 8
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "iWy" = (
 /obj/machinery/door/window{
@@ -60994,7 +61006,7 @@
 	icon_state = "grassa4"
 	},
 /obj/machinery/vending/coffee,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "jOk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -61415,7 +61427,7 @@
 /obj/structure/flora/junglebush{
 	icon_state = "bushb1"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "jYV" = (
 /obj/structure/window/reinforced{
@@ -61515,14 +61527,14 @@
 "kbk" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /turf/open/floor/plasteel/dark,
 /area/engineering/storage/tech)
 "kbB" = (
 /obj/structure/flora/grass/jungle/b{
 	icon_state = "busha2"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "kbP" = (
 /obj/structure/table/wood/poker,
@@ -62375,7 +62387,7 @@
 	icon_state = "grassa4"
 	},
 /obj/item/kirbyplants/random,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "kwq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -63994,7 +64006,7 @@
 /area/engineering/atmos)
 "lfF" = (
 /obj/structure/flora/bush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "lgF" = (
 /obj/machinery/door/firedoor,
@@ -64161,7 +64173,7 @@
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "lkU" = (
 /obj/machinery/disposal/bin,
@@ -65158,7 +65170,7 @@
 /area/construction/mining/aux_base)
 "lKQ" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "lLr" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -65587,7 +65599,7 @@
 /area/engineering/main)
 "lUM" = (
 /obj/structure/flora/junglebush/b,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "lUO" = (
 /obj/structure/table/wood,
@@ -67941,7 +67953,7 @@
 /obj/structure/chair/pew/right{
 	dir = 8
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "mYT" = (
 /obj/machinery/power/apc{
@@ -68225,7 +68237,7 @@
 /obj/structure/chair/pew{
 	dir = 1
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "nhL" = (
 /obj/machinery/airalarm{
@@ -69137,7 +69149,7 @@
 /area/engineering/main)
 "nHz" = (
 /obj/structure/flora/junglebush/large,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "nHL" = (
 /obj/machinery/light{
@@ -69792,7 +69804,7 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/pew/right,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "nWu" = (
 /obj/structure/chair,
@@ -70123,7 +70135,7 @@
 /obj/structure/flora/junglebush{
 	icon_state = "grassa4"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "obm" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -71460,7 +71472,7 @@
 /obj/structure/flora/grass/jungle/b{
 	icon_state = "grassa5"
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "oHW" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -77405,8 +77417,20 @@
 /area/hallway/primary/central)
 "rmj" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/maintenance/aft)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/medical/virology)
 "rms" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
@@ -82275,6 +82299,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/service/sauna)
+"tEB" = (
+/mob/living/simple_animal/pet/dog/corgi/mothroach,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "tFp" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
@@ -83655,7 +83683,7 @@
 	light_power = 1;
 	light_range = 4
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "ufE" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -84115,7 +84143,7 @@
 "uqz" = (
 /obj/structure/flora/junglebush/c,
 /obj/item/kirbyplants/random,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "uqB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -84278,7 +84306,7 @@
 /obj/structure/chair/pew/left{
 	dir = 1
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "utQ" = (
 /obj/structure/chair/stool{
@@ -85402,7 +85430,7 @@
 /area/engineering/supermatter)
 "vaG" = (
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "vaQ" = (
 /obj/effect/turf_decal/bot{
@@ -86813,7 +86841,7 @@
 /area/space)
 "vLE" = (
 /obj/structure/flora/junglebush,
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "vLV" = (
 /obj/effect/turf_decal/tile/blue{
@@ -89100,7 +89128,7 @@
 /obj/structure/chair/pew/right{
 	dir = 1
 	},
-/turf/open/floor/spooktime/spooktimegrass,
+/turf/open/misc/grass,
 /area/service/park)
 "wLX" = (
 /obj/structure/table/wood,
@@ -106495,7 +106523,7 @@ apx
 bTs
 fFJ
 lFF
-bao
+qXY
 aaa
 aaa
 aaa
@@ -106752,7 +106780,7 @@ dsh
 bTs
 qBq
 oCi
-bao
+qXY
 aac
 lMJ
 aaa
@@ -107009,7 +107037,7 @@ tao
 wEs
 ehn
 gVJ
-bao
+qXY
 aaa
 lMJ
 aaa
@@ -107523,7 +107551,7 @@ gaB
 bTs
 wsf
 frX
-bao
+qXY
 aaa
 lMJ
 aaa
@@ -107780,7 +107808,7 @@ wRg
 wEs
 byI
 mAx
-bao
+qXY
 aaa
 aaa
 aaa
@@ -108037,7 +108065,7 @@ gaB
 bTs
 ngb
 qgZ
-bao
+qXY
 aaa
 aaa
 aaa
@@ -108551,7 +108579,7 @@ kDP
 bTs
 eZL
 wan
-bao
+qXY
 aaa
 lMJ
 aaa
@@ -108808,7 +108836,7 @@ eHA
 wEs
 krn
 lhR
-bao
+qXY
 aaa
 xwj
 aaa
@@ -109786,7 +109814,7 @@ alK
 bSu
 dux
 bUW
-bXE
+tEB
 bXD
 bYI
 bZO
@@ -111879,7 +111907,7 @@ cBR
 cBR
 cBR
 cBR
-dBU
+cBR
 cBR
 cBR
 cBR
@@ -112132,9 +112160,9 @@ aaa
 aaa
 cFK
 cGC
-cBS
+cDE
 cIy
-cZU
+hOD
 vxL
 qeV
 qeV
@@ -112387,11 +112415,11 @@ aaa
 aaf
 aaa
 aaa
-cFK
+rmj
 cGD
 cBS
 aaa
-rmj
+hOD
 lpZ
 pKY
 xmQ
@@ -112644,11 +112672,11 @@ dux
 dux
 dux
 aaa
-cFK
+cZU
 cGE
-cBS
+dBU
 aaa
-rmj
+hOD
 dIy
 ker
 ker
@@ -120557,7 +120585,7 @@ aaf
 hMQ
 jZI
 sIL
-sIL
+cZS
 jZA
 jUl
 fnn

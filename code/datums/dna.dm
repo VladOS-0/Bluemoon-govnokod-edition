@@ -52,6 +52,8 @@ GLOBAL_DATUM(dna_for_copying, /datum/dna)
 	destination.dna.features = features.Copy()
 	destination.set_species(species.type, icon_update=0)
 	destination.dna.species.say_mod = species.say_mod
+	destination.dna.species.exotic_blood_color = species.exotic_blood_color //it can change from the default value
+	destination.dna.species.exotic_blood_blend_mode = species.exotic_blood_blend_mode
 	destination.dna.real_name = real_name
 	destination.dna.nameless = nameless
 	destination.dna.custom_species = custom_species

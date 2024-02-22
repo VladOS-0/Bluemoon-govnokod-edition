@@ -106,8 +106,8 @@
 	spreadFire(AM)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["embedded_object"])
-		if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, check_resting = FALSE))
+		if(href_list["embedded_object"])
 			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 			if(!L)
 				return
@@ -996,8 +996,8 @@
 	return "<font color='#18d855'>"
 
 
-/*/mob/living/carbon/human/get_tooltip_data()
-	var/t_He = ru_who(TRUE)
+/mob/living/carbon/human/get_tooltip_data()
+	/*var/t_He = ru_who(TRUE)
 	var/t_is = p_are()
 	. = list()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -1006,6 +1006,10 @@
 	else
 		. += "[t_He] [t_is] a [spec_trait_examine_font()][dna.custom_species ? dna.custom_species : dna.species.name]</font>"
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)*/
+	if(activity)
+		. = list()
+		. += activity
+
 
 /mob/living/carbon/human/get_access_locations()
 	. = ..()

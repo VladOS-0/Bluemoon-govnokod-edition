@@ -124,6 +124,7 @@
 	item_state = "lewdmaid_obj"
 	can_adjust = FALSE
 	body_parts_covered = CHEST
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/rank/security/skirt/slut
 	name = "slutty security jumpskirt"
@@ -289,10 +290,11 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/pentatop
-	name = "pentagram crop top"
+	name = "Pentagram Crop Top"
 	desc = "For those goth girls with lots of chest to show."
 	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	anthro_mob_worn_overlay = 'modular_splurt/icons/mob/clothing/uniform_digi.dmi'
 	icon_state = "pentatop"
 	item_state = "pentatop"
 	body_parts_covered = CHEST
@@ -342,9 +344,6 @@
 	name = "yellow trencher uniform"
 	desc = "An utilitarian uniform of rugged warfare, with yellow insignias."
 	icon_state = "goner_uniform_y"
-
-/obj/item/clothing/under/misc/gear_harness
-	body_parts_covered = NONE
 
 /obj/item/clothing/under/misc/leia_outfit
 	name = "space princess outfit"

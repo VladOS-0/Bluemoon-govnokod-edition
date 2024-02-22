@@ -23,8 +23,10 @@
 		"Prosecutor",
 		"NanoTrasen Consultant",
 		"Syndicate Advisor",
+		"Netorare",
+		"Commissar",
 		"NanoTrasen Slut",
-		"Netorare"
+		"Syndicate Slut",
 		)
 
 	outfit = /datum/outfit/job/ntr

@@ -17151,7 +17151,8 @@
 /area/slavers)
 "aMT" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Cell 2"
+	name = "Cell 2";
+	req_access_txt = "154"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -18367,7 +18368,8 @@
 /area/slavers)
 "aRK" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Cell 1"
+	name = "Cell 1";
+	req_access_txt = "154"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -19679,7 +19681,8 @@
 /area/syndicate_mothership)
 "aXa" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Cell 3"
+	name = "Cell 3";
+	req_access_txt = "154"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -19723,7 +19726,8 @@
 /area/tdome/tdomeobserve)
 "aXj" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Broadcasting Cell"
+	name = "Broadcasting Cell";
+	req_access_txt = "154"
 	},
 /turf/open/floor/padded,
 /area/slavers)
@@ -23984,6 +23988,14 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
+"fXE" = (
+/obj/machinery/button/flasher{
+	id = "slaverflash";
+	pixel_x = -24;
+	pixel_y = -24
+	},
+/turf/open/space/basic,
+/area/space)
 "fYK" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/structure/table/wood,
@@ -24826,6 +24838,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
+"hln" = (
+/mob/living/simple_animal/hostile/tentacles,
+/obj/structure/tentacles/node,
+/turf/open/floor/plating/dirt/dark/jungle{
+	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
+	},
+/area/centcom/holding)
 "hmY" = (
 /turf/closed/wall/mineral/snow,
 /area/centcom/holding)
@@ -30927,6 +30946,10 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/holding)
+"pEN" = (
+/obj/item/toy/plush/mammal/fox/emma/rozgo,
+/turf/open/floor/carpet/red,
+/area/centcom/holding)
 "pJe" = (
 /obj/structure/table/wood,
 /obj/item/flashlight{
@@ -34778,13 +34801,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership)
-"vtq" = (
-/obj/item/toy/plush/mammal{
-	desc = "ГАНДОЛЛА!!";
-	name = "Rozgo plushie"
-	},
-/turf/open/floor/carpet/red,
-/area/centcom/holding)
 "vts" = (
 /obj/structure/chair/stool,
 /turf/open/floor/iron/dark,
@@ -36182,6 +36198,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/centcom/holding)
+"xnG" = (
+/obj/item/toy/plush/mammal/fox/emma/taliza,
+/obj/item/storage/box/tentaclescubes,
+/obj/structure/tentacles/node,
+/turf/open/floor/plating/dirt/dark/jungle{
+	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
+	},
 /area/centcom/holding)
 "xnU" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -62072,7 +62096,7 @@ aaa
 aaa
 aaa
 ncJ
-iPk
+hln
 iPk
 iUm
 iUm
@@ -62329,8 +62353,8 @@ aaa
 aaa
 aaa
 ncJ
-iPk
-iPk
+xnG
+hln
 iPk
 iUm
 iUm
@@ -62586,7 +62610,7 @@ aaa
 aaa
 aaa
 ncJ
-iPk
+hln
 iPk
 iPk
 iPk
@@ -63359,8 +63383,8 @@ aaa
 ncJ
 iPk
 vHr
+pEN
 wwK
-vtq
 gDM
 ncJ
 ncJ
@@ -84389,7 +84413,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+fXE
 aaa
 aaa
 aaa

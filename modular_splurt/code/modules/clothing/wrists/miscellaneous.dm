@@ -39,3 +39,26 @@
 /obj/item/clothing/wrists/armwarmer_striped/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, poly_colors, 2)
+
+/obj/item/clothing/wrists/helper_bracelet
+	name = "Браслет - Поговорите со мной"
+	desc = "Относительно новая разработка для поддержки некоторого социального слоя существ."
+	icon = 'modular_splurt/icons/obj/clothing/wrists.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/wrists.dmi'
+	icon_state = "talk_need"
+
+/obj/item/clothing/wrists/helper_bracelet/love_need_bracelet
+	name = "Браслет - Нахожусь в активном поиске любви"
+	icon_state = "love_need"
+
+/obj/item/clothing/wrists/helper_bracelet/rape_need_bracelet
+	name = "Браслет - Изнасилуйте меня"
+	icon_state = "rape_need"
+
+/obj/item/clothing/wrists/helper_bracelet/fuckme_need_bracelet
+	name = "Браслет - Трахните меня"
+	icon_state = "fuckme_need"
+
+/obj/item/clothing/wrists/helper_bracelet/fuckyou_need_bracelet
+	name = "Браслет - Хочу трахнуть кого-то"
+	icon_state = "fuckyou_need"

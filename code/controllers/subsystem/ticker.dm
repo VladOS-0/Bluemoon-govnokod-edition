@@ -281,7 +281,7 @@ SUBSYSTEM_DEF(ticker)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
-		modes = sortList(modes)
+		modes = sort_list(modes)
 		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
 		mode.announce()*/
@@ -747,6 +747,14 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/gondolabridge.ogg',
 		'sound/roundend/haveabeautifultime.ogg',
 		'sound/roundend/CitadelStationHasSeenBetterDays.ogg',
+		'sound/roundend/not_working.ogg',
+		'sound/roundend/lovko_pridumal.ogg',
+		'sound/roundend/punk.ogg',
+		'sound/roundend/tupye.ogg',
+		'sound/roundend/get_up.ogg',
+		'sound/roundend/phonk_cats.ogg',
+		'sound/roundend/russian_fear.ogg',
+		'sound/roundend/gandon.ogg',
 		'sound/roundend/approachingbaystation.ogg'\
 		)
 

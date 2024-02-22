@@ -27,7 +27,7 @@
 	build_path = /obj/item/ammo_box/c38/trac
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	min_security_level = SEC_LEVEL_RED
+	min_security_level = SEC_LEVEL_AMBER
 
 /datum/design/c38_hotshot
 	name = "Speed Loader (.38 Hot Shot)"
@@ -256,7 +256,7 @@
 	build_path = /obj/item/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	min_security_level = SEC_LEVEL_AMBER
+	min_security_level = SEC_LEVEL_BLUE
 
 /datum/design/pin_explorer
 	name = "Outback Firing Pin"
@@ -412,7 +412,7 @@
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	min_security_level = SEC_LEVEL_RED
+	min_security_level = SEC_LEVEL_AMBER
 
 /datum/design/magpistol
 	name = "Magpistol"

@@ -87,8 +87,8 @@
 	desc = "Ваше тело слабее, чем у большинства, здоровье уменьшено на 20%."
 	value = -2
 	medical_record_text = "У пациента чрезвычайно низкая устойчивость к травмам."
-	gain_text = "<span class='notice'>Вы чувствуете, что вас могли бы снести с одного удара."
-	lose_text = "<span class='notice'>Вы чувствуете себя крепче."
+	gain_text = span_notice("Вы чувствуете, что вас могли бы снести с одного удара.")
+	lose_text = span_notice("Вы чувствуете себя крепче.")
 
 /datum/quirk/flimsy/add()
 	quirk_holder.maxHealth *= 0.8
@@ -171,7 +171,12 @@
 		//quirk_holder.emote("sigh")	//это происходит настолько не к месту... пусть игрок сам отыгрывает.
 
 		// Define list of phrases
-
+		var/list/trigger_phrases = list(
+										"В животе слегка урчит, а на ум приходит сперма.",\
+										"Уф, тебе действительно стоит выпить немного спермы...",\
+										"Немного спермы сейчас не помешало бы.!",\
+										"Ты желаешь выпить хоть немного спермы..."
+									)
 		// Alert user in chat
 		to_chat(quirk_holder, span_love("[pick(trigger_phrases)]"))
 
@@ -223,21 +228,38 @@
 	name = "Бездонный Желудок"
 	desc = "В вас быстрее просыпаются голод и жажда. Необходимо есть и пить в два раза больше."
 	value = -1
-	gain_text = "<span class='danger'>Вы хотите есть и пить чаще.</span>"
-	lose_text = "<span class='notice'>Жор идёт на спад.</span>"
+	gain_text = span_danger("Вы хотите есть и пить чаще.")
+	lose_text = span_notice("Жор идёт на спад.")
 	medical_record_text = "Пациенту требуется вдвое большее количество еды, по сравнению с типичным представителем их вида."
 
 /datum/quirk/hungry/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/datum/physiology/P = H.physiology
 	P.hunger_mod *= 2
-	P.thirst_mod *= 2
 
 /datum/quirk/hungry/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	if(H)
 		var/datum/physiology/P = H.physiology
 		P.hunger_mod /= 2
+
+/datum/quirk/thirsty
+	name = "Жаждущий"
+	desc = "Вам необычайно хочется пить. Приходится пить в два раза больше, чем обычно."
+	value = -1
+	gain_text = span_danger("Вы начинаете испытывать жажду гораздо быстрее.")
+	lose_text = span_notice("Ваша повышенная тяга к воде начинает угасать.")
+	medical_record_text = "Пациент сообщает, что пьет в два раза больше жидкости в день, чем обычно для его вида."
+
+/datum/quirk/thirsty/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/physiology/P = H.physiology
+	P.thirst_mod *= 2
+
+/datum/quirk/thirsty/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/physiology/P = H.physiology
 		P.thirst_mod /= 2
 
 /datum/quirk/less_nightmare

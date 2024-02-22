@@ -2,6 +2,11 @@
 	var/list/extra_products = list(
 		/obj/item/clothing/under/dress/skirt/lustymaid = 5,
 		/obj/item/clothing/under/dress/skirt/maidsexy = 5,
+		/obj/item/clothing/wrists/helper_bracelet = 10,
+		/obj/item/clothing/wrists/helper_bracelet/love_need_bracelet = 10,
+		/obj/item/clothing/wrists/helper_bracelet/fuckme_need_bracelet = 10,
+		/obj/item/clothing/wrists/helper_bracelet/fuckyou_need_bracelet = 10,
+		/obj/item/clothing/wrists/helper_bracelet/rape_need_bracelet = 10,
 		/obj/item/magicwand = 5,
 		/obj/item/magicwand/blackwand = 5,
 		/obj/item/sybian_kit = 5,

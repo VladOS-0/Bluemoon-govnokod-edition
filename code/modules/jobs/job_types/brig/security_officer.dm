@@ -10,7 +10,7 @@
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
 	selection_color = "#c02f2f"
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 3000
 	exp_type = EXP_TYPE_CREW
 	considered_combat_role = TRUE
 

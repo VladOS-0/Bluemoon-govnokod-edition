@@ -674,7 +674,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	var/area/A = oldTurf?.loc
 	var/area/my_area = get_area(L)
 
-
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M, A)
 	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
@@ -686,6 +685,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update_gravity(L.mob_has_gravity())
 
 	if(!L.ckey)
+		return
+
+	if(!L.client)
 		return
 
 	if(L.client.prefs.toggles & SOUND_SHIP_AMBIENCE && shipambience != A.shipambience)

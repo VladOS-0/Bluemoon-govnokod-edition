@@ -249,3 +249,11 @@
 	message_mime = "строит грозную мину!"
 	emote_sound = 'sound/voice/rawr2.ogg'
 	emote_cooldown = 1 SECONDS
+
+/datum/emote/living/audio/rocking
+	key = "rocking"
+	key_third_person = "rocking"
+	message = "издаёт звук - <b>LIGHT WEIGHT BABY!</b>"
+	message_mime = "строит грозную мину!"
+	emote_sound = 'sound/voice/light_weight_baby.ogg'
+	emote_cooldown = 15 SECONDS

@@ -7,7 +7,7 @@
 	item_state = "raiqbawks"
 	icon_state = "raiqbawks"
 	verb_say = "states"
-	density = TRUE
+	density = FALSE
 	var/active = FALSE
 	var/list/rangers = list()
 	var/stop = 0

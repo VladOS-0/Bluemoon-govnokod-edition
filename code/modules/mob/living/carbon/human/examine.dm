@@ -206,9 +206,9 @@
 			. += "<b>Игрок НЕ разрешил непристойные действия по отношению к его персонажу.</b>"
 
 	//SPLURT edit
-	if((user.client?.prefs.cit_toggles & GENITAL_EXAMINE))
-		for(var/obj/item/organ/genital/G in internal_organs)
-			if(CHECK_BITFIELD(G.genital_flags, GENITAL_CHASTENED) && G.is_exposed())
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(istype(G) && G.is_exposed())
+			if(CHECK_BITFIELD(G.genital_flags, GENITAL_CHASTENED))
 				. += "[t_on] носит БДСМ-клетку. БДСМ-клетка покрывает [G.name]."
 	//
 	if(covered_in_cum)
@@ -585,6 +585,9 @@
 
 	if(!(ITEM_SLOT_EYES in obscured))
 		. += span_boldnotice("Профиль персонажа: <a href='?src=\ref[src];character_profile=1'>\[Осмотреть\]</a>")
+
+	if(activity)
+		. += "Деятельность: [activity]"
 
 	// send signal last so everything else prioritizes above
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .) //This also handles flavor texts now

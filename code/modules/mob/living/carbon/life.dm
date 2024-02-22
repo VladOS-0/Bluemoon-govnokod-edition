@@ -252,7 +252,7 @@
 		if(SA_partialpressure > SA_para_min)
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
-				Sleeping(max(AmountSleeping() + 40, 200))
+				Sleeping(max(AmountSleeping() + 60, 400)) // BLUEMOON EDIT, WAS H.Sleeping(max(H.AmountSleeping() + 40, 400)) - сервак лагает и под анестезией просыпаются
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
@@ -827,6 +827,12 @@ BLUEMOON REMOVAL END */
 
 	if(istype(head_item, /obj/item/clothing/head/helmet/space) && istype(suit_item, /obj/item/clothing/suit/space))
 		return 1
+
+	if(istype(head_item, /obj/item/clothing/head/mod) && istype(suit_item, /obj/item/clothing/suit/mod))
+		var/obj/item/clothing/suit/mod/modsuit = suit_item
+		var/obj/item/mod/control/mod_control = modsuit.mod
+		if(mod_control && mod_control.active)
+			return 1
 
 	if(T && is_mining_level(T.z) && istype(head_item, /obj/item/clothing/head/hooded/explorer) && istype(suit_item, /obj/item/clothing/suit/hooded/explorer))
 		return 1
