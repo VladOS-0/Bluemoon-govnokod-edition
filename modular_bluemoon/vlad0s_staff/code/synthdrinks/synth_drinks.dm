@@ -450,22 +450,30 @@
 	omnissiah_rate = isholy + ishallowed + istechpriest
 
 	// Для органиков
-	if(!isrobotic(drinker))
-		switch(omnissiah_rate)
-			if(0)
-				to_chat(drinker, "<span class='boldnotice'>Выпитая вами жидкость ощущается странной и липкой... А ещё наполняет большим уважением ко всей машинерии. Как странно...</span>")
-				drinker.adjust_disgust(15)
-			if(1)
-				to_chat(drinker, "<span class='boldnotice'>Вы чувствуете благословенную силу в этой жидкости...</span>")
-			if(2)
-				to_chat(drinker, "<span class='synth'>Вы слышите у себя в голове зов машинного бога...</span>")
-			if(3)
-				to_chat(drinker, "<span class='synth'>ПРИШЛО ВРЕМЯ ВОССЛАВИТЬ БОГА МАШИНЫ!</span>")
-		return
+		if(0)
+			to_chat(drinker, "<span class='boldnotice'>Выпитая вами жидкость ощущается странной и липкой... А ещё наполняет большим уважением ко всей машинерии. Как странно...</span>")
+			drinker.adjust_disgust(15)
+		if(1)
+			to_chat(drinker, "<span class='boldnotice'>Вы чувствуете благословенную силу в этой жидкости...</span>")
+		if(2)
+			to_chat(drinker, "<span class='synth'>Вы слышите у себя в голове зов машинного бога...</span>")
+		if(3)
+			to_chat(drinker, "<span class='synth'>ПРИШЛО ВРЕМЯ ВОССЛАВИТЬ БОГА МАШИНЫ!</span>")
 
 	// У машин баффы значительно увеличиваются, если у них был хотя бы один балл
-	if(omnissiah_rate > 0)
+	if(isrobotic(drinker) && omnissiah_rate > 0)
 		omnissiah_rate += 2
+
+	switch(omnissiah_rate)
+		if(0)
+			to_chat(drinker, "<span class='boldnotice'>Выпитая вами жидкость ощущается странной и липкой... А ещё наполняет большим уважением ко всей машинерии. Как странно...</span>")
+			drinker.adjust_disgust(15)
+		if(1)
+			to_chat(drinker, "<span class='boldnotice'>Вы чувствуете благословенную силу в этой жидкости...</span>")
+		if(2)
+			to_chat(drinker, "<span class='synth'>Вы слышите у себя в голове зов машинного бога...</span>")
+		if(3)
+			to_chat(drinker, "<span class='synth'>ПРИШЛО ВРЕМЯ ВОССЛАВИТЬ БОГА МАШИНЫ!</span>")
 	. = ..()
 
 /datum/reagent/consumable/synthdrink/synthanol/holycode/on_mob_life(mob/living/carbon/M)
