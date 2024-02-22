@@ -475,7 +475,7 @@
 				booze_power *= 0.7
 			M.drunkenness = max((M.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0)
 		// Забавные эффекты для техножрецов-органиков
-		if(prob(min((omnissiah_rate * current_cycle + 1)/20, 0.5)))
+		if(prob(min((omnissiah_rate * current_cycle + 1)/20, 2)))
 			var/random_action = rand(1, 6)
 			switch(random_action)
 				if(1) // Самый редкий вариант
@@ -487,15 +487,7 @@
 				if(3)
 					M.say(pick("Уверуйте в Омниссию, глупцы!", "В плоти нет правды, лишь предательство!", "Спаси нас, Омниссия, от слабости разума..."), forced = "synthetic booze")
 				if(4)
-					if(M.get_idcard())
-						var/obj/item/card/id/card = M.get_idcard()
-						var/job = card.assignment ? ckey(card.get_job_name()) : null
-						if(job == "Roboticist")
-							M.emote("me", EMOTE_AUDIBLE, "поглаживает свою ID-карту")
-							M.say("Хорошо работать робототехником... богоугодно...", forced = "synthetic booze")
-						else
-							M.say("Надо было устроиться робототехником...", forced = "synthetic booze")
-					M.emote("me", EMOTE_AUDIBLE, "рассуждает о превратностях работы робототехником")
+					M.emote("protect")
 				if(5)
 					if(prob(50))
 						M.emote("me", EMOTE_AUDIBLE, "тихо молится Омниссии...")
@@ -530,7 +522,7 @@
 	if(omnissiah_rate)
 		to_chat(M, "<span class='synth'>Вы фиксируете благословение Машинного Бога на своём корпусе...</span>")
 		playsound(M, 'sound/ambience/ambiholy.ogg', 20, FALSE)
-	if(M.client?.prefs?.features && !M.client.prefs.features["horns"])
+	if(!M.client?.prefs?.features || (M.client?.prefs?.features && !M.client.prefs.features["horns"]))
 		M.visible_message("<span class='synth'>[M] начинает излучать священный свет!</span>")
 		M.client.prefs.features["horns"] = "halo"
 		M.update_body()
@@ -539,7 +531,7 @@
 /datum/reagent/consumable/synthdrink/synthanol/holycode/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
 	// Похожая система, что и у органиков
-	if(prob(min((omnissiah_rate * current_cycle + 1)/20, 0.5)))
+	if(prob(min((omnissiah_rate * current_cycle + 1)/20, 2)))
 		var/random_action = rand(1, 4)
 		switch(random_action)
 			if(1) // Самый редкий вариант
@@ -573,7 +565,8 @@
 	if(added_effect)
 		to_chat(M, "<span class='warning'>С исчезновением реагента из вашей системы, странное свечение перестаёт исходить из вашего корпуса...</span>")
 		M.visible_message("<span class='notice'>С тихим металлическим треском нимб вокруг корпуса [M] распадается...</span>")
-		M.client.prefs.features["horns"] = null
+		if(M.client?.prefs?.features)
+			M.client.prefs.features["horns"] = null
 		M.update_body()
 	else if(omnissiah_rate > 0)
 		to_chat(M, "<span class='warning'>Священные машинные литания медленно исчезают из вашей головы...</span>")
