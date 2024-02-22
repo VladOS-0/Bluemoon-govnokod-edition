@@ -475,7 +475,7 @@
 				booze_power *= 0.7
 			M.drunkenness = max((M.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0)
 		// Забавные эффекты для техножрецов-органиков
-		if(prob(min((omnissiah_rate * current_cycle + 1)/20, 2)))
+		if(prob(min((omnissiah_rate + 1) * current_cycle/20, 2)))
 			var/random_action = rand(1, 6)
 			switch(random_action)
 				if(1) // Самый редкий вариант
@@ -531,7 +531,7 @@
 /datum/reagent/consumable/synthdrink/synthanol/holycode/synthetic_on_life(mob/living/carbon/human/M)
 	. = ..()
 	// Похожая система, что и у органиков
-	if(prob(min((omnissiah_rate * current_cycle + 1)/20, 2)))
+	if(prob(min((omnissiah_rate + 1) * current_cycle/20, 2)))
 		var/random_action = rand(1, 4)
 		switch(random_action)
 			if(1) // Самый редкий вариант
