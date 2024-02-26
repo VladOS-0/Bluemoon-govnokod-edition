@@ -91,7 +91,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	set waitfor = FALSE
-	var/static/list/special_crit_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	// Данные режимы обходят проверку на крит и не превращаются в разговор "на последнем вздохе"
+	var/static/list/special_crit_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)  // BLUEMOON EDIT - правки last breath'а
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
 
@@ -118,7 +119,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
 	var/in_critical = InCritical()
-	var/fullcrit = InFullCritical()
+	var/fullcrit = InFullCritical() // BLUEMOON EDIT - правки last breath'а
 
 	if(one_character_prefix[message_mode])
 		message = copytext_char(message, 2)
@@ -144,7 +145,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
 		return
 
-	else if(stat == UNCONSCIOUS && !fullcrit)
+	else if(stat == UNCONSCIOUS && !fullcrit) // BLUEMOON EDIT - правки last breath'а
 		if(!(unconscious_allowed_modes[message_mode]))
 			return
 
@@ -177,7 +178,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/succumbed = FALSE
 
-	if(in_critical && !unconscious_allowed_modes[message_mode])
+	// BLUEMOON EDIT START - правки last breath'а
+	if(in_critical && !special_crit_modes[message_mode])
 		message_range = 2
 		message_mode = MODE_WHISPER
 		src.log_talk(message, LOG_WHISPER)
@@ -192,6 +194,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message = Ellipsis(message, 10, 1)
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
+	// BLUEMOON EDIT END
 	else
 		src.log_talk(message, LOG_SAY, forced_by=forced)
 
