@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/fullcrit = InFullCritical()
 	if(in_critical && !(message_mode in special_crit_modes))
-		message_range = 1
+		message_range = 2
 		message_mode = MODE_WHISPER
 		src.log_talk(message, LOG_WHISPER)
 		if(fullcrit)
