@@ -2058,7 +2058,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(initial(T.value) != 0)
 				font_color = value > 0 ? "#AAFFAA" : "#FFAAAA"
 			// BLUEMOON ADD START - настройки для квирков
-			if(initial(T.quirk_options).len > 0)
+			if(LAZYLEN(initial(T.quirk_options)) > 0)
 				options_string_class = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=trait;task=setup_options;trait=[quirk_name]'"
 			// BLUEMOON ADD END
 			if(quirk_conflict)
