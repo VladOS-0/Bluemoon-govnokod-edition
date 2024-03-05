@@ -97,7 +97,7 @@
 	return isrobotic(target)
 
 /datum/surgery_step/voicebox_detaching
-	name = "Подсоединить Синтезатор (Мультитул)"
+	name = "Отсоединить Синтезатор (Мультитул)"
 	implements = list(TOOL_MULTITOOL = 100, TOOL_SCREWDRIVER = 10, /obj/item/stack/cable_coil = 60)
 	time = 50
 
@@ -150,7 +150,7 @@
 	return isrobotic(target)
 
 /datum/surgery_step/voicebox_reattach
-	name = "Отсоединить Синтезатор (Плоскогубцы)"
+	name = "Подсоединить Синтезатор (Плоскогубцы)"
 	implements = list(TOOL_WIRECUTTER = 100, TOOL_SCALPEL = 80, /obj/item/melee/transforming/energy/sword = 75, /obj/item/kitchen/knife = 65,
 		/obj/item/shard = 45, /obj/item = 30)
 	time = 60
