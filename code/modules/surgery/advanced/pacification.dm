@@ -17,7 +17,7 @@
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	. = ..()
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B || istype(B, /obj/item/organ/brain/ipc)) // BLUEMOON EDIT - изменение неподходящих для синтетиков операций
+	if(!B || isrobotic(target)) // BLUEMOON EDIT - изменение неподходящих для синтетиков операций
 		return FALSE
 	return TRUE
 
@@ -71,7 +71,7 @@
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	. = ..()
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B || !istype(B, /obj/item/organ/brain/ipc))
+	if(!B || !isrobotic(target))
 		return FALSE
 	return TRUE
 // BLUEMOON ADD END
