@@ -14,7 +14,8 @@
 /datum/surgery/robotic_burn_repair/can_start(mob/living/user, mob/living/carbon/target)
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		return(targeted_bodypart.get_wound_type(targetable_wound))
+		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
+		return burn_wound
 
 
 // Хирургический шаг
