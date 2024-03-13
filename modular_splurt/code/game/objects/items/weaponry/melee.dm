@@ -6,6 +6,8 @@
 	to_chat(user, "<span class='notice'>Я целюсь в... [hole].</span>")
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+	if(!user.canUseTopic(user, BE_CLOSE))
+		return
 	user.DelayNextAction(CLICK_CD_RANGE)
 	if (user.zone_selected == BODY_ZONE_PRECISE_GROIN && user.a_intent == INTENT_HELP)
 		var/message = ""
@@ -27,7 +29,8 @@
 			playsound(loc, pick('modular_sand/sound/interactions/bang4.ogg',
 								'modular_sand/sound/interactions/bang5.ogg',
 								'modular_sand/sound/interactions/bang6.ogg'), 70, 1, -1)
-
+			if(!HAS_TRAIT(target, TRAIT_LEWD_JOB))
+				new /obj/effect/temp_visual/heart(target.loc)
 	else //Standart code
 		. = ..()
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))

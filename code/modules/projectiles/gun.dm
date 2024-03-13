@@ -299,6 +299,8 @@
 	var/message = ""
 	var/lust_amt = 0
 	var/mob/living/living_target = target
+	if(!user.canUseTopic(user, BE_CLOSE))
+		return
 	user.DelayNextAction(CLICK_CD_RANGE)
 	if(ishuman(living_target) && (living_target?.client?.prefs?.toggles & VERB_CONSENT))
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
@@ -317,6 +319,8 @@
 		playsound(loc, pick('modular_sand/sound/interactions/bang4.ogg',
 							'modular_sand/sound/interactions/bang5.ogg',
 							'modular_sand/sound/interactions/bang6.ogg'), 70, 1, -1)
+		if(!HAS_TRAIT(target, TRAIT_LEWD_JOB))
+			new /obj/effect/temp_visual/heart(target.loc)
 
 /obj/item/gun/CheckAttackCooldown(mob/user, atom/target, shooting = FALSE)
 	return user.CheckActionCooldown(shooting? ranged_attack_speed : attack_speed, clickdelay_from_next_action, clickdelay_mod_bypass, clickdelay_ignores_next_action)

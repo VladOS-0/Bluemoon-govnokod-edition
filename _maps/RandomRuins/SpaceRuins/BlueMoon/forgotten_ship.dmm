@@ -49,6 +49,9 @@
 /obj/item/ammo_box/c10mm,
 /obj/item/flashlight/seclite,
 /obj/item/paper/fluff/ruins/forgottenship/missionobj,
+/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/ammo_box/magazine/pistolm9mm,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/inteq_forgotten_ship)
 "ag" = (
@@ -304,6 +307,9 @@
 /obj/item/ammo_box/c10mm,
 /obj/item/flashlight/seclite,
 /obj/item/paper/fluff/ruins/forgottenship/missionobj,
+/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/ammo_box/magazine/pistolm9mm,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/inteq_forgotten_ship)
 "aL" = (
@@ -3847,6 +3853,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/crowbar/power,
 /obj/item/weldingtool/experimental,
+/obj/item/multitool/tricorder,
 /obj/item/screwdriver/power,
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -5267,6 +5274,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/crowbar/power,
 /obj/item/weldingtool/experimental,
+/obj/item/multitool/tricorder,
 /obj/item/screwdriver/power,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8

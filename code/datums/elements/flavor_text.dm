@@ -138,7 +138,6 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			onclose(usr, "[target.name]")
 		return TRUE
 
-// BLUEMOON EDIT START - почините это когда-нибудь
 /mob/proc/manage_flavor_tests()
 	set name = "Manage Flavor Texts"
 	set desc = "Used to manage your various flavor texts."
@@ -177,9 +176,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		to_chat(src, "Your headshot has been cleared.")
 		return
 
-	// Validate the headshot URL | "Почините когда-нибудь эту херню и тут, и в преференсах" - безымянный кодер Блюмуна
-	var/static/link_regex = regex("https://i.gyazo.com|https://media.discordapp.net|https://cdn.discordapp.com|https://media.discordapp.net$") //Do not touch the damn duplicates.
-	var/static/end_regex = regex(".jpg|.jpg|.png|.jpeg|.jpeg") //Regex is terrible, don't touch the duplicate extensions
+	// Validate the headshot URL
+	var/static/link_regex = regex("https://i\\.gyazo\\.com|https://media\\.discordapp\\.net|https://cdn\\.discordapp\\.com|https://media\\.discordapp\\.net$")
+	var/static/end_regex = regex("\\.jpg|\\.png|\\.jpeg$")
 
 	if(!findtext(new_headshot, link_regex))
 		to_chat(src, span_warning("The link needs to be an unshortened Gyazo or Discordapp link!"))
@@ -194,7 +193,6 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		to_chat(src, span_notice("Your headshot has been updated."))
 		to_chat(src, span_notice("If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser."))
 		to_chat(src, span_notice("Keep in mind that the photo will be downsized to 250x250 pixels, so the more square the photo, the better it will look."))
-// BLUEMOON EDIT END
 
 /mob/proc/set_pose()
 	set name = "Set Pose"
