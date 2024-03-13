@@ -101,7 +101,7 @@ GLOBAL_DATUM(dna_for_copying, /datum/dna)
 	new_dna.species.limbs_id = species.limbs_id || species.id
 	new_dna.real_name = real_name
 	new_dna.nameless = nameless
-	new_dna.custom_species = custom_species // BLUEMOON EDIT - привязка кастомной расы к ДНК
+	new_dna.custom_species = custom_species
 	new_dna.custom_species_lore = custom_species_lore // BLUEMOON EDIT - привязка лора рас к ДНК
 	new_dna.mutations = mutations.Copy()
 	// BLUEMOON EDIT START - привязка флавора к ДНК

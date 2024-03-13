@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			onclose(usr, "[target.name]")
 		return TRUE
 
-// BLUEMOON EDIT START - отказался от компонента flavor_text и перевёл всё на хардкод. Печальный конец, не так ли?
+// BLUEMOON EDIT START - почините это когда-нибудь
 /mob/proc/manage_flavor_tests()
 	set name = "Manage Flavor Texts"
 	set desc = "Used to manage your various flavor texts."
