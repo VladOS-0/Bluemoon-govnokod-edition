@@ -44,6 +44,17 @@ GLOBAL_LIST_EMPTY(cached_previews)
 	data["character_ref"] = examine_panel_screen.assigned_map
 	data["directory_visible"] = M?.client?.prefs?.show_in_directory
 
+	var/list/headshots = list()
+	if (M?.client?.prefs)
+		if (M.client.prefs.features["headshot_link"])
+			headshots.Add(M.client.prefs.features["headshot_link"])
+		if (M.client.prefs.features["headshot_link1"])
+			headshots.Add(M.client.prefs.features["headshot_link1"])
+		if (M.client.prefs.features["headshot_link2"])
+			headshots.Add(M.client.prefs.features["headshot_link2"])
+
+	data["headshot_links"] = headshots
+
 	if (istype(M, /mob/living/silicon))
 		data["flavortext"] = M?.client?.prefs.features["silicon_flavor_text"] || ""
 
@@ -56,11 +67,10 @@ GLOBAL_LIST_EMPTY(cached_previews)
 		data["custom_species_lore"] = H.dna?.custom_species_lore || ""
 	else
 		data["species_name"] = M?.client?.prefs?.custom_species || M // BLUEMOON EDIT - после || замениил "космонавтик" на имя самого моба
-		data["custom_species_lore"] = M?.client?.prefs.features["custom_species_lore"] || "" // BLUEMOON EDIT - если нет кастомного лора, то там 3 чёрточки
-
-	data["security_records"] = M?.client?.prefs.security_records || "" //BLUEMOON ADD - призраки видят базы данных в описании персонажей
-	data["medical_records"] = M?.client?.prefs.medical_records || "" //BLUEMOON ADD - призраки видят базы данных в описании персонажей
-	// BLUEMOON EDIT END
+	data["custom_species_lore"] = M?.client?.prefs.features["custom_species_lore"] || "" // BLUEMOON EDIT - если нет кастомного лора, то там 3 чёрточки
+	if (isobserver(user))
+		data["security_records"] = M?.client?.prefs.security_records || "" //BLUEMOON ADD - призраки видят базы данных в описании персонажей
+		data["medical_records"] = M?.client?.prefs.medical_records || "" //BLUEMOON ADD - призраки видят базы данных в описании персонажей
 	data["vore_tag"] = M?.client?.prefs?.vorepref || "No"
 	data["erp_tag"] = M?.client?.prefs?.erppref || "No"
 	data["mob_tag"] = M?.client?.prefs?.mobsexpref || "No"
@@ -129,12 +139,7 @@ GLOBAL_LIST_EMPTY(cached_previews)
 	if (!ui)
 		user.client.register_map_obj(examine_panel_screen)
 		examine_panel_screen.setDir(SOUTH)
-		// BLUEMOON ADD START - призраки видят базы данных в описании персонажей
-		if(isobserver(user))
-			ui = new(user, src, "CharacterProfileForGhosts", "Профиль персонажа [M]")
-		else
-		// BLUEMOON ADD END
-			ui = new(user, src, "CharacterProfile", "Профиль персонажа [M]")
+		ui = new(user, src, "CharacterProfile", "Профиль персонажа [M]")
 		ui.open()
 
 /datum/description_profile/ui_act(action, list/params)

@@ -242,16 +242,22 @@
 	with your fists, and be able to slam people through tables with immense force. \
 	Unfortunately, due to the size of the gloves you will be unable to wield firearms with them equipped."
 	item = /obj/item/clothing/gloves/fingerless/pugilist/mauler
-	cost = 8
+	cost = 10
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
 	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
-		 Upon hitting a target, the piston-ram will extend forward to make contact for some serious damage. \
-		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
-		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
+		Upon hitting a target, the piston-ram will extend forward to make contact for some serious damage. \
+		Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
+		deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
 	cost = 8
+
+/datum/uplink_item/dangerous/death_lipstick
+	name = "Kiss of Death"
+	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	item = /obj/item/lipstick/black/death
+	cost = 12
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
