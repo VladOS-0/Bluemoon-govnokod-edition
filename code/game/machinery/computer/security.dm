@@ -214,7 +214,7 @@
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["mi_crim"])
 							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails][c.centcomm_enforced ? "<br><b style='color:green'>АВТОРИЗОВАНО ЦЕНТРАЛЬНЫМ КОМАНДОВАНИЕМ</b>" : ""]</td>"
+							dat += "<td>[c.crimeDetails][c.centcom_enforced ? "<br><b style='color:green'>АВТОРИЗОВАНО ЦЕНТРАЛЬНЫМ КОМАНДОВАНИЕМ</b>" : ""]</td>"
 							dat += "<td>[c.author]</td>"
 							dat += "<td>[c.time]</td>"
 							dat += "<td>[c.penalties_incurred ? "<b style='color:green'>ДА</b>" : "<b style='color:red'>НЕТ</b>"]<BR><A href='?src=[REF(src)];choice=Edit Field;field=crim_incur_switch;cdataid=[c.dataId]'>\[Switch\]</A></td>"
@@ -236,7 +236,7 @@
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["ma_crim"])
 							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails][c.centcomm_enforced ? "<br><b>[span_green("АВТОРИЗОВАНО ЦЕНТРАЛЬНЫМ КОМАНДОВАНИЕМ")]</b>" : ""]</td>"
+							dat += "<td>[c.crimeDetails][c.centcom_enforced ? "<br><b>[span_green("АВТОРИЗОВАНО ЦЕНТРАЛЬНЫМ КОМАНДОВАНИЕМ")]</b>" : ""]</td>"
 							dat += "<td>[c.author]</td>"
 							dat += "<td>[c.time]</td>"
 							dat += "<td>[c.penalties_incurred ? "<b style='color:green'>ДА</b>" : "<b style='color:red'>НЕТ</b>"]<BR><A href='?src=[REF(src)];choice=Edit Field;field=crim_incur_switch;cdataid=[c.dataId]'>\[Switch\]</A></td>"
@@ -459,7 +459,7 @@ What a mess.*/
 						continue
 					var/crime_text = "<p>"
 					crime_text += "<b>" + c.crimeName + "</b> - " + c.crimeDetails
-					if(c.centcomm_enforced)
+					if(c.centcom_enforced)
 						crime_text += " <i>\[Центкомм\]</i>"
 					crime_text += "</p>"
 					report_text += crime_text
@@ -720,8 +720,8 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/centcomm_authority = (ACCESS_CENT_CAPTAIN in logged_access)
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), centcomm_authority)
+							var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), centcom_authority)
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
 							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("mi_crim_delete")
@@ -729,16 +729,16 @@ What a mess.*/
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								var/centcomm_authority = (ACCESS_CENT_CAPTAIN in logged_access)
-								GLOB.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"], centcomm_authority)
+								var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+								GLOB.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"], centcom_authority)
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
 							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/centcomm_authority = (ACCESS_CENT_CAPTAIN in logged_access)
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), centcomm_authority)
+							var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), centcom_authority)
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
 							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("ma_crim_delete")
@@ -746,8 +746,8 @@ What a mess.*/
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								var/centcomm_authority = (ACCESS_CENT_CAPTAIN in logged_access)
-								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"], centcomm_authority)
+								var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"], centcom_authority)
 					if("crim_incur_switch")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])

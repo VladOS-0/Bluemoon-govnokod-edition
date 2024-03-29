@@ -34,17 +34,17 @@
 	var/author = ""
 	var/time = ""
 	var/dataId = 0
-	var/centcomm_enforced = FALSE
+	var/centcom_enforced = FALSE
 	var/penalties_incurred = FALSE // Понёс ли субъект наказание за свои преступления
 
-/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", centcomm_enforced = FALSE)
+/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", centcom_enforced = FALSE)
 	var/datum/data/crime/c = new /datum/data/crime
 	c.crimeName = cname
 	c.crimeDetails = cdetails
 	c.author = author
 	c.time = time
 	c.dataId = ++securityCrimeCounter
-	c.centcomm_enforced = centcomm_enforced
+	c.centcom_enforced = centcom_enforced
 	return c
 
 /datum/datacore/proc/addMinorCrime(id = "", datum/data/crime/crime)
@@ -54,24 +54,24 @@
 			crimes |= crime
 			return
 
-/datum/datacore/proc/removeMinorCrime(id, cDataId, centcomm_authority = FALSE)
+/datum/datacore/proc/removeMinorCrime(id, cDataId, centcom_authority = FALSE)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["mi_crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
-					if(crime.centcomm_enforced && !centcomm_authority)
+					if(crime.centcom_enforced && !centcom_authority)
 						return
 					crimes -= crime
 					return
 
-/datum/datacore/proc/removeMajorCrime(id, cDataId, centcomm_authority = FALSE)
+/datum/datacore/proc/removeMajorCrime(id, cDataId, centcom_authority = FALSE)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["ma_crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
-					if(crime.centcomm_enforced && !centcomm_authority)
+					if(crime.centcom_enforced && !centcom_authority)
 						return
 					crimes -= crime
 					return
