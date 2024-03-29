@@ -202,7 +202,7 @@
 						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
 						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
-
+						// BLUEMOON EDIT START - возможность пометить правонарушение как обработанное и от имени ЦК
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
@@ -243,7 +243,7 @@
 							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
 							dat += "</tr>"
 						dat += "</table>"
-
+						// BLUEMOON EDIT END
 						dat += "<br>\nImportant Notes:<br>\n\t<A href='?src=[REF(src)];choice=Edit Field;field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A>"
 						dat += "<br><br><font size='4'><b>Comments/Log</b></font><br>"
 						var/counter = 1
@@ -431,6 +431,7 @@ What a mess.*/
 					P.update_appearance()
 					P.update_icon()
 					printing = null
+			// BLUEMOON ADD START - возможность распечатать автоматически сгенерированный ордер
 			if("Generate Arrest Warrant")
 				if(printing)
 					return
@@ -486,6 +487,7 @@ What a mess.*/
 				P.update_appearance()
 				P.update_icon()
 				printing = null
+			// BLUEMOON ADD END
 			if("Print Poster")
 				if(!( printing ))
 					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
@@ -720,7 +722,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+							var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access) // BLUEMOON EDIT - авторизация ЦК
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), centcom_authority)
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
 							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
@@ -729,7 +731,7 @@ What a mess.*/
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+								var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access) // BLUEMOON EDIT - авторизация ЦК
 								GLOB.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"], centcom_authority)
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
@@ -737,7 +739,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+							var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access) // BLUEMOON EDIT - авторизация ЦК
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), centcom_authority)
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
 							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
@@ -746,14 +748,16 @@ What a mess.*/
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access)
+								var/centcom_authority = (ACCESS_CENT_CAPTAIN in logged_access) // BLUEMOON EDIT - авторизация ЦК
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"], centcom_authority)
+					// BLUEMOON ADD START - возможность пометить правонарушение как обработанное
 					if("crim_incur_switch")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "incur", null, a2))
 									return
 								GLOB.data_core.switch_incur(active1.fields["id"], href_list["cdataid"])
+					// BLUEMOON ADD END
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_multiline_input(usr, "Please summarize notes:", "Secure records", active2.fields["notes"], 8192)
