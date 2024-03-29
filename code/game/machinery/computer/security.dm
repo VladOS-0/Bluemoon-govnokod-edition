@@ -209,7 +209,7 @@
 						<th>Details</th>
 						<th>Author</th>
 						<th>Time Added</th>
-						<th>Incurred</th>
+						<th>Penalty Incurred</th>
 						<th>Del</th>
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["mi_crim"])
@@ -231,7 +231,7 @@
 						<th>Details</th>
 						<th>Author</th>
 						<th>Time Added</th>
-						<th>Incurred</th>
+						<th>Penalty Incurred</th>
 						<th>Del</th>
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["ma_crim"])
