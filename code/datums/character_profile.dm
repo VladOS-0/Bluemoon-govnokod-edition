@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(cached_previews)
 
 	// BLUEMOON EDIT START - перепривязка к ДНК и майнду флаворов
 	if (issilicon(M))
-		data["flavortext"] = M?.mind?["silicon_flavor_text"] || ""
+		data["flavortext"] = M?.mind?.silicon_flavor_text || ""
 
 	if(iscarbon(M))
 		var/mob/living/carbon/H = M
