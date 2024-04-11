@@ -144,38 +144,38 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	set desc = "Used to manage your various flavor texts."
 	set category = "IC"
 
-	if(!src || !iscarbon(src))
-		if(issilicon(src))
-			var/mob/living/silicon/our_borgy = src
-			if(our_borgy.mind)
-				var/new_text = tgui_input_text(our_borgy, "Введите новый синт-флавор (максимум [MAX_FLAVOR_LEN] символов). Изменения действуют только в течении раунда и не затрагивают сами преференсы.", "Новый синт-флавор", our_borgy.mind.silicon_flavor_text, MAX_FLAVOR_LEN, TRUE, TRUE)
-				if(new_text)
-					our_borgy.mind.silicon_flavor_text = new_text
+	if(!isliving(src))
 		return
-	var/mob/living/carbon/our_mob = src
-	if(!our_mob.dna)
-		return
-
 	var/list/changeable_texts = list(
-		"Флавор",
-		"Обнажённый Флавор",
-		"Лор Расы",
 		"OOC-заметки",
-		"Хедшоты"
+		"Временный Флавор (Поза)"
 	)
+	if(iscarbon(src))
+		if(!src.dna)
+			return
+		changeable_texts.Add("Флавор", "Обнажённый Флавор", "Лор Расы", "Хедшоты")
+
+	else if(issilicon(src))
+		if(!src.mind)
+			return
+		changeable_texts.Add("Синтетический флавор")
+
 	var/chosen = tgui_input_list(our_mob, "Выберите параметр, который должен быть изменён. Изменения действуют только в течении раунда и не затрагивают сами преференсы.", "Управление флавор-текстами", changeable_texts, changeable_texts[1])
 	if(!chosen)
 		return
 	switch(chosen)
 		if("Флавор")
+			var/mob/living/carbon/our_mob = src
 			var/new_text = tgui_input_text(our_mob, "Введите новый флавор (максимум [MAX_FLAVOR_LEN] символов).", "Новый флавор", our_mob.dna.flavor_text, MAX_FLAVOR_LEN, TRUE, TRUE)
 			if(new_text)
 				our_mob.dna.flavor_text = new_text
 		if("Обнажённый Флавор")
+			var/mob/living/carbon/our_mob = src
 			var/new_text = tgui_input_text(our_mob, "Введите новый флавор обнажённого тела своего персонажа (максимум [MAX_FLAVOR_LEN] символов).", "Новый обнажённый флавор", our_mob.dna.naked_flavor_text, MAX_FLAVOR_LEN, TRUE, TRUE)
 			if(new_text)
 				our_mob.dna.naked_flavor_text = new_text
 		if("Лор Расы")
+			var/mob/living/carbon/our_mob = src
 			var/new_text = tgui_input_text(our_mob, "Введите новый лор биологического (или не совсем биологического) вида своего персонажа (максимум [MAX_FLAVOR_LEN] символов).", "Новый лор расы", our_mob.dna.custom_species_lore, MAX_FLAVOR_LEN, TRUE, TRUE)
 			if(new_text)
 				our_mob.dna.custom_species_lore = new_text
@@ -221,6 +221,22 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			to_chat(our_mob, span_notice("Имейте в виду, что размер фотографии будет уменьшен до 256x256 пикселей, поэтому чем квадратнее фотография, тем лучше она будет выглядеть."))
 
 			our_mob.dna.headshot_links[chosen_headshot_id] = new_link
+		if("Временный Флавор (Поза)")
+			var/list/L = GLOB.mobs_with_editable_flavor_text[src]
+			var/datum/element/flavor_text/carbon/temporary/T
+			for(var/i in L)
+				if(istype(i, /datum/element/flavor_text/carbon/temporary))
+					T = i
+			if(!T)
+				to_chat(src, "<span class='warning'>Your mob type does not support temporary flavor text.</span>")
+				return
+			T.set_flavor(src)
+		if("Синтетический флавор")
+			var/mob/living/silicon/our_borgy = src
+			if(our_borgy.mind)
+				var/new_text = tgui_input_text(our_borgy, "Введите новый синт-флавор (максимум [MAX_FLAVOR_LEN] символов). Изменения действуют только в течении раунда и не затрагивают сами преференсы.", "Новый синт-флавор", our_borgy.mind.silicon_flavor_text, MAX_FLAVOR_LEN, TRUE, TRUE)
+				if(new_text)
+					our_borgy.mind.silicon_flavor_text = new_text
 // BLUEMOON EDIT END
 
 /mob/proc/set_pose()
