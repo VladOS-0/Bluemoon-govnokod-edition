@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	. = list("<span class='info'>Это [icon2html(src, user)] \a <EM>[src]</EM>, a [src.module.name] юнит!")
+	. = list("<span class='info'>Это [icon2html(src, user)] \a <EM>[src]</EM>, [src.module.name] юнит!")
 	if(desc)
 		. += "[desc]"
 
@@ -19,11 +19,11 @@
 		if (overall_fireloss < maxHealth * 0.5)
 			. += "<span class='warning'>Он выглядит слегка обгоревшим.</span>"
 		else
-			. += "<span class='warning'><B>Он сильно обгорел!!</B></span>"
+			. += "<span class='warning'><B>Он сильно обгорел!</B></span>"
 	if (health < -maxHealth*0.5)
 		. += "<span class='warning'>Он вот-вот отключится.</span>"
 	if (fire_stacks < 0)
-		. += "<span class='warning'>Он вымок в воде..</span>"
+		. += "<span class='warning'>Он вымок в воде.</span>"
 	else if (fire_stacks > 0)
 		. += "<span class='warning'>Он покрыт чем-то горючим.</span>"
 
@@ -52,7 +52,7 @@
 	if(LAZYLEN(.) > 1)
 		.[2] = "<hr>[.[2]]"
 
-	. += span_boldnotice("Профиль киборга: <a href='?src=\ref[src];cyborg_profile=1'>\[Осмотреть\]</a>")
+	. += span_boldnotice("<br>Профиль киборга: <a href='?src=\ref[src];cyborg_profile=1'>\[Осмотреть\]</a><br>")
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
 	if(tempflavor)

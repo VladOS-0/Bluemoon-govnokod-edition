@@ -45,9 +45,10 @@ export const CyborgProfile = (props, context) => {
   ];
 
   return (
-    <Window resizable width={950} height={730}>
+    <Window resizable width={600} height={460}>
       <Window.Content scrollable>
         <Flex>
+          <Flex.Item pl="10px" grow>
             <Collapsible title="Описание Юнита" open>
               <Section>
                 <Flex direction="column">
@@ -62,7 +63,7 @@ export const CyborgProfile = (props, context) => {
                 {data.oocnotes || "Отсутствуют"}
               </Section>
             </Collapsible>
-              <Section title="Преференсы персонажа" width="100%">
+              <Section title="Преференсы киборга" width="100%">
                 <LabeledList>
                   {tags.map(tag => (
                     <LabeledList.Item
@@ -74,6 +75,7 @@ export const CyborgProfile = (props, context) => {
                   ))}
                 </LabeledList>
               </Section>
+          </Flex.Item>
         </Flex>
       </Window.Content>
     </Window>
