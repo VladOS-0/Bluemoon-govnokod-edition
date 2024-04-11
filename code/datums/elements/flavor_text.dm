@@ -228,6 +228,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	set desc = "Sets your temporary flavor text"
 	set category = "IC"
 
+	// BLUEMOON EDIT START - перенос темпфлавора на хардкод
+	/*
 	var/list/L = GLOB.mobs_with_editable_flavor_text[src]
 	var/datum/element/flavor_text/carbon/temporary/T
 	for(var/i in L)
@@ -237,6 +239,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		to_chat(src, "<span class='warning'>Your mob type does not support temporary flavor text.</span>")
 		return
 	T.set_flavor(src)
+	*/
 
 /datum/element/flavor_text/proc/set_flavor(mob/user)
 	if(!(user in texts_by_atom))

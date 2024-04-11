@@ -589,6 +589,9 @@
 	if(activity)
 		. += "Деятельность: [activity]"
 
+	if(tempflavor)
+		. += span_notice(tempflavor)
+
 	// send signal last so everything else prioritizes above
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .) //This also handles flavor texts now
 

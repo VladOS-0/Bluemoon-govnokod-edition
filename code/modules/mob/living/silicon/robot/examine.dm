@@ -55,6 +55,9 @@
 	. += span_boldnotice("Профиль киборга: <a href='?src=\ref[src];cyborg_profile=1'>\[Осмотреть\]</a>")
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
+	if(tempflavor)
+		. += span_notice(tempflavor)
+
 	if(length(.) > 1)
 		.[1] += "<br>"
 
