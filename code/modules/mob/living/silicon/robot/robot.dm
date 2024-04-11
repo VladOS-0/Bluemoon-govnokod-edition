@@ -6,7 +6,6 @@
 	bubble_icon = "robot"
 	var/obj/item/pda/ai/aiPDA
 	var/flash_protect = FALSE
-	var/borg_profile =
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -126,7 +125,7 @@
 	. = ..()
 	// BLUEMOON ADD START - профиль для боргов
 	if(href_list["cyborg_profile"])
-		ui_interact(user)
+		ui_interact(usr)
 	// BLUEMOON ADD END
 	if(href_list["character_profile"])
 		if(!profile)
