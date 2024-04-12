@@ -45,17 +45,13 @@ export const CyborgProfile = (props, context) => {
   ];
 
   return (
-    <Window resizable width={600} height={460}>
+    <Window resizable width={600} height={600}>
       <Window.Content scrollable>
         <Flex>
           <Flex.Item pl="10px" grow>
             <Collapsible title="Описание Юнита" open>
-              <Section>
-                <Flex direction="column">
-                  {data.silicon_flavor_text
-                    ? (<Flex.Item style={{ "white-space": "pre-line" }}>{data.silicon_flavor_text}</Flex.Item>)
-                    : (<Box />)}
-                </Flex>
+              <Section style={{ "white-space": "pre-line" }}>
+                {data.silicon_flavor_text || "———"}
               </Section>
             </Collapsible>
             <Collapsible title="Внеигровые заметки" open>
