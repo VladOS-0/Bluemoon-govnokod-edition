@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			return
 		changeable_texts.Add("Синтетический флавор")
 
-	var/chosen = tgui_input_list(src, "Выберите параметр, который должен быть изменён. Изменения действуют только в течении раунда и не затрагивают сами преференсы.", "Управление флавор-текстами", changeable_texts, changeable_texts[1])
+	var/chosen = tgui_input_list(src, "Выберите параметр, который должен быть изменён. Изменения действуют только в течении раунда и не затрагивают сами преференсы. Если вам нужно ввести многострочный текст с ENTER-ами, то лучше введите его вне игры и скопируйте сюда.", "Управление флавор-текстами", changeable_texts, changeable_texts[1])
 	if(!chosen)
 		return
 	switch(chosen)
