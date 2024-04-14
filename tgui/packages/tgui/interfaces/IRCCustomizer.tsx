@@ -1,135 +1,141 @@
 import { sortBy } from '../../common/collections';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Table } from '../components';
+import { BlockQuote, Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-type Info = {
-  faxes: FaxInfo[];
-  fax_id: string;
-  fax_name: string;
-  visible: boolean;
-  has_paper: string;
-  syndicate_network: boolean;
-  fax_history: FaxHistory[];
-  special_faxes: FaxSpecial[];
+type GeneralInfo = {
+  owner: string;
+  page: string;
+  possible_races: string[];
+  IRC_data: IRCData | null;
 };
+
+type IRCData = {
+  name: string;
+  ID: number;
+  currentStage: number;
+}
 
 
 export const IRCCustomizer = (props, context) => {
   const { act } = useBackend(context);
-  const { data } = useBackend<FaxData>(context);
-  const faxes = data.faxes
-    ? sortBy((sortFax: FaxInfo) => sortFax.fax_name)(
-      data.syndicate_network
-        ? data.faxes.filter((filterFax: FaxInfo) => filterFax.visible)
-        : data.faxes.filter(
-          (filterFax: FaxInfo) =>
-            filterFax.visible && !filterFax.syndicate_network
-        )
-    )
-    : [];
-  return (
-    <Window width={340} height={540}>
-      <Window.Content scrollable>
-        <Section title="About Fax">
-          <LabeledList.Item label="Network name">
-            {data.fax_name}
-          </LabeledList.Item>
-          <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
-          <LabeledList.Item label="Visible to Network">
-            {data.visible ? true : false}
-          </LabeledList.Item>
-        </Section>
-        <Section
-          title="Paper"
-          buttons={
-            <Button
-              onClick={() => act('remove')}
-              disabled={data.has_paper ? false : true}>
-              Remove
-            </Button>
-          }>
-          <LabeledList.Item label="Paper">
-            {data.has_paper ? (
-              <Box color="green">Paper in tray</Box>
-            ) : (
-              <Box color="red">No paper</Box>
+  const { data } = useBackend<GeneralInfo>(context);
+  if(data.page == "General") {
+    return (
+      <Window width={560} height={420}>
+        <Window.Content scrollable>
+          <Section
+            title = 'IRC-кастомизатор'
+            buttons={(
+              <Button
+                icon = 'lock'
+                content = 'Очистить и выйти'
+                color = 'bad'
+                onClick={() => act('erase-all')}
+                />
             )}
-          </LabeledList.Item>
-        </Section>
-        <Section title="Send">
-          {faxes.length !== 0 ? (
-            <Box mt={0.4}>
-              {(data.syndicate_network
-                ? data.special_faxes
-                : data.special_faxes.filter(
-                  (fax: FaxSpecial) => !fax.emag_needed
-                )
-              ).map((special: FaxSpecial) => (
+            >
+            <LabeledList>
+              <LabeledList.Item
+                label="Владелец"
+                color='good'
+                >
+                {data.owner}
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
+        </Window.Content>
+      </Window>
+    );
+  }
+  if(data.page == "Customization") {
+    switch(data.IRC_data.currentStage) {
+      case 1: {
+        let JSON_output: string
+        let chosen_race: string = data.possible_races[0]
+        return (
+          <Window width={560} height={420}>
+            <Window.Content scrollable>
+            <DefaultCustomisationSection></DefaultCustomisationSection>
+            <Section
+              title = 'Стадия I'
+              >
+              <BlockQuote>
+                Выберите вид синтетика, к которому будет принадлежать КРБ.
+              </BlockQuote>
+              {data.possible_races.map(race => (
                 <Button
-                  key={special.fax_id}
-                  title={special.fax_name}
-                  disabled={!data.has_paper}
-                  color={special.color}
-                  onClick={() =>
-                    act('send_special', {
-                      id: special.fax_id,
-                      name: special.fax_name,
-                    })
-                  }>
-                  {special.fax_name}
-                </Button>
+                  fluid
+                  key={race}
+                  content={race}
+                  textAlign="center"
+                  selected={chosen_race === race}
+                  onClick={() => {
+                    chosen_race = race
+                  }} />
               ))}
-              {faxes.map((fax: FaxInfo) => (
-                <Button
-                  key={fax.fax_id}
-                  title={fax.fax_name}
-                  disabled={!data.has_paper}
-                  color={fax.syndicate_network ? 'red' : 'blue'}
-                  onClick={() =>
-                    act('send', {
-                      id: fax.fax_id,
-                      name: fax.fax_name,
-                    })
-                  }>
-                  {fax.fax_name}
-                </Button>
-              ))}
-            </Box>
-          ) : (
-            "The fax couldn't detect any other faxes on the network."
-          )}
-        </Section>
-        <Section
-          title="History"
-          buttons={
-            <Button
-              onClick={() => act('history_clear')}
-              disabled={data.fax_history ? false : true}>
-              Clear
-            </Button>
-          }>
-          <Table>
-            <Table.Cell>
-              {data.fax_history !== null
-                ? data.fax_history.map((history: FaxHistory) => (
-                  <Table.Row key={history.history_type}>
-                    {
-                      <Box
-                        color={
-                          history.history_type === 'Send' ? 'Green' : 'Red'
-                        }>
-                        {history.history_type}
-                      </Box>
+              <Button
+                  fluid
+                  key="end_stage"
+                  content="Завершить стадию"
+                  textAlign="center"
+                  onClick={() => {
+                    const output = {
+                      stage: "1",
+                      choices: {
+                        chosen_race: chosen_race
+                      }
                     }
-                    {history.history_fax_name} - {history.history_time}
-                  </Table.Row>
-                ))
-                : null}
-            </Table.Cell>
-          </Table>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
+                    JSON_output = JSON.stringify(output)
+                    act("handle_JSON", {JSON: JSON_output})
+                  }} />
+            </Section>
+            </Window.Content>
+          </Window>
+        );
+      }
+      case 2: {
+
+      }
+    }
+  }
 };
+
+export const DefaultCustomisationSection = (props, context) => {
+  const { act } = useBackend(context);
+  const { data } = useBackend<GeneralInfo>(context);
+  return (
+    <Section
+      title = 'IRC-кастомизатор'
+      buttons={(
+        <Button
+          icon = 'lock'
+          content = 'Очистить и выйти'
+          color = 'bad'
+          onClick={() => act('erase-all')}
+          />
+      )}
+      >
+      <LabeledList>
+      <LabeledList.Item
+          label="Оператор"
+          color='average'
+          >
+          {data.owner}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Наименование КРБ"
+          color='good'
+          >
+          {data.IRC_data.name}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Серийный номер"
+          color='good'
+          >
+          {data.IRC_data.ID}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  )
+}
