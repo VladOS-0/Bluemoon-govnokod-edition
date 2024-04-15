@@ -7,7 +7,7 @@ type GeneralInfo = {
   owner: string;
   page: string;
   possible_races: string[];
-  IRC_data: IRCData | null;
+  IRC_data: IRCData;
 };
 
 type IRCData = {
