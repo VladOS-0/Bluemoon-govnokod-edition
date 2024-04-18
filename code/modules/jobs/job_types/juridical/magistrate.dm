@@ -120,7 +120,7 @@
 
 	implants = list(/obj/item/implant/mindshield)
 
-	accessory = /obj/item/clothing/accessory/permit/head
+	accessory = /obj/item/clothing/accessory/permit/special/representative
 
 /datum/outfit/job/ntr/syndicate
 	name = "Syndicate Representative"
@@ -142,6 +142,8 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
 	box = /obj/item/storage/box/survival/syndie
 	pda_slot = ITEM_SLOT_BELT
+	accessory = /obj/item/clothing/accessory/permit/special/representative
+
 	backpack_contents = list(/obj/item/gun/energy/e_gun=1, /obj/item/stamp/law=1, /obj/item/syndicate_uplink=1)
 
 /datum/outfit/job/ntr/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)

@@ -1,7 +1,5 @@
 // BLUEMOON EDITED - реворк разрешений на оружие
 
-//This'll be used for gun permits, such as for heads of staff, crew, and bartenders. Sec and the Captain do not require these
-
 /obj/item/clothing/accessory/permit
 	name = "Weapons permit"
 	desc = "Небольшая карточка с блюспейс-электроникой для упрощения контроля за трафиком оружия на станции."
@@ -12,20 +10,132 @@
 	resistance_flags = FIRE_PROOF
 	var/owner_name = ""
 	var/owner_assignment = ""
+	var/issuer_name = ""
+	var/issuer_assignment = ""
 	var/permitted_weapons = ""
 	var/notes = ""
+	var/issue_time = ""
 	var/locked = FALSE
 	// Выдан ли роли при спавне
 	var/special = FALSE
 
-/obj/item/clothing/accessory/permit/attack_self(mob/user as mob)
-    if(isliving(user))
-        if(!owner)
-            set_name(user.name)
-            to_chat(user, "[src] registers your name.")
-            access += list(ACCESS_WEAPONS)
-        else
-            to_chat(user, "[src] already has an owner!")
+/obj/item/clothing/accessory/permit/ui_interact(mob/user, datum/tgui/ui)
+	if(!can_see_permit(user))
+		SStgui.ui_close(user)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "WeaponPermit")
+		ui.open()
+
+/obj/item/clothing/accessory/permit/ui_data(mob/user)
+	var/list/data = list()
+	if(!can_see_permit(user))
+		return data
+	data["owner_name"] = owner_name
+	data["owner_assignment"] = owner_assignment
+	data["issuer_name"] = issuer_name
+	data["issuer_assignment"] = issuer_assignment
+	data["permitted_weapons"] = permitted_weapons
+	data["issue_time"] = issue_time
+	data["notes"] = notes
+	data["locked"] = locked
+	data["centcomm_issued"] = special
+	data["can_interact"] = can_redact_permit(user)
+	data["has_access"] = has_access_to_issuing(user)
+	return data
+
+/obj/item/clothing/accessory/permit/ui_act(action, params)
+	if(..())
+		return
+	if(!can_redact_permit(usr))
+		return
+	switch(action)
+		if("submit_license")
+			if(!has_access_to_issuing(usr))
+				to_chat(usr, span_warning("У вас нет прав на это действие!"))
+				return
+			if(!owner_name || !owner_assignment || !permitted_weapons)
+				to_chat(usr, span_warning("Сначала заполните все необходимые поля!"))
+				return
+			var/mob/living/carbon/human/user = usr
+			var/obj/item/card/id/redactor_card = user.get_id_card()
+			issuer_name = redactor_card.registered_name
+			issuer_assignment = redactor_card.assignment
+			issue_time = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
+			playsound(src, 'sound/machines/chime.ogg', 20)
+			locked = TRUE
+		if("reopen_license")
+			if(!has_access_to_issuing(usr))
+				to_chat(usr, span_warning("У вас нет прав на это действие!"))
+				return
+			issuer_name = ""
+			issuer_assignment = ""
+			issue_time = ""
+			playsound(src, 'sound/machines/beep.ogg', 20)
+			locked = FALSE
+		if("submit_owner")
+			if(!ishuman(usr))
+				return
+			var/mob/living/carbon/human/user = usr
+			var/obj/item/card/id/owner_card = user.get_id_card()
+			owner_name = owner_card.registered_name
+			owner_assignment = owner_card.assignment
+			playsound(src, 'sound/machines/beep.ogg', 20)
+			locked = FALSE
+		if("input_weapons")
+			var/new_weapons_list = tgui_input_text(usr, "Введите новый перечень разрешённого оружия и снаряжения (максимум 150 символов).", "Новый перечень оружия", permitted_weapons, 15, TRUE, TRUE)
+			if(new_weapons_list)
+				permitted_weapons = new_weapons_list
+		if("input_notes")
+			var/new_notes = tgui_input_text(usr, "Введите новый набор заметок для службы безопасности по поводу данного разрешения (максимум 300 символов).", "Новые заметки", notes, 300, TRUE, TRUE)
+			if(new_notes)
+				notes = new_notes
+
+/obj/item/clothing/accessory/permit/attack_self(mob/user)
+    if(can_redact_permit(user))
+        ui_interact(user)
+
+/obj/item/clothing/accessory/permit/examine(mob/user)
+	. = ..()
+	if(special)
+		. += span_notice("Данная карточка была выдана Центральным Командованием перед началом смены. Её нельзя изменить.")
+	else if(locked)
+		. += span_notice("Данная карточка заблокирована. Используйте её в руке и разблокируйте, если у вас есть доступ выше смотрителя.")
+	else
+		. += span_notice("Данная карточка разблокирована. Используйте её в руке, чтобы изменить параметры.")
+	if(can_see_permit(user))
+		. += span_boldnotice(" <center><a href='?src=[REF(src)];check=1'>\[Проверить\]</a></center>")
+
+/obj/item/clothing/accessory/permit/proc/can_see_permit(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(isobserver(user))
+		return TRUE
+	if(get_dist(user, loc) > 5)
+		return FALSE
+	if(current_uniform)
+		var/obj/item/clothing/under/unif = current_uniform
+		if(unif.flags_inv & HIDEACCESSORY || flags_inv & HIDEACCESSORY)
+			return FALSE
+	return TRUE
+
+/obj/item/clothing/accessory/permit/proc/can_redact_permit(mob/user)
+	if(!can_see(user))
+		return FALSE
+	if(!istype(user, /mob/living/carbon/human))
+		return FALSE
+	var/mob/living/carbon/human/redactor = user
+	if(src in redactor.held_items)
+		return TRUE
+	return FALSE
+
+/obj/item/clothing/accessory/permit/proc/has_access_to_issuing(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/redactor = user
+		var/obj/item/card/id/redactor_card = redactor.get_id_card()
+		if(ACCESS_ARMORY in redactor_card.GetAccess())
+			return TRUE
+	return FALSE
 
 /obj/item/clothing/accessory/permit/get_examine_string(mob/user, thats)
 	. = ..()
@@ -39,12 +149,12 @@
 		var/mob/user = usr
 		if(!user || !istype(user))
 			return
-		if(get_dist(user, loc) > 5 && !isobserver(user))
-			to_chat(user, span_warning("Вы слишком далеко!"))
+		if(!can_see_permit(user))
+			to_chat(user, span_warning("Вы не можете осмотреть эту карточку. Возможно, стоит подойти поближе?"))
 			return
 		if(istype(user, /mob/living))
 			user.visible_message("[user] осматривает [src] [current_uniform ? ", прикреплённый к [current_uniform]" : ""].", "Вы осматриваете [src]")
-		examine(user)
+		ui_interact(user)
 	return
 
 /obj/item/clothing/accessory/permit/proc/register()
@@ -55,16 +165,36 @@
 /obj/item/clothing/accessory/permit/special
 	name = "Coder's special shitcoding permit"
 	desc = "Если вы это видите - напишите багрепорт"
+	issuer_name = "ЦЕНТРАЛЬНОЕ КОМАНДОВАНИЕ"
+	issuer_assignment = "N/A"
+	issue_time = "Перед началом текущей смены"
 	special = TRUE
+	var/first_inited = FALSE // Карточку нужно использовать в руке, чтобы она записалась. Как со старыми пермитами
 
-/obj/item/clothing/accessory/permit/special/New(_owner_name, _owner_assignment)
+/obj/item/clothing/accessory/permit/special/examine(mob/user)
 	. = ..()
-	owner_name = _owner_name
-	owner_assignment = _owner_assignment
+	if(!first_inited)
+		. += span_boldnotice("Данная карточка, выданная ЦК, ещё не была инициализирована. Используйте её в руке, имея ID-карту на поясе, чтобы присвоить её себе.")
 
-/obj/item/clothing/accessory/permit/special/Initialize(mapload)
-	. = ..()
-	register()
+/obj/item/clothing/accessory/permit/special/attack_self(mob/user, datum/tgui/ui)
+	if(!can_redact_permit(user))
+		return
+	if(!first_inited)
+		if(ishuman(user))
+			var/mob/living/carbon/human/man_behind_the_permit = user
+			var/obj/item/card/id/man_card = man_behind_the_permit.get_id_card()
+			if(man_card && man_card.name == man_behind_the_permit.real_name)
+				owner_name = man_card.registered_name
+				owner_assignment = man_card.assignment
+				first_inited = TRUE
+				playsound(src, 'sound/machines/chime.ogg', 20)
+				balloon_alert(man_behind_the_permit, "Привязка успешна.")
+				return
+		balloon_alert(user, "Привязка не удалась. Проверьте, чтобы ваша ID-карта была на нужном месте.")
+		return
+	else
+		. = ..()
+
 
 // Заранее созданные пермиты, выдающиеся разным ролям при спавне.
 // Было бы классно, если бы кто-то правил список оружия и примечания после правок КЗ и НРП, да?
@@ -137,14 +267,12 @@
 
 /obj/item/clothing/accessory/permit/special/bartender
 	name = "Bartender's weapons permit"
-	icon = "barpermit"
 	desc = "Я точно не вынесу этот чертовски большой, длинный и привлекательный... дробовик за пределы отдела. Честно-честно."
 	permitted_weapons = "Барменовский дробовик с нелетальными патронами"
 	notes = "Бармену разрешено хранить и использовать свой дробовик с нелетальными патронами для успокоения буйных посетителей на территории бара в рамках своих норм рабочих процедур и космического закона."
 
 /obj/item/clothing/accessory/permit/special/bouncer
 	name = "Bouncer's weapons permit"
-	icon = "barpermit"
 	desc = "Ну надо же вышибале чем-то вышибать, да?"
 	permitted_weapons = "Нелетальное энергооружие, наручники и их варианты, болы, перцовый баллончик"
 	notes = "Сотрудник охраны сервиса имеет право использовать своё вооружение только в случае защиты своей жизни или жизни других. Применение вооружения также допустимо против неадекватных членов персонала, что игнорируют просьбы и предупреждения от сотрудников сервисного отдела."

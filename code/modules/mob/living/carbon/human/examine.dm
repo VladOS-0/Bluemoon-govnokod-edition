@@ -55,7 +55,7 @@
 			// Аксессуары
 			var/accessory_msg
 			if(length(U.attached_accessories) && !(U.flags_inv & HIDEACCESSORY))
-				var/metioned_accessories_list = list()
+				var/list/metioned_accessories_list = list()
 				// Фильтруем неспрятанные аксессуары
 				for(var/obj/item/clothing/accessory/attached_accessory in U.attached_accessories)
 					if(attached_accessory.flags_inv & HIDEACCESSORY)
