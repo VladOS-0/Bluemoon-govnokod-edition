@@ -19,28 +19,27 @@ type WeaponPermitData = {
 	permitted_weapons: string;
 	notes: string;
 	locked: boolean;
-	special: boolean;
   can_interact: boolean;
   has_access: boolean;
   issue_time: string;
   centcomm_issued: boolean;
 }
 
-export const Vending = (props, context) => {
+export const WeaponPermit = (props, context) => {
   const { act, data } = useBackend<WeaponPermitData>(context);
   return (
     <Window
       title="Разрешение на оружие"
-      width={400}
-      height={300}>
+      width={900}
+      height={500}>
       <Window.Content overflow="auto">
         <Section title="Данные о разрешении"
           buttons={!data.locked ? (
             <Button /** Выдать лицензию и закрыть */
               color="red"
-              disabled={!data.can_interact || !data.has_access || !data.locked}
+              disabled={!data.can_interact || !data.has_access || data.locked || data.centcomm_issued}
               icon="sign-out-alt"
-              tooltip={!data.has_access ? "У вас нет доступа для выдачи лицензий" :  data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." : data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" : "Нажмите, чтобы выдать лицензию и завершить работу"}
+              tooltip={!data.has_access ? "У вас нет доступа для выдачи лицензий" :  data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." : !data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" : "Нажмите, чтобы выдать лицензию и завершить работу"}
               tooltipPosition="left"
               onClick={() => act('submit_license')}
             />
@@ -48,9 +47,9 @@ export const Vending = (props, context) => {
           (
             <Button /** Удалить текущую лицензию и начать заполнение заново */
               color="yellow"
-              disabled={!data.can_interact || !data.has_access || data.locked}
+              disabled={!data.can_interact || !data.has_access || !data.locked || data.centcomm_issued}
               icon="sign-in-alt"
-              tooltip={!data.has_access ? "У вас нет доступа для выдачи лицензий" :  data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." : data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" : "Нажмите, чтобы отозвать текущую лицензию и оформить её заново."}
+              tooltip={!data.has_access ? "У вас нет доступа для выдачи лицензий" :  data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." : !data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" : "Нажмите, чтобы отозвать текущую лицензию и оформить её заново."}
               tooltipPosition="left"
               onClick={() => act('reopen_license')}
             />
@@ -59,10 +58,10 @@ export const Vending = (props, context) => {
           <LabeledList.Item
                 label="Имя обладателя лицензии"
                 color="green"
-                buttons={(!data.locked && data.can_interact) ? (
+                buttons={(!data.locked && data.can_interact && !data.centcomm_issued) ? (
                     <Button
                       icon="edit"
-                      disabled={!data.can_interact || data.locked}
+                      disabled={!data.can_interact || data.locked || data.centcomm_issued}
                       content="Присвоить"
                       tooltip="Присвоит имени и должности обладателя соответствующую информацию с ID-карты на костюме сотрудника, производящего настройку."
                       onClick={() => act('submit_owner')} />
@@ -95,11 +94,11 @@ export const Vending = (props, context) => {
           <LabeledList>
             <LabeledList.Item
                 label="Перечень разрешённого снаряжения"
-                color="red"
-                buttons={(!data.locked && data.can_interact) ? (
+                color="orange"
+                buttons={(!data.locked && data.can_interact && !data.centcomm_issued) ? (
                     <Button
                       icon="edit"
-                      disabled={!data.can_interact || data.locked}
+                      disabled={!data.can_interact || data.locked || data.centcomm_issued}
                       content="Редактировать"
                       tooltip="Ввести новый перечень разрешённого к использованию оружия."
                       onClick={() => act('input_weapons')} />
@@ -108,11 +107,11 @@ export const Vending = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item
                 label="Примечания"
-                color="red"
-                buttons={(!data.locked && data.can_interact) ? (
+                color="orange"
+                buttons={(!data.locked && data.can_interact && !data.centcomm_issued) ? (
                     <Button
                       icon="edit"
-                      disabled={!data.can_interact || data.locked}
+                      disabled={!data.can_interact || data.locked || data.centcomm_issued}
                       content="Редактировать"
                       tooltip="Введите примечания и заметки для службы безопасности по поводу данной лицензии."
                       onClick={() => act('input_notes')} />

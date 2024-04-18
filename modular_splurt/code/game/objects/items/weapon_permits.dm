@@ -19,9 +19,13 @@
 	// Выдан ли роли при спавне
 	var/special = FALSE
 
-/obj/item/clothing/accessory/permit/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/clothing/accessory/permit/ui_status(mob/user)
 	if(!can_see_permit(user))
-		SStgui.ui_close(user)
+		return UI_CLOSE
+	else
+		return UI_INTERACTIVE
+
+/obj/item/clothing/accessory/permit/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "WeaponPermit")
@@ -59,6 +63,9 @@
 				return
 			var/mob/living/carbon/human/user = usr
 			var/obj/item/card/id/redactor_card = user.get_id_card()
+			if(!redactor_card || !redactor_card.registered_name || !redactor_card.assignment)
+				balloon_alert(user, "Наденьте ID-карту в специальный слот, чтобы активировать данное разрешение.")
+				return
 			issuer_name = redactor_card.registered_name
 			issuer_assignment = redactor_card.assignment
 			issue_time = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
@@ -78,12 +85,15 @@
 				return
 			var/mob/living/carbon/human/user = usr
 			var/obj/item/card/id/owner_card = user.get_id_card()
+			if(!owner_card || !owner_card.registered_name || !owner_card.assignment)
+				balloon_alert(user, "Наденьте ID-карту в специальный слот, чтобы привязать данное разрешение.")
+				return
 			owner_name = owner_card.registered_name
 			owner_assignment = owner_card.assignment
 			playsound(src, 'sound/machines/beep.ogg', 20)
 			locked = FALSE
 		if("input_weapons")
-			var/new_weapons_list = tgui_input_text(usr, "Введите новый перечень разрешённого оружия и снаряжения (максимум 150 символов).", "Новый перечень оружия", permitted_weapons, 15, TRUE, TRUE)
+			var/new_weapons_list = tgui_input_text(usr, "Введите новый перечень разрешённого оружия и снаряжения (максимум 150 символов).", "Новый перечень оружия", permitted_weapons, 150, TRUE, TRUE)
 			if(new_weapons_list)
 				permitted_weapons = new_weapons_list
 		if("input_notes")
@@ -111,16 +121,17 @@
 		return FALSE
 	if(isobserver(user))
 		return TRUE
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/our_mob = user
+	if(our_mob.stat == UNCONSCIOUS || our_mob.stat == DEAD)
+		return FALSE
 	if(get_dist(user, loc) > 5)
 		return FALSE
-	if(current_uniform)
-		var/obj/item/clothing/under/unif = current_uniform
-		if(unif.flags_inv & HIDEACCESSORY || flags_inv & HIDEACCESSORY)
-			return FALSE
 	return TRUE
 
 /obj/item/clothing/accessory/permit/proc/can_redact_permit(mob/user)
-	if(!can_see(user))
+	if(!can_see_permit(user))
 		return FALSE
 	if(!istype(user, /mob/living/carbon/human))
 		return FALSE
@@ -133,6 +144,8 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/redactor = user
 		var/obj/item/card/id/redactor_card = redactor.get_id_card()
+		if(!redactor_card)
+			return FALSE
 		if(ACCESS_ARMORY in redactor_card.GetAccess())
 			return TRUE
 	return FALSE
@@ -176,21 +189,24 @@
 	if(!first_inited)
 		. += span_boldnotice("Данная карточка, выданная ЦК, ещё не была инициализирована. Используйте её в руке, имея ID-карту на поясе, чтобы присвоить её себе.")
 
-/obj/item/clothing/accessory/permit/special/attack_self(mob/user, datum/tgui/ui)
+/obj/item/clothing/accessory/permit/special/attack_self(mob/user)
 	if(!can_redact_permit(user))
 		return
 	if(!first_inited)
 		if(ishuman(user))
 			var/mob/living/carbon/human/man_behind_the_permit = user
 			var/obj/item/card/id/man_card = man_behind_the_permit.get_id_card()
-			if(man_card && man_card.name == man_behind_the_permit.real_name)
+			if(!man_card || !man_card.registered_name || !man_card.assignment)
+				balloon_alert(man_behind_the_permit, "Наденьте ID-карту в специальный слот, чтобы привязать данное разрешение.")
+				return
+			if(man_card.registered_name == man_behind_the_permit.real_name)
 				owner_name = man_card.registered_name
 				owner_assignment = man_card.assignment
 				first_inited = TRUE
 				playsound(src, 'sound/machines/chime.ogg', 20)
 				balloon_alert(man_behind_the_permit, "Привязка успешна.")
 				return
-		balloon_alert(user, "Привязка не удалась. Проверьте, чтобы ваша ID-карта была на нужном месте.")
+		balloon_alert(user, "Привязка не удалась. Проверьте, чтобы ваша ID-карта была на нужном месте и имена совпадали.")
 		return
 	else
 		. = ..()
@@ -205,11 +221,17 @@
 	permitted_weapons = "Любое неконтрабандное вооружение"
 	notes = "Капитан имеет право использовать любое неконтрабандное вооружение, исключительно в рамках самозащиты, начиная с Синего уровня тревоги. В случаях, если применение силы не вызвано критической ситуацией подставляющую жизнь капитана под угрозу, данный пункт не снимает ответственности за ущерб причинённый в рамках самообороны."
 
+/obj/item/clothing/accessory/permit/special/head_of_personnel
+	name = "Head's of Personnel weapons permit"
+	desc = "Как тебе ТАКАЯ бюрократия, ублюдок?!"
+	permitted_weapons = "Стандартное вооружение командного состава"
+	notes = "Глава персонала имеет право пользоваться стандартной экипировкой и вооружением, а также применять её в рамках самозащиты."
+
 /obj/item/clothing/accessory/permit/special/bridge_officer
 	name = "Bridge Officer's weapons permit"
 	desc = "Боевая горничная капитана на посту!"
-	permitted_weapons = "Стандартное вооружение офицера мостика"
-	notes = "Офицер мостика имеет право использовать стандартное вооружение исключительно для самозащиты."
+	permitted_weapons = "Стандартное вооружение офицера мостика, в том числе гражданский энергопистолет"
+	notes = "Офицер мостика имеет право использовать своё стандартное вооружение исключительно для самозащиты."
 
 /obj/item/clothing/accessory/permit/special/blueshield
 	name = "Blueshield's weapons permit"
