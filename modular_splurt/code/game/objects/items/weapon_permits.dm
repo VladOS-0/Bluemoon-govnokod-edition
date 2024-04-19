@@ -213,6 +213,7 @@ GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 	special = TRUE
 	var/first_inited = FALSE // Карточку нужно использовать в руке, чтобы она записалась. Как со старыми пермитами
 
+/*
 /obj/item/clothing/accessory/permit/special/Initialize(mapload)
 	. = ..()
 	if(istype(loc, /obj/item/storage/backpack))
@@ -235,6 +236,7 @@ GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 				first_inited = TRUE
 	if(first_inited)
 		register(FALSE)
+	*/
 
 /obj/item/clothing/accessory/permit/special/examine(mob/user)
 	. = ..()
