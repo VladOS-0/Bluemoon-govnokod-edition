@@ -29,7 +29,8 @@ export const WeaponPermit = (props, context) => {
       height={500}>
       <Window.Content overflow="auto">
         <Section title="Данные о разрешении"
-          buttons={!data.locked ? (
+          buttons={!data.locked ?
+            (
             <Button /** Выдать лицензию и закрыть */
               color="red"
               disabled={!data.can_interact || !data.has_access || data.locked || data.centcomm_issued}
@@ -43,8 +44,8 @@ export const WeaponPermit = (props, context) => {
               tooltipPosition="left"
               onClick={() => act('submit_license')}
             />
-          ) :
-          (
+            ) :
+            (
             <Button /** Удалить текущую лицензию и начать заполнение заново */
               color="yellow"
               disabled={!data.can_interact || !data.has_access || !data.locked || data.centcomm_issued}
@@ -58,7 +59,7 @@ export const WeaponPermit = (props, context) => {
               tooltipPosition="left"
               onClick={() => act('reopen_license')}
             />
-          )}>
+            )}>
           <LabeledList>
             <LabeledList.Item
                 label="Имя обладателя лицензии"
@@ -124,17 +125,17 @@ export const WeaponPermit = (props, context) => {
               {data.notes ? data.notes : "---"}
             </LabeledList.Item>
           </LabeledList>
+          <Box color="green" fontSize="14px" textAlign="center">
+            ДЛЯ ВЛАДЕЛЬЦА ЛИЦЕНЗИИ:<br />
+            Данное разрешение недействительно в случае нарушения боевой политики.<br />
+            Сотрудники СБ имеют право потребовать бумажный документ в случае сомнения.<br />
+          </Box>
+          <Box color="red" fontSize="12px" textAlign="center">
+            ДЛЯ ЭМИТЕНТА ЛИЦЕНЗИИ:<br />
+            Не забудьте ОБЯЗАТЕЛЬНО заблокировать разрешение кнопкой вверху.<br />
+            Выдавайте разрешения в соответствии с НРП и Боевой Политикой.
+          </Box>
         </Section>
-        <Box color="green" fontSize="14px" textAlign="center">
-          ДЛЯ ВЛАДЕЛЬЦА ЛИЦЕНЗИИ:<br />
-          Данное разрешение недействительно в случае нарушения боевой политики.<br />
-          Сотрудники СБ имеют право потребовать бумажный документ в случае сомнения.<br />
-        </Box>
-        <Box color="red" fontSize="12px" textAlign="center">
-          ДЛЯ ЭМИТЕНТА ЛИЦЕНЗИИ:<br />
-          Не забудьте ОБЯЗАТЕЛЬНО заблокировать разрешение кнопкой вверху.<br />
-          Выдавайте разрешения в соответствии с НРП и Боевой Политикой.
-        </Box>
       </Window.Content>
     </Window>
   );
