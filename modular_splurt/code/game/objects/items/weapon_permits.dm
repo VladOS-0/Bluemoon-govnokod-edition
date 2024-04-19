@@ -154,6 +154,10 @@
 	. = ..()
 	if(!current_uniform)
 		return
+	if(istype(current_uniform, /obj/item/clothing/under) && ishuman(current_uniform.loc))
+		var/mob/living/carbon/human/wearer = current_uniform.loc
+		if(wearer.get_visible_name() != owner_name)
+			. += span_warning("(!)")
 	. += span_notice(" <a href='?src=[REF(src)];check=1'>\[Проверить\]</a>")
 
 /obj/item/clothing/accessory/permit/Topic(href, href_list)
@@ -183,6 +187,27 @@
 	issue_time = "Перед началом текущей смены"
 	special = TRUE
 	var/first_inited = FALSE // Карточку нужно использовать в руке, чтобы она записалась. Как со старыми пермитами
+
+/obj/item/clothing/accessory/permit/special/Initialize(mapload)
+	. = ..()
+	if(istype(loc, /obj/item/storage/backpack))
+		var/obj/item/storage/backpack/B = loc
+		if(ishuman(B.loc))
+			var/mob/living/carbon/human/wearer = B.loc
+			var/obj/item/card/id/wearer_card = wearer.get_id_card()
+			if(wearer_card && wearer_card.registered_name && wearer_card.assignment)
+				owner_name = wearer_card.registered_name
+				owner_assignment = wearer_card.assignment
+				first_inited = TRUE
+	if(current_uniform && istype(current_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = loc
+		if(ishuman(U.loc))
+			var/mob/living/carbon/human/wearer = U.loc
+			var/obj/item/card/id/wearer_card = wearer.get_id_card()
+			if(wearer_card && wearer_card.registered_name && wearer_card.assignment)
+				owner_name = wearer_card.registered_name
+				owner_assignment = wearer_card.assignment
+				first_inited = TRUE
 
 /obj/item/clothing/accessory/permit/special/examine(mob/user)
 	. = ..()
