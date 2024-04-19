@@ -42,10 +42,10 @@ export const WeaponPermit = (props, context) => {
                   !data.has_access
                     ? 'У вас нет доступа для выдачи лицензий'
                     : data.centcomm_issued
-                      ? 'Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать.'
-                      : !data.can_interact
-                        ? 'Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко'
-                        : 'Нажмите, чтобы выдать лицензию и завершить работу'
+                    ? 'Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать.'
+                    : !data.can_interact
+                    ? 'Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко'
+                    : 'Нажмите, чтобы выдать лицензию и завершить работу'
                 }
                 tooltipPosition="left"
                 onClick={() => act('submit_license')}
@@ -64,15 +64,16 @@ export const WeaponPermit = (props, context) => {
                   !data.has_access
                     ? 'У вас нет доступа для выдачи лицензий'
                     : data.centcomm_issued
-                      ? 'Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать.'
-                      : !data.can_interact
-                        ? 'Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко'
-                        : 'Нажмите, чтобы отозвать текущую лицензию и оформить её заново.'
+                    ? 'Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать.'
+                    : !data.can_interact
+                    ? 'Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко'
+                    : 'Нажмите, чтобы отозвать текущую лицензию и оформить её заново.'
                 }
                 tooltipPosition="left"
                 onClick={() => act('reopen_license')}
               />
-          )}>
+            )
+          }>
           <LabeledList>
             <LabeledList.Item
               label="Имя обладателя лицензии"
@@ -89,9 +90,10 @@ export const WeaponPermit = (props, context) => {
                     onClick={() => act('submit_owner')}
                   />
                 ) : (
-                  ""
-                )}>
-            {data.owner_name ? data.owner_name : '---'}
+                  ''
+                )
+              }>
+              {data.owner_name ? data.owner_name : '---'}
             </LabeledList.Item>
             <LabeledList.Item
               label="Должность обладателя лицензии"
@@ -128,10 +130,11 @@ export const WeaponPermit = (props, context) => {
                     onClick={() => act('input_weapons')}
                   />
                 ) : (
-                  ""
-                )}>
+                  ''
+                )
+              }>
               {data.permitted_weapons ? data.permitted_weapons : '---'}
-          </LabeledList.Item>
+            </LabeledList.Item>
             <LabeledList.Item
               label="Примечания"
               color="orange"
@@ -147,11 +150,12 @@ export const WeaponPermit = (props, context) => {
                     onClick={() => act('input_notes')}
                   />
                 ) : (
-                  ""
-                )}>
+                  ''
+                )
+              }>
               {data.notes ? data.notes : '---'}
             </LabeledList.Item>
-        </LabeledList>
+          </LabeledList>
           <Box color="green" fontSize="14px" textAlign="center">
             ДЛЯ ВЛАДЕЛЬЦА ЛИЦЕНЗИИ:
             <br />
