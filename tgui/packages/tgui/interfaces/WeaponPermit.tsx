@@ -89,7 +89,7 @@ export const WeaponPermit = (props, context) => {
                     onClick={() => act('submit_owner')}
                   />
                 ) : (
-                  <></>
+                  ""
                 )}>
               {data.owner_name ? data.owner_name : '---'}
             </LabeledList.Item>
@@ -128,7 +128,7 @@ export const WeaponPermit = (props, context) => {
                     onClick={() => act('input_weapons')}
                   />
                 ) : (
-                  <></>
+                  ""
                 )}>
               {data.permitted_weapons ? data.permitted_weapons : '---'}
             </LabeledList.Item>
@@ -147,7 +147,7 @@ export const WeaponPermit = (props, context) => {
                     onClick={() => act('input_notes')}
                   />
                 ) : (
-                  <></>
+                  ""
                 )}>
               {data.notes ? data.notes : '---'}
             </LabeledList.Item>
