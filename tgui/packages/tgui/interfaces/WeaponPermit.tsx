@@ -1,13 +1,8 @@
 /**
  * BLUEMOON EDITED
  */
-
-import { filter } from 'common/collections';
-import { flow } from 'common/fp';
-import { classes } from 'common/react';
-import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Table } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 import { LabeledList } from './../components/LabeledList';
 
@@ -39,7 +34,12 @@ export const WeaponPermit = (props, context) => {
               color="red"
               disabled={!data.can_interact || !data.has_access || data.locked || data.centcomm_issued}
               icon="sign-out-alt"
-              tooltip={!data.has_access ? "У вас нет доступа для выдачи лицензий" :  data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." : !data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" : "Нажмите, чтобы выдать лицензию и завершить работу"}
+              tooltip={
+                !data.has_access ? "У вас нет доступа для выдачи лицензий" :
+                data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." :
+                !data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" :
+                "Нажмите, чтобы выдать лицензию и завершить работу"
+              }
               tooltipPosition="left"
               onClick={() => act('submit_license')}
             />
@@ -49,13 +49,18 @@ export const WeaponPermit = (props, context) => {
               color="yellow"
               disabled={!data.can_interact || !data.has_access || !data.locked || data.centcomm_issued}
               icon="sign-in-alt"
-              tooltip={!data.has_access ? "У вас нет доступа для выдачи лицензий" :  data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." : !data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" : "Нажмите, чтобы отозвать текущую лицензию и оформить её заново."}
+              tooltip={
+                !data.has_access ? "У вас нет доступа для выдачи лицензий" :
+                data.centcomm_issued ? "Данная лицензия выдана Центральным Командованием. Вы не можете её редактировать." :
+                !data.can_interact ? "Вы не можете взаимодействовать с данной лицензией. Возможно, она слишком далеко" :
+                "Нажмите, чтобы отозвать текущую лицензию и оформить её заново."
+              }
               tooltipPosition="left"
               onClick={() => act('reopen_license')}
             />
           )}>
           <LabeledList>
-          <LabeledList.Item
+            <LabeledList.Item
                 label="Имя обладателя лицензии"
                 color="green"
                 buttons={(!data.locked && data.can_interact && !data.centcomm_issued) ? (
@@ -120,10 +125,15 @@ export const WeaponPermit = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Box color="light-grey">
+        <Box color="green" fontSize="14px" textAlign="center">
+          ДЛЯ ВЛАДЕЛЬЦА ЛИЦЕНЗИИ:<br />
+          Данное разрешение недействительно в случае нарушения боевой политики.<br />
+          Сотрудники СБ имеют право потребовать бумажный документ в случае сомнения.<br />
+        </Box>
+        <Box color="red" fontSize="12px" textAlign="center">
+          ДЛЯ ЭМИТЕНТА ЛИЦЕНЗИИ:<br />
           Не забудьте ОБЯЗАТЕЛЬНО заблокировать разрешение кнопкой вверху.<br />
-          Выдавайте разрешения в соответствии с НРП и Боевой Политикой.<br />
-          Бумажный документ разрешения, а также НРП и Боевая Политика имеют приоритет над данными в этом устройстве.
+          Выдавайте разрешения в соответствии с НРП и Боевой Политикой.
         </Box>
       </Window.Content>
     </Window>
