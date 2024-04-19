@@ -27,13 +27,10 @@ GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 	permit_id = GLOB.weapon_permits_issued
 	name += " #[id]"
 
-<<<<<<< HEAD
 /obj/item/clothing/accessory/permit/Destroy()
 	. = ..()
 	unregister()
 
-=======
->>>>>>> f4c8a27832c (Айдишники пермитов)
 /obj/item/clothing/accessory/permit/ui_status(mob/user)
 	if(!can_see_permit(user))
 		return UI_CLOSE
