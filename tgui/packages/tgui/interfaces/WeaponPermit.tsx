@@ -89,9 +89,10 @@ export const WeaponPermit = (props, context) => {
                     tooltip="Присвоит имени и должности обладателя соответствующую информацию с ID-карты на костюме сотрудника, производящего настройку."
                     onClick={() => act('submit_owner')}
                   />
-                ) : (
+                ) :
+                (
                   ''
-              )
+                )
               }>
               {data.owner_name ? data.owner_name : '---'}
             </LabeledList.Item>
@@ -129,9 +130,10 @@ export const WeaponPermit = (props, context) => {
                     tooltip="Ввести новый перечень разрешённого к использованию оружия."
                     onClick={() => act('input_weapons')}
                   />
-                ) : (
+                ) :
+                (
                   ''
-              )
+                )
               }>
               {data.permitted_weapons ? data.permitted_weapons : '---'}
             </LabeledList.Item>
@@ -149,9 +151,10 @@ export const WeaponPermit = (props, context) => {
                     tooltip="Введите примечания и заметки для службы безопасности по поводу данной лицензии."
                     onClick={() => act('input_notes')}
                   />
-                ) : (
+                ) :
+                (
                   ''
-              )
+                )
               }>
               {data.notes ? data.notes : '---'}
             </LabeledList.Item>
