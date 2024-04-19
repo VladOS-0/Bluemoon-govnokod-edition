@@ -1,5 +1,6 @@
 // BLUEMOON EDITED - реворк разрешений на оружие
 
+GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 /obj/item/clothing/accessory/permit
 	name = "Weapons permit"
 	desc = "Небольшая карточка с блюспейс-электроникой для упрощения контроля за трафиком оружия на станции."
@@ -8,6 +9,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/accessories.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FIRE_PROOF
+	var/permit_id
 	var/owner_name = ""
 	var/owner_assignment = ""
 	var/issuer_name = ""
@@ -18,6 +20,12 @@
 	var/locked = FALSE
 	// Выдан ли роли при спавне
 	var/special = FALSE
+
+/obj/item/clothing/accessory/permit/Initialize(mapload)
+	. = ..()
+	GLOB.weapon_permits_issued++
+	permit_id = GLOB.weapon_permits_issued
+	name += " #[id]"
 
 /obj/item/clothing/accessory/permit/ui_status(mob/user)
 	if(!can_see_permit(user))
