@@ -23,7 +23,7 @@ type WeaponPermitData = {
 export const WeaponPermit = (props, context) => {
   const { act, data } = useBackend<WeaponPermitData>(context);
   return (
-    <Window title="Разрешение на оружие" width={900} height={500}>
+    <Window title="Разрешение на оружие" width={800} height={450}>
       <Window.Content overflow="auto">
         <Section
           title="Данные о разрешении"
@@ -89,9 +89,7 @@ export const WeaponPermit = (props, context) => {
                     tooltip="Присвоит имени и должности обладателя соответствующую информацию с ID-карты на костюме сотрудника, производящего настройку."
                     onClick={() => act('submit_owner')}
                   />
-                ) : (
-                  ''
-                )
+                ) : ''
               }>
               {data.owner_name ? data.owner_name : '---'}
             </LabeledList.Item>
@@ -129,9 +127,7 @@ export const WeaponPermit = (props, context) => {
                     tooltip="Ввести новый перечень разрешённого к использованию оружия."
                     onClick={() => act('input_weapons')}
                   />
-                ) : (
-                  ''
-                )
+                ) : ''
               }>
               {data.permitted_weapons ? data.permitted_weapons : '---'}
             </LabeledList.Item>
@@ -149,14 +145,13 @@ export const WeaponPermit = (props, context) => {
                     tooltip="Введите примечания и заметки для службы безопасности по поводу данной лицензии."
                     onClick={() => act('input_notes')}
                   />
-                ) : (
-                  ''
-                )
+                ) : ''
               }>
               {data.notes ? data.notes : '---'}
             </LabeledList.Item>
           </LabeledList>
-          <Box color="green" fontSize="14px" textAlign="center">
+        </Section>
+        <Box color="green" fontSize="8px" textAlign="center">
             ДЛЯ ВЛАДЕЛЬЦА ЛИЦЕНЗИИ:
             <br />
             Данное разрешение недействительно в случае нарушения боевой
@@ -165,15 +160,14 @@ export const WeaponPermit = (props, context) => {
             Сотрудники СБ имеют право потребовать бумажный документ в случае
             сомнения.
             <br />
-          </Box>
-          <Box color="red" fontSize="12px" textAlign="center">
-            ДЛЯ ЭМИТЕНТА ЛИЦЕНЗИИ:
-            <br />
-            Не забудьте ОБЯЗАТЕЛЬНО заблокировать разрешение кнопкой вверху.
-            <br />
-            Выдавайте разрешения в соответствии с НРП и Боевой Политикой.
-          </Box>
-        </Section>
+        </Box>
+        <Box color="red" fontSize="8px" textAlign="center">
+          ДЛЯ ЭМИТЕНТА ЛИЦЕНЗИИ:
+          <br />
+          Не забудьте ОБЯЗАТЕЛЬНО заблокировать разрешение кнопкой вверху.
+          <br />
+          Выдавайте разрешения в соответствии с НРП и Боевой Политикой.
+        </Box>
       </Window.Content>
     </Window>
   );
