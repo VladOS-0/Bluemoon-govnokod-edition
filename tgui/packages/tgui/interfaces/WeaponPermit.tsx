@@ -72,7 +72,7 @@ export const WeaponPermit = (props, context) => {
                 tooltipPosition="left"
                 onClick={() => act('reopen_license')}
               />
-            )}>
+          )}>
           <LabeledList>
             <LabeledList.Item
               label="Имя обладателя лицензии"
