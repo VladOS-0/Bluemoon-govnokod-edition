@@ -167,6 +167,10 @@ GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 	. = ..()
 	if(!current_uniform)
 		return
+	if(istype(current_uniform, /obj/item/clothing/under) && ishuman(current_uniform.loc))
+		var/mob/living/carbon/human/wearer = current_uniform.loc
+		if(wearer.get_visible_name() != owner_name)
+			. += span_warning("(!)")
 	. += span_notice(" <a href='?src=[REF(src)];check=1'>\[Проверить\]</a>")
 
 /obj/item/clothing/accessory/permit/Topic(href, href_list)
