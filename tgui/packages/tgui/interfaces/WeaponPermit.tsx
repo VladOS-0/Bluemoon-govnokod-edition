@@ -72,7 +72,7 @@ export const WeaponPermit = (props, context) => {
                 tooltipPosition="left"
                 onClick={() => act('reopen_license')}
               />
-          )}>
+            )}>
           <LabeledList>
             <LabeledList.Item
               label="Имя обладателя лицензии"
@@ -91,7 +91,7 @@ export const WeaponPermit = (props, context) => {
                 ) : (
                   <></>
                 )}>
-              {data.owner_name ? data.owner_name : '---'}
+            {data.owner_name ? data.owner_name : '---'}
             </LabeledList.Item>
             <LabeledList.Item
               label="Должность обладателя лицензии"
@@ -131,7 +131,7 @@ export const WeaponPermit = (props, context) => {
                   <></>
               )}>
               {data.permitted_weapons ? data.permitted_weapons : '---'}
-            </LabeledList.Item>
+              </LabeledList.Item>
             <LabeledList.Item
               label="Примечания"
               color="orange"
@@ -148,10 +148,10 @@ export const WeaponPermit = (props, context) => {
                   />
                 ) : (
                   <></>
-                )}>
+                  )}>
               {data.notes ? data.notes : '---'}
             </LabeledList.Item>
-          </LabeledList>
+            </LabeledList>
           <Box color="green" fontSize="14px" textAlign="center">
             ДЛЯ ВЛАДЕЛЬЦА ЛИЦЕНЗИИ:
             <br />
