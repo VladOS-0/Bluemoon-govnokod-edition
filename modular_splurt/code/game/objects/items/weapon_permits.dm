@@ -1,5 +1,6 @@
 // BLUEMOON EDITED - реворк разрешений на оружие
 
+GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 /obj/item/clothing/accessory/permit
 	name = "Weapons permit"
 	desc = "Небольшая карточка с блюспейс-электроникой для упрощения контроля за трафиком оружия на станции."
@@ -8,6 +9,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/accessories.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FIRE_PROOF
+	var/permit_id
 	var/owner_name = ""
 	var/owner_assignment = ""
 	var/issuer_name = ""
@@ -18,6 +20,16 @@
 	var/locked = FALSE
 	// Выдан ли роли при спавне
 	var/special = FALSE
+
+/obj/item/clothing/accessory/permit/Initialize(mapload)
+	. = ..()
+	GLOB.weapon_permits_issued++
+	permit_id = GLOB.weapon_permits_issued
+	name += " #[id]"
+
+/obj/item/clothing/accessory/permit/Destroy()
+	. = ..()
+	unregister()
 
 /obj/item/clothing/accessory/permit/ui_status(mob/user)
 	if(!can_see_permit(user))
@@ -71,6 +83,7 @@
 			issue_time = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 			playsound(src, 'sound/machines/chime.ogg', 20)
 			locked = TRUE
+			register()
 		if("reopen_license")
 			if(!has_access_to_issuing(usr))
 				to_chat(usr, span_warning("У вас нет прав на это действие!"))
@@ -80,6 +93,7 @@
 			issue_time = ""
 			playsound(src, 'sound/machines/beep.ogg', 20)
 			locked = FALSE
+			unregister()
 		if("submit_owner")
 			if(!ishuman(usr))
 				return
@@ -91,7 +105,6 @@
 			owner_name = owner_card.registered_name
 			owner_assignment = owner_card.assignment
 			playsound(src, 'sound/machines/beep.ogg', 20)
-			locked = FALSE
 		if("input_weapons")
 			var/new_weapons_list = tgui_input_text(usr, "Введите новый перечень разрешённого оружия и снаряжения (максимум 150 символов).", "Новый перечень оружия", permitted_weapons, 150, TRUE, TRUE)
 			if(new_weapons_list)
@@ -170,8 +183,19 @@
 		ui_interact(user)
 	return
 
-/obj/item/clothing/accessory/permit/proc/register()
-	return
+/obj/item/clothing/accessory/permit/proc/register(notify_warden = TRUE)
+	var/list/obj/item/warden_assistant/tracking_devices = GLOB.warden_assistant_devices_list
+	if(!tracking_devices.len)
+		return
+	for(var/list/obj/item/warden_assistant/device in tracking_devices)
+		device.register_permit(src, notify_warden)
+
+/obj/item/clothing/accessory/permit/proc/unregister(notify_warden = TRUE)
+	var/list/obj/item/warden_assistant/tracking_devices = GLOB.warden_assistant_devices_list
+	if(!tracking_devices.len)
+		return
+	for(var/list/obj/item/warden_assistant/device in tracking_devices)
+		device.unregister_permit(src, notify_warden)
 
 
 // База для заранее созданных пермитов
@@ -183,6 +207,29 @@
 	issue_time = "Перед началом текущей смены"
 	special = TRUE
 	var/first_inited = FALSE // Карточку нужно использовать в руке, чтобы она записалась. Как со старыми пермитами
+
+/obj/item/clothing/accessory/permit/special/Initialize(mapload)
+	. = ..()
+	if(istype(loc, /obj/item/storage/backpack))
+		var/obj/item/storage/backpack/B = loc
+		if(ishuman(B.loc))
+			var/mob/living/carbon/human/wearer = B.loc
+			var/obj/item/card/id/wearer_card = wearer.get_id_card()
+			if(wearer_card && wearer_card.registered_name && wearer_card.assignment)
+				owner_name = wearer_card.registered_name
+				owner_assignment = wearer_card.assignment
+				first_inited = TRUE
+	if(current_uniform && istype(current_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = loc
+		if(ishuman(U.loc))
+			var/mob/living/carbon/human/wearer = U.loc
+			var/obj/item/card/id/wearer_card = wearer.get_id_card()
+			if(wearer_card && wearer_card.registered_name && wearer_card.assignment)
+				owner_name = wearer_card.registered_name
+				owner_assignment = wearer_card.assignment
+				first_inited = TRUE
+	if(first_inited)
+		register(FALSE)
 
 /obj/item/clothing/accessory/permit/special/examine(mob/user)
 	. = ..()

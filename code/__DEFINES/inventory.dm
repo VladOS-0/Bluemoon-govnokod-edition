@@ -180,7 +180,8 @@ GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/device/cooler, //BLUEMOON ADD - ПОУ для бронежилетов СБ,
-	/obj/item/tank/internals)))
+	/obj/item/tank/internals,
+	/obj/item/warden_assistant))) // BLUEMOON ADD - планшетик вардена
 
 GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
@@ -214,7 +215,8 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/device/cooler, //BLUEMOON ADD - ПОУ для бронежилетов СБ,
 	/obj/item/spear/electrospear, //BLUEMOON ADD тестовый вариант
-	/obj/item/tank/internals/plasmaman)))
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/warden_assistant))) // BLUEMOON ADD - планшетик вардена
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/ammo_box,
@@ -231,7 +233,8 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/device/cooler, //BLUEMOON ADD - ПОУ для бронежилетов СБ,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
-	/obj/item/toy)))
+	/obj/item/toy,
+	/obj/item/warden_assistant))) // BLUEMOON ADD - планшетик вардена
 
 //Internals checker
 #define GET_INTERNAL_SLOTS(C) list(C.head, C.wear_mask)
