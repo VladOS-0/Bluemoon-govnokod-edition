@@ -50,7 +50,7 @@ export const WeaponPermit = (props, context) => {
                 tooltipPosition="left"
                 onClick={() => act('submit_license')}
               />
-            ) : (
+              ) : (
               <Button /** Удалить текущую лицензию и начать заполнение заново */
                 color="yellow"
                 disabled={
@@ -72,7 +72,7 @@ export const WeaponPermit = (props, context) => {
                 tooltipPosition="left"
                 onClick={() => act('reopen_license')}
               />
-          )}>
+              )}>
           <LabeledList>
             <LabeledList.Item
               label="Имя обладателя лицензии"
