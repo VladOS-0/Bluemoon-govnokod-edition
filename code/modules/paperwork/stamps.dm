@@ -109,5 +109,11 @@
 	icon_state = "stamp-warden"
 	dye_color = DYE_RED
 
+/obj/item/stamp/machine
+	name = "Machinery stamping module"
+	desc = "И откуда ты это достал, мясной мешок? Положи обратно!"
+	icon_state = "stamp-machine"
+	dye_color = DYE_BLUE
+
 /obj/item/stamp/attack_paw(mob/user)
 	return attack_hand(user)
