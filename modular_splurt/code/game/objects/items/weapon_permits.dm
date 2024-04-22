@@ -192,14 +192,14 @@ GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 	var/list/obj/item/warden_assistant/tracking_devices = GLOB.warden_assistant_devices_list
 	if(!tracking_devices.len)
 		return
-	for(var/list/obj/item/warden_assistant/device in tracking_devices)
+	for(var/obj/item/warden_assistant/device in tracking_devices)
 		device.register_permit(src, notify_warden)
 
 /obj/item/clothing/accessory/permit/proc/unregister(notify_warden = TRUE)
 	var/list/obj/item/warden_assistant/tracking_devices = GLOB.warden_assistant_devices_list
 	if(!tracking_devices.len)
 		return
-	for(var/list/obj/item/warden_assistant/device in tracking_devices)
+	for(var/obj/item/warden_assistant/device in tracking_devices)
 		device.unregister_permit(src, notify_warden)
 
 
