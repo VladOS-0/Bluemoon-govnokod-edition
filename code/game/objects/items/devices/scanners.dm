@@ -155,6 +155,8 @@ GENETICS SCANNER
 	if(advanced)
 		to_chat_msg += "<center><a href='?src=[REF(src)];print_scan=1;subject_name=[last_recipient_name];time=[last_scan_time]'>Распечатать</a></center>"
 	if(browser_mode)
+		to_chat_msg = replacetext(to_chat_msg, "\n", "<br>") // Чтобы нормально переносилось
+		to_chat_msg = replacetext(to_chat_msg, "color='#0000CC'", "color='#13ace3'") // На тёмном фоне плохо видно
 		var/datum/browser/popup = new(user, "healthscan", "Сканирование [last_recipient_name]", 600, 900)
 		popup.set_content(to_chat_msg)
 		popup.open()
@@ -562,6 +564,8 @@ GENETICS SCANNER
 		connected_analyzer.last_recipient_name = M.get_visible_name()
 		connected_analyzer.last_scan_time = scan_time
 		if(connected_analyzer.browser_mode)
+			to_chat_msg = replacetext(to_chat_msg, "\n", "<br>")
+			to_chat_msg = replacetext(to_chat_msg, "color='#0000CC'", "color='#13ace3'")
 			var/datum/browser/popup = new(user, "healthscan", "Сканирование [M]", 600, 900)
 			popup.set_content(to_chat_msg)
 			popup.open()
