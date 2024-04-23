@@ -571,6 +571,8 @@ GENETICS SCANNER
 			popup.open()
 		else
 			to_chat(user, examine_block(to_chat_msg))
+	else
+		to_chat(user, examine_block(to_chat_msg))
 	// BLUEMOON EDIT END
 
 
