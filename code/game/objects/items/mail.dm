@@ -35,6 +35,53 @@
 	/// Created items during initialization. If items should be customised, use
 	var/list/obj/item/initial_contents = list()
 
+/obj/item/mail/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
+	AddElement(/datum/element/item_scaling, 0.5, 1)
+	if(isnull(department_colors))
+		department_colors = list(
+			ACCOUNT_CIV = COLOR_WHITE,
+			ACCOUNT_ENG = COLOR_PALE_ORANGE,
+			ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
+			ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
+			ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
+			ACCOUNT_CAR = COLOR_BEIGE,
+			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+		)
+
+	// Icons
+	// Add some random stamps.
+	if(stamped == TRUE)
+		var/stamp_count = rand(1, stamp_max)
+		for(var/i = 1, i <= stamp_count, i++)
+			stamps += list("stamp_[rand(2, 6)]")
+	update_icon()
+
+/obj/item/mail/update_overlays()
+	. = ..()
+	var/bonus_stamp_offset = 0
+	for(var/stamp in stamps)
+		var/image/stamp_image = image(
+			icon = icon,
+			icon_state = stamp,
+			pixel_x = stamp_offset_x,
+			pixel_y = stamp_offset_y + bonus_stamp_offset
+		)
+		stamp_image.appearance_flags |= RESET_COLOR
+		bonus_stamp_offset -= 5
+		. += stamp_image
+
+	if(postmarked == TRUE)
+		var/image/postmark_image = image(
+			icon = icon,
+			icon_state = "postmark",
+			pixel_x = stamp_offset_x + rand(-3, 1),
+			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+		)
+		postmark_image.appearance_flags |= RESET_COLOR
+		. += postmark_image
+
 /obj/item/mail/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/storage/concrete)
@@ -45,11 +92,6 @@
 	STR.allow_quick_empty = TRUE
 	STR.max_items = 3
 	STR.locked = TRUE
-
-/obj/item/mail/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
-	update_icon()
 
 /obj/item/mail/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
