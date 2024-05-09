@@ -72,6 +72,10 @@ SUBSYSTEM_DEF(economy)
 	var/import_total = 0
 	/// Number of mail items generated.
 	var/mail_waiting = 0
+	/// Mails on station, which was not opened yet - BLUEMOON ADD
+	var/sealed_mails_count = 0
+	/// Total amount of arrived letters during the round - BLUEMOON ADD
+	var/total_mails_count = 0
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -107,8 +111,9 @@ SUBSYSTEM_DEF(economy)
 
 	// if(!market_crashing)
 		// price_update()
-	var/effective_mailcount = round(living_player_count() / (rand(1, 5) - 0.5)) // fake inflation // (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
+	if(sealed_mails_count < MAX_SEALED_MESSAGES)
+		var/effective_mailcount = round(living_player_count() / (rand(1, 5) - 0.5)) // fake inflation // (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
+		mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)

@@ -1,8 +1,12 @@
+/// Info block for mails examine
+#define mail_info_box(str) ("<div class='mail_info_box'>" + str + "</div>")
+
 /**
  *
  * ПОЧТОВЫЕ КОНВЕРТЫ И ОСНОВНАЯ ЛОГИКА
  *
  */
+
 /obj/item/mail
 	name = "Postal Envelope"
 	gender = NEUTER
@@ -23,17 +27,31 @@
 	var/sort_tag = 0
 	/// Fingerprint of recipient
 	var/recipient_fingerprint = null
-	/// Whether main is opened or not
+	/// Whether mail is opened or not
 	var/opened = FALSE
+	/// Whether mail is postmarked or not
+	var/postmarked = TRUE
+	/// Does the letter have a stamp overlay?
+	var/stamped = TRUE
+	/// List of all stamp overlays on the letter.
+	var/list/stamps = list()
+	/// Maximum number of stamps on the letter.
+	var/stamp_max = 1
+	/// Physical offset of stamps on the object. X direction.
+	var/stamp_offset_x = 0
+	/// Physical offset of stamps on the object. Y direction.
+	var/stamp_offset_y = 2
+	/// Mail will have the color of the department the recipient is in.
+	var/static/list/department_colors
 
 	// Свойства, относящиеся к наполнению
 
-	/// Name for text letter in envelope
-	var/letter_title = "БЛАНК ПОЛУЧЕНИЯ"
-	/// HTML for text letter in envelope
-	var/letter_html = "Данный бланк подтверждает получение посылки адресатом."
-	/// Created items during initialization. If items should be customised, use
-	var/list/obj/item/initial_contents = list()
+	var/datum/mail_pattern/pattern
+
+	var/sender_name = "НЕИЗВЕСТЕН"
+	var/recipient_name = "???"
+	var/arrive_time = ""
+	var/open_time = "N/A"
 
 /obj/item/mail/Initialize()
 	. = ..()
@@ -49,14 +67,39 @@
 			ACCOUNT_CAR = COLOR_BEIGE,
 			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
 		)
-
 	// Icons
 	// Add some random stamps.
 	if(stamped == TRUE)
 		var/stamp_count = rand(1, stamp_max)
 		for(var/i = 1, i <= stamp_count, i++)
 			stamps += list("stamp_[rand(2, 6)]")
+	pattern = new(src)
+
+	arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+
+	addtimer(CALLBACK(src, PROC_REF(disappear)), 20 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	SSeconomy.sealed_mails_count++
+	SSeconomy.total_mails_count++
 	update_icon()
+
+/obj/item/mail/Destroy()
+	qdel(pattern)
+	pattern = null
+	stamps = null
+	for(var/atom/content in contents)
+		contents -= content
+		qdel(content)
+	if(!opened)
+		SSeconomy.sealed_mails_count--
+	. = ..()
+
+/obj/item/mail/proc/disappear()
+	if(opened)
+		return
+	say("Получатель не был обнаружен в течении тридцати минут. Самоликвидация...")
+	sleep(3 SECONDS)
+	do_fake_sparks(2, 2, src)
+	qdel(src)
 
 /obj/item/mail/update_overlays()
 	. = ..()
@@ -87,9 +130,10 @@
 	AddComponent(/datum/component/storage/concrete)
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
 	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
-	STR.max_volume = DEFAULT_VOLUME_TINY * 3
+	STR.max_volume = DEFAULT_VOLUME_TINY * 4
 	STR.max_w_class = WEIGHT_CLASS_TINY
 	STR.allow_quick_empty = TRUE
+	STR.drop_all_on_deconstruct = FALSE
 	STR.max_items = 3
 	STR.locked = TRUE
 
@@ -97,6 +141,18 @@
 	SIGNAL_HANDLER
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
+
+/obj/item/mail/examine(mob/user)
+	. = ..()
+	var/mail_info = ""
+	mail_info += "<center><b>ПОЧТОВОЕ АГЕНТСТВО ЦЕНТРАЛЬНОГО КОМАНДОВАНИЯ</b></center><hr>"
+	mail_info += "<u>ОТПРАВИТЕЛЬ</u> - [sender_name]<br>"
+	mail_info += "<u>ПУНКТ НАЗНАЧЕНИЯ</u> - [GLOB.station_name]<br>"
+	mail_info += "<u>ПОЛУЧАТЕЛЬ</u> - [recipient_name]<br>"
+	mail_info += "<u>ДАТА ПРИБЫТИЯ</u> - [arrive_time]<hr>"
+	mail_info += "<u>ВСКРЫТО</u> - [open_time]"
+	. += mail_info_box(mail_info)
+	. += span_info("<br>Используйте таггер, чтобы отправить письмо по станционной системе труб.")
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
 	// Destination tagging
@@ -130,81 +186,34 @@
 		if(md5(opener.dna.uni_identity) != recipient_fingerprint)
 			balloon_alert_to_viewers("ОТКАЗАНО В ДОСТУПЕ: отпечатки не совпадают")
 			return
-	balloon_alert_to_viewers("ДОСТУП РАЗРЕШЁН. Приятного пользования, [opener]!")
+		if(pattern && !pattern.special_open_check(opener))
+			return
+	open(opener)
+
+/obj/item/mail/proc/open(mob/living/carbon/human/opener = null)
+	balloon_alert_to_viewers("ДОСТУП РАЗРЕШЕН. Приятного пользования, [opener ? opener : "аноним"]!")
 	playsound(src, 'sound/machines/chime.ogg', 20)
 	opened = TRUE
 	if(open_state)
 		icon_state = open_state
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
 	STR.locked = FALSE
-	on_mail_open(user)
+	SSeconomy.sealed_mails_count--
+	open_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+	on_mail_open(opener)
 
 /// Proc that called when mail is succesfully opened with special effects
-/obj/item/mail/proc/on_mail_open(/mob/living/carbon/human/opener)
-	return
-
-/*
-/obj/item/mail/examine_more(mob/user)
-	. = ..()
-	if(!postmarked)
-		. += span_info("This mail has no postmarking of any sort...")
-	else
-		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
-	var/datum/mind/recipient = recipient_ref.resolve()
-	if(recipient)
-		. += span_info("[postmarked ? "Certified NT" : "Uncertified"] mail for [recipient].")
-	else if(postmarked)
-		. += span_info("Certified mail for [GLOB.station_name].")
-	else
-		. += span_info("This is a dead letter mail with no recipient.")
-	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
-*/
-
-/// Accepts a mind to initialize goodies for a piece of mail.
-/obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role])"
-	recipient_ref = WEAKREF(recipient)
-
-	var/mob/living/body = recipient.current
-	var/list/goodies = generic_goodies
-
-	var/datum/job/this_job = SSjob.name_occupations[recipient.assigned_role]
-	var/is_mail_restricted = FALSE // certain roles and jobs (prisoner) do not receive generic gifts
-
-	if(this_job)
-		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
-			color = department_colors[this_job.paycheck_department]
-
-		var/list/job_goodies = this_job.get_mail_goodies()
-		is_mail_restricted = this_job.exclusive_mail_goodies
-		if(LAZYLEN(job_goodies))
-			if(is_mail_restricted)
-				goodies = job_goodies
-			else
-				goodies += job_goodies
-
-	if(!is_mail_restricted)
-		// the weighted list is 50 (generic items) + 50 (job items)
-		// every quirk adds 5 to the final weighted list (regardless the number of items or weights in the quirk list)
-		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
-		for(var/datum/quirk/quirk as anything in body.roundstart_quirks)
-			if(LAZYLEN(quirk.mail_goodies))
-				var/quirk_goodie = pick(quirk.mail_goodies)
-				goodies[quirk_goodie] = 5
-
-		// A little boost for the special times!
-		for(var/datum/holiday/holiday as anything in SSevents.holidays)
-			if(LAZYLEN(holiday.mail_goodies))
-				var/holiday_goodie = pick(holiday.mail_goodies)
-				goodies[holiday_goodie] = holiday.mail_goodies[holiday_goodie]
-
-	for(var/iterator in 1 to goodie_count)
-		var/target_good = pikweight(goodies)
-		var/atom/movable/target_atom = new target_good(src)
-		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
-
-	return TRUE
-
+/obj/item/mail/proc/on_mail_open(mob/living/carbon/human/opener)
+	if(!istype(opener))
+		return
+	if(istype(pattern))
+		pattern.on_mail_open(opener)
+	var/obj/item/paper/letter = locate() in contents
+	if(letter)
+		if(!opener.get_inactive_held_item())
+			opener.put_in_inactive_hand(letter)
+			opener.swap_hand()
+		letter.attempt_examinate(opener)
 
 /**
  *
@@ -222,8 +231,8 @@
 /obj/item/mail/envelope/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
-	STR.max_volume = DEFAULT_VOLUME_TINY * 3
-	STR.max_w_class = WEIGHT_CLASS_TINY
+	STR.max_volume = DEFAULT_VOLUME_SMALL * 6
+	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /**
  *
@@ -237,6 +246,17 @@
 	base_icon_state = "mail"
 	///if it'll show the nt mark on the crate
 	var/postmarked = TRUE
+	var/arrive_time = "N/A"
+	var/initial_mails_count = 0
+
+/obj/structure/closet/crate/mail/Initialize(mapload)
+	. = ..()
+	arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+
+/obj/structure/closet/crate/mail/examine(mob/user)
+	. = ..()
+	. += span_notice("Дата прибытия - [GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
+	. += span_notice("Количество прибывших в контейнере писем и посылок - [initial_mails_count]")
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -268,19 +288,47 @@
 		mail_recipients += human.mind
 
 	for(var/i in 1 to mail_count)
-		var/obj/item/mail/new_mail
-		if(prob(FULL_CRATE_LETTER_ODDS))
-			new_mail = new /obj/item/mail(src)
-		else
-			new_mail = new /obj/item/mail/envelope(src)
-
 		var/datum/mind/recipient = pick_n_take(mail_recipients)
-		if(recipient)
-			new_mail.initialize_for_recipient(recipient)
-		else
-			new_mail.junk_mail()
-
+		if(!recipient)
+			continue
+		create_mail_for_recipient(recipient, src)
 	update_icon()
+
+/// Creates a mail for a specific mind
+/obj/structure/closet/crate/mail/proc/create_mail_for_recipient(datum/mind/recipient)
+
+	var/mob/living/carbon/human/body = recipient.current
+
+	var/datum/job/this_job = SSjob.name_occupations[recipient.assigned_role]
+
+	if(!this_job || !istype(body))
+		return
+
+	if(!body.dna.uni_identity)
+		return
+
+	var/obj/item/mail/new_mail = null
+	// Шанс выбора письма/посылки - 50/50
+	if(prob(50))
+		new_mail = new /obj/item/mail/envelope(src)
+	else
+		new_mail = new /obj/item/mail(src)
+
+	new_mail.name = "[initial(new_mail.name)] for [recipient.name] ([recipient.assigned_role])"
+	if(this_job.paycheck_department && new_mail.department_colors[this_job.paycheck_department])
+		new_mail.color = new_mail.department_colors[this_job.paycheck_department]
+	new_mail.recipient_fingerprint = md5(body.dna.uni_identity)
+
+	if(!new_mail.pattern?.choose_pattern(body) || !new_mail.pattern)
+		qdel(new_mail)
+		return
+
+	new_mail.recipient_name = recipient.name
+	new_mail.pattern.apply(body)
+
+	initial_mails_count++
+
+	return
 
 /// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
 /obj/structure/closet/crate/mail/economy/Initialize(mapload)
