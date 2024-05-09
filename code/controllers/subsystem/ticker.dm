@@ -78,6 +78,16 @@ SUBSYSTEM_DEF(ticker)
 	/// People who have been commended and will receive a heart
 	var/list/hearts
 
+	// BLUEMOON ADD START - воут за карту и перезагрузка сервера, если прошлый раунд окончился крашем
+
+	/// Was already launched map vote, after which server will be restarted?
+	var/mapvote_restarter_in_progress
+
+	/// Was SSPersistence GracefulEnding mark unrecorded due to roundstart?
+	var/graceful_ending_unrecoreded = FALSE
+
+	// BLUEMOON ADD END
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -175,7 +185,21 @@ SUBSYSTEM_DEF(ticker)
 
 			fire()
 		if(GAME_STATE_PREGAME)
-				//lobby stats for statpanels
+
+			// BLUEMOON ADD START - воут за карту и перезагрузка сервера, если прошлый раунд окончился крашем
+			if(mapvote_restarter_in_progress)
+				return
+			if(!SSpersistence.CheckGracefulEnding())
+				SetTimeLeft(-1)
+				start_immediately = FALSE
+				mapvote_restarter_in_progress = TRUE
+				var/vote_type = CONFIG_GET(string/map_vote_type)
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = vote_type)
+				to_chat(world, span_boldwarning("Активировано голосование за смену карты из-за неудачного завершения прошлого раунда. После его окончания сервер будет перезапущен."))
+				return
+			// BLUEMOON ADD END
+
+			//lobby stats for statpanels
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
@@ -187,7 +211,6 @@ SUBSYSTEM_DEF(ticker)
 
 			if(start_immediately)
 				timeLeft = 0
-
 			if(!modevoted)
 				var/forcemode = CONFIG_GET(string/force_gamemode)
 				if(forcemode)
@@ -226,6 +249,12 @@ SUBSYSTEM_DEF(ticker)
 				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
+			// BLUEMOON ADD START - пометка раунда, как ещё не завершившегося удачно, а также проверка на мидраундовую запись
+			if(!graceful_ending_unrecoreded)
+				SSpersistence.UnrecordGracefulEnding()
+				graceful_ending_unrecoreded = TRUE
+			midround_record_check()
+			// BLUEMOON ADD END
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
