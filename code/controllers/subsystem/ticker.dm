@@ -247,14 +247,13 @@ SUBSYSTEM_DEF(ticker)
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
-
-		if(GAME_STATE_PLAYING)
-			// BLUEMOON ADD START - пометка раунда, как ещё не завершившегося удачно, а также проверка на мидраундовую запись
-			if(!graceful_ending_unrecoreded)
+			// BLUEMOON ADD START - пометка раунда, как ещё не завершившегося удачно
+			else if(!graceful_ending_unrecoreded)
 				SSpersistence.UnrecordGracefulEnding()
 				graceful_ending_unrecoreded = TRUE
-			midround_record_check()
 			// BLUEMOON ADD END
+
+		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
