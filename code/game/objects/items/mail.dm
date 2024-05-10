@@ -50,6 +50,7 @@
 
 	var/sender_name = "НЕИЗВЕСТЕН"
 	var/recipient_name = "???"
+	var/recipient_job = "N/A"
 	var/arrive_time = ""
 	var/open_time = "N/A"
 
@@ -144,15 +145,30 @@
 
 /obj/item/mail/examine(mob/user)
 	. = ..()
+	. += span_notice("<br>Вы видите красную панель с текстом на упаковке. <a href='?src=[REF(src)];check_mail_info=1'>Осмотреть</a>")
+	. += span_info("<br>Используйте таггер, чтобы отправить письмо по станционной системе труб.")
+
+/obj/item/mail/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["check_mail_info"])
+		mail_info_display(usr)
+		return
+
+/obj/item/mail/proc/mail_info_display(mob/user)
+	if(QDELETED(src) || !istype(user))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	var/mail_info = ""
 	mail_info += "<center><b>ПОЧТОВОЕ АГЕНТСТВО ЦЕНТРАЛЬНОГО КОМАНДОВАНИЯ</b></center><hr>"
 	mail_info += "<u>ОТПРАВИТЕЛЬ</u> - [sender_name]<br>"
 	mail_info += "<u>ПУНКТ НАЗНАЧЕНИЯ</u> - [GLOB.station_name]<br>"
 	mail_info += "<u>ПОЛУЧАТЕЛЬ</u> - [recipient_name]<br>"
+	mail_info += "<u>ДОЛЖНОСТЬ ПОЛУЧАТЕЛЯ</u> - [recipient_job]<br>"
 	mail_info += "<u>ДАТА ПРИБЫТИЯ</u> - [arrive_time]<hr>"
 	mail_info += "<u>ВСКРЫТО</u> - [open_time]"
 	. += mail_info_box(mail_info)
-	. += span_info("<br>Используйте таггер, чтобы отправить письмо по станционной системе труб.")
+	to_chat(user, mail_info)
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
 	// Destination tagging
@@ -215,21 +231,16 @@
 			opener.swap_hand()
 		letter.attempt_examinate(opener)
 
-/**
- *
- * ПОСЫЛКИ
- *
- */
-
-/obj/item/mail/envelope
-	name = "Postal Package"
+/// Proc that converts mail envelope into mail package
+/obj/item/mail/proc/convert_to_package()
+	if(recipient_name && recipient_job)
+		name = "Postal Package for for [recipient_name] ([recipient_job])"
+	else
+		name = "Postal Package"
 	desc = "Сертифицированный Пактом современный™ почтовый контейнер из сверхпрочной бумаги с небольшим датчиком отпечатков пальцев. Всё ещё сильно дешевле блюспейс-доставки."
 	icon_state = "mail_large"
 	open_state = "mail_large_tampered"
 	w_class = WEIGHT_CLASS_NORMAL
-
-/obj/item/mail/envelope/ComponentInitialize()
-	. = ..()
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
 	STR.max_volume = DEFAULT_VOLUME_SMALL * 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
@@ -308,23 +319,18 @@
 		return
 
 	var/obj/item/mail/new_mail = null
-	// Шанс выбора письма/посылки - 50/50
-	if(prob(50))
-		new_mail = new /obj/item/mail/envelope(src)
-	else
-		new_mail = new /obj/item/mail(src)
 
-	new_mail.name = "[initial(new_mail.name)] for [recipient.name] ([recipient.assigned_role])"
+	new_mail.recipient_name = recipient.name
+	new_mail.recipient_job = recipient.assigned_role
+	new_mail.recipient_fingerprint = md5(body.dna.uni_identity)
+
+	new_mail.name = "[initial(new_mail.name)] for [new_mail.recipient_name] ([new_mail.recipient_job])"
 	if(this_job.paycheck_department && new_mail.department_colors[this_job.paycheck_department])
 		new_mail.color = new_mail.department_colors[this_job.paycheck_department]
-	new_mail.recipient_fingerprint = md5(body.dna.uni_identity)
 
 	if(!new_mail.pattern?.choose_pattern(body) || !new_mail.pattern)
 		qdel(new_mail)
 		return
-
-	new_mail.recipient_name = recipient.name
-	new_mail.pattern.apply(body)
 
 	initial_mails_count++
 

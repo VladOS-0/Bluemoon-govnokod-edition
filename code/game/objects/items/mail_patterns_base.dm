@@ -1,5 +1,5 @@
 #define MAIL_CATEGORY_MISC "mail_misc"
-#define MAIL_CATEGORY_SYNDIE "mail_syndie"
+#define MAIL_CATEGORY_ANTAG "mail_antag"
 #define MAIL_CATEGORY_MONEY "mail_money"
 #define MAIL_CATEGORY_FAMILY "mail_family"
 #define MAIL_CATEGORY_JOB "mail_job"
@@ -12,7 +12,7 @@
 
 GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 	MAIL_CATEGORY_MISC = 3,
-	MAIL_CATEGORY_SYNDIE = 5000,
+	MAIL_CATEGORY_ANTAG = 5000,
 	MAIL_CATEGORY_MONEY = 5,
 	MAIL_CATEGORY_FAMILY = 5000,
 	MAIL_CATEGORY_JOB = 7,
@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 	/// Envelope / Package
 	var/envelope_type = MAIL_TYPE_ENVELOPE
 
+	/// Envelope, to which this pattern assigned
 	var/obj/item/mail/parent
 
 	/// Category of letter
@@ -41,7 +42,7 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 	/// Name for text letter in envelope
 	var/letter_title = "БЛАНК ПОЛУЧЕНИЯ"
 	/// HTML for text letter in envelope
-	var/letter_html = "Данный бланк подтверждает получение посылки адресатом."
+	var/letter_html = ""
 	/// Description for text letter in envelope
 	var/letter_desc = "Слегка помятая исписанная бумажка с явным перегибом по середине. Видимо, его достали из конверта."
 	/// Icon file for text letter in envelope
@@ -49,8 +50,41 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 	/// Icon state for text letter in envelope
 	var/letter_icon_state = "paperslip_words"
 
-	/// Created items during initialization. If items should be customised, override create_contents proc
+	/// Created items during pattern applying. If items should be customised, override apply() proc
 	var/list/obj/item/initial_contents = list()
+
+	//
+	// ОГРАНИЧЕНИЯ
+	//
+
+	// .. НА РЕЖИМ ИГРЫ
+
+	/// List of whitelisted roundtypes (Extended, Dynamic Hard, etc). Pattern will be available only during them
+	var/list/whitelisted_roundtypes = list()
+	/// List of blacklisted roundtypes (Extended, Dynamic Hard, etc). Pattern will not be available during them
+	var/list/blacklisted_roundtypes = list()
+
+	// .. НА КВИРКИ
+
+	/// List of whitelisted quirks. Pattern will be available only if owner has one of them
+	var/list/whitelisted_quirks = list()
+	/// List of blacklisted quirks. Pattern will not be available if owner has one of them
+	var/list/blacklisted_quirks = list()
+
+	// .. НА РАСЫ
+
+	/// List of whitelisted species. Pattern will be available only if owner has one of them
+	var/list/whitelisted_species = list()
+	/// List of blacklisted species. Pattern will not be available if owner has one of them
+	var/list/blacklisted_species = list()
+
+	// .. НА ПРОФЕССИИ. Передаётся строками из player.mind.assigned_role
+
+	/// List of whitelisted jobs. Pattern will be available only if owner assigned role is one of them
+	var/list/whitelisted_jobs = list()
+	/// List of blacklisted jobs. Pattern will not be available if owner assigned role is one of them
+	var/list/blacklisted_jobs = list()
+
 
 /datum/mail_pattern/New(obj/item/mail/_parent)
 	. = ..()
@@ -90,12 +124,51 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 
 	for(var/P in patterns_list)
 		var/datum/mail_pattern/pattern = P
+		// Фильтр по категории
 		if(initial(pattern.category) != category)
 			continue
-		if(istype(parent, /obj/item/mail/envelope) && initial(pattern.envelope_type) != MAIL_TYPE_ENVELOPE)
-			continue
-		if(!istype(parent, /obj/item/mail/envelope) && initial(pattern.envelope_type) == MAIL_TYPE_ENVELOPE)
-			continue
+
+		// Фильтр на тип раунда
+
+		if(whitelisted_roundtypes.len)
+			if(!(GLOB.round_type in whitelisted_roundtypes))
+				continue
+		if(blacklisted_roundtypes.len)
+			if(GLOB.round_type in whitelisted_roundtypes)
+				continue
+
+		// Фильтр на квирки
+
+		if(whitelisted_quirks.len)
+			var/whitelist_quirk_exists = FALSE
+			for(var/quirk in whitelisted_quirks)
+				if(quirk in recipient.roundstart_quirks)
+					whitelist_quirk_exists = TRUE
+					break
+			if(!whitelist_quirk_exists)
+				continue
+		if(blacklisted_quirks.len)
+			for(var/quirk in blacklisted_quirks)
+				if(quirk in recipient.roundstart_quirks)
+					continue
+
+		// Фильтр на расы
+
+		if(whitelisted_species.len)
+			if(!(recipient.dna?.species in whitelisted_species))
+				continue
+		if(blacklisted_species.len)
+			if(recipient.dna?.species in blacklisted_species)
+				continue
+
+		// Фильтр на профессии
+
+		if(whitelisted_jobs.len)
+			if(!(recipient.mind.assigned_role in whitelisted_jobs))
+				continue
+		if(blacklisted_jobs.len)
+			if(recipient.mind.assigned_role in blacklisted_jobs)
+				continue
 
 		var/pattern_id = initial(pattern.id)
 		var/pattern_weight = initial(pattern.weight)
@@ -107,7 +180,7 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 				switch(pattern_id)
 					if("")
 						continue
-			if(MAIL_CATEGORY_SYNDIE)
+			if(MAIL_CATEGORY_ANTAG)
 				switch(pattern_id)
 					if("")
 						continue
@@ -119,7 +192,7 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 				switch(pattern_id)
 					if("babushka_cookies")
 						if(isrobotic(recipient) || HAS_TRAIT(recipient, TRAIT_NOHUNGER))
-							pattern_weight = 0
+							continue
 			if(MAIL_CATEGORY_SHOP)
 				switch(pattern_id)
 					if("")
@@ -176,19 +249,29 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 	if(!istype(parent))
 		return
 
-	letter_title = text_customisation(letter_title, recipient)
-	letter_html = text_customisation(letter_html, recipient)
+	if(envelope_type == MAIL_TYPE_PACKAGE)
+		parent.convert_to_package()
+
+	// 25% шанс получить неправильного адресата
+	if(prob(25))
+		parent.sender_name = pick(list("Центральное Командование", "N/A", "Не указан", "УДАЛЕНО", "НЕИЗВЕСТНО", random_unique_name()))
+	else
+		parent.sender_name = sender
+
+	if(letter_html)
+		letter_title = text_customisation(letter_title, recipient)
+		letter_html = text_customisation(letter_html, recipient)
+		var/obj/item/paper/letter = new /obj/item/paper(parent)
+		letter.show_written_words = FALSE
+		letter.name = letter_title
+		letter.add_raw_text(letter_html)
+		letter.desc = letter_desc
+		letter.icon = letter_icon
+		letter.icon_state = letter_icon_state
+		letter.update_appearance()
 
 	parent.sender_name = sender
 
-	var/obj/item/paper/letter = new /obj/item/paper(parent)
-	letter.show_written_words = FALSE
-	letter.name = letter_title
-	letter.add_raw_text(letter_html)
-	letter.desc = letter_desc
-	letter.icon = letter_icon
-	letter.icon_state = letter_icon_state
-	letter.update_appearance()
 	for(var/good in initial_contents)
 		new good(parent)
 
@@ -201,8 +284,8 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 /datum/mail_pattern/misc
 	category = MAIL_CATEGORY_MISC
 
-/datum/mail_pattern/syndie
-	category = MAIL_CATEGORY_SYNDIE
+/datum/mail_pattern/antag
+	category = MAIL_CATEGORY_ANTAG
 
 /datum/mail_pattern/money
 	category = MAIL_CATEGORY_MONEY
@@ -222,8 +305,93 @@ GLOBAL_LIST_INIT(mail_categories_with_weights, list(
 /datum/mail_pattern/lewd
 	category = MAIL_CATEGORY_LEWD
 
+/**
+ *
+ * ПАНЕЛЬКА ДЛЯ АДМИНОВ, ПОЗВОЛЯЮЩАЯ СОЗДАВАТЬ ПИСЬМА ПО ШАБЛОНУ
+ *
+ */
+
+/client/proc/mail_panel()
+	set name = "Mail Panel"
+	set desc = "Позволяет создавать письма и посылки для определённых игроков."
+	set category = "Admin.Game"
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mail Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!istype(usr, /mob))
+		to_chat(usr, span_warning("Вы должны быть мобом, чтобы использовать почтовую панель!"))
+		return
+	var/datum/mail_panel_gui/tgui = new(usr)
+	tgui.ui_interact(usr)
+
+/datum/mail_panel_gui
+	var/mob/holder
+	var/list/players_assoc_list = list()
+	var/list/player_names = list()
+
+/datum/mail_panel_gui/New(mob/user)
+	holder = user
+	load_player_list()
+
+/datum/mail_panel_gui/Destroy(force, ...)
+	holder = null
+	players_assoc_list = null
+	player_names = null
+	. = ..()
+
+/datum/mail_panel_gui/proc/load_player_list()
+	players_assoc_list = list()
+	player_names = list()
+	if(istype(holder, /mob/living/carbon/human))
+		players_assoc_list["_Для меня!"] = holder
+		player_names += "_Для меня!"
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!istype(player))
+			continue
+		if(player == holder)
+			continue
+		players_assoc_list[player.real_name] = player
+		player_names += player.real_name
+
+/datum/mail_panel_gui/ui_state(mob/user)
+	if(!istype(holder, /mob))
+		return UI_CLOSE
+	return GLOB.admin_state
+
+/datum/mail_panel_gui/ui_close()
+	qdel(src)
+
+/datum/mail_panel_gui/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Mail Admin Panel")
+		ui.open()
+
+/datum/mail_panel_gui/ui_data(mob/user)
+	var/list/data = list()
+
+	data[""] = src
+
+	return data
+
+/datum/mail_panel_gui/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+
+	data["player_names"] = player_names
+
+	return data
+
+/datum/mail_panel_gui/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("update_data")
+			load_player_list()
+			update_static_data(holder)
+
 #undef MAIL_CATEGORY_MISC
-#undef MAIL_CATEGORY_SYNDIE
+#undef MAIL_CATEGORY_ANTAG
 #undef MAIL_CATEGORY_MONEY
 #undef MAIL_CATEGORY_FAMILY
 #undef MAIL_CATEGORY_JOB

@@ -25,11 +25,11 @@
 
 /**
  *
- * ПРИКОЛЫ ОТ СИНДИКАТА
+ * ПРИКОЛЫ, СВЯЗАННЫЕ С РАЗНЫМИ АНТАГОНИСТАМИ
  *
  */
 
-/datum/mail_pattern/syndie/anecdote
+/datum/mail_pattern/antag/anecdote
 	id = "syndie_anecdote"
 	name = "Привет от InteQ!"
 	description = "эхехехе"
