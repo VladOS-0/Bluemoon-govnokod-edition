@@ -175,7 +175,10 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Добро пожаловать на [station_name()]!</span>")
-			send2chat(new /datum/tgs_message_content("Новый раунд начинается на [SSmapping.config.map_name], голосование за режим полным ходом!"), CONFIG_GET(string/chat_announce_new_game))
+			if(!SSpersistence.CheckGracefulEnding())
+				send2chat(new /datum/tgs_message_content("Производится реролл карты в связи с крашем сервера..."), CONFIG_GET(string/chat_announce_new_game))
+			else
+				send2chat(new /datum/tgs_message_content("Новый раунд начинается на [SSmapping.config.map_name], голосование за режим полным ходом!"), CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//SPLURT EDIT - Bring back old panel
 			//Everyone who wants to be an observer is now spawned
