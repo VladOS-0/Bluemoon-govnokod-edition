@@ -1,9 +1,5 @@
 /// Number of paychecks jobs start with at the creation of a new bank account for a player (So at shift-start or game join, but not a blank new account.)
 #define STARTING_PAYCHECKS 5
-/// How much mail the Economy SS will create per minute, regardless of firing time.
-#define MAX_MAIL_PER_MINUTE 3
-/// Maximum of mails on station, which was not opened yet
-#define MAX_SEALED_MESSAGES 120
 
 #define PAYCHECK_ASSISTANT 25
 #define PAYCHECK_MINIMAL 75

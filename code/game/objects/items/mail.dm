@@ -1,35 +1,35 @@
-/// Info block for mails examine
-#define mail_info_box(str) ("<div class='mail_info_box'>" + str + "</div>")
+// BLUEMOON REMOVAL - был произведён полный реворк писем, файлы перемещены в modular_bluemoon/vlad0s_staff/code/mail/
 
-/**
- *
- * ПОЧТОВЫЕ КОНВЕРТЫ И ОСНОВНАЯ ЛОГИКА
- *
- */
-
+/*
+/// Mail is tamper-evident and unresealable, postmarked by CentCom for an individual recepient.
 /obj/item/mail
-	name = "Postal Envelope"
+	name = "mail"
 	gender = NEUTER
-	desc = "Сертифицированный Пактом современный™ почтовый конверт из сверхпрочной бумаги с небольшим датчиком отпечатков пальцев. Всё ещё сильно дешевле блюспейс-доставки."
+	desc = "An officially postmarked, tamper-evident parcel regulated by CentCom and made of high-quality materials."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "mail_small"
 	item_state = "paper"
-	var/open_state = "mail_small_tempered"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	// drop_sound = 'sound/items/handling/paper_drop.ogg'
 	// pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-
-	// Свойства, относящиеся к самому письму
-
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
-	/// Fingerprint of recipient
-	var/recipient_fingerprint = null
-	/// Whether mail is opened or not
-	var/opened = FALSE
-	/// Whether mail is postmarked or not
+	/// Weak reference to who this mail is for and who can open it.
+	var/datum/weakref/recipient_ref
+	/// How many goodies this mail contains.
+	var/goodie_count = 1
+	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
+	var/list/generic_goodies = list(
+		/obj/item/stack/spacecash/c50 = 10,
+		/obj/item/stack/spacecash/c100 = 25,
+		/obj/item/stack/spacecash/c200 = 15,
+		/obj/item/stack/spacecash/c500 = 5,
+		/obj/item/stack/spacecash/c1000 = 1,
+	)
+	// Overlays (pure fluff)
+	/// Does the letter have the postmark overlay?
 	var/postmarked = TRUE
 	/// Does the letter have a stamp overlay?
 	var/stamped = TRUE
@@ -41,18 +41,16 @@
 	var/stamp_offset_x = 0
 	/// Physical offset of stamps on the object. Y direction.
 	var/stamp_offset_y = 2
-	/// Mail will have the color of the department the recipient is in.
+
+	///mail will have the color of the department the recipient is in.
 	var/static/list/department_colors
 
-	// Свойства, относящиеся к наполнению
-
-	var/datum/mail_pattern/pattern
-
-	var/sender_name = "НЕИЗВЕСТЕН"
-	var/recipient_name = "???"
-	var/recipient_job = "N/A"
-	var/arrive_time = ""
-	var/open_time = "N/A"
+/obj/item/mail/envelope
+	name = "envelope"
+	icon_state = "mail_large"
+	goodie_count = 2
+	stamp_max = 2
+	stamp_offset_y = 5
 
 /obj/item/mail/Initialize()
 	. = ..()
@@ -68,39 +66,14 @@
 			ACCOUNT_CAR = COLOR_BEIGE,
 			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
 		)
+
 	// Icons
 	// Add some random stamps.
 	if(stamped == TRUE)
 		var/stamp_count = rand(1, stamp_max)
 		for(var/i = 1, i <= stamp_count, i++)
 			stamps += list("stamp_[rand(2, 6)]")
-	pattern = new(src)
-
-	arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
-
-	addtimer(CALLBACK(src, PROC_REF(disappear)), 20 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
-	SSeconomy.sealed_mails_count++
-	SSeconomy.total_mails_count++
 	update_icon()
-
-/obj/item/mail/Destroy()
-	qdel(pattern)
-	pattern = null
-	stamps = null
-	for(var/atom/content in contents)
-		contents -= content
-		qdel(content)
-	if(!opened)
-		SSeconomy.sealed_mails_count--
-	. = ..()
-
-/obj/item/mail/proc/disappear()
-	if(opened)
-		return
-	say("Получатель не был обнаружен в течении тридцати минут. Самоликвидация...")
-	sleep(3 SECONDS)
-	do_fake_sparks(2, 2, src)
-	qdel(src)
 
 /obj/item/mail/update_overlays()
 	. = ..()
@@ -126,50 +99,6 @@
 		postmark_image.appearance_flags |= RESET_COLOR
 		. += postmark_image
 
-/obj/item/mail/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/storage/concrete)
-	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
-	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
-	STR.max_volume = DEFAULT_VOLUME_TINY * 4
-	STR.max_w_class = WEIGHT_CLASS_TINY
-	STR.allow_quick_empty = TRUE
-	STR.drop_all_on_deconstruct = FALSE
-	STR.max_items = 3
-	STR.locked = TRUE
-
-/obj/item/mail/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
-	SIGNAL_HANDLER
-	if(!hasmob)
-		disposal_holder.destinationTag = sort_tag
-
-/obj/item/mail/examine(mob/user)
-	. = ..()
-	. += span_notice("<br>Вы видите красную панель с текстом на упаковке. <a href='?src=[REF(src)];check_mail_info=1'>Осмотреть</a>")
-	. += span_info("<br>Используйте таггер, чтобы отправить письмо по станционной системе труб.")
-
-/obj/item/mail/Topic(href, list/href_list)
-	. = ..()
-	if(href_list["check_mail_info"])
-		mail_info_display(usr)
-		return
-
-/obj/item/mail/proc/mail_info_display(mob/user)
-	if(QDELETED(src) || !istype(user))
-		return
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	var/mail_info = ""
-	mail_info += "<center><b>ПОЧТОВОЕ АГЕНТСТВО ЦЕНТРАЛЬНОГО КОМАНДОВАНИЯ</b></center><hr>"
-	mail_info += "<u>ОТПРАВИТЕЛЬ</u> - [sender_name]<br>"
-	mail_info += "<u>ПУНКТ НАЗНАЧЕНИЯ</u> - [GLOB.station_name]<br>"
-	mail_info += "<u>ПОЛУЧАТЕЛЬ</u> - [recipient_name]<br>"
-	mail_info += "<u>ДОЛЖНОСТЬ ПОЛУЧАТЕЛЯ</u> - [recipient_job]<br>"
-	mail_info += "<u>ДАТА ПРИБЫТИЯ</u> - [arrive_time]<hr>"
-	mail_info += "<u>ВСКРЫТО</u> - [open_time]"
-	. += mail_info_box(mail_info)
-	to_chat(user, mail_info)
-
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
 	// Destination tagging
 	if(istype(W, /obj/item/dest_tagger))
@@ -181,75 +110,140 @@
 			sort_tag = destination_tag.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
 
+/obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
+	if(user.get_inactive_held_item() == src)
+		balloon_alert(user, "nothing to disable!")
+		return TRUE
+	balloon_alert(user, "hold it!")
+	return FALSE
+
 /obj/item/mail/attack_self(mob/user)
-	if(!opened)
-		try_open(user)
+	if(!unwrap(user))
+		return FALSE
+	return after_unwrap(user)
+
+/// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
+/obj/item/mail/proc/unwrap(mob/user)
+	if(recipient_ref)
+		var/datum/mind/recipient = recipient_ref.resolve()
+		// If the recipient's mind has gone, then anyone can open their mail
+		// whether a mind can actually be qdel'd is an exercise for the reader
+		if(recipient && recipient != user?.mind)
+			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
+			return FALSE
+
+	balloon_alert(user, "unwrapping...")
+	if(!do_after(user, 1.5 SECONDS, target = user))
+		return FALSE
+	return TRUE
+
+// proc that goes after unwrapping a mail.
+/obj/item/mail/proc/after_unwrap(mob/user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	for(var/obj/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
+		if(isitem(stuff))
+			user.put_in_hands(stuff)
+		else
+			stuff.forceMove(drop_location())
+	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	qdel(src)
+	return TRUE
+
+/obj/item/mail/examine_more(mob/user)
+	. = ..()
+	if(!postmarked)
+		. += span_info("This mail has no postmarking of any sort...")
 	else
-		. = ..()
-
-/// Opening mail if user's fingerprint is identical to recipient's
-/obj/item/mail/proc/try_open(mob/user)
-	if(!istype(user, /mob/living/carbon/human))
-		to_chat(user, span_warning("Вы не понимаете, что делать с этим свёртком..."))
-		return
-	var/mob/living/carbon/human/opener = user
-	opener.visible_message(span_notice("[opener] вдавливает палец в сканер отпечатков на [src]"))
-
-	if(recipient_fingerprint)
-		if(!opener.dna.uni_identity)
-			to_chat(opener, span_warning("Сканер свёртка не реагирует на ваш палец!"))
-			return
-		if(md5(opener.dna.uni_identity) != recipient_fingerprint)
-			balloon_alert_to_viewers("ОТКАЗАНО В ДОСТУПЕ: отпечатки не совпадают")
-			return
-		if(pattern && !pattern.special_open_check(opener))
-			return
-	open(opener)
-
-/obj/item/mail/proc/open(mob/living/carbon/human/opener = null)
-	balloon_alert_to_viewers("ДОСТУП РАЗРЕШЕН. Приятного пользования, [opener ? opener : "аноним"]!")
-	playsound(src, 'sound/machines/chime.ogg', 20)
-	opened = TRUE
-	if(open_state)
-		icon_state = open_state
-	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
-	STR.locked = FALSE
-	SSeconomy.sealed_mails_count--
-	open_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
-	on_mail_open(opener)
-
-/// Proc that called when mail is succesfully opened with special effects
-/obj/item/mail/proc/on_mail_open(mob/living/carbon/human/opener)
-	if(!istype(opener))
-		return
-	if(istype(pattern))
-		pattern.on_mail_open(opener)
-	var/obj/item/paper/letter = locate() in contents
-	if(letter)
-		if(!opener.get_inactive_held_item())
-			opener.put_in_inactive_hand(letter)
-			opener.swap_hand()
-		letter.attempt_examinate(opener)
-
-/// Proc that converts mail envelope into mail package
-/obj/item/mail/proc/convert_to_package()
-	if(recipient_name && recipient_job)
-		name = "Postal Package for for [recipient_name] ([recipient_job])"
+		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
+	var/datum/mind/recipient = recipient_ref.resolve()
+	if(recipient)
+		. += span_info("[postmarked ? "Certified NT" : "Uncertified"] mail for [recipient].")
+	else if(postmarked)
+		. += span_info("Certified mail for [GLOB.station_name].")
 	else
-		name = "Postal Package"
-	desc = "Сертифицированный Пактом современный™ почтовый контейнер из сверхпрочной бумаги с небольшим датчиком отпечатков пальцев. Всё ещё сильно дешевле блюспейс-доставки."
-	icon_state = "mail_large"
-	open_state = "mail_large_tampered"
-	w_class = WEIGHT_CLASS_NORMAL
-	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
-	STR.max_volume = DEFAULT_VOLUME_SMALL * 6
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+		. += span_info("This is a dead letter mail with no recipient.")
+	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
 
-/**
- *
- * ПРЕ-СОЗДАННЫЕ ЯЩИКИ С ПОЧТОЙ
- *
- */
+/// Accepts a mind to initialize goodies for a piece of mail.
+/obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
+	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role])"
+	recipient_ref = WEAKREF(recipient)
+
+	var/mob/living/body = recipient.current
+	var/list/goodies = generic_goodies
+
+	var/datum/job/this_job = SSjob.name_occupations[recipient.assigned_role]
+	var/is_mail_restricted = FALSE // certain roles and jobs (prisoner) do not receive generic gifts
+
+	if(this_job)
+		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
+			color = department_colors[this_job.paycheck_department]
+
+		var/list/job_goodies = this_job.get_mail_goodies()
+		is_mail_restricted = this_job.exclusive_mail_goodies
+		if(LAZYLEN(job_goodies))
+			if(is_mail_restricted)
+				goodies = job_goodies
+			else
+				goodies += job_goodies
+
+	if(!is_mail_restricted)
+		// the weighted list is 50 (generic items) + 50 (job items)
+		// every quirk adds 5 to the final weighted list (regardless the number of items or weights in the quirk list)
+		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
+		for(var/datum/quirk/quirk as anything in body.roundstart_quirks)
+			if(LAZYLEN(quirk.mail_goodies))
+				var/quirk_goodie = pick(quirk.mail_goodies)
+				goodies[quirk_goodie] = 5
+
+		// A little boost for the special times!
+		for(var/holiday_name in SSevents.holidays)
+			var/datum/holiday/holiday = SSevents.holidays[holiday_name]
+			if(LAZYLEN(holiday.mail_goodies))
+				var/holiday_goodie = pick(holiday.mail_goodies)
+				goodies[holiday_goodie] = holiday.mail_goodies[holiday_goodie]
+
+	for(var/iterator in 1 to goodie_count)
+		var/target_good = pickweight(goodies)
+		var/atom/movable/target_atom = new target_good(src)
+		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
+
+	return TRUE
+
+/// Alternate setup, just complete garbage inside and anyone can open
+/obj/item/mail/proc/junk_mail()
+
+	var/obj/junk = /obj/item/paper/fluff/junkmail_generic
+	var/special_name = FALSE
+
+	if(prob(25))
+		special_name = TRUE
+		junk = pick(list(/obj/item/paper/pamphlet/gateway, /obj/item/paper/pamphlet/violent_video_games, /obj/item/paper/fluff/junkmail_redpill, /obj/effect/decal/cleanable/ash))
+
+	var/list/junk_names = list(
+		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
+		/obj/item/paper/pamphlet/violent_video_games = "[initial(name)] for the truth about the arcade centcom doesn't want to hear",
+		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at Nanotrasen",
+		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION. HANDLE WITH CARE.",
+	)
+
+	color = pick(department_colors) //eh, who gives a shit.
+	name = special_name ? junk_names[junk] : "important [initial(name)]"
+
+	junk = new junk(src)
+	return TRUE
+
+/obj/item/mail/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+	SIGNAL_HANDLER
+	if(!hasmob)
+		disposal_holder.destinationTag = sort_tag
+
+/// Subtype that's always junkmail
+/obj/item/mail/junkmail/Initialize()
+	. = ..()
+	junk_mail()
+
+/// Crate for mail from CentCom.
 /obj/structure/closet/crate/mail
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
@@ -257,17 +251,6 @@
 	base_icon_state = "mail"
 	///if it'll show the nt mark on the crate
 	var/postmarked = TRUE
-	var/arrive_time = "N/A"
-	var/initial_mails_count = 0
-
-/obj/structure/closet/crate/mail/Initialize(mapload)
-	. = ..()
-	arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
-
-/obj/structure/closet/crate/mail/examine(mob/user)
-	. = ..()
-	. += span_notice("Дата прибытия - [GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
-	. += span_notice("Количество прибывших в контейнере писем и посылок - [initial_mails_count]")
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -299,42 +282,19 @@
 		mail_recipients += human.mind
 
 	for(var/i in 1 to mail_count)
+		var/obj/item/mail/new_mail
+		if(prob(FULL_CRATE_LETTER_ODDS))
+			new_mail = new /obj/item/mail(src)
+		else
+			new_mail = new /obj/item/mail/envelope(src)
+
 		var/datum/mind/recipient = pick_n_take(mail_recipients)
-		if(!recipient)
-			continue
-		create_mail_for_recipient(recipient, src)
+		if(recipient)
+			new_mail.initialize_for_recipient(recipient)
+		else
+			new_mail.junk_mail()
+
 	update_icon()
-
-/// Creates a mail for a specific mind
-/obj/structure/closet/crate/mail/proc/create_mail_for_recipient(datum/mind/recipient)
-
-	var/mob/living/carbon/human/body = recipient.current
-
-	var/datum/job/this_job = SSjob.name_occupations[recipient.assigned_role]
-
-	if(!this_job || !istype(body))
-		return
-
-	if(!body.dna.uni_identity)
-		return
-
-	var/obj/item/mail/new_mail = null
-
-	new_mail.recipient_name = recipient.name
-	new_mail.recipient_job = recipient.assigned_role
-	new_mail.recipient_fingerprint = md5(body.dna.uni_identity)
-
-	new_mail.name = "[initial(new_mail.name)] for [new_mail.recipient_name] ([new_mail.recipient_job])"
-	if(this_job.paycheck_department && new_mail.department_colors[this_job.paycheck_department])
-		new_mail.color = new_mail.department_colors[this_job.paycheck_department]
-
-	if(!new_mail.pattern?.choose_pattern(body) || !new_mail.pattern)
-		qdel(new_mail)
-		return
-
-	initial_mails_count++
-
-	return
 
 /// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
 /obj/structure/closet/crate/mail/economy/Initialize(mapload)
@@ -351,16 +311,26 @@
 	. = ..()
 	populate(INFINITY)
 
+///Used in the mail strike shuttle loan event
+/* /obj/structure/closet/crate/mail/full/mail_strike
+	desc = "A post crate from somewhere else. It has no NT logo on it."
+	postmarked = FALSE
+
+/obj/structure/closet/crate/mail/full/mail_strike/populate(amount)
+	var/strike_mail_to_spawn = rand(1, storage_capacity-1)
+	for(var/i in 1 to strike_mail_to_spawn)
+		if(prob(95))
+			new /obj/item/mail/mail_strike(src)
+		else
+			new /obj/item/mail/traitor/mail_strike(src)
+	return ..(storage_capacity - strike_mail_to_spawn) */
+
 /// Opened mail crate
 /obj/structure/closet/crate/mail/preopen
 	opened = TRUE
 	icon_state = "mailopen"
 
-/**
- *
- * МЕШОК ДЛЯ ПИСЕМ
- *
- */
+/// Mailbag.
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
@@ -381,3 +351,134 @@
 		/obj/item/small_delivery,
 		/obj/item/paper
 	))
+
+/obj/item/paper/fluff/junkmail_redpill
+	name = "smudged paper"
+	icon_state = "scrap"
+	var/nuclear_option_odds = 0.1
+
+/obj/item/paper/fluff/junkmail_redpill/Initialize()
+	. = ..()
+	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
+		default_raw_text = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
+		return
+	var/code = random_nukecode()
+	for(var/obj/machinery/nuclearbomb/selfdestruct/self_destruct in GLOB.nuke_list)
+		self_destruct.r_code = code
+	message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
+	default_raw_text = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'"
+
+/obj/item/paper/fluff/junkmail_redpill/true //admin letter enabling players to brute force their way through the nuke code if they're so inclined.
+	nuclear_option_odds = 100
+
+/obj/item/paper/fluff/junkmail_generic
+	name = "important document"
+	icon_state = "paper_words"
+
+/obj/item/paper/fluff/junkmail_generic/Initialize()
+	. = ..()
+	default_raw_text = pick(GLOB.junkmail_messages)
+
+/* Maybe some other time
+/obj/item/mail/traitor
+	var/armed = FALSE
+	var/datum/weakref/made_by_ref
+	/// Cached information about who made it for logging purposes
+	var/made_by_cached_name
+	/// Cached information about who made it for logging purposes
+	var/made_by_cached_ckey
+	goodie_count = 0
+
+/obj/item/mail/traitor/envelope
+	name = "envelope"
+	icon_state = "mail_large"
+	stamp_max = 2
+	stamp_offset_y = 5
+
+/obj/item/mail/traitor/after_unwrap(mob/user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
+		if(user.put_in_hands(stuff) && armed)
+			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
+			log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
+			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
+	qdel(src)
+	return TRUE
+
+/obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
+	if(armed == FALSE || user.get_inactive_held_item() != src)
+		return ..()
+	if(IS_WEAKREF_OF(user.mind, made_by_ref))
+		balloon_alert(user, "disarming trap...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return FALSE
+		balloon_alert(user, "disarmed")
+		playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
+	else
+		balloon_alert(user, "tinkering with something...")
+
+		if(!do_after(user, 2 SECONDS, target = src))
+			after_unwrap(user)
+			return FALSE
+		if(prob(50))
+			balloon_alert(user, "disarmed something...?")
+			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+			armed = FALSE
+			return TRUE
+		else
+			after_unwrap(user)
+			return TRUE
+
+///Generic mail used in the mail strike shuttle loan event
+/obj/item/mail/mail_strike
+	name = "dead mail"
+	desc = "An unmarked parcel of unknown origins, effectively undeliverable."
+	postmarked = FALSE
+	generic_goodies = list(
+		/obj/effect/spawner/random/entertainment/money_medium = 2,
+		/obj/effect/spawner/random/contraband = 2,
+		/obj/effect/spawner/random/entertainment/money_large = 1,
+		/obj/effect/spawner/random/entertainment/coin = 1,
+		/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage = 1,
+		/obj/effect/spawner/random/entertainment/drugs = 1,
+		/obj/effect/spawner/random/contraband/grenades = 1,
+	)
+
+/obj/item/mail/mail_strike/Initialize(mapload)
+	if(prob(35))
+		stamped = FALSE
+	if(prob(35))
+		name = "dead envelope"
+		icon_state = "mail_large"
+		goodie_count = 2
+		stamp_max = 2
+		stamp_offset_y = 5
+	. = ..()
+	color = pick(COLOR_SILVER, COLOR_DARK, COLOR_DRIED_TAN, COLOR_ORANGE_BROWN, COLOR_BROWN, COLOR_SYNDIE_RED)
+	for(var/goodie in 1 to goodie_count)
+		var/target_good = pick_weight(generic_goodies)
+		new target_good(src)
+
+///Also found in the mail strike shuttle loan. It contains a random grenade that'll be triggered when unwrapped
+/obj/item/mail/traitor/mail_strike
+	name = "dead mail"
+	desc = "An unmarked parcel of unknown origins, effectively undeliverable."
+	postmarked = FALSE
+
+/obj/item/mail/traitor/mail_strike/Initialize(mapload)
+	if(prob(35))
+		stamped = FALSE
+	if(prob(35))
+		name = "dead envelope"
+		icon_state = "mail_large"
+		goodie_count = 2
+		stamp_max = 2
+		stamp_offset_y = 5
+	. = ..()
+	color = pick(COLOR_SILVER, COLOR_DARK, COLOR_DRIED_TAN, COLOR_ORANGE_BROWN, COLOR_BROWN, COLOR_SYNDIE_RED)
+	new /obj/effect/spawner/random/contraband/grenades/dangerous(src)
+*/
+*/

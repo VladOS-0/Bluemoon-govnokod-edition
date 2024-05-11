@@ -26737,6 +26737,10 @@
 /obj/structure/sign/flag/vulp,
 /turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeadmin)
+"jBN" = (
+/obj/structure/marker_beacon/yellow/mail_beacon,
+/turf/open/floor/carpet/black/airless,
+/area/mail_spawner)
 "jCR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -31524,6 +31528,9 @@
 "pLM" = (
 /turf/open/floor/sepia,
 /area/centcom/holding)
+"pMW" = (
+/turf/closed/indestructible/wood,
+/area/mail_spawner)
 "pNd" = (
 /obj/machinery/light{
 	dir = 1
@@ -32111,6 +32118,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
+"qHm" = (
+/turf/open/floor/carpet/airless,
+/area/mail_spawner)
 "qHp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -101539,13 +101549,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
 aaa
 aaa
 aaa
@@ -101796,13 +101806,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+qHm
+qHm
+qHm
+qHm
+qHm
+pMW
 aaa
 aaa
 aaa
@@ -102053,13 +102063,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+qHm
+qHm
+qHm
+qHm
+qHm
+pMW
 aaa
 aaa
 aaa
@@ -102310,13 +102320,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+qHm
+qHm
+jBN
+qHm
+qHm
+pMW
 aaa
 aaa
 aaa
@@ -102567,13 +102577,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+qHm
+qHm
+qHm
+qHm
+qHm
+pMW
 aaa
 aaa
 aaa
@@ -102824,13 +102834,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+qHm
+qHm
+qHm
+qHm
+qHm
+pMW
 aaa
 aaa
 aaa
@@ -103081,13 +103091,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
 aaa
 aaa
 aaa
