@@ -21,13 +21,13 @@
 	initial_contents = list()
 
 /datum/mail_pattern/money/misterious_money/apply(mob/living/carbon/human/recipient)
-	. = ..()
 	initial_contents += pick(
 		/obj/item/stack/spacecash/c100,
 		/obj/item/stack/spacecash/c100,
 		/obj/item/stack/spacecash/c1000,
 		/obj/item/storage/bag/money/c5000,
 	)
+	. = ..()
 
 /datum/mail_pattern/money/taxes
 	name = "Налоговая"
