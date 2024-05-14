@@ -17507,7 +17507,7 @@
 /area/centcom/evac)
 "ips" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/mail/full,
+/obj/structure/closet/crate/mail,
 /turf/open/floor/plasteel/dark,
 /area/centcom/supply)
 "ipu" = (
@@ -18720,16 +18720,6 @@
 "jAc" = (
 /turf/closed/indestructible/fakeglass,
 /area/syndicate_mothership/control)
-<<<<<<< HEAD
-"jAw" = (
-/obj/structure/sign/flag/vulp,
-/turf/closed/indestructible/fakeglass,
-/area/tdome/tdomeadmin)
-"jBN" = (
-/obj/structure/marker_beacon/yellow/mail_beacon,
-/turf/open/floor/carpet/black/airless,
-/area/mail_spawner)
-=======
 "jAt" = (
 /obj/effect/turf_decal/tile/red/half,
 /obj/machinery/button/door{
@@ -18753,7 +18743,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
->>>>>>> 2e4ea75b6c572378a5c5ab5a63251df7d49c684f
 "jCR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -25428,11 +25417,6 @@
 "pLM" = (
 /turf/open/floor/sepia,
 /area/centcom/holding)
-<<<<<<< HEAD
-"pMW" = (
-/turf/closed/indestructible/wood,
-/area/mail_spawner)
-=======
 "pMb" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/secure/soviet,
@@ -25457,7 +25441,6 @@
 /obj/item/book/manual/random,
 /turf/open/floor/grass,
 /area/centcom/control)
->>>>>>> 2e4ea75b6c572378a5c5ab5a63251df7d49c684f
 "pNd" = (
 /obj/machinery/light{
 	dir = 1

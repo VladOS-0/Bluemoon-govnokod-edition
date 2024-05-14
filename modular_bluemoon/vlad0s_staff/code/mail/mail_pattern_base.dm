@@ -123,7 +123,7 @@
 			letter_sign = "<br><br><i style='text-align:right;'>[letter_sign]</i>"
 			letter_sign = replacetext(letter_sign, "%подпись%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
 			letter_html += letter_sign
-		letter_html = "<html><body>" + letter_html"</body></html>"
+		letter_html = "<html><body>" + letter_html + "</body></html>"
 		letter_title = text_customisation(letter_title, recipient)
 		letter_html = text_customisation(letter_html, recipient)
 		var/obj/item/paper/letter = new /obj/item/paper(parent)
@@ -138,7 +138,7 @@
 			parent.included_letter = letter
 
 	for(var/good in initial_contents)
-			new good(parent)
+		new good(parent)
 	// 25% шанс получить неправильного адресата
 	if(prob(25))
 		sender = pick(list("Центральное Командование", "N/A", "Не указан", "УДАЛЕНО", "НЕИЗВЕСТНО", MAIL_SENDER_RANDOM_NAME))
