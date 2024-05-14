@@ -203,7 +203,7 @@
 			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
 
 /obj/item/mail/attack_self(mob/user)
-	if (opened)
+	if(opened)
 		return ..()
 	try_open()
 
