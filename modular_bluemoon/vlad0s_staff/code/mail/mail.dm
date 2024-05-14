@@ -76,14 +76,8 @@
 		var/stamp_count = rand(1, stamp_max)
 		for(var/i = 1, i <= stamp_count, i++)
 			stamps += list("stamp_[rand(2, 6)]")
-	pattern = new(src)
-
-	arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
-
-	addtimer(CALLBACK(src, PROC_REF(disappear)), 20 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
-	SSeconomy.sealed_mails_count++
-	SSeconomy.total_mails_count++
 	update_icon()
+	SSmail.total_mails_count++
 
 /obj/item/mail/Destroy()
 	qdel(pattern)
@@ -96,7 +90,7 @@
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
 	qdel(STR)
 	if(!opened)
-		SSeconomy.sealed_mails_count--
+		SSmail.unregister_mail(src)
 	. = ..()
 
 /obj/item/mail/proc/disappear()
@@ -105,6 +99,21 @@
 	say("Получатель не был обнаружен в течении тридцати минут. Самоликвидация...")
 	sleep(3 SECONDS)
 	do_fake_sparks(2, 2, src)
+	qdel(src)
+
+/obj/item/mail/proc/manual_destroy(mob/destroyer)
+	if(QDELETED(src) || !istype(destroyer))
+		return
+	if(isobserver(destroyer) || !destroyer.canUseTopic(src, BE_CLOSE))
+		return
+	if(!opened)
+		return
+	say("Конверт распакован, пользователем [destroyer] запрошена ликвидация оболочки...")
+	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
+	STR.drop_all_on_destroy = TRUE
+	sleep(3 SECONDS)
+	do_fake_sparks(2, 2, src)
+	qdel(STR)
 	qdel(src)
 
 /obj/item/mail/update_overlays()
@@ -152,17 +161,24 @@
 	. = ..()
 	. += span_notice("<br>Вы видите красную панель с текстом на упаковке. <a href='?src=[REF(src)];check_mail_info=1'>Осмотреть</a>")
 	. += span_info("<br>Используйте таггер, чтобы отправить письмо по станционной системе труб.")
+	if(pattern && isobserver(user))
+		. += span_info("<br>Будучи неупокоенным и очень любознательным духом, вы понимаете, что это <b>[pattern.name]</b>")
+	if(opened)
+		. += span_info("<br>Письмо уже открыто, и вы видите мигающую кнопку самоуничтожения конверта <a href='?src=[REF(src)];destroy=1'>Нажать</a>")
 
 /obj/item/mail/Topic(href, list/href_list)
 	. = ..()
 	if(href_list["check_mail_info"])
 		mail_info_display(usr)
 		return
+	if(href_list["destroy"])
+		manual_destroy(usr)
+		return
 
 /obj/item/mail/proc/mail_info_display(mob/user)
 	if(QDELETED(src) || !istype(user))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!isobserver(user) && !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/mail_info = ""
 	mail_info += "<center><b>ПОЧТОВОЕ АГЕНТСТВО ЦЕНТРАЛЬНОГО КОМАНДОВАНИЯ</b></center><hr>"
@@ -219,21 +235,21 @@
 		icon_state = open_state
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
 	STR.locked = FALSE
-	SSeconomy.sealed_mails_count--
 	open_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+	SSmail.unregister_mail(src)
 	on_mail_open(opener)
 
 /// Proc that called when mail is succesfully opened with special effects
 /obj/item/mail/proc/on_mail_open(mob/living/carbon/human/opener)
 	if(!istype(opener))
 		return
-	if(istype(pattern))
-		pattern.on_mail_open(opener)
 	if(istype(included_letter))
 		if(!opener.get_inactive_held_item())
 			opener.put_in_inactive_hand(included_letter)
 			opener.swap_hand()
 		included_letter.attempt_examinate(opener)
+	if(istype(pattern))
+		pattern.on_mail_open(opener)
 
 /// Proc that converts mail envelope into mail package
 /obj/item/mail/proc/convert_to_package()
@@ -259,18 +275,26 @@
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
 	base_icon_state = "mail"
+	storage_capacity = 50
 	///if it'll show the nt mark on the crate
 	var/postmarked = TRUE
 	var/arrive_time = "N/A"
 	var/initial_mails_count = 0
 
-/obj/structure/closet/crate/mail/Initialize(mapload)
-	. = ..()
+/obj/structure/closet/crate/mail/proc/wrap()
 	arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+	for(var/obj/item/mail/envelope_in_container in contents)
+		initial_mails_count++
+		SSmail.register_mail(envelope_in_container)
+		envelope_in_container.arrive_time = "[GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+	desc = initial(desc)
+	name = initial(name)
+	if(resistance_flags & INDESTRUCTIBLE)
+		resistance_flags &= ~INDESTRUCTIBLE
 
 /obj/structure/closet/crate/mail/examine(mob/user)
 	. = ..()
-	. += span_notice("Дата прибытия - [GLOB.current_date_string] [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
+	. += span_notice("Дата прибытия - [arrive_time]")
 	. += span_notice("Количество прибывших в контейнере писем и посылок - [initial_mails_count]")
 
 /obj/structure/closet/crate/mail/update_icon_state()
@@ -286,74 +310,6 @@
 	. = ..()
 	if(postmarked)
 		. += "mail_nt"
-
-/// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
-/obj/structure/closet/crate/mail/proc/populate(amount)
-	var/mail_count = min(amount, storage_capacity)
-	// Fills the
-	var/list/mail_recipients = list()
-
-	for(var/mob/living/carbon/human/human in GLOB.player_list)
-		if(human.stat == DEAD || !human.mind)
-			continue
-		// Skip wizards, nuke ops, cyborgs; Centcom does not send them mail
-		if(!(human.mind.assigned_role in get_all_jobs()))
-			continue
-
-		mail_recipients += human.mind
-
-	for(var/i in 1 to mail_count)
-		var/datum/mind/recipient = pick_n_take(mail_recipients)
-		if(!recipient)
-			continue
-		create_mail_for_recipient(recipient, src)
-	update_icon()
-
-/// Creates a mail for a specific mind
-/obj/structure/closet/crate/mail/proc/create_mail_for_recipient(datum/mind/recipient)
-
-	var/mob/living/carbon/human/body = recipient.current
-
-	var/datum/job/this_job = SSjob.name_occupations[recipient.assigned_role]
-
-	if(!this_job || !istype(body))
-		return
-
-	if(!body.dna.uni_identity)
-		return
-
-	var/obj/item/mail/new_mail = null
-
-	new_mail.recipient_name = recipient.name
-	new_mail.recipient_job = recipient.assigned_role
-	new_mail.recipient_fingerprint = md5(body.dna.uni_identity)
-
-	new_mail.name = "[initial(new_mail.name)] for [new_mail.recipient_name] ([new_mail.recipient_job])"
-	if(this_job.paycheck_department && new_mail.department_colors[this_job.paycheck_department])
-		new_mail.color = new_mail.department_colors[this_job.paycheck_department]
-
-	if(!new_mail.pattern?.choose_pattern(body) || !new_mail.pattern)
-		qdel(new_mail)
-		return
-
-	initial_mails_count++
-
-	return
-
-/// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
-/obj/structure/closet/crate/mail/economy/Initialize(mapload)
-	. = ..()
-	populate(SSeconomy.mail_waiting)
-	SSeconomy.mail_waiting = 0
-
-/// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
-/obj/structure/closet/crate/mail/full
-	name = "brimming mail crate"
-	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
-
-/obj/structure/closet/crate/mail/full/Initialize(mapload)
-	. = ..()
-	populate(INFINITY)
 
 /// Opened mail crate
 /obj/structure/closet/crate/mail/preopen
@@ -404,11 +360,6 @@
 	desc = "Этот неразрушимый маяк генерирует энергию для своей работы, собирает письма со всей галактики, пакует их в контейнеры и телепортирует их на шаттл карго. Это блюспейс, я не обязан ничего объяснять."
 	resistance_flags = INDESTRUCTIBLE
 
-/obj/structure/marker_beacon/yellow/mail_beacon/Initialize(mapload, set_color)
-	. = ..()
-	SSmail.beacon = src
-
 /obj/structure/marker_beacon/yellow/mail_beacon/Destroy()
-	SSmail.beacon = new /obj/structure/marker_beacon/yellow/mail_beacon(get_turf(src))
-	message_admins("[ADMIN_VERBOSEJMP(SSmail.beacon)] Почтовый маяк был уничтожен! Создан новый!")
+	message_admins("[ADMIN_VERBOSEJMP(SSmail.main_storage_spawnpoint)] Почтовый маяк был уничтожен!")
 	. = ..()

@@ -70,12 +70,6 @@ SUBSYSTEM_DEF(economy)
 	var/export_total = 0
 	/// Total value of imported goods.
 	var/import_total = 0
-	/// Number of mail items generated.
-	var/mail_waiting = 0
-	/// Mails on station, which was not opened yet - BLUEMOON ADD
-	var/sealed_mails_count = 0
-	/// Total amount of arrived letters during the round - BLUEMOON ADD
-	var/total_mails_count = 0
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
