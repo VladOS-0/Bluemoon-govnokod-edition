@@ -99,8 +99,8 @@
 		if(text_pieces.len  > 1)
 			for(var/piece in text_pieces)
 				if(piece[1] == ">")
-					piece = replacetext(piece, ">",  "")
-					var/list/parts_of_replacer = splittext(piece,  " | ")
+					piece = replacetext_char(piece, ">",  "")
+					var/list/parts_of_replacer = splittext_char(piece,  " | ")
 					if(recipient.gender == FEMALE)
 						piece = parts_of_replacer[2]
 					else
