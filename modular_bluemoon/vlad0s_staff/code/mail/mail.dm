@@ -96,7 +96,7 @@
 /obj/item/mail/proc/disappear()
 	if(opened)
 		return
-	say("Получатель не был обнаружен в течении тридцати минут. Самоликвидация...")
+	say("Получатель не был обнаружен в течение тридцати минут. Самоликвидация...")
 	sleep(3 SECONDS)
 	do_fake_sparks(2, 2, src)
 	qdel(src)
