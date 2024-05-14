@@ -94,7 +94,7 @@
 		output = replacetext_char(output, "%%А%%", recipient.ru_a())
 		output = replacetext_char(output, "%%ЕН%%", recipient.ru_en())
 		// " %-внучок | внучка%- "
-		var/list/text_pieces = splittext(output,  "%-")
+		var/list/text_pieces = splittext_char(output,  "%-")
 		var/list/formatted_text_pieces = list()
 		if(text_pieces.len  > 1)
 			for(var/piece in text_pieces)
