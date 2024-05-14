@@ -130,7 +130,7 @@
 		bonus_stamp_offset -= 5
 		. += stamp_image
 
-	if(postmarked == TRUE)
+	if(postmarked)
 		var/image/postmark_image = image(
 			icon = icon,
 			icon_state = "postmark",
