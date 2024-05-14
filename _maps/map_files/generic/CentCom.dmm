@@ -14327,6 +14327,9 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+"fwu" = (
+/turf/closed/wall/mineral/wood,
+/area/mail_spawner)
 "fwB" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdome1";
@@ -33746,6 +33749,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/control)
+"xCV" = (
+/obj/structure/marker_beacon/yellow/mail_beacon,
+/turf/open/floor/carpet/green,
+/area/mail_spawner)
 "xDB" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -33980,6 +33987,9 @@
 /obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+"xQF" = (
+/turf/open/floor/carpet,
+/area/mail_spawner)
 "xRe" = (
 /obj/structure/closet/crate/large,
 /obj/item/reagent_containers/food/snacks/rationpack,
@@ -68001,11 +68011,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fwu
+fwu
+fwu
+fwu
+fwu
 aaa
 aaa
 aaa
@@ -68258,11 +68268,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fwu
+xQF
+xQF
+xQF
+fwu
 aaa
 aaa
 aaa
@@ -68515,11 +68525,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fwu
+xQF
+xCV
+xQF
+fwu
 aaa
 aaa
 aaa
@@ -68772,11 +68782,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fwu
+xQF
+xQF
+xQF
+fwu
 aaa
 aaa
 aaa
@@ -69029,11 +69039,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fwu
+fwu
+fwu
+fwu
+fwu
 aaa
 aaa
 aaa
