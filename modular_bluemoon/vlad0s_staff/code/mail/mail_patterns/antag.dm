@@ -33,7 +33,7 @@
 
 /datum/mail_pattern/antag/anecdote/apply(mob/living/carbon/human/recipient)
 	if(prob(10))
-		letter_html = "<img src='https://vgorode.ua/img/article/12082/19_main-v1654070622.jpg'></img>"
+		letter_html = "<img src='https://vgorode.ua/img/article/12082/19_main-v1654070622.jpg'>"
 	else
 		letter_html = replacetext(letter_html, "%номер агента%", pick(GLOB.phonetic_alphabet))
 		letter_html = replacetext(letter_html, "%кодовые слова%", jointext(GLOB.syndicate_code_phrase, ", "))
