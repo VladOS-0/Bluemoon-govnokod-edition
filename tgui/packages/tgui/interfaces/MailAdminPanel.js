@@ -168,7 +168,7 @@ export const MailCreationPanel = (props, context) => {
                       </LabeledList.Item>
                       <LabeledList.Item label="Изначальный вес шаблона"
                         labelColor="green"
-                        color={info_on_displayed_pattern["weight"] == "0" ? "bad" : "yellow"}>
+                        color={info_on_displayed_pattern["weight"] === "0" ? "bad" : "yellow"}>
                         {info_on_displayed_pattern["weight"]}
                       </LabeledList.Item>
                       <LabeledList.Item label="Описание шаблона" labelColor="green">
