@@ -85,22 +85,22 @@
 	var/output = text
 	output = replacetext(output, "%%подпись%%", "<br>  [sender]")
 	if(recipient.gender)
-		output = replacetext(output, "%%СЯ%%", recipient.ru_sya())
-		output = replacetext(output, "%%ОН%%", recipient.ru_who())
-		output = replacetext(output, "%%ЕГО%%", recipient.ru_ego())
-		output = replacetext(output, "%%НЕГО%%", recipient.ru_nego())
-		output = replacetext(output, "%%НЁМ%%", recipient.ru_na())
-		output = replacetext(output, "%%ЕМУ%%", recipient.ru_emu())
-		output = replacetext(output, "%%А%%", recipient.ru_a())
-		output = replacetext(output, "%%ЕН%%", recipient.ru_en())
+		output = replacetext_char(output, "%%СЯ%%", recipient.ru_sya())
+		output = replacetext_char(output, "%%ОН%%", recipient.ru_who())
+		output = replacetext_char(output, "%%ЕГО%%", recipient.ru_ego())
+		output = replacetext_char(output, "%%НЕГО%%", recipient.ru_nego())
+		output = replacetext_char(output, "%%НЁМ%%", recipient.ru_na())
+		output = replacetext_char(output, "%%ЕМУ%%", recipient.ru_emu())
+		output = replacetext_char(output, "%%А%%", recipient.ru_a())
+		output = replacetext_char(output, "%%ЕН%%", recipient.ru_en())
 		// " %-внучок | внучка%- "
-		var/list/text_pieces = splittext(output,  "%-")
+		var/list/text_pieces = splittext_char(output,  "%-")
 		var/list/formatted_text_pieces = list()
 		if(text_pieces.len  > 1)
 			for(var/piece in text_pieces)
 				if(piece[1] == ">")
-					piece = replacetext(piece, ">",  "")
-					var/list/parts_of_replacer = splittext(piece,  " | ")
+					piece = replacetext_char(piece, ">",  "")
+					var/list/parts_of_replacer = splittext_char(piece,  " | ")
 					if(recipient.gender == FEMALE)
 						piece = parts_of_replacer[2]
 					else
@@ -121,7 +121,7 @@
 	if(letter_html)
 		if(letter_sign)
 			letter_sign = "<br><br><i style='text-align:right;'>[letter_sign]</i>"
-			letter_sign = replacetext(letter_sign, "%подпись%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
+			letter_sign = replacetext_char(letter_sign, "%подпись%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
 			letter_html += letter_sign
 		letter_html = "<html><body>" + letter_html + "</body></html>"
 		letter_title = text_customisation(letter_title, recipient)

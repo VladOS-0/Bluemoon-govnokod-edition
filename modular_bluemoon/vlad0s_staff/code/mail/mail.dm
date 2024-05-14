@@ -252,10 +252,9 @@
 
 /// Proc that converts mail envelope into mail package
 /obj/item/mail/proc/convert_to_package()
+	name = "Postal Package"
 	if(recipient_name && recipient_job)
-		name = "Postal Package for for [recipient_name] ([recipient_job])"
-	else
-		name = "Postal Package"
+		name += " for [recipient_name] ([recipient_job])"		
 	desc = "Сертифицированный Пактом современный™ почтовый контейнер из сверхпрочной бумаги с небольшим датчиком отпечатков пальцев. Всё ещё сильно дешевле блюспейс-доставки."
 	icon_state = "mail_large"
 	open_state = "mail_large_tampered"
