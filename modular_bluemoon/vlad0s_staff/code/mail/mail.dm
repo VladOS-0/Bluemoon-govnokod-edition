@@ -203,10 +203,9 @@
 			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
 
 /obj/item/mail/attack_self(mob/user)
-	if(!opened)
-		try_open(user)
-	else
-		. = ..()
+	if (opened)
+		return ..()
+	try_open()
 
 /// Opening mail if user's fingerprint is identical to recipient's
 /obj/item/mail/proc/try_open(mob/user)
