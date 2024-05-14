@@ -121,7 +121,7 @@
 	if(letter_html)
 		if(letter_sign)
 			letter_sign = "<br><br><i style='text-align:right;'>[letter_sign]</i>"
-			letter_sign = replacetext(letter_sign, "%подпись%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
+			letter_sign = replacetext_char(letter_sign, "%подпись%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
 			letter_html += letter_sign
 		letter_html = "<html><body>" + letter_html + "</body></html>"
 		letter_title = text_customisation(letter_title, recipient)
