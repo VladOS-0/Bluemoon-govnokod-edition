@@ -26,7 +26,7 @@
 	/// Icon state for text letter in envelope
 	var/letter_icon_state = "paperslip_words"
 
-	var/letter_sign = "С уважением, %подпись%"
+	var/letter_sign = "С уважением, %%подпись%%"
 
 	/// Created items during pattern applying. If items should be customised, override apply() proc
 	var/list/obj/item/initial_contents = list()
@@ -83,7 +83,7 @@
 	if(!istype(recipient) || !istype(parent))
 		return
 	var/output = text
-	output = replacetext(output, "%%подпись%%", "<br>  [sender]")
+	output = replacetext_char(output, "%%подпись%%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
 	if(recipient.gender)
 		output = replacetext_char(output, "%%СЯ%%", recipient.ru_sya())
 		output = replacetext_char(output, "%%ОН%%", recipient.ru_who())
@@ -121,11 +121,12 @@
 	if(letter_html)
 		if(letter_sign)
 			letter_sign = "<br><br><i style='text-align:right;'>[letter_sign]</i>"
-			letter_sign = replacetext_char(letter_sign, "%подпись%", "<br><span style=\"color:black;font-family:'Segoe Script';\"><p><b>[sender]</b></p></span>")
+			letter_sign = text_customisation(letter_sign, recipient)
 			letter_html += letter_sign
 		letter_html = "<html><body>" + letter_html + "</body></html>"
 		letter_title = text_customisation(letter_title, recipient)
 		letter_html = text_customisation(letter_html, recipient)
+		sender = text_customisation(sender, recipient)
 		var/obj/item/paper/letter = new /obj/item/paper(parent)
 		if(letter)
 			letter.show_written_words = FALSE

@@ -32,3 +32,8 @@
 #define MAIL_SENDER_RANDOM_NAME "random_name"
 #define MAIL_SENDER_RANDOM_FEMALE "random_female"
 #define MAIL_SENDER_RANDOM_MALE "random_male"
+
+#define MAIL_RECIPIENT_SYNTH list( \
+		/datum/species/mammal/synthetic, \
+		/datum/species/ipc, \
+		/datum/species/synthliz)

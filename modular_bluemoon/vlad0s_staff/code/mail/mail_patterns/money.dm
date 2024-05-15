@@ -57,7 +57,7 @@
 
 	letter_title = "..."
 	letter_html = "Ты знаешь, что делать."
-	letter_sign = "Твой босс, %подпись%"
+	letter_sign = "Твой босс, %%подпись%%"
 
 	initial_contents = list(
 		/obj/item/suspiciousphone

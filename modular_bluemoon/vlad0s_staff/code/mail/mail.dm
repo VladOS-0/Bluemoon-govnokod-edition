@@ -205,7 +205,7 @@
 /obj/item/mail/attack_self(mob/user)
 	if(opened)
 		return ..()
-	try_open()
+	try_open(user)
 
 /// Opening mail if user's fingerprint is identical to recipient's
 /obj/item/mail/proc/try_open(mob/user)
@@ -247,6 +247,8 @@
 			opener.put_in_inactive_hand(included_letter)
 			opener.swap_hand()
 		included_letter.attempt_examinate(opener)
+	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
+	STR.user_show_to_mob(opener)
 	if(istype(pattern))
 		pattern.on_mail_open(opener)
 
@@ -254,7 +256,7 @@
 /obj/item/mail/proc/convert_to_package()
 	name = "Postal Package"
 	if(recipient_name && recipient_job)
-		name += " for [recipient_name] ([recipient_job])"		
+		name += " for [recipient_name] ([recipient_job])"
 	desc = "Сертифицированный Пактом современный™ почтовый контейнер из сверхпрочной бумаги с небольшим датчиком отпечатков пальцев. Всё ещё сильно дешевле блюспейс-доставки."
 	icon_state = "mail_large"
 	open_state = "mail_large_tampered"
