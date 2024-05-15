@@ -173,7 +173,7 @@ SUBSYSTEM_DEF(mail)
 		if(world.time > sealed_mails[sealed_mail])
 			sealed_mails[sealed_mail] = null
 			sealed_mails -= sealed_mail
-			sealed_mail.disappear()
+			INVOKE_ASYNC(sealed_mail, TYPE_PROC_REF(/obj/item/mail, disappear))
 			deleted_mails_count++
 	if(deleted_mails_count)
 		log_subsystem(src, "Удалено [deleted_mails_count] старых неоткрытых писем")
