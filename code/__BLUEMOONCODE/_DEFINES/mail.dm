@@ -14,9 +14,9 @@
 /// How much mail the Mail SS will create per fire
 #define MAX_MAIL_PER_FIRE 50
 /// Maximum of mails on station, which was not opened yet
-#define MAX_SEALED_MESSAGES 120
+#define MAX_SEALED_MESSAGES 80
 /// Amount of time, after which sealed mail will disappear
-#define MAIL_DISAPPEAR_TIME 30 MINUTES
+#define MAIL_DISAPPEAR_TIME 20 MINUTES
 
 /// Small letter
 #define MAIL_TYPE_ENVELOPE "envelope"
