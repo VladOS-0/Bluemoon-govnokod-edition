@@ -36,12 +36,7 @@
 
 	envelope_type = MAIL_TYPE_PACKAGE
 
-	blacklisted_species = list(
-		/datum/species/mammal/synthetic,
-		/datum/species/ipc,
-		/datum/species/synthliz,
-		/datum/species/skeleton
-	)
+	blacklisted_species = MAIL_RECIPIENT_SYNTH
 
 	sender = "Пекарня"
 
@@ -66,11 +61,7 @@
 
 	envelope_type = MAIL_TYPE_PACKAGE
 
-	whitelisted_species = list(
-		/datum/species/mammal/synthetic,
-		/datum/species/ipc,
-		/datum/species/synthliz
-	)
+	whitelisted_species = MAIL_RECIPIENT_SYNTH
 
 	sender = "Аккумуляторный завод 'Энергичный'"
 
@@ -119,4 +110,10 @@
 	initial_contents = list(
 		/obj/item/storage/box/fancy_maid_kit
 	)
+
+/datum/mail_pattern/shop/maid_costume/regenerate_weight(mob/living/carbon/human/recipient)
+	. = ..()
+	if(.)
+		if(is_species(recipient, /datum/species/human/felinid))
+			. *= 2
 

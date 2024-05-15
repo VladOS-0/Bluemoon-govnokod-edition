@@ -35,6 +35,5 @@
 /datum/mail_pattern/lewd/heart_cum/regenerate_weight(mob/living/carbon/human/recipient)
 	. = ..()
 	if(.)
-		var/mob/living/carbon/human/recipient
 		if(HAS_TRAIT(recipient, TRAIT_DUMB_CUM_CRAVE) || recipient.has_quirk(/datum/quirk/succubus))
-		. *= 3
+			. *= 3
