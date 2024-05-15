@@ -118,6 +118,13 @@
 	if(envelope_type == MAIL_TYPE_PACKAGE)
 		parent.convert_to_package()
 
+	if(sender == MAIL_SENDER_RANDOM_NAME)
+		sender = random_unique_name(pick(MALE, FEMALE), 1)
+	else if(sender == MAIL_SENDER_RANDOM_FEMALE)
+		sender = random_unique_name(FEMALE, 1)
+	else if(sender == MAIL_SENDER_RANDOM_MALE)
+		sender = random_unique_name(MALE, 1)
+
 	if(letter_html)
 		if(letter_sign)
 			letter_sign = "<br><br><i style='text-align:right;'>[letter_sign]</i>"
@@ -137,19 +144,13 @@
 			letter.icon_state = letter_icon_state
 			letter.update_appearance()
 			parent.included_letter = letter
-
-	for(var/good in initial_contents)
-		new good(parent)
 	// 25% шанс получить неправильного адресата
 	if(prob(25))
 		sender = pick(list("Центральное Командование", "N/A", "Не указан", "УДАЛЕНО", "НЕИЗВЕСТНО", MAIL_SENDER_RANDOM_NAME))
-	if(sender == MAIL_SENDER_RANDOM_NAME)
-		sender = random_unique_name(pick(MALE, FEMALE), 1)
-	else if(sender == MAIL_SENDER_RANDOM_FEMALE)
-		sender = random_unique_name(FEMALE, 1)
-	else if(sender == MAIL_SENDER_RANDOM_MALE)
-		sender = random_unique_name(MALE, 1)
 	parent.sender_name = sender
+
+	for(var/good in initial_contents)
+		new good(parent)
 
 /// Special check of pattern, that called by mail/try_open() proc. If returns FALSE, piece of mail will not be open.
 /datum/mail_pattern/proc/special_open_check(mob/living/carbon/human/recipient)
