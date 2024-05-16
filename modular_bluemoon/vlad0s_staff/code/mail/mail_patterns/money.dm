@@ -13,10 +13,10 @@
 
 	envelope_type = MAIL_TYPE_ENVELOPE
 
-	sender = "НЕИЗВЕСТЕН"
-
 	letter_title = "..."
 	letter_html = "Ты знаешь, за что."
+	sender = "НЕИЗВЕСТЕН"
+	letter_sign = null
 
 	initial_contents = list()
 
