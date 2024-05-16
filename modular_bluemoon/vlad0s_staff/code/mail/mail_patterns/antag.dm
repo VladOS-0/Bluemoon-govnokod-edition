@@ -46,6 +46,7 @@
 	// проимплантируют / завербуют в антажку позже
 	if(!recipient.mind?.has_antag_datum(/datum/antagonist, TRUE) && !HAS_TRAIT(recipient, TRAIT_MINDSHIELD))
 		recipient.mind.add_antag_datum(/datum/antagonist/traitor)
+		message_admins("[ADMIN_LOOKUPFLW(recipient)] был сделан предателем через почту!")
 	else
 		to_chat(recipient, span_warning("Вы вспоминаете о своих клятвах, данных до начала смены... Но теперь у вас другая цель. Обстоятельства изменились."))
 	sleep(20)
@@ -129,4 +130,13 @@
 		initial_contents += /obj/item/clothing/head/wizard
 	var/obj/item/spellbook/our_spellbook = new(parent)
 	our_spellbook.owner = recipient
+	our_spellbook.name = "Стандартная книга заклинаний, курс I"
+	our_spellbook.uses = 5
+	our_spellbook.desc = "Учебник Миранды Гуссокл из серии «Стандартных книг заклинаний» для первого курса магических школ. Немного ограниченнее, чем то, что вы могли себе вообразить."
 	. = ..()
+
+/datum/mail_pattern/antag/hogwarts/on_mail_open(mob/living/carbon/human/recipient)
+	. = ..()
+	recipient.visible_message(span_abductor("[recipient] обдаёт магической энергией из [parent]!"), span_abductor("Вас обдаёт магической энергией из [parent]!"))
+	playsound(parent, 'sound/effects/magic.ogg')
+	message_admins("[ADMIN_LOOKUPFLW(recipient)] получил магическую книжку письмом из Хогвартса!")
