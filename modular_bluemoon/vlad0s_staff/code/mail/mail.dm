@@ -99,14 +99,15 @@
 	do_fake_sparks(2, 2, src)
 	qdel(src)
 
-/obj/item/mail/proc/manual_destroy(mob/destroyer)
-	if(QDELETED(src) || !istype(destroyer))
-		return
-	if(isobserver(destroyer) || !destroyer.canUseTopic(src, BE_CLOSE))
-		return
-	if(!opened)
-		return
-	say("Конверт распакован, пользователем [destroyer] запрошена ликвидация оболочки...")
+/obj/item/mail/proc/manual_destroy(mob/destroyer = null, automatic = FALSE)
+	if(!automatic)
+		if(QDELETED(src) || !istype(destroyer))
+			return
+		if(isobserver(destroyer) || !destroyer.canUseTopic(src, BE_CLOSE))
+			return
+		if(!opened)
+			return
+	say("Конверт распакован, пользователем [destroyer ? destroyer : "СИСТЕМНЫЙ_АДМИНИСТРАТОР"] запрошена ликвидация оболочки...")
 	var/datum/component/storage/concrete/STR = GetComponent(/datum/component/storage/concrete)
 	STR.drop_all_on_destroy = TRUE
 	sleep(3 SECONDS)
@@ -152,7 +153,7 @@
 
 /obj/item/mail/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
-	if(!hasmob)
+	if(!opened && !hasmob)
 		disposal_holder.destinationTag = sort_tag
 
 /obj/item/mail/examine(mob/user)
@@ -199,6 +200,8 @@
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
+		return
+	. = ..()
 
 /obj/item/mail/attack_self(mob/user)
 	if(opened)
@@ -249,6 +252,7 @@
 	STR.user_show_to_mob(opener)
 	if(istype(pattern))
 		pattern.on_mail_open(opener)
+	addtimer(CALLBACK(src, PROC_REF(manual_destroy), null, TRUE), 7 MINUTES)
 
 /// Proc that converts mail envelope into mail package
 /obj/item/mail/proc/convert_to_package()
@@ -323,6 +327,7 @@
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
 	icon = 'icons/obj/library.dmi'
+	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "bookbag"
 	item_state = "bookbag"
 	resistance_flags = FLAMMABLE
@@ -331,9 +336,11 @@
 	. = ..()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
 	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_combined_w_class = 42
-	storage.max_items = 21
+	storage.max_combined_w_class = 62
+	storage.max_items = 40
 	storage.display_numerical_stacking = FALSE
+	storage.click_gather = TRUE
+	storage.allow_quick_gather = TRUE
 	storage.can_hold = typecacheof(list(
 		/obj/item/mail,
 		/obj/item/small_delivery,
@@ -360,4 +367,219 @@
 
 /obj/structure/marker_beacon/yellow/mail_beacon/Destroy()
 	message_admins("[ADMIN_VERBOSEJMP(SSmail.main_storage_spawnpoint)] Почтовый маяк был уничтожен!")
+	. = ..()
+
+/**
+ *
+ * РАЗДАТЧИК ПИСЕМ
+ *
+ */
+
+/obj/item/mailmat_deployer
+	name = "Mail Dispenser Assembly"
+	desc = "Очень тяжёлая коробка с гидравлическими механизмами. Видимо, её тоже пытались прислать по почте..."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "deploycrate"
+	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/mailmat_deployer/examine(mob/user)
+	. = ..()
+	. += span_boldnotice("Вы можете развернуть структуру, использовав [src] в руке!")
+
+/obj/item/mailmat_deployer/attack_self(mob/user)
+	var/turf/placeloc = get_turf(user)
+	if(!isturf(placeloc))
+		to_chat(user, span_warning("Вы не можете поставить его здесь!"))
+		return
+	if(placeloc.density || locate(/obj/structure) in placeloc || locate(/obj/machinery) in placeloc)
+		to_chat(user, span_warning("Тут уже что-то есть!"))
+		return
+	to_chat(user, span_notice("Вы начинаете развёртывать [src]..."))
+	if(!do_after(user, 7 SECONDS, placeloc))
+		return
+
+	// Те же проверки, что и выше. Ситуация за семь секунд могла смениться
+	if(!isturf(placeloc) || placeloc.density || locate(/obj/structure) in placeloc || locate(/obj/machinery) in placeloc)
+		to_chat(user, span_warning("Вы не можете поставить его здесь!"))
+		return
+
+	visible_message(span_boldnotice("[user] развёртвывает [src]!"))
+	var/obj/machinery/mailmat/dispenser = new(placeloc)
+	dispenser.say("Развёртывание успешно!")
+	playsound(dispenser, 'sound/machines/ping.ogg', 50, TRUE)
+	qdel(src)
+	return
+
+/obj/machinery/mailmat
+	name = "Mail Dispenser"
+	desc = "<i>Postman Pat, Postman Pat, Postman Pat and his black and white cat, All the birds are singing, And the day is just beginning, Pat feels he's a really happy man, Pat feels he's a really happy man, Pat feels he's a really happy man!</i>"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "mail"
+	layer = BELOW_OBJ_LAYER
+	density = TRUE
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
+	max_integrity = 400
+	integrity_failure = 0.33
+	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	light_power = 0.5
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+
+	var/list/obj/item/mail/mails = list()
+
+/obj/machinery/mailmat/examine(mob/user)
+	. = ..()
+	. += span_notice("Внутри [src] <b>[mails.len ? mails.len : "нет"]</b> писем и посылок.")
+	. += span_notice("Вы можете загрузить письма внутрь вручную или при помощи <i>мешка для писем</i>, которым их можно и выгружать.")
+	. += span_notice("Вы можете свернуть этот автомат при помощи <b>гаечного ключа</b>.")
+	. += span_notice("Вы можете сбросить все письма и посылки при помощи <b>Alt+Click</b>.")
+
+	if(mails.len && istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/checker = user
+		var/user_fingerprint = md5(checker.dna.uni_identity)
+		var/my_mails_count = 0
+		for(var/obj/item/mail/M in mails)
+			if(M.recipient_fingerprint == user_fingerprint)
+				my_mails_count++
+		if(my_mails_count)
+			. += span_green("<br><b>Тут есть [my_mails_count] писем и посылок для вас!</b>")
+		else
+			. += span_warning("<br>Тут нет писем и посылок для вас...")
+
+/obj/machinery/mailmat/attackby(obj/item/I, mob/living/user, params)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+
+	if(istype(I, /obj/item/storage/bag/mail))
+		var/obj/item/storage/bag/mail/mailbag = I
+		var/datum/component/storage/STR = mailbag.GetComponent(/datum/component/storage)
+		if(I.contents.len)
+			to_chat(user, span_notice("Вы загружаете письма в [src]..."))
+			if(!do_after(user, 2 SECONDS, src))
+				return
+			for(var/obj/item/mail/M in mailbag.contents)
+				STR.remove_from_storage(M, src)
+				mails += M
+			mailbag.do_squish()
+			return
+		else if(mails.len > 0)
+			to_chat(user, span_notice("Вы выгружаете письма из [src]..."))
+			if(!do_after(user, 2 SECONDS, src))
+				return
+			for(var/obj/item/mail/M in mails)
+				if(STR.can_be_inserted(M, TRUE, user))
+					STR.handle_item_insertion(M, TRUE, user)
+					mails -= M
+			mailbag.do_squish()
+			return
+		else
+			to_chat(user, span_warning("[mailbag] и [src] пусты!"))
+			return
+
+	if(istype(I, /obj/item/mail))
+		I.forceMove(src)
+		mails += I
+		to_chat(user, span_notice("Вы загружаете [I] в [src]!"))
+
+	if(I.tool_behaviour == TOOL_WRENCH)
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		if(stat & BROKEN)
+			to_chat(user, span_warning("Механизмы сборки-разборки критически повреждены! Остаётся только доломать..."))
+			return
+		var/turf/deconstruct_turf = get_turf(src)
+		if(!isturf(deconstruct_turf))
+			to_chat(user, span_warning("[src] находится на нестабильной поверхности. Разборка невозможна."))
+			return
+		to_chat(user, span_notice("Вы начинаете складывать [src] при помощи [I]..."))
+		if(!I.use_tool(src, user, 7 SECONDS))
+			return
+		say("Свёртывание успешно!")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		visible_message(span_warning("[user] складывает [src] при помощи [I]!"))
+		drop_all_mails()
+		new /obj/item/mailmat_deployer(deconstruct_turf)
+		qdel(src)
+		return
+	. = ..()
+
+/obj/machinery/mailmat/attack_hand(mob/user, act_intent, attackchain_flags)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(!mails.len)
+		to_chat(user, span_warning("Внутри [src] нет писем и посылок!"))
+		return
+	var/turf/our_turf = get_turf(user)
+	if(!isturf(our_turf))
+		to_chat(user, span_warning("Вы находитесь на нестабильном покрытии!"))
+		return
+	var/mob/living/carbon/human/checker = user
+	var/user_fingerprint = md5(checker.dna.uni_identity)
+	var/my_mails_count = 0
+	for(var/obj/item/mail/M in mails)
+		if(M.recipient_fingerprint == user_fingerprint)
+			my_mails_count++
+			mails -= M
+			M.forceMove(our_turf)
+	if(my_mails_count)
+		checker.visible_message(span_warning("[checker] прикладывает палец к сканеру [src], и выдаёт себе [my_mails_count] конвертов."))
+	else
+		checker.visible_message(span_warning("[checker] прикладывает палец к сканеру [src], но внутри не оказывается посылок для н[checker.ru_ego()]..."))
+
+/obj/machinery/mailmat/AltClick(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(!mails.len)
+		to_chat(user, span_warning("Внутри [src] нет писем и посылок!"))
+		return
+	to_chat(user, span_notice("Вы начинаете опустошать [src]..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	visible_message(span_warning("[user] опустошает внутреннее хранилище писем [src]."))
+	drop_all_mails()
+
+/obj/machinery/mailmat/update_appearance(updates=ALL)
+	. = ..()
+	if(stat & BROKEN)
+		set_light(0)
+		return
+	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
+
+/obj/machinery/mailmat/update_icon_state()
+	if(stat & BROKEN)
+		icon_state = "[initial(icon_state)]-broken"
+		return ..()
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	return ..()
+
+/obj/machinery/mailmat/obj_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+	drop_all_mails()
+
+/obj/machinery/mailmat/proc/drop_all_mails(damage_flag)
+	if(!isturf(get_turf(src)))
+		stack_trace("[src] не смог сбросить своё содержимое")
+		for(var/obj/item/mail in mails)
+			qdel(mail)
+		return
+	var/turf/dropturf = get_turf(src)
+	for(var/obj/item/mail in mails)
+		mail.forceMove(dropturf)
+
+/obj/machinery/vending/wardrobe/cargo_wardrobe/Initialize(mapload)
+	var/list/extra_products = list(
+		/obj/item/mailmat_deployer = 3
+	)
+
+	LAZYADD(products, extra_products)
 	. = ..()
