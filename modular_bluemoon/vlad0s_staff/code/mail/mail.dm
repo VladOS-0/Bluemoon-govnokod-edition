@@ -428,6 +428,10 @@
 
 	var/list/obj/item/mail/mails = list()
 
+/obj/machinery/mailmat/Destroy()
+	drop_all_mails()
+	. = ..()
+
 /obj/machinery/mailmat/examine(mob/user)
 	. = ..()
 	. += span_notice("Внутри [src] <b>[mails.len ? mails.len : "нет"]</b> писем и посылок.")
