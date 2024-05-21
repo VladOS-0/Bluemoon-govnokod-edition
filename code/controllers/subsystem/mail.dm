@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(mail)
 		MAIL_CATEGORY_JOB = 8,
 		MAIL_CATEGORY_SHOP = 6,
 		MAIL_CATEGORY_SPAM = 5,
-		MAIL_CATEGORY_LEWD = 1
+		MAIL_CATEGORY_LEWD = 4
 	)
 	/// Assoc list 'mail category' = 'mail category color'
 	var/static/list/mail_categories_with_colors = list(

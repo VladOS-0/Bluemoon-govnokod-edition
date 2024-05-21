@@ -91,6 +91,9 @@
 	qdel(STR)
 	if(!opened)
 		SSmail.unregister_mail(src)
+	if(istype(loc, /obj/machinery/mailmat))
+		var/obj/machinery/mailmat/holder = loc
+		holder.mails -= src
 	. = ..()
 
 /obj/item/mail/proc/disappear()

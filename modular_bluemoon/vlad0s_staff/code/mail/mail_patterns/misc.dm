@@ -31,7 +31,8 @@
 	sender = "???"
 	letter_sign = null
 
-	letter_icon_state = "cpaper"
+	letter_icon = 'icons/obj/toy.dmi'
+	letter_icon_state = "sc_Ace of Hearts_syndicate"
 
 	bad_feeling = "Письмо пахнет дешёвыми духами. Это чтобы что-то скрыть?"
 
@@ -49,7 +50,8 @@
 	sender = "???"
 	letter_sign = null
 
-	letter_icon_state = "scrap_bloodied"
+	letter_icon = 'icons/obj/toy.dmi'
+	letter_icon_state = "sc_Ace of Hearts_syndicate"
 
 	bad_feeling = "Письмо пахнет дешёвыми духами. Это чтобы что-то скрыть?"
 
@@ -76,6 +78,9 @@
 					(⁠*⁠＾⁠3⁠＾⁠)⁠/⁠～⁠♡"}
 	sender = "*****"
 	letter_sign = null
+
+	letter_icon = 'icons/obj/toy.dmi'
+	letter_icon_state = "sc_Ace of Hearts_syndicate"
 
 	whitelisted_quirks = list(
 		/datum/quirk/well_trained
