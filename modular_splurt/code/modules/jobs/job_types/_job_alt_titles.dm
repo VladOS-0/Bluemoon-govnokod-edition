@@ -71,6 +71,7 @@
 		"Supply Chief",
 		"Cargonia Chief",
 		"Brigadier",
+		"Logistics Syndicate Supervisor",
 		"Manager of Shipping Sex"
 	)
 	LAZYADD(alt_titles, extra_titles)
@@ -80,6 +81,7 @@
 	var/list/extra_titles = list(
 		"Science Administrator",
 		"Cybersun Lead Specialist",
+		"Donk Co. Lead Specialist",
 		"CEO of Sex",
 		"Sex Research Director",
 		"Research Manager"
@@ -222,7 +224,6 @@
 		"Prey Prepper",
 		"Poissonier",
 		"Chef De Sexe",
-		"Waffle Co. Specialist",
 		"Baker"
 	)
 	LAZYADD(alt_titles, extra_titles)
@@ -286,6 +287,7 @@
 		"Rack Researcher",
 		"Nanite Programmer",
 		"Tetromino Researcher",
+		"Donk Co. Specialist",
 		"Xenoarchaeologist"
 	)
 	LAZYADD(alt_titles, extra_titles)
