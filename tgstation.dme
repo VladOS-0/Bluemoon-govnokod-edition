@@ -4522,6 +4522,7 @@
 #include "modular_bluemoon\vlad0s_staff\code\backstab_knives.dm"
 #include "modular_bluemoon\vlad0s_staff\code\midround_record.dm"
 #include "modular_bluemoon\vlad0s_staff\code\robot_purge_reagents.dm"
+#include "modular_bluemoon\vlad0s_staff\code\synthbuff_items.dm"
 #include "modular_bluemoon\vlad0s_staff\code\synthdrinks\synth_drinks.dm"
 #include "modular_bluemoon\vlad0s_staff\code\synthdrinks\synth_drinks_containers.dm"
 #include "modular_bluemoon\vlad0s_staff\code\synthdrinks\synth_drinks_recipes.dm"
