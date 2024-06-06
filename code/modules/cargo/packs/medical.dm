@@ -57,7 +57,7 @@
 /datum/supply_pack/medical/oilblood_deluxe
 	name = "Super-Pressurized Hydraulic Fluid Crate"
 	desc = "Содержит пять ёмкостей с инновационной гидравлической жидкостью, способной усваиваться гораздо быстрее и в большем объёме."
-	cost = 5000
+	cost = 4000
 	contains = list(/obj/item/reagent_containers/glass/bottle/synthblood_deluxe,
 					/obj/item/reagent_containers/glass/bottle/synthblood_deluxe,
 					/obj/item/reagent_containers/glass/bottle/synthblood_deluxe,
