@@ -9,6 +9,7 @@
 	icon = 'modular_bluemoon/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_bluemoon/icons/mob/clothing/uniforms.dmi'
 	unique_reskin = list()
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/shoes/jackboots/sec/white
 	name = "white jackboots"
@@ -17,6 +18,7 @@
 	item_state = "jackboots_sec_white"
 	icon = 'modular_bluemoon/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_bluemoon/icons/mob/clothing/uniforms.dmi'
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/HoS/beret/white
 	name = "white beret"
@@ -25,6 +27,7 @@
 	item_state = "hos_beret_white"
 	icon = 'modular_bluemoon/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_bluemoon/icons/mob/clothing/uniforms.dmi'
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 // Лодаутные датумы
 
