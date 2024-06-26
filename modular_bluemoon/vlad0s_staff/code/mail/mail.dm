@@ -337,14 +337,15 @@
 
 /obj/item/storage/bag/mail/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_combined_w_class = 62
-	storage.max_items = 40
-	storage.display_numerical_stacking = FALSE
-	storage.click_gather = TRUE
-	storage.allow_quick_gather = TRUE
-	storage.can_hold = typecacheof(list(
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 62
+	STR.max_items = 40
+	STR.display_numerical_stacking = FALSE
+	STR.click_gather = TRUE
+	STR.allow_quick_gather = TRUE
+	STR.quick_gather_storages = TRUE
+	STR.can_hold = typecacheof(list(
 		/obj/item/mail,
 		/obj/item/small_delivery,
 		/obj/item/paper
