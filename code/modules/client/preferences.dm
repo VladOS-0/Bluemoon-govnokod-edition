@@ -1372,6 +1372,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									var/class_link = ""
 									var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
 									var/extra_loadout_data = ""
+									if(gear.base64icon)
+										extra_loadout_data += "<center><img src=data:image/jpeg;base64,[gear.base64icon]></center>"
 									if(loadout_item)
 										class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 										if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
@@ -3488,7 +3490,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					gender = chosengender
 
 				if("body_size")
-					var/new_body_size = input(user, "Choose your desired sprite size: ([CONFIG_GET(number/body_size_min)*100]-[CONFIG_GET(number/body_size_max)*100]%)\nWarning: This may make your character look distorted. Additionally, any size under 100% takes a 10% maximum health penalty", "Character Preference", features["body_size"]*100) as num|null
+					var/new_body_size = input(user, "Choose your desired sprite size: ([CONFIG_GET(number/body_size_min)*100]-[CONFIG_GET(number/body_size_max)*100]%)\nWarning: This may make your character look distorted. Additionally, any size affects speed and max health", "Character Preference", features["body_size"]*100) as num|null
 					if(new_body_size)
 						features["body_size"] = clamp(new_body_size * 0.01, CONFIG_GET(number/body_size_min), CONFIG_GET(number/body_size_max))
 

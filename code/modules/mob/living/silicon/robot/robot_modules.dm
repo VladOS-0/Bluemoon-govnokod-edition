@@ -44,6 +44,7 @@
 	var/moduleselect_alternate_icon
 	var/dogborg = FALSE
 	var/hasrest = FALSE //For the new borgs who are not dogs
+	var/drakerest = FALSE //For the new drakemech resting icons
 
 /obj/item/robot_module/Initialize(mapload)
 	. = ..()
@@ -390,7 +391,9 @@
 		"Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "medraptor-b"), // SPLURT Addon (ChompS Port)
 		"Raptor V-4 (alt)" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "traumaraptor-b"), // SPLURT Addon (ChompS Port)
 		"Handy" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "handy_medical"), // SPLURT Addon (Fallout 13)
-		"Mechoid" = image(icon = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi', icon_state = "wide-mechoid-medical") // Danaiyka request
+		"SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_med-b"), // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+		"Mechoid" = image(icon = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi', icon_state = "wide-mechoid-medical"), // Danaiyka request
+		"DrakeTrauma" = image(icon = 'modular_sand/icons/mob/cyborg/drakemech.dmi', icon_state = "draketraumabox")	//DarkSer request by Gardelin0
 		)
 		var/list/L = list("Medihound" = "medihound", "Medihound Dark" = "medihounddark", "Vale" = "valemed")
 		for(var/a in L)
@@ -517,6 +520,7 @@
 			moduleselect_icon = "medihound"
 			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
+			drakerest = TRUE
 		if("Fembot") // //Gardelin0 Addon
 			cyborg_base_icon = "fembot-medic"
 			cyborg_icon_override = 'modular_bluemoon/Gardelin0/icons/mob/robots.dmi'
@@ -574,7 +578,20 @@
 			cyborg_icon_override = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi'
 			special_light_key = "wide-mechoid-medical"
 			sleeper_overlay = "medraptor_sleeper"
+		if("SmollRaptor") // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+			cyborg_base_icon = "smolraptor_med"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
+			moduleselect_icon = "medihound"
+			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
+		if("DrakeTrauma") // Dergborg brought to you by Navier#1236 | Skyrat | Commissioned Artist: deviantart.com/mizartz
+			cyborg_base_icon = "draketrauma"
+			cyborg_icon_override = 'modular_sand/icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakemedsleeper"
+			moduleselect_icon = "medihound"
+			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			dogborg = TRUE
+			drakerest = TRUE
 		else
 			return FALSE
 	return ..()
@@ -658,8 +675,9 @@
 		"Haydee" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "haydeeengi"), // SPLURT Addon
 		"Feline" = image(icon = 'modular_splurt/icons/mob/widerobot.dmi', icon_state = "vixengi-b"), // SPLURT Addon (ChompS Port)
 		"Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "engiraptor-b"), // SPLURT Addon (ChompS Port)
-		"Handy" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "handy_engineer"), // SPLURT Addon (Fallout 13)
-		"Mechoid" = image(icon = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi', icon_state = "wide-mechoid-engineer") // Danaiyka request
+		"Mechoid" = image(icon = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi', icon_state = "wide-mechoid-engineer"), // Danaiyka request
+		"SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_eng-b"), // BubberStation Port; Made by @aKromatopzia (GitHub)
+		"Handy" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "handy_engineer") // SPLURT Addon (Fallout 13)
 		)
 		var/list/L = list("Pup Dozer" = "pupdozer", "Vale" = "valeeng")
 		for(var/a in L)
@@ -786,6 +804,7 @@
 			cyborg_icon_override = 'modular_sand/icons/mob/cyborg/drakemech.dmi'
 			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
+			drakerest = TRUE
 		if("Fembot") // //Gardelin0 Addon
 			cyborg_base_icon = "fembot-engineering"
 			cyborg_icon_override = 'modular_bluemoon/Gardelin0/icons/mob/robots.dmi'
@@ -837,6 +856,9 @@
 			cyborg_icon_override = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi'
 			special_light_key = "wide-mechoid-engineer"
 			sleeper_overlay = "engiraptor-sleeper"
+		if("SmollRaptor") // BubberStation Port; Made by @aKromatopzia (GitHub)
+			cyborg_base_icon = "smolraptor_eng"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
 			dogborg = TRUE
 		else
 			return FALSE
@@ -1047,6 +1069,7 @@
 			sleeper_overlay = "drakesecsleeper"
 			cyborg_icon_override = 'modular_sand/icons/mob/cyborg/drakemech.dmi'
 			dogborg = TRUE
+			drakerest = TRUE
 		if("Fembot") // //Gardelin0 Addon
 			cyborg_base_icon = "fembot-security"
 			cyborg_icon_override = 'modular_bluemoon/Gardelin0/icons/mob/robots.dmi'
@@ -1156,6 +1179,7 @@
 		"Meka" = image(icon = 'modular_splurt/icons/mob/robots_32x64.dmi', icon_state = "mekapeace"), // SPLURT Addon
 		"Feline" = image(icon = 'modular_splurt/icons/mob/widerobot.dmi', icon_state = "vixpk-b"), // SPLURT Addon (ChompS Port)
 		"Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "peaceraptor-b"), // SPLURT Addon (ChompS Port)
+		"SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_pk-b"), // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
 		"Handy" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "handy_peace") // SPLURT Addon (Fallout 13)
 	))
 	var/peace_borg_icon = show_radial_menu(R, R , peace_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), R), radius = 42, require_near = TRUE)
@@ -1218,6 +1242,7 @@
 			sleeper_overlay = "drakepeacesleeper"
 			cyborg_icon_override = 'modular_sand/icons/mob/cyborg/drakemech.dmi'
 			dogborg = TRUE
+			drakerest = TRUE
 		if("Fembot") // //Gardelin0 Addon
 			cyborg_base_icon = "fembot-peace"
 			cyborg_icon_override = 'modular_bluemoon/Gardelin0/icons/mob/robots.dmi'
@@ -1258,6 +1283,10 @@
 			cyborg_base_icon = "peaceraptor"
 			cyborg_icon_override = 'modular_splurt/icons/mob/robots_64x45.dmi'
 			sleeper_overlay = "peaceraptor-sleeper"
+			dogborg = TRUE
+		if("SmollRaptor") // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+			cyborg_base_icon = "smolraptor_pk"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
 			dogborg = TRUE
 		else
 			return FALSE
@@ -1384,6 +1413,7 @@
 		"(Service) Feline" = image(icon = 'modular_splurt/icons/mob/widerobot.dmi', icon_state = "vixserv-b"), // SPLURT Addon (ChompS Port)
 		"(Service) Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "serviraptor-b"), // SPLURT Addon (ChompS Port)
 		"(Fancy) Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "fancyraptor-b"), // SPLURT Addon (ChompS Port)
+		"(Service) SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_srv-b"), // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
 		"(Janitor) Default" = image(icon = 'icons/mob/robots.dmi', icon_state = "janitor"),
 		"(Janitor) Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinajan"),
 		"(Janitor) Sleek" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "sleekjan"),
@@ -1414,6 +1444,8 @@
 		"(Janitor Alt) Feline" = image(icon = 'modular_splurt/icons/mob/widerobot.dmi', icon_state = "vixsci-b"), // SPLURT Addon (ChompS Port)
 		"(Janitor) Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "janiraptor-b"), // SPLURT Addon (ChompS Port)
 		"(Janitor Alt) Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "sciraptor-b"), // SPLURT Addon (ChompS Port)
+		"(Janitor) SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_jani-b"), // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+		"(Janitor Alt) SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_sci-b"), // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
 		"(Waiter) Meka" = image(icon = 'modular_splurt/icons/mob/robots_32x64.dmi', icon_state = "mekaserve_alt"), // SPLURT Addon
 		"(Service) FMeka" = image(icon = 'modular_bluemoon/Gardelin0/icons/mob/tallrobot.dmi', icon_state = "fmekaserv"), // Lyoll Request (Skyrat Port)
 		"(Service) K4" = image(icon = 'modular_bluemoon/Gardelin0/icons/mob/tallrobot.dmi', icon_state = "k4tserve"), // Lyoll Request (Skyrat Port)
@@ -1550,6 +1582,10 @@
 			cyborg_icon_override = 'modular_splurt/icons/mob/robots_64x45.dmi'
 			sleeper_overlay = "fancyraptor-sleeper"
 			dogborg = TRUE
+		if("(Service) SmollRaptor") // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+			cyborg_base_icon = "smolraptor_srv"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
+			dogborg = TRUE
 		if("(Janitor) Default")
 			cyborg_base_icon = "janitor"
 		if("(Janitor) Marina")
@@ -1640,6 +1676,7 @@
 			cyborg_icon_override = 'modular_sand/icons/mob/cyborg/drakemech.dmi'
 			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
+			drakerest = TRUE
 		if("(Janitor) Fembot") // //Gardelin0 Addon
 			cyborg_base_icon = "fembot-janitor"
 			cyborg_icon_override = 'modular_bluemoon/Gardelin0/icons/mob/robots.dmi'
@@ -1683,6 +1720,14 @@
 			cyborg_base_icon = "sciraptor"
 			cyborg_icon_override = 'modular_splurt/icons/mob/robots_64x45.dmi'
 			sleeper_overlay = "sciraptor-sleeper"
+			dogborg = TRUE
+		if("(Janitor) SmollRaptor") // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+			cyborg_base_icon = "smolraptor_jani"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
+			dogborg = TRUE
+		if("(Janitor Alt) SmollRaptor") // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub); Ditto with sci module thing.
+			cyborg_base_icon = "smolraptor_sci"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
 			dogborg = TRUE
 		if("(Waiter) Meka")
 			cyborg_base_icon = "mekaserve_alt"
@@ -1809,8 +1854,9 @@
 		"Meka" = image(icon = 'modular_splurt/icons/mob/robots_32x64.dmi', icon_state = "mekamine"), // SPLURT Addon
 		"Feline" = image(icon = 'modular_splurt/icons/mob/widerobot.dmi', icon_state = "vixmine-b"), // SPLURT Adoon (ChompS Port)
 		"Raptor V-4" = image(icon = 'modular_splurt/icons/mob/robots_64x45.dmi', icon_state = "mineraptor-b"), // SPLURT Adoon (ChompS Port)
-		"Handy" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "handy_miner"), // SPLURT Addon (Fallout 13)
-		"Mechoid" = image(icon = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi', icon_state = "wide-mechoid-mining") // Danaiyka request
+		"Mechoid" = image(icon = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi', icon_state = "wide-mechoid-mining"), // Danaiyka request
+		"SmollRaptor" = image(icon = 'modular_zubbers/icons/mob/smolraptor.dmi', icon_state = "smolraptor_min-b"), // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+		"Handy" = image(icon = 'modular_splurt/icons/mob/robots.dmi', icon_state = "handy_miner") // SPLURT Addon (Fallout 13)
 		)
 		var/list/L = list("Blade" = "blade", "Vale" = "valemine")
 		for(var/a in L)
@@ -1914,6 +1960,7 @@
 			cyborg_icon_override = 'modular_sand/icons/mob/cyborg/drakemech.dmi'
 			sleeper_overlay = "drakeminesleeper"
 			dogborg = TRUE
+			drakerest = TRUE
 		if("Fembot") // //Gardelin0 Addon
 			cyborg_base_icon = "fembot-miner"
 			cyborg_icon_override = 'modular_bluemoon/Gardelin0/icons/mob/robots.dmi'
@@ -1963,6 +2010,9 @@
 			cyborg_icon_override = 'modular_bluemoon/leesuro/icons/mob/widerobot_mechoid.dmi'
 			special_light_key = "wide-mechoid-mining"
 			sleeper_overlay = "mineraptor-sleeper"
+		if("SmollRaptor") // BubberStation Port; Made by aKhro/@aKromatopzia (GitHub)
+			cyborg_base_icon = "smolraptor_min"
+			cyborg_icon_override = 'modular_zubbers/icons/mob/smolraptor.dmi'
 			dogborg = TRUE
 		else
 			return FALSE
