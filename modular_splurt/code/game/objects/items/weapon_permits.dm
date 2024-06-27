@@ -9,6 +9,8 @@ GLOBAL_VAR_INIT(weapon_permits_issued, 0)
 	mob_overlay_icon = 'icons/mob/clothing/accessories.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FIRE_PROOF
+	max_stack = 2
+	max_stack_path = /obj/item/clothing/accessory/permit
 	var/permit_id
 	var/owner_name = ""
 	var/owner_assignment = ""
