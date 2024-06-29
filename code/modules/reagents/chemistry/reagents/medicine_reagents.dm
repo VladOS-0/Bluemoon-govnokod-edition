@@ -1808,7 +1808,7 @@
 	description = "A reagent with special properties causing it to slowly reduce corruption in robots. Mildly toxic for organics."
 	reagent_state = LIQUID
 	color = "#D7C9C6"
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_ALL_PROCESS
 	overdose_threshold = 50
 
