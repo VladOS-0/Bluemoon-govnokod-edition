@@ -1833,7 +1833,7 @@
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
 		if(current_cycle % 10 == 0)
 			to_chat(M, span_warning("П&вреждение ддр%йверов оч$стки - обрат}тесь к сист#мному админист@ратору..."))
-		M.adjustToxLoss(0.8, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
+		M.adjustToxLoss(1.6, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
 	else
 		M.adjustToxLoss(0.5)
 	. = 1
