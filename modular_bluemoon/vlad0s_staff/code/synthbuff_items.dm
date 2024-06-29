@@ -34,8 +34,8 @@
 	if(!isrobotic(L))
 		return
 	to_chat(L, span_boldnotice("В процессоре реагентов обнаружена гидравлическая жидкость под большим давлением. Производится подготовка для её интеграции. Возможны побочные эффекты.."))
-	L.AdjustConfused(7)
-	L.adjust_blurriness(7)
+	L.AdjustConfused(3)
+	L.adjust_blurriness(3)
 
 /datum/reagent/medicine/synthblood_deluxe/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -55,16 +55,34 @@
 	icon = 'icons/obj/chemical.dmi'
 	list_reagents = list(/datum/reagent/medicine/synthblood_deluxe = 30)
 
+// Исследование для крутых роботехнических штук
+/datum/techweb_node/superior_robotics
+	id = "sup_robotics"
+	display_name = "Superior Robotics"
+	description = "Glory to Omnissiah!"
+	prereq_ids = list("adv_biotech", "adv_bluespace", "adv_robotics")
+	design_ids = list("roboliq")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+
+// Дизайн для фабрикатора платы генератора жидкостей
+/datum/design/board/robo_liquid_generator
+	name = "Machine Design (RoboLiquid Generator)"
+	desc = "Allows for the construction of circuit boards used to build a RoboLiquid Generator."
+	id = "roboliq"
+	build_path = /obj/item/circuitboard/machine/robo_liquid_generator
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 // Плата для генератора полезных для робототехника жидкостей
 /obj/item/circuitboard/machine/robo_liquid_generator
 	name = "RoboLiquid Generator (Machine Board)"
 	icon_state = "science"
-	build_path = /obj/machinery/chem_master
+	build_path = /obj/machinery/robo_liquid_generator
 	desc = "Звучит достаточно инновационно?"
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 3,
 		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 2,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
@@ -108,15 +126,31 @@
 	return ..()
 
 /obj/machinery/robo_liquid_generator/RefreshParts()
-	var/new_amount = initial(max_single_material_amount)
+	// 2 ёмкости материи - умножаем вместимость на среднее значение их рейтинга
+	var/new_amount_cap = initial(max_single_material_amount)
+	var/all_rating = 0
 	for(var/obj/item/stock_parts/matter_bin/mb in component_parts)
-		new_amount *= mb.rating
-	max_single_material_amount = new_amount
+		all_rating += mb.rating
+	new_amount_cap *= all_rating / 2
+	max_single_material_amount = round(new_amount_cap)
 
+	// 3 манипулятора - умножаем скорость на среднее значение их рейтинга
 	var/new_speed = initial(processing_speed)
+	all_rating = 0
 	for(var/obj/item/stock_parts/manipulator/m in component_parts)
-		new_speed *= m.rating
-	processing_speed = new_speed
+		all_rating += m.rating
+	new_speed *= all_rating / 3
+	processing_speed = round(new_speed)
+
+	// 2 конденсатора - умножаем выхлоп на среднее значение их рейтинга, делённое на два
+	var/new_processing_amount = initial(processing_amount)
+	all_rating = 0
+	for(var/obj/item/stock_parts/capacitor/c in component_parts)
+		all_rating += c.rating
+	new_processing_amount *= clamp(all_rating / (2 * 2), 1, 30)
+	processing_amount = round(new_processing_amount)
+
+	updateUsrDialog()
 
 
 /obj/machinery/robo_liquid_generator/attackby(obj/item/I, mob/user, params)
@@ -149,27 +183,28 @@
 		if(added_amount + bluespace_amount > max_single_material_amount)
 			added_amount = clamp(added_amount, 0, max_single_material_amount - bluespace_amount)
 			added_amount = floor(added_amount / MINERAL_MATERIAL_AMOUNT) * MINERAL_MATERIAL_AMOUNT
-		if(new_material.amount < MINERAL_MATERIAL_AMOUNT)
+		if(added_amount < MINERAL_MATERIAL_AMOUNT)
 			to_chat(user, span_warning("Вы не можете загрузить столько [new_material] в [src]!"))
 			return
-		if(new_material.amount > MINERAL_MATERIAL_AMOUNT * 10)
+		if(added_amount > MINERAL_MATERIAL_AMOUNT * 10)
 			var/confirmation = alert(user, "Вы уверены, что хотите установить столько [new_material]? В дальнейшем его изъять будет невозможно.", "Загрузка", "Да", "Нет")
 			if(confirmation != "Да")
 				return
 		new_material.use(floor(added_amount / MINERAL_MATERIAL_AMOUNT))
 		bluespace_amount += added_amount
+		updateUsrDialog()
 	else
 		return ..()
 
 /obj/machinery/robo_liquid_generator/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
 	if(beaker)
 		replace_beaker(user)
 	return TRUE
 
 /obj/machinery/robo_liquid_generator/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!istype(user, /mob/living/carbon/human) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
 	if(beaker)
 		var/obj/item/reagent_containers/B = beaker
 		B.forceMove(drop_location())
@@ -179,6 +214,7 @@
 	if(new_beaker)
 		beaker = new_beaker
 	update_icon()
+	updateUsrDialog()
 
 /obj/machinery/robo_liquid_generator/proc/consume_bluespace(amount)
 	. = TRUE
@@ -189,12 +225,15 @@
 /obj/machinery/robo_liquid_generator/proc/produce_reagent()
 	if(panel_open || stat & (BROKEN|NOPOWER))
 		in_progress = FALSE
+		updateUsrDialog()
 		return
 	if(!selected_production)
 		in_progress = FALSE
+		updateUsrDialog()
 		return
 	if(!beaker)
 		in_progress = FALSE
+		updateUsrDialog()
 		return
 	var/datum/reagents/R = beaker.reagents
 	var/free = R.maximum_volume - R.total_volume
@@ -202,16 +241,19 @@
 		say("Контейнер заполнен. Производство остановлено.")
 		selected_production = null
 		in_progress = FALSE
+		updateUsrDialog()
 		return
 	if(!consume_bluespace(production[selected_production]))
 		say("Сырьё закончилось. Производство остановлено.")
 		selected_production = null
 		in_progress = FALSE
+		updateUsrDialog()
 		return
 	in_progress = TRUE
 	var/production_time =  30 SECONDS / processing_speed
 	addtimer(CALLBACK(src, PROC_REF(dispose_reagent), selected_production), production_time, TIMER_DELETE_ME)
 	addtimer(CALLBACK(src, PROC_REF(produce_reagent)), production_time, TIMER_DELETE_ME)
+	updateUsrDialog()
 
 /obj/machinery/robo_liquid_generator/proc/dispose_reagent(reagent_type)
 	if(panel_open || stat & (BROKEN|NOPOWER))
@@ -225,26 +267,35 @@
 	if(free < processing_amount)
 		say("Контейнер заполнен. Производство остановлено.")
 		selected_production = null
+		updateUsrDialog()
 		return
 	R.add_reagent(reagent_type, processing_amount)
+	playsound(src, 'sound/effects/bubbles.ogg', 25)
+	updateUsrDialog()
 
 /obj/machinery/robo_liquid_generator/on_attack_hand(mob/user, act_intent, attackchain_flags)
 	add_fingerprint(user)
-	display_ui(user)
+	ui_interact(user)
 	. = ..()
 
-/obj/machinery/robo_liquid_generator/proc/display_ui(mob/user)
+/obj/machinery/robo_liquid_generator/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	var/data = "<html><body>"
 	data += "<center><h2>RoboLiquid Generator</h2></center><br>"
-	data += "<b>Всего блюспейс-порошка</b>: [bluespace_amount]"
+	data += "<b>Всего блюспейс-порошка</b>: [bluespace_amount]<br>"
 	var/datum/reagent/selec_prod = selected_production
 	data += "<b>Выбранный реагент</b>: [initial(selec_prod.name)]<br>"
-	data += "<b>Производство</b> - [in_progress ? "ВЕДЁТСЯ" : "НЕ ВЕДЁТСЯ"]"
+	data += "<b>Производство</b> - [in_progress ? "ВЕДЁТСЯ" : "НЕ ВЕДЁТСЯ"]<br>"
 	for(var/prod in production)
 		var/datum/reagent/reagent_prod = prod
-		data += "<a href='?src=[REF(src)];selected_reagent=[prod]'>[initial(reagent_prod.name)] ([production[prod]]bs)</a>"
+		data += "<a href='?src=[REF(src)];selected_reagent=[prod]'>[initial(reagent_prod.name)] ([production[prod]]bs)</a><br>"
 	data += "<a href='?src=[REF(src)];selected_reagent=1'>NONE</a><br>"
 	data += "<b>Ёмкость</b>: [istype(beaker) ? "[icon2html(beaker, user)][beaker.name] - [beaker.reagents.total_volume]/[beaker.reagents.maximum_volume]" : "ОТСУТСТВУЕТ"]"
+	data += " <a href='?src=[REF(src)];detach_beaker=1'>Вынуть</a><br>"
+	data += "<hr>"
+	data += span_green("<b>Максимум порошка</b>: [max_single_material_amount]<br>")
+	data += span_green("<b>Скорость производства</b>: [processing_speed]<br>")
+	data += span_green("<b>Реагентов за цикл</b>: [processing_amount]<br>")
 	data += "</body></html>"
 	var/datum/browser/popup = new(user, "roboliquid_generator", "RoboLiquid Generator", 500, 400)
 	popup.set_content(data)
@@ -255,12 +306,21 @@
 	if(href_list["selected_reagent"])
 		if(href_list["selected_reagent"] == "1")
 			selected_production = null
+			say("Запрошена остановка производства...")
+			updateUsrDialog()
 			return
-		var/new_reagent = text2path(selected_production)
+		var/new_reagent = text2path(href_list["selected_reagent"])
 		if(production[new_reagent])
 			if(selected_production == new_reagent)
+				say("Выбран тот же реагент!")
 				return
 			selected_production = new_reagent
 			playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
+			updateUsrDialog()
 			if(!in_progress)
+				var/datum/reagent/new_prod = selected_production
+				say("Начинаем производить [initial(new_prod.name)]")
 				produce_reagent()
+				updateUsrDialog()
+	if(href_list["detach_beaker"])
+		replace_beaker(usr, null)
