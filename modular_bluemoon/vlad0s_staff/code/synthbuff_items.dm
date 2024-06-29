@@ -179,13 +179,18 @@
 
 	if(istype(I, /obj/item/stack/sheet/bluespace_crystal))
 		var/obj/item/stack/sheet/bluespace_crystal/new_material = I
+		// Получаем количество блюспейса, которое хочет вставить юзер, умножением числа кристаллов на кол-во порошка в кристалле
 		var/added_amount = new_material.amount * MINERAL_MATERIAL_AMOUNT
+		// Если юзер пытается вставить больше чем есть свободного места
 		if(added_amount + bluespace_amount > max_single_material_amount)
+			// Округляем так, чтобы влезало
 			added_amount = clamp(added_amount, 0, max_single_material_amount - bluespace_amount)
 			added_amount = floor(added_amount / MINERAL_MATERIAL_AMOUNT) * MINERAL_MATERIAL_AMOUNT
+		// Если юзер пытается вставить меньше, чем 1 кристалл. Обычно это случается если там 9500 / 10 000 заполнено или что-то такое
 		if(added_amount < MINERAL_MATERIAL_AMOUNT)
 			to_chat(user, span_warning("Вы не можете загрузить столько [new_material] в [src]!"))
 			return
+		// Блюспейс кристаллы вытащить нельзя, поэтому даём предупреждение, если пытается вставить > 10 слитков
 		if(added_amount > MINERAL_MATERIAL_AMOUNT * 10)
 			var/confirmation = alert(user, "Вы уверены, что хотите установить столько [new_material]? В дальнейшем его изъять будет невозможно.", "Загрузка", "Да", "Нет")
 			if(confirmation != "Да")
@@ -222,6 +227,7 @@
 		return FALSE
 	bluespace_amount -= amount
 
+// Прок, проверяющий возможность производства и останавливающий его. Если не остановил - выдаёт коллбэки на себя и dispose_reagent()
 /obj/machinery/robo_liquid_generator/proc/produce_reagent()
 	if(panel_open || stat & (BROKEN|NOPOWER))
 		in_progress = FALSE
@@ -250,11 +256,13 @@
 		updateUsrDialog()
 		return
 	in_progress = TRUE
+	// Через n секунд он выплюнет запрошенный реагент и начнёт новый цикл
 	var/production_time =  30 SECONDS / processing_speed
 	addtimer(CALLBACK(src, PROC_REF(dispose_reagent), selected_production), production_time, TIMER_DELETE_ME)
 	addtimer(CALLBACK(src, PROC_REF(produce_reagent)), production_time, TIMER_DELETE_ME)
 	updateUsrDialog()
 
+// Прок, выплёвывающий реагент
 /obj/machinery/robo_liquid_generator/proc/dispose_reagent(reagent_type)
 	if(panel_open || stat & (BROKEN|NOPOWER))
 		return
@@ -282,20 +290,25 @@
 	. = ..()
 	var/data = "<html><body>"
 	data += "<center><h2>RoboLiquid Generator</h2></center><br>"
+	// Информация о состоянии генератора
 	data += "<b>Всего блюспейс-порошка</b>: [bluespace_amount]<br>"
 	var/datum/reagent/selec_prod = selected_production
 	data += "<b>Выбранный реагент</b>: [initial(selec_prod.name)]<br>"
 	data += "<b>Производство</b> - [in_progress ? "ВЕДЁТСЯ" : "НЕ ВЕДЁТСЯ"]<br>"
+	// Варианты производства
 	for(var/prod in production)
 		var/datum/reagent/reagent_prod = prod
 		data += "<a href='?src=[REF(src)];selected_reagent=[prod]'>[initial(reagent_prod.name)] ([production[prod]]bs)</a><br>"
+	// Отмена производства
 	data += "<a href='?src=[REF(src)];selected_reagent=1'>NONE</a><br>"
+	// Контейнер
 	data += "<b>Ёмкость</b>: [istype(beaker) ? "[icon2html(beaker, user)][beaker.name] - [beaker.reagents.total_volume]/[beaker.reagents.maximum_volume]" : "ОТСУТСТВУЕТ"]"
 	data += " <a href='?src=[REF(src)];detach_beaker=1'>Вынуть</a><br>"
 	data += "<hr>"
-	data += span_green("<b>Максимум порошка</b>: [max_single_material_amount]<br>")
-	data += span_green("<b>Скорость производства</b>: [processing_speed]<br>")
-	data += span_green("<b>Реагентов за цикл</b>: [processing_amount]<br>")
+	// Информация о том, как улучшен генератор
+	data += "<b>Максимум порошка</b>: [max_single_material_amount]<br>"
+	data += "<b>Скорость производства</b>: [processing_speed]<br>"
+	data += "<b>Реагентов за цикл</b>: [processing_amount]<br>"
 	data += "</body></html>"
 	var/datum/browser/popup = new(user, "roboliquid_generator", "RoboLiquid Generator", 500, 400)
 	popup.set_content(data)
