@@ -1815,9 +1815,9 @@
 /datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
-		M.adjustToxLoss(-1*REM, toxins_type = TOX_SYSCORRUPT)
+		M.adjustToxLoss(-0.8, toxins_type = TOX_SYSCORRUPT)
 	else
-		M.adjustToxLoss(0.5*REM)
+		M.adjustToxLoss(0.5)
 	. = 1
 
 /datum/reagent/medicine/system_cleaner/overdose_start(mob/living/M)
@@ -1833,9 +1833,9 @@
 	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
 		if(current_cycle % 10 == 0)
 			to_chat(M, span_warning("П&вреждение ддр%йверов оч$стки - обрат}тесь к сист#мному админист@ратору..."))
-		M.adjustToxLoss(0.8*REM, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
+		M.adjustToxLoss(0.8, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
 	else
-		M.adjustToxLoss(0.5*REM)
+		M.adjustToxLoss(0.5)
 	. = 1
 
 /datum/reagent/medicine/limb_regrowth
