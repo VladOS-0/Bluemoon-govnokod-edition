@@ -126,6 +126,10 @@
 	mood_change = -3
 
 /datum/mood_event/brain_damage/add_effects()
+	if(isrobotic(owner))
+		var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "synth_brain_damage")
+		description = span_warning("K-k-k-k-ERNEL ERR$@OR: [damage_message]\n")
+		return
 	var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
 	description = span_warning("Хр-р-р р-р-р... [damage_message]\n")
 
