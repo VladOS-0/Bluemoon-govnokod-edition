@@ -68,7 +68,7 @@
 				else
 					emote("drool")
 			else
-				var/braindamage_variant = isrobotic(owner) ? "synth_brain_damage" : "brain_damage"
+				var/braindamage_variant = isrobotic(src) ? "synth_brain_damage" : "brain_damage"
 				say(pick_list_replacements(BRAIN_DAMAGE_FILE, braindamage_variant), forced = "brain damage")
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
