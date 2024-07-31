@@ -55,12 +55,12 @@
 			chaplain.visible_message(span_warning("[chaplain] опрыскивает [target] святой водой с помощью [src]!"))
 			if(ishuman(target))
 				var/mob/living/carbon/human/blessed = target
-				blessed.reagents.add_reagent(/datum/reagent/water/holywater, water_per_transfer)
 				chaplain.whisper("[pick(prayers)]")
 				playsound(src, 'sound/effects/splash.ogg', 10)
 				if(iscatperson(blessed) && prob(40))
 					blessed.emote("hiss")
 				if(prob(50))
+					blessed.reagents.add_reagent(/datum/reagent/water/holywater, water_per_transfer)
 					set_wet(FALSE)
 				if(prob(50))
 					playsound(blessed, 'sound/effects/pray.ogg', 35)
