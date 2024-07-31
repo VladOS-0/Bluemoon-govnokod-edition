@@ -151,7 +151,7 @@
 
 /obj/item/aspergillum/ert/proc/check_hand_attack(datum/source, mob/user)
 	if(istype(user, /mob/living/simple_animal/drone/cogscarab))
-		to_chat(user, span_cultlarge("[src] защищается от вашей попытки его утащить!"))
+		to_chat(user, span_cultlarge("[src] защищается от вашей попытки его подобрать!"))
 		return COMPONENT_NO_ATTACK_HAND
 
 /obj/item/aspergillum/ert/proc/check_unholy(atom/target)
@@ -166,6 +166,7 @@
 		return TRUE
 	if(istype(livingmob, /mob/living/simple_animal/hostile/clockcultistmelee) || istype(livingmob, /mob/living/simple_animal/hostile/clockcultistranged))
 		return TRUE
+	return FALSE
 
 /obj/item/aspergillum/ert/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(check_unholy(target))
