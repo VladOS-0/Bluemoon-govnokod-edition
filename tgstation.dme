@@ -4544,6 +4544,7 @@
 #include "modular_bluemoon\vlad0s_staff\code\midround_record.dm"
 #include "modular_bluemoon\vlad0s_staff\code\robot_purge_reagents.dm"
 #include "modular_bluemoon\vlad0s_staff\code\synthbuff_items.dm"
+#include "modular_bluemoon\vlad0s_staff\code\holy\aspergillum.dm"
 #include "modular_bluemoon\vlad0s_staff\code\mail\mail.dm"
 #include "modular_bluemoon\vlad0s_staff\code\mail\mail_pattern_base.dm"
 #include "modular_bluemoon\vlad0s_staff\code\mail\mail_patterns\antag.dm"
