@@ -223,14 +223,14 @@ export const Orbit = (props, context) => {
         </Section>
 
         <BasicSection
-          title="Dead"
-          source={dead}
+          title="Dead Players"
+          source={dead_players}
           searchText={searchText}
         />
 
         <BasicSection
-          title="Dead Players"
-          source={dead_players}
+          title="Dead"
+          source={dead}
           searchText={searchText}
         />
 
