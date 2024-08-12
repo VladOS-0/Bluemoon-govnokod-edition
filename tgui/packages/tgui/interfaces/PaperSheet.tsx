@@ -8,7 +8,7 @@ import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, Ref, RefObject } from 'inferno';
 import { clamp } from 'common/math';
 
 const Z_INDEX_STAMP = 1;
@@ -955,6 +955,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     const { scrollableRef, handleOnScroll } = this.props;
 
     return (
+      // @ts-ignore
       <Section
         fill
         fitted
