@@ -1,1 +1,0 @@
-#define DEFAULT_SAVE_SLOTS 40

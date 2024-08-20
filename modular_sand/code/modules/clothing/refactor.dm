@@ -1,3 +1,0 @@
-/obj/item/clothing/suit/armor/vest/warden
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_ALL_TAURIC
-	taur_mob_worn_overlay = 'modular_sand/icons/mob/suits_taur.dmi'
