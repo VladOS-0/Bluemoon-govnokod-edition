@@ -1,1 +1,0 @@
-#define COMSIG_MOB_CTRLSHIFTCLICKON "mob_ctrlshiftclickon"
