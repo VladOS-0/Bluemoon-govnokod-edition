@@ -782,7 +782,7 @@
 "Qf" = (/obj/structure/cable{icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{dir = 8},/turf/open/floor/carpet/black,/area/ruin/space/has_grav/bluemoon/hotel/guestroom)
 "Qg" = (/obj/effect/decal/cleanable/shreds,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/ruin/space/has_grav/bluemoon/hotel/workroom)
 "Qh" = (/turf/closed/wall,/area/ruin/space/has_grav/bluemoon/hotel/workroom)
-"Qn" = (/obj/structure/safe,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/obj/item/storage/bag/money/c5000,/turf/open/floor/engine,/area/ruin/space/has_grav/bluemoon/hotel/workroom)
+"Qn" = (/obj/structure/safe,/obj/item/stack/spacecash/c1000,/obj/item/stack//obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/obj/item/storage/bag/money/c5000,/turf/open/floor/engine,/area/ruin/space/has_grav/bluemoon/hotel/workroom)
 "Qp" = (/obj/machinery/washing_machine,/turf/open/floor/plasteel/showroomfloor,/area/ruin/space/has_grav/bluemoon/hotel)
 "Qq" = (/obj/structure/closet/athletic_mixed,/obj/item/clothing/under/misc/bathrobe,/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/bluemoon/hotel/pool)
 "Qu" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/bluemoon/hotel/pool)
