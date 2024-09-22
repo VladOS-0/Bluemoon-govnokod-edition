@@ -2,7 +2,7 @@
 	icon = 'icons/obj/pool.dmi'
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	force = 0
+	force = 5
 	damtype = STAMINA
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb= list("smash", "slam", "whack", "thwack")
@@ -78,3 +78,12 @@
 	user.gib()
 	suiciding = FALSE
 	return MANUAL_SUICIDE
+
+/obj/item/pool/pool_noodle/red
+	color = "#ff4c4c"
+
+/obj/item/pool/pool_noodle/blue
+	color = "#3232ff"
+
+/obj/item/pool/pool_noodle/yellow
+	color = "#ffff66"

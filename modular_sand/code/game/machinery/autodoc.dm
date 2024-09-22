@@ -11,23 +11,23 @@
 	verb_say = "states"
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/autodoc
-	var/obj/item/organ/storedorgan
+	var/obj/item/organ/stored_organ
 	var/organ_type = /obj/item/organ
 	var/processing = FALSE
-	var/surgerytime = 300
+	var/surgery_time = 300
 
 /obj/machinery/autodoc/Initialize(mapload)
 	. = ..()
 	update_icon()
 
 	// Set initial time based on config
-	surgerytime = max(AUTODOC_TIME_BASE,10)
+	surgery_time = max(AUTODOC_TIME_BASE,10)
 
 /obj/machinery/autodoc/RefreshParts()
 	var/max_time = AUTODOC_TIME_BASE
 	for(var/obj/item/stock_parts/L in component_parts)
 		max_time -= (L.rating*10)
-	surgerytime = max(max_time,10)
+	surgery_time = max(max_time,10)
 
 /obj/machinery/autodoc/examine(mob/user)
 	. = ..()
@@ -55,7 +55,7 @@
 		dosurgery()
 
 /obj/machinery/autodoc/proc/dosurgery()
-	if(!storedorgan && !(obj_flags & EMAGGED))
+	if(!stored_organ && !(obj_flags & EMAGGED))
 		to_chat(occupant, span_notice("[src] currently has no implant stored."))
 		return
 
@@ -80,15 +80,15 @@
 		occupant.visible_message(span_warning("[src] dismembers [occupant]!"), span_warning("[src] saws up your body!"))
 
 	else
-		sleep(surgerytime)
+		sleep(surgery_time)
 		if(!processing)
 			return
-		var/obj/item/organ/currentorgan = C.getorganslot(storedorgan.slot)
+		var/obj/item/organ/currentorgan = C.getorganslot(stored_organ.slot)
 		if(currentorgan)
 			currentorgan.Remove(C)
 			currentorgan.forceMove(get_turf(src))
-		storedorgan.Insert(occupant)//insert stored organ into the user
-		storedorgan = null
+		stored_organ.Insert(occupant)//insert stored organ into the user
+		stored_organ = null
 		occupant.visible_message(span_notice("[src] completes the surgery procedure."), span_notice("[src] inserts the organ into your body."))
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, 0)
 	processing = FALSE
@@ -116,12 +116,12 @@
 
 /obj/machinery/autodoc/attackby(obj/item/I, mob/user, params)
 	if(istype(I, organ_type))
-		if(storedorgan)
+		if(stored_organ)
 			to_chat(user, span_notice("[src] already has an implant stored."))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		storedorgan = I
+		stored_organ = I
 		I.forceMove(src)
 		to_chat(user, span_notice("You insert the [I] into [src]."))
 	else
@@ -138,9 +138,9 @@
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		if(storedorgan)
-			storedorgan.forceMove(drop_location())
-			storedorgan = null
+		if(stored_organ)
+			stored_organ.forceMove(drop_location())
+			stored_organ = null
 		update_icon()
 		return
 	return FALSE

@@ -108,9 +108,9 @@
 	playsound(get_turf(newwalker),'sound/magic/exit_blood.ogg', 100, TRUE)
 	qdel(oldmob)
 
-	var/load_character = alert(M.client, "Желаете загрузить текущего своего выбранного персонажа?", "Играть своим персонажем!", "Да", "Нет")
+	var/load_character = alert(newwalker.client, "Желаете загрузить текущего своего выбранного персонажа?", "Играть своим персонажем!", "Да", "Нет")
 	if(load_character == "Да")
-		M.load_client_appearance(M.client)
+		newwalker.load_client_appearance(newwalker.client)
 
 /obj/structure/lavaland/ash_walker/proc/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)

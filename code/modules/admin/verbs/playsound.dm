@@ -61,19 +61,19 @@
 		to_chat(src, span_boldwarning("yt-dlp was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via yt-dlp") as text|null
-	if(istext(web_sound_input))
+	var/yt_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via yt-dlp") as text|null
+	if(istext(yt_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
 		var/list/music_extra_data = list()
-		if(length(web_sound_input))
+		if(length(yt_sound_input))
 
-			web_sound_input = trim(web_sound_input)
-			if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
+			yt_sound_input = trim(yt_sound_input)
+			if(findtext(yt_sound_input, ":") && !findtext(yt_sound_input, GLOB.is_http_protocol))
 				to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
 				to_chat(src, span_warning("For yt-dlp shortcuts like ytsearch: please use the appropriate full url from the website."), confidential = TRUE)
 				return
-			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
+			var/shell_scrubbed_input = shell_url_scrub(yt_sound_input)
 			var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			var/stdout = output[SHELLEO_STDOUT]
@@ -125,9 +125,9 @@
 						if("Cancel")
 							return
 
-					SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
-					log_admin("[key_name(src)] played web sound: [web_sound_input]")
-					message_admins("[key_name(src)] played web sound: [web_sound_input]")
+					SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[yt_sound_input]"))
+					log_admin("[key_name(src)] played web sound: [yt_sound_input]")
+					message_admins("[key_name(src)] played web sound: [yt_sound_input]")
 			else
 				to_chat(src, span_boldwarning("yt-dlp URL retrieval FAILED:"), confidential = TRUE)
 				to_chat(src, span_warning("[stderr]"), confidential = TRUE)
@@ -142,18 +142,17 @@
 			to_chat(src, span_boldwarning("BLOCKED: Content URL not using http(s) protocol"), confidential = TRUE)
 			to_chat(src, span_warning("The media provider returned a content URL that isn't using the HTTP or HTTPS protocol"), confidential = TRUE)
 			return
+		if(web_sound_url || stop_web_sounds)
+			for(var/m in GLOB.player_list)
+				var/mob/M = m
+				var/client/C = M.client
+				if(C.prefs.toggles & SOUND_MIDI)
+					if(!stop_web_sounds)
+						C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					else
+						C.tgui_panel?.stop_music()
 
-	var/web_sound_input = tgui_input_text(usr, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
-
-	if(length(web_sound_input))
-		web_sound_input = trim(web_sound_input)
-		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
-			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
-			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
-			return
-		web_sound(usr, web_sound_input)
-	else
-		web_sound(usr, null)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
 /proc/web_sound(mob/user, input, credit)
