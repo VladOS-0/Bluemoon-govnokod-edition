@@ -370,7 +370,7 @@
 				H.DefaultCombatKnockdown(100)
 				H.apply_damage(1, BRUTE, BODY_ZONE_HEAD)
 			else
-				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.ru_who()] wearing a helmet.</span>")
+				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user] is wearing a helmet.</span>")
 	..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -667,6 +667,129 @@
 				set_light(0)
 		else
 			set_light(0)
+
+/obj/machinery/door/airlock/update_overlays()
+	. = ..()
+	var/pre_light_range = 0
+	var/pre_light_power = 0
+	var/pre_light_color = ""
+	var/lights_overlay = ""
+
+	var/frame_state
+	var/light_state
+	switch(airlock_state)
+		if(AIRLOCK_CLOSED)
+			frame_state = AIRLOCK_FRAME_CLOSED
+			if(locked)
+				light_state = AIRLOCK_LIGHT_BOLTS
+				lights_overlay = "lights_bolts"
+				pre_light_color = light_color_bolts
+			else if(emergency)
+				light_state = AIRLOCK_LIGHT_EMERGENCY
+				lights_overlay = "lights_emergency"
+				pre_light_color = light_color_emergency
+			else
+				lights_overlay = "lights_poweron"
+				pre_light_color = light_color_poweron
+		if(AIRLOCK_DENY)
+			frame_state = AIRLOCK_FRAME_CLOSED
+			light_state = AIRLOCK_LIGHT_DENIED
+			lights_overlay = "lights_denied"
+			pre_light_color = light_color_deny
+		if(AIRLOCK_EMAG)
+			frame_state = AIRLOCK_FRAME_CLOSED
+		if(AIRLOCK_CLOSING)
+			frame_state = AIRLOCK_FRAME_CLOSING
+			light_state = AIRLOCK_LIGHT_CLOSING
+			lights_overlay = "lights_closing"
+			pre_light_color = light_color_access
+		if(AIRLOCK_OPEN)
+			frame_state = AIRLOCK_FRAME_OPEN
+			if(locked)
+				lights_overlay = "lights_bolts_open"
+				pre_light_color = light_color_bolts
+			else if(emergency)
+				lights_overlay = "lights_emergency_open"
+				pre_light_color = light_color_emergency
+			else
+				lights_overlay = "lights_poweron_open"
+				pre_light_color = light_color_poweron
+		if(AIRLOCK_OPENING)
+			frame_state = AIRLOCK_FRAME_OPENING
+			light_state = AIRLOCK_LIGHT_OPENING
+			lights_overlay = "lights_opening"
+			pre_light_color = light_color_access
+
+	. += get_airlock_overlay(frame_state, icon, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+	if(airlock_material)
+		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+	else
+		. += get_airlock_overlay("fill_[frame_state + fill_state_suffix]", icon, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+
+	if(greyscale_lights_color && !light_state)
+		lights_overlay += "_greyscale"
+
+	if(lights && hasPower())
+		. += get_airlock_overlay("lights_[light_state]", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+		pre_light_range = door_light_range
+		pre_light_power = door_light_power
+		if(has_environment_lights)
+			set_light(pre_light_range, pre_light_power, pre_light_color, TRUE)
+			// if(multi_tile)
+			// 	filler.set_light(pre_light_range, pre_light_power, pre_light_color)
+	else
+		lights_overlay = ""
+
+	var/mutable_appearance/lights_appearance = mutable_appearance(overlays_file, lights_overlay, FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+
+	if(greyscale_lights_color && !light_state)
+		lights_appearance.color = greyscale_lights_color
+
+	// if(multi_tile)
+	// 	lights_appearance.dir = dir
+
+	. += lights_appearance
+
+	if(greyscale_accent_color)
+		. += get_airlock_overlay("[frame_state]_accent", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+
+	if(panel_open)
+		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
+		. += get_airlock_overlay("welded", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+
+	if(airlock_state == AIRLOCK_EMAG)
+		. += get_airlock_overlay("sparks", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+
+	if(hasPower())
+		if(frame_state == AIRLOCK_FRAME_CLOSED)
+			if(obj_integrity < integrity_failure * max_integrity)
+				. += get_airlock_overlay("sparks_broken", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+			else if(obj_integrity < (0.75 * max_integrity))
+				. += get_airlock_overlay("sparks_damaged", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+		else if(frame_state == AIRLOCK_FRAME_OPEN)
+			if(obj_integrity < (0.75 * max_integrity))
+				. += get_airlock_overlay("sparks_open", overlays_file, targetlayer = FLOAT_LAYER, targetplane = FLOAT_PLANE)
+
+	if(hasPower() && unres_sides)
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_x = 0
+					floorlight.pixel_y = 32
+				if (SOUTH)
+					floorlight.pixel_x = 0
+					floorlight.pixel_y = -32
+				if (EAST)
+					floorlight.pixel_x = 32
+					floorlight.pixel_y = 0
+				if (WEST)
+					floorlight.pixel_x = -32
+					floorlight.pixel_y = 0
+			. += floorlight
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
@@ -1666,6 +1789,21 @@
 #undef AIRLOCK_OPENING
 #undef AIRLOCK_DENY
 #undef AIRLOCK_EMAG
+
+#undef AIRLOCK_LIGHT_BOLTS
+#undef AIRLOCK_LIGHT_EMERGENCY
+#undef AIRLOCK_LIGHT_DENIED
+#undef AIRLOCK_LIGHT_CLOSING
+#undef AIRLOCK_LIGHT_OPENING
+
+#undef AIRLOCK_LIGHT_POWER
+#undef AIRLOCK_LIGHT_RANGE
+
+#undef AIRLOCK_POWERON_LIGHT_COLOR
+#undef AIRLOCK_BOLTS_LIGHT_COLOR
+#undef AIRLOCK_ACCESS_LIGHT_COLOR
+#undef AIRLOCK_EMERGENCY_LIGHT_COLOR
+#undef AIRLOCK_DENY_LIGHT_COLOR
 
 #undef AIRLOCK_SECURITY_NONE
 #undef AIRLOCK_SECURITY_METAL

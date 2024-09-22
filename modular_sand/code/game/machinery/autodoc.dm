@@ -31,12 +31,16 @@
 
 /obj/machinery/autodoc/examine(mob/user)
 	. = ..()
-	if((obj_flags & EMAGGED) && panel_open)
-		. += span_warning("[src]'s surgery protocols have been corrupted!")
-	if(processing)
-		. += span_notice("[src] is currently inserting [storedorgan] into [occupant].")
-	else if(storedorgan)
-		. += span_notice("[src] is prepared to insert [storedorgan].")
+	if(get_dist(src, user) <= 1 || isobserver(user))
+		. += span_notice("A small screen on \the [src] displays, \"Surgery time: [DisplayTimeText(surgery_time)]\"")
+		if(processing)
+			. += span_notice("[src] is currently inserting [stored_organ] into [occupant].")
+		else if(stored_organ)
+			. += span_notice("[src] is prepared to insert [stored_organ].")
+		if((obj_flags & EMAGGED) && panel_open)
+			. += span_warning("[src]'s surgery protocols have been corrupted!")
+	else
+		. += span_warning("You need to get closer to see more information!")
 
 /obj/machinery/autodoc/close_machine(mob/user)
 	..()

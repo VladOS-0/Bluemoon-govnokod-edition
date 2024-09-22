@@ -296,6 +296,11 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	var/area/hilbertshotel/currentArea = get_area(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 	currentArea.roomType = chosen_room // Sets the room type here
 
+	// Set up vending machines in the room to have prices instead of being free
+	for(var/obj/machinery/vending/V in currentArea)
+		V.onstation = TRUE
+		V.onstation_override = TRUE
+
 	//To send the user one tile above default when teleported
 	var/additionalY = chosen_room == "Apartment-Sauna" ? 1 : 0
 

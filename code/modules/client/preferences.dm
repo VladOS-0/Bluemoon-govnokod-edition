@@ -314,7 +314,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = 120
+	var/clientfps = 60
 
 	var/parallax = PARALLAX_INSANE
 
