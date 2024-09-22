@@ -30668,9 +30668,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "cae" = (
 /turf/open/floor/plating{
@@ -31047,10 +31045,8 @@
 /turf/closed/wall/rust,
 /area/science/mixing)
 "cbi" = (
-/obj/structure/barricade/wooden,
-/obj/structure/girder,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "cbj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -40601,12 +40597,10 @@
 /turf/open/floor/plasteel/dark,
 /area/commons/dorms)
 "cVw" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
+/obj/structure/sink/directional/west{
+	pixel_x = 13
 	},
-/obj/item/seeds/tower,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "cVK" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -43040,13 +43034,8 @@
 /turf/open/floor/glass/reinforced,
 /area/commons/dorms)
 "ewN" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/watermelon,
-/obj/item/seeds/cannabis,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "exg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -46859,18 +46848,10 @@
 	},
 /area/medical/surgery)
 "hbi" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/glowshroom,
-/obj/item/seeds/cannabis/ultimate,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "hbl" = (
 /obj/structure/extinguisher_cabinet{
@@ -48448,12 +48429,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "iky" = (
-/obj/effect/turf_decal/weather/dirt,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "ikL" = (
 /turf/open/floor/spooktime/cobble/roadmid,
@@ -48859,13 +48838,13 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/command/storage/eva)
 "iyG" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
+/obj/effect/landmark/stationroom/maint/threexthree,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "izg" = (
 /obj/item/cigbutt/cigarbutt,
@@ -53957,14 +53936,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/service/sauna)
-"lUP" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "lVy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -55372,12 +55343,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"mLS" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/starboard/aft)
 "mMq" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -56057,9 +56022,7 @@
 /area/service/bar)
 "nnM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "nnR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -56440,14 +56403,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/security/prison/cells)
-"nzB" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/grass,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "nzI" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -58361,6 +58316,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"oKQ" = (
+/obj/effect/landmark/stationroom/maint/threexfive,
+/turf/template_noop,
+/area/maintenance/starboard/aft)
 "oKV" = (
 /obj/structure/closet/secure_closet/genpop,
 /obj/effect/turf_decal/bot_white,
@@ -60177,12 +60136,10 @@
 /turf/open/floor/plasteel/dark,
 /area/commons/dorms)
 "pYQ" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
 /obj/structure/sign/poster/official/hydro_ad{
 	pixel_y = 32
 	},
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "pZw" = (
 /obj/effect/turf_decal/siding/white{
@@ -60951,13 +60908,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port)
-"qEB" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/berry,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "qEQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -61474,11 +61424,10 @@
 /turf/open/floor/plasteel/dark,
 /area/service/kitchen)
 "qSF" = (
-/obj/item/seeds/bee_balm/honey_balm,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "qSH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -62853,7 +62802,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "rSN" = (
 /obj/machinery/light,
@@ -66581,14 +66530,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
-"uqu" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/cultivator,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "uqz" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
@@ -69462,12 +69403,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "wly" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "wlC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -69690,16 +69626,6 @@
 	},
 /turf/open/floor/plating,
 /area/service/park)
-"wuO" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/costume,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "wuQ" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -70566,17 +70492,13 @@
 /turf/open/space,
 /area/space/nearstation)
 "xcz" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/onion,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_x = 32
 	},
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/maintenance/starboard/aft)
 "xcL" = (
 /obj/structure/fans/tiny,
@@ -71906,13 +71828,6 @@
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/service/kitchen)
-"yaW" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/ambrosia,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "ybb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -123318,7 +123233,7 @@ imZ
 kAJ
 cNW
 rSf
-cNW
+wly
 wly
 jJq
 noa
@@ -123575,8 +123490,8 @@ sMG
 bYs
 ccU
 nnM
-cNW
-wuO
+wly
+wly
 pDG
 cNW
 ceT
@@ -124086,10 +124001,10 @@ hTt
 vsr
 cNW
 hbi
-uqu
-yaW
+wly
+wly
 iky
-cNW
+oKQ
 mHA
 ifJ
 cNW
@@ -124343,10 +124258,10 @@ hTt
 cOe
 wVN
 pYQ
-mLS
-qIO
+wly
+wly
 qSF
-lUP
+wly
 tTc
 vxh
 cNW
@@ -124600,8 +124515,8 @@ hTt
 lXy
 kfS
 ewN
-qEB
-nzB
+wly
+wly
 xcz
 cVw
 jsO
