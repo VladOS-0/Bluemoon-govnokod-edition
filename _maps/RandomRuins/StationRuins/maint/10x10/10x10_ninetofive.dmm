@@ -45,7 +45,7 @@
 "o" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/item/paper/crumpled/bloody/fluff{
-	info = "NOTICE: Please limit your social interactions at the water cooler to 15 words or less, to insure maximum productivity. -Management"
+	default_raw_text = "NOTICE: Please limit your social interactions at the water cooler to 15 words or less, to insure maximum productivity. -Management"
 	},
 /turf/open/floor/carpet,
 /area/template_noop)

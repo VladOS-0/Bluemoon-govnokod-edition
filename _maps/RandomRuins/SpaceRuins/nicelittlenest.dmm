@@ -361,7 +361,7 @@
 "zo" = (
 /obj/structure/table/reinforced,
 /obj/item/paper{
-	info = "I hope that my cousin John is doing well! I am going to go see him on his new goat research vessel! I'm pretty confident my pod can make the trip. When he gets back home, I bet he will love the statue I made him!";
+	default_raw_text = "I hope that my cousin John is doing well! I am going to go see him on his new goat research vessel! I'm pretty confident my pod can make the trip. When he gets back home, I bet he will love the statue I made him!";
 	name = "Diary"
 	},
 /obj/structure/window/spawner/west,
