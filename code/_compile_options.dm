@@ -24,7 +24,7 @@
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
-// #define FIND_REF_NO_CHECK_TICK
+#define FIND_REF_NO_CHECK_TICK
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
 #endif //ifdef REFERENCE_TRACKING
@@ -76,7 +76,7 @@
 //Hard del testing defines
 #define REFERENCE_TRACKING
 #define REFERENCE_TRACKING_DEBUG
-// #define FIND_REF_NO_CHECK_TICK
+#define FIND_REF_NO_CHECK_TICK
 // #define GC_FAILURE_HARD_LOOKUP // Uncomment this to have harddel reftracking in unit tests (takes 3-5min to run per single harddel)
 #endif
 
