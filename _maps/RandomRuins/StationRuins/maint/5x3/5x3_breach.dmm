@@ -8,7 +8,7 @@
 /turf/open/floor/plating/foam,
 /area/template_noop)
 "o" = (
-/obj/item/grenade,
+/obj/item/grenade/chem_grenade/metalfoam,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -22,6 +22,7 @@
 /turf/open/floor/plating/foam,
 /area/template_noop)
 "W" = (
+/obj/item/grenade/chem_grenade/metalfoam,
 /turf/open/floor/plating,
 /area/template_noop)
 
