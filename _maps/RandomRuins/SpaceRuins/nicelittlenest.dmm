@@ -602,7 +602,7 @@
 /area/ruin/space/has_grav/powered)
 "WU" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/library/checkout,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/powered)
 "Yl" = (

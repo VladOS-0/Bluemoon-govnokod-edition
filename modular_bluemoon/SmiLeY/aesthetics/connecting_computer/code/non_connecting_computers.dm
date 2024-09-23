@@ -16,9 +16,6 @@
 /obj/machinery/computer/shuttle/pod
 	connectable = FALSE
 
-/obj/machinery/computer/bookmanagement
-	connectable = FALSE
-
 /obj/machinery/computer/med_data/laptop
 	connectable = FALSE
 

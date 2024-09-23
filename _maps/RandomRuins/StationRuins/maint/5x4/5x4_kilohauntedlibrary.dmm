@@ -150,7 +150,7 @@
 /area/template_noop)
 "I" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
+/obj/machinery/computer/library/checkout{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/neutral,
