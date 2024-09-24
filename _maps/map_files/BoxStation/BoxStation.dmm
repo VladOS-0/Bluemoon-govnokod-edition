@@ -30668,7 +30668,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "cae" = (
 /turf/open/floor/plating{
@@ -31046,7 +31046,7 @@
 /area/science/mixing)
 "cbi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "cbj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -43029,7 +43029,7 @@
 /area/commons/dorms)
 "ewN" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "exg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -46848,7 +46848,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "hbl" = (
 /obj/structure/extinguisher_cabinet{
@@ -48429,7 +48429,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "ikL" = (
 /turf/open/floor/spooktime/cobble/roadmid,
@@ -48841,7 +48841,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/stationroom/maint/threexthree,
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "izg" = (
 /obj/item/cigbutt/cigarbutt,
@@ -56022,7 +56022,7 @@
 /area/service/bar)
 "nnM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "nnR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -58318,7 +58318,7 @@
 /area/maintenance/aft)
 "oKQ" = (
 /obj/effect/landmark/stationroom/maint/threexfive,
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "oKV" = (
 /obj/structure/closet/secure_closet/genpop,
@@ -60139,7 +60139,7 @@
 /obj/structure/sign/poster/official/hydro_ad{
 	pixel_y = 32
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "pZw" = (
 /obj/effect/turf_decal/siding/white{
@@ -61427,7 +61427,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "qSH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -62802,7 +62802,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "rSN" = (
 /obj/machinery/light,
@@ -69403,7 +69403,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "wly" = (
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "wlC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -70495,7 +70495,7 @@
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_x = 32
 	},
-/turf/template_noop,
+/turf/open,
 /area/maintenance/starboard/aft)
 "xcL" = (
 /obj/structure/fans/tiny,
