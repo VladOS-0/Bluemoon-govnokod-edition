@@ -123,7 +123,7 @@
 		for(var/i in 1 to device_type)
 			var/datum/gas_mixture/air = airs[i]
 			T.assume_air_moles(air, shared_loss)
-		air_update_turf(TRUE)
+		air_update_turf(1)
 
 /obj/machinery/atmospherics/components/proc/safe_input(var/title, var/text, var/default_set)
 	var/new_value = input(usr,text,title,default_set) as num
@@ -133,17 +133,13 @@
 
 // Helpers
 
-/**
- * Called in most atmos processes and gas handling situations, update the parents pipelines of the devices connected to the source component
- * This way gases won't get stuck
- */
 /obj/machinery/atmospherics/components/proc/update_parents()
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
 			stack_trace("Component is missing a pipenet! Rebuilding...")
 			SSair.add_to_rebuild_queue(src)
-		parent.update = TRUE
+		parent.update = 1
 
 /obj/machinery/atmospherics/components/returnPipenets()
 	. = list()
@@ -157,7 +153,7 @@
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	to_chat(user, "<span class='danger'>Доступ запрещён.</span>")
+	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
 
 /obj/machinery/atmospherics/components/attack_ghost(mob/dead/observer/O)
