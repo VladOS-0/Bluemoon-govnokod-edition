@@ -655,7 +655,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/complex/research)
 "aDj" = (
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/artillerycontrol,
 /turf/open/floor/plating/snowed/smoothed/warmer,
 /area/awaymission/complex/security)
 "aDD" = (

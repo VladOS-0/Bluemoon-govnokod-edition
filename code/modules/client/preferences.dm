@@ -109,8 +109,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 	var/pda_skin = PDA_SKIN_ALT
+<<<<<<< HEAD
 	var/pda_ringtone = "beep"
-	var/list/alt_titles_preferences = list()
+=======
+>>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 
 	var/hardsuit_tail_style = null // Пока не используется. Вскоре нужно будет бахнуть новых спрайтов.
 	var/custom_blood_color = FALSE
@@ -138,6 +140,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eorg_enabled = TRUE
 	var/enable_personal_chat_color = FALSE
 	var/personal_chat_color = "#ffffff"
+	var/list/alt_titles_preferences = list()
 	var/lust_tolerance = 100
 	var/sexual_potency = 15
 	//Sandstorm CHANGES END
@@ -1924,9 +1927,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
+			//Skyrat changes
 			var/displayed_rank = rank
 			if(job.alt_titles.len && (rank in alt_titles_preferences))
 				displayed_rank = alt_titles_preferences[rank]
+			//End of skyrat changes
 			lastJob = job
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=\"#000000\">[rank]</font></td><td><a href='?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
@@ -1953,15 +1958,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if((job_preferences["[SSjob.overflow_role]"] == JP_LOW) && (rank != SSjob.overflow_role) && !jobban_isbanned(user, SSjob.overflow_role))
 				HTML += "<font color=\"#000000\">[rank]</font></td><td></td></tr>"
 				continue
+			//Skyrat changes
 			var/rank_title_line = "[displayed_rank]"
 			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
 				rank_title_line = "<b>[rank_title_line]</b>"
 			if(job.alt_titles.len)
 				rank_title_line = "<a href='?_src_=prefs;preference=job;task=alt_title;job_title=[job.title]'>[rank_title_line]</a>"
-
 			else
 				rank_title_line = "<span class='dark'>[rank_title_line]</span>" //Make it dark if we're not adding a button for alt titles
 			HTML += rank_title_line
+			//End of skyrat changes
 
 			HTML += "</td><td width='40%'>"
 
@@ -2223,6 +2229,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				SetChoices(user)
 			if("setJobLevel")
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
+			//SKYRAT CHANGES
 			if("alt_title")
 				var/job_title = href_list["job_title"]
 				var/titles_list = list(job_title)
@@ -2238,6 +2245,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						alt_titles_preferences[job_title] = chosen_title
 				SetChoices(user)
+			//END OF SKYRAT CHANGES
 			else
 				SetChoices(user)
 		return TRUE

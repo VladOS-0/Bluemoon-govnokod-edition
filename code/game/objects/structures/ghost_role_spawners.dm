@@ -556,7 +556,6 @@
 	outfit = /datum/outfit/ert/sol_soldier
 	assignedrole = "Solar Federation Operative"
 	can_load_appearance = TRUE
-	loadout_enabled = TRUE
 
 /obj/effect/mob_spawn/human/solfed/demoman
 	name = "Solar Federation Support"

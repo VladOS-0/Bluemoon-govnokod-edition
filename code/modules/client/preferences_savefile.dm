@@ -1139,7 +1139,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(json_from_file)
 			belly_prefs = json_from_file["belly_prefs"]
 
-	S["alt_titles_preferences"] 		>> alt_titles_preferences
 	//gear loadout
 	if(istext(S["loadout"]))
 		loadout_data = safe_json_decode(S["loadout"])
@@ -1413,15 +1412,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pregnancy_inflation"] >> pregnancy_inflation
 	S["pregnancy_breast_growth"] >> pregnancy_breast_growth
 	//SPLURT EDIT END
-
+	
 	loadout_slot = sanitize_num_clamp(loadout_slot, 1, MAXIMUM_LOADOUT_SAVES, 1, TRUE)
-
-	alt_titles_preferences = SANITIZE_LIST(alt_titles_preferences)
-	if(SSjob)
-		for(var/datum/job/job in SSjob.occupations)
-			if(alt_titles_preferences[job.title])
-				if(!(alt_titles_preferences[job.title] in job.alt_titles))
-					alt_titles_preferences.Remove(job.title)
 
 	cit_character_pref_load(S)
 
@@ -1599,8 +1591,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["feature_neckfire"], features["neckfire"])
 	WRITE_FILE(S["feature_neckfire_color"], features["neckfire_color"])
-
-	WRITE_FILE(S["alt_titles_preferences"], alt_titles_preferences)
 
 	WRITE_FILE(S["feature_ooc_notes"], features["ooc_notes"])
 

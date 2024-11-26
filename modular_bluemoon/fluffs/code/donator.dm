@@ -1063,14 +1063,6 @@
 	ckeywhitelist = list("dragoncora")
 	subcategory = LOADOUT_SUBCATEGORIES_DON02
 
-
-/datum/gear/donator/bm/soviet_coat
-    name = "Soviet coat"
-    slot = ITEM_SLOT_OCLOTHING
-    path = /obj/item/clothing/suit/donator/bm/soviet_coat
-    ckeywhitelist = list("fedor1545")
-    subcategory = LOADOUT_SUBCATEGORIES_DON04
-
 /datum/gear/donator/bm/poster_box
 	name = "Box with posters"
 	slot = ITEM_SLOT_OCLOTHING
