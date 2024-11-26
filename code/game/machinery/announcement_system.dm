@@ -17,15 +17,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
 	var/obj/item/radio/headset/radio
-<<<<<<< HEAD
 	var/arrival = "На станцию прибывает %PERSON, %RANK."
 	var/arrivalToggle = TRUE
 	var/newhead = "%PERSON, %RANK, глава отдела."
-=======
-	var/arrival = "%PERSON has signed up as %RANK"
-	var/arrivalToggle = TRUE
-	var/newhead = "%PERSON, %RANK, is the department head."
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 	var/newheadToggle = TRUE
 	var/cryostorage = "%PERSON, %RANK, уходит в криосон." // this shouldnt be changed
 	var/cryostorage_tele = "%PERSON, %RANK, телепортируется на аванпост ЦК."   // you saying it hat man.

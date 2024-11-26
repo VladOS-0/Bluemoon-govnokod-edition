@@ -109,10 +109,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 	var/pda_skin = PDA_SKIN_ALT
-<<<<<<< HEAD
 	var/pda_ringtone = "beep"
-=======
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 
 	var/hardsuit_tail_style = null // Пока не используется. Вскоре нужно будет бахнуть новых спрайтов.
 	var/custom_blood_color = FALSE
