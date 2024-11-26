@@ -48,12 +48,8 @@
 	alt_titles = list(
 		"Maintenance Technician",
 		"Engine Technician",
-<<<<<<< HEAD
 		"Electrician",
 		"GEC Engineer" // - add nta_of
-=======
-		"Electrician"
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		)
 
 //Service
@@ -63,15 +59,9 @@
 		"Visitor",
 		"Businessman",
 		"Trader",
-<<<<<<< HEAD
 		"Intern",
 		"Off-Duty Civilian",
 		"Fraudster" // - add nta_of
-=======
-		"Entertainer",
-		"Intern",
-		"Off-Duty Civilian"
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		)
 
 /datum/job/bartender
@@ -82,7 +72,6 @@
 /datum/job/chaplain
 	alt_titles = list(
 		"Priest",
-<<<<<<< HEAD
 		"Shaman",
 		"Pope",
 		"Voodo Sorcerer",
@@ -92,23 +81,11 @@
 		"Psychic" // Это экстрасен! - add nta_of
 		)
 /* BLUEMOON REMOVAL - развлекатель теперь отдельная профессия
-=======
-		"Cult Leader",
-		"Pope",
-		"Bishop", // How about you actually say something about it instead of crying on a downstream's comments i won't read.
-		"Pontiff"
-		)
-
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 /datum/job/clown //The most useless role in the game, delet this
 	alt_titles = list(
 		"Entertainer"
 		)
-<<<<<<< HEAD
 */
-=======
-
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 /datum/job/cook
 	alt_titles = list(
 		"Culinary Artist",
@@ -120,16 +97,12 @@
 /datum/job/curator
 	alt_titles = list(
 		"Journalist",
-<<<<<<< HEAD
 		"Librarian",
 		"Reporter",
 		"Correspondent",
 		"Newsman",
 		"Questioner",
 		"Occultism Fan"
-=======
-		"Librarian"
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		)
 
 /datum/job/hydro
@@ -149,12 +122,7 @@
 
 /datum/job/lawyer
 	alt_titles = list(
-<<<<<<< HEAD
 		"Human Resources Agent"
-=======
-		"Human Resources Agent",
-		"Internal Affairs Agent"
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		)
 
 /datum/job/mime
@@ -177,13 +145,9 @@
 		"Circuitry Designer",
 		"Xenobiologist",
 		"Xenobotanist",
-<<<<<<< HEAD
 		"Chemical Researcher",
 		"Thaumaturge", // Да, Тауматург, вопросы? - add nta_of
 		"Anomalist" // - add nta_of
-=======
-		"Chemical Researcher"
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		)
 
 //Medical
@@ -199,11 +163,7 @@
 		"Surgeon",
 		"Medical Secretary",
 		"Emergency Physician",
-<<<<<<< HEAD
 		"Field Surgeon"
-=======
-		"Field Surgeon" 
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		)
 
 /datum/job/geneticist
@@ -232,13 +192,7 @@
 
 /datum/job/officer
 	alt_titles = list(
-<<<<<<< HEAD
 		"Security Guard",
-=======
-		"Security Cadet",
-		"Security Guard",
-		"Peacekeeper",
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master')
 		"Enforcer"
 		)
 

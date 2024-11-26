@@ -50,11 +50,7 @@
 
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
-<<<<<<< HEAD:code/modules/jobs/job_types/command/captain.dm
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), "Капитан [H.nameless ? "" : "[H.real_name] "] прибывает на [station_name()]!"))
-=======
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), "Captain [H.nameless ? "" : "[H.real_name] "]on deck!"))
->>>>>>> parent of a44046076a (Merge remote-tracking branch 'upstream/master'):code/modules/jobs/job_types/captain.dm
 
 /datum/outfit/job/captain
 	name = "Captain"
