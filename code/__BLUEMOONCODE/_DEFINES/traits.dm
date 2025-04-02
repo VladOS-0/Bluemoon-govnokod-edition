@@ -10,6 +10,10 @@
 #define TRAIT_LEWD_SUMMON					"Призываемый"
 #define TRAIT_LEWD_SUMMONED					"lewd_summoned"
 #define TRAIT_SPIKY							"spiky"
+#define TRAIT_SHY							"shy"
+#define TRAIT_COMMON_PREGNANCY				"common_pregnancy"
+#define TRAIT_BONDAGED						"bondaged"
+
 // Отдельные наименования для квирков, чтобы не повторять их в настройках
 #define BLUEMOON_TRAIT_NAME_SHRIEK				"Крикун"
 
@@ -25,3 +29,5 @@
 
 /// Mob does not remember its death, due to one of DEATH_FORGETFULLNESS_REASONs
 #define TRAIT_BLUEMOON_DEATH_FORGETFULNESS	"bm_death_forget"
+// Названия для мудов от квирков
+#define QMOOD_BONDAGE		"mood_bondage"
