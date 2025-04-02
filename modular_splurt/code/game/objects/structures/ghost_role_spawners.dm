@@ -223,6 +223,14 @@
 	R.freqlock = TRUE
 	R.independent = TRUE
 
+/datum/outfit/inteqspace/inteq_engineer/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_INTEQ
+
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_GHOST_INTEQ)
+	R.freqlock = TRUE
+	R.independent = TRUE
+
 /obj/effect/mob_spawn/human/inteqspace/special(mob/living/new_spawn)
 	. = ..()
 	new_spawn.grant_language(/datum/language/old_codes, TRUE, TRUE, LANGUAGE_MIND)
