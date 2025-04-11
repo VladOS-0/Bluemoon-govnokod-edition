@@ -190,10 +190,13 @@
 		"Possum" = /mob/living/simple_animal/opossum,
 		"Alta" = /mob/living/simple_animal/pet/cat/alta,
 		"Space Alta" = /mob/living/simple_animal/pet/cat/space/alta,
-		"Zlat" = /mob/living/simple_animal/pet/dog/corgi/Lisa/zlatchek,)
+		"Zlat" = /mob/living/simple_animal/pet/dog/corgi/Lisa/zlatchek)
 
 /obj/item/choice_beacon/pet/jruttie
 	pets = list("Jruttie" = /mob/living/simple_animal/pet/cat/jruttie)
+
+/obj/item/choice_beacon/pet/juda
+	pets = list("Judas" = /mob/living/simple_animal/pet/dog/juda)
 
 /obj/item/choice_beacon/pet/generate_display_names()
 	return pets

@@ -538,7 +538,6 @@
 	speak = list("*meow", "*meow2", "*meow3", "*meow4", "*meow5", "*meow6", "*mrrp", "*mrrp3", "*purr")
 	icon = 'modular_bluemoon/kovac_shitcode/icons/animals.dmi'
 
-
 /mob/living/simple_animal/pet/cat/space/alta/Initialize(mapload)
 	. = ..()
 	if((NEW_YEAR || CHRISTMAS || FESTIVE_SEASON) in SSevents.holidays)
@@ -558,6 +557,18 @@
 	icon_living = "ada"
 	icon_dead = "ada_dead"
 	held_icon = "ada"
+	icon = 'modular_bluemoon/kovac_shitcode/icons/animals.dmi'
+
+/mob/living/simple_animal/pet/dog/juda
+	name = "Juda"
+	desc = "Adorable shark that moves its paws funny and resembles a banana."
+	icon_state = "juda"
+	icon_living = "juda"
+	icon_dead = "juda_dead"
+	held_icon = "juda"
+	unique_pet = TRUE
+	gender = MALE
+	speak = list("*growl", "*rawr2", "Булькает", "Булькает гениально", "Надувает пузырь", "Крутится вокруг себя")
 	icon = 'modular_bluemoon/kovac_shitcode/icons/animals.dmi'
 
 /mob/living/simple_animal/pet/dog/corgi/Lisa/zlatchek
