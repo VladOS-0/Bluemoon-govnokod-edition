@@ -39,3 +39,7 @@
 	icon_state = "mouthring"
 	item_state = "mouthring"
 	flags_cover = null // рот открыт
+
+/obj/item/clothing/mask/gas/sechailer/mopp
+	mutantrace_variation = STYLE_MUZZLE
+	anthro_mob_worn_overlay = 'modular_bluemoon/icons/mob/clothing/mask_muzzled.dmi'

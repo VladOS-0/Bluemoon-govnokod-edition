@@ -438,7 +438,8 @@
 	alternate_screams = RUSSIAN_SCREAMS
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
-	mutantrace_variation = NONE
+	anthro_mob_worn_overlay = 'modular_bluemoon/icons/mob/clothing/uniforms_digi.dmi' // BLUEMOON ADD custom icons for anthro
+	mutantrace_variation = STYLE_DIGITIGRADE // BLUEMOON ADD enabling icons for anthro
 
 /obj/item/clothing/gloves/longblackgloves
 	name = "Luna's Gauntlets"

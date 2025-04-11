@@ -6,3 +6,10 @@
 	item_state = "legwrap"
 	mob_overlay_icon = 'modular_bluemoon/icons/mob/clothing/shoes.dmi'
 	anthro_mob_worn_overlay = 'modular_bluemoon/icons/mob/clothing/shoes_digi.dmi'
+
+/obj/item/clothing/shoes/jackboots/cbrn/mopp
+	icon = 'modular_bluemoon/icons/obj/clothing/shoes.dmi'
+	icon_state = "moppboots"
+	item_state = "moppboots"
+	mob_overlay_icon = 'modular_bluemoon/icons/mob/clothing/shoes.dmi'
+	anthro_mob_worn_overlay = 'modular_bluemoon/icons/mob/clothing/shoes_digi.dmi'

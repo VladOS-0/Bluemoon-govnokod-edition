@@ -313,6 +313,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
+	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR // BLUEMOON ADD enabling visibility of snouts, faces and beards in combat mode
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon_state()
 	icon_state = "hardsuit[on]-[hardsuit_type]"
@@ -438,6 +439,7 @@
 	alt_desc = "An elite version of the syndicate helmet, with improved armour and fireproofing. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit0-syndi-winter"
 	hardsuit_type = "syndi-winter"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT // BLUEMOON ADD enabling hiding 'cause helmet sprite does not truly opening
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/winter
 	name = "Winter Elite Syndicate Hardsuit"

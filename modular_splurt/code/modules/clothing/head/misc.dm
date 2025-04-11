@@ -86,7 +86,7 @@
 	desc = "Mission Oriented Protective Posture. A hood design for harsh combat conditions short of no atmosphere. This is an advance versoin for ERT units and Central Command Staff."
 	can_flashlight = 1
 	armor = list("melee" = 50, "bullet" = 40, "laser" = 40,"energy" = 40, "bomb" = 35, "bio" = 110, "rad" = 110, "fire" = 50, "acid" = 110)
-	clothing_flags = NONE
+// 	clothing_flags = NONE // BLUEMOON COMMENTED OUT led to loss of parental clothing flags = no space protection
 	is_edible = 0
 
 

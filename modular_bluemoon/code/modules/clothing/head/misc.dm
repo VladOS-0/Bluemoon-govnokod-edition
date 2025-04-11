@@ -51,3 +51,10 @@
 	icon = 'modular_bluemoon/icons/obj/clothing/hats.dmi'
 	mob_overlay_icon = 'modular_bluemoon/icons/mob/clothing/hats.dmi'
 	icon_state = "cracked_pot"
+
+////////////////////////////////////////////
+/obj/item/clothing/head/helmet/cbrn/mopp
+	mutantrace_variation = STYLE_MUZZLE
+	anthro_mob_worn_overlay = 'modular_bluemoon/icons/mob/clothing/head_muzzled.dmi'
+
+////////////////////////////////////////////

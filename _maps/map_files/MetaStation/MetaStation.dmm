@@ -1892,9 +1892,6 @@
 	pixel_x = 6;
 	pixel_y = 28
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "afY" = (
@@ -65724,6 +65721,44 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
+"lXD" = (
+/obj/structure/safe/floor/syndi/armory{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = 2
+	},
+/obj/item/gun/ballistic/automatic/acr5m30,
+/obj/item/gun/ballistic/automatic/acr5m30{
+	pixel_y = -5
+	},
+/obj/item/gun/ballistic/automatic/acr5m30{
+	pixel_y = -10
+	},
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30,
+/obj/item/ammo_box/magazine/acr5m30/ap,
+/obj/item/ammo_box/magazine/acr5m30/ap,
+/obj/item/ammo_box/magazine/acr5m30/ap,
+/obj/item/ammo_box/magazine/acr5m30/ap,
+/obj/item/ammo_box/magazine/acr5m30/ap,
+/obj/item/ammo_box/magazine/acr5m30/ap,
+/obj/item/ammo_box/magazine/acr5m30/hp,
+/obj/item/ammo_box/magazine/acr5m30/hp,
+/obj/item/ammo_box/magazine/acr5m30/hp,
+/obj/effect/turf_decal/tile/red/full,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/security/armory)
 "lXR" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/power/apc/auto_name/west,
@@ -121592,7 +121627,7 @@ aaa
 lMJ
 aaf
 aeq
-aeq
+lXD
 uey
 oPH
 mfU
@@ -121848,7 +121883,7 @@ aaa
 aaa
 anT
 aaf
-aaf
+qey
 aeq
 aeq
 aeq

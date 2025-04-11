@@ -55,11 +55,13 @@
 	update_icons()
 	. = ..() // this will handle finding a target if there is a valid one nearby
 
+/* BLUEMOON COMMENT OUT using modified proc in modularized drone.dm file
 /mob/living/simple_animal/hostile/malf_drone/Life(seconds, times_fired)
 	. = ..()
 	if(.) // mob is alive. We check this just in case Life() can fire for qdel'ed mobs.
 		if(times_fired % 15 == 0) // every 15 cycles, aka 30 seconds, 50% chance to switch between modes
 			scramble_settings()
+*/
 
 /mob/living/simple_animal/hostile/malf_drone/proc/scramble_settings()
 	if(prob(50))

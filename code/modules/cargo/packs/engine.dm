@@ -181,7 +181,7 @@
 	contains = list(/obj/item/fuel_rod,
 					/obj/item/fuel_rod)
 	crate_name = "Uranium-235 Fuel Rod crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure/radiation // BLUEMOON CHANGE fix of the contamination shit after arrival
 	dangerous = TRUE
 
 /datum/supply_pack/engine/bananium_fuel_rod
@@ -192,7 +192,7 @@
 	contains = list(/obj/item/fuel_rod/material/bananium,
 					/obj/item/fuel_rod/material/bananium)
 	crate_name = "Bluespace Crystal Fuel Rod crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure/radiation // BLUEMOON CHANGE fix of the contamination shit after arrival
 	dangerous = TRUE
 	contraband = TRUE
 
