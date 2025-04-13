@@ -147,7 +147,7 @@
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
-	desc = "Остановите наплыв с помощью четырех гранат защитного барьера. Для открытия требуется доступ СБ."
+	desc = "Остановите штурм с помощью четырех гранат защитного барьера. Для открытия требуется доступ СБ."
 	contains = list(/obj/item/grenade/barrier,
 					/obj/item/grenade/barrier,
 					/obj/item/grenade/barrier,

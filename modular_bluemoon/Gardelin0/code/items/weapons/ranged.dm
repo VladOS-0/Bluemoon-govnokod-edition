@@ -24,7 +24,7 @@
 	item_state = "KS-23TheInquisitor"
 
 /obj/item/gun/ballistic/shotgun/KS23/attack_self(mob/living/user)
-	if(do_after(user, rand(2,4), src))
+	if(do_after(user, rand(2,4)))
 		..()
 
 /obj/item/gun/ballistic/shotgun/KS23/pump_unload(mob/M)

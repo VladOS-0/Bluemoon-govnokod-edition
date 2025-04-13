@@ -114,6 +114,7 @@
 	name = ".45 Revolver Single-Pack"
 	desc = "Contains a parts kit to assemble a 45 Revolver Gun. Comes with a box of .45 Long"
 	cost = 1600 //BLUEMOON REBALANCE 800 --> 1600
+	contraband = TRUE
 	contains = list( /obj/item/gunpart/revolver45cylinder, /obj/item/gunpart/revolver45frame, /obj/item/ammo_box/g45l)
 
 /datum/supply_pack/goody/huntingshotgun_single
