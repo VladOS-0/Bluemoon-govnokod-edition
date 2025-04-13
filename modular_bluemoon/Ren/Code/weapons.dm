@@ -330,6 +330,45 @@
 	build_path = /obj/item/ammo_box/magazine/garand/rubber
 	category = list("Imported")
 
+/obj/item/disk/design_disk/adv/ammo/ks23
+	name = "Ammo Design Disk"
+	desc = "Вставь в автолат, чтобы печатать крутые патроны."
+
+/obj/item/disk/design_disk/adv/ammo/ks23/Initialize(mapload)
+	. = ..()
+	var/datum/design/ammo_ks23/N = new
+	var/datum/design/ammo_ks23/slugs/E = new
+	var/datum/design/ammo_ks23/buckshot23/G = new
+	var/datum/design/ammo_ks23/rubbershot23/R = new
+	blueprints[1] = N
+	blueprints[2] = E
+	blueprints[3] = G
+	blueprints[4] = R
+
+/datum/design/ammo_ks23
+	name = "ammo box (KS23 slugs)"
+	desc = "Ammo for KS23."
+	id = "ammo_ks23"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 28000)
+	build_path = /obj/item/ammo_box/slug23
+	category = list("Imported")
+
+/datum/design/ammo_ks23/slugs
+	name = "ammo box (KS23 rubber slugs)"
+	id = "ammo_ks23_rs"
+	build_path = /obj/item/ammo_box/slug_rubber23
+
+/datum/design/ammo_ks23/buckshot23
+	name = "ammo box (KS23 buckshots)"
+	id = "ammo_ks23_bs"
+	build_path = /obj/item/ammo_box/buckshot23
+
+/datum/design/ammo_ks23/rubbershot23
+	name = "ammo box (KS23 rubbershots)"
+	id = "ammo_ks23_rsh"
+	build_path = /obj/item/ammo_box/rubbershot23
+
 ///Дорожный знак
 /obj/item/spear/stop
 	name = "Stop sign"

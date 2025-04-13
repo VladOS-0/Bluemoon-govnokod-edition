@@ -17,19 +17,15 @@
 	fire_delay = 7
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/KS23
 
-/obj/item/gun/ballistic/shotgun/KS23/Inquisitor
-	name = "Righteous Wrath of the Faithful"
-	desc = "Don't be afraid, John!"
-	icon_state = "KS-23TheInquisitor"
-	item_state = "KS-23TheInquisitor"
-
-/obj/item/gun/ballistic/shotgun/KS23/attack_self(mob/living/user)
-	if(do_after(user, rand(2,4)))
-		..()
-
 /obj/item/gun/ballistic/shotgun/KS23/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
 		chambered.forceMove(drop_location())//Eject casing
 		chambered.bounce_away()
 		chambered = null
 		playsound(src, "modular_bluemoon/Gardelin0/sound/weapons/shell_fall.ogg", 45, 1)
+
+/obj/item/gun/ballistic/shotgun/KS23/Inquisitor
+	name = "Righteous Wrath of the Faithful"
+	desc = "Don't be afraid, John!"
+	icon_state = "KS-23TheInquisitor"
+	item_state = "KS-23TheInquisitor"
