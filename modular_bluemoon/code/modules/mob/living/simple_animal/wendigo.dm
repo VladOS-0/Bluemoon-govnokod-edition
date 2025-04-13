@@ -22,6 +22,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	deathmessage = "falls, shaking the ground around it"
 	deathsound = 'sound/effects/gravhit.ogg'
+	melee_damage_type = STAMINA
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
