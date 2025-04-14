@@ -665,7 +665,9 @@
 					if(req_defib)
 						if(defib.healdisk)
 							H.heal_overall_damage(25, 25)
+					// BLUEMOON EDIT START - изменение памяти после смерти
 					H.mind?.revival_handle_memory("defibrillator")
+					// BLUEMOON EDIT END
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
