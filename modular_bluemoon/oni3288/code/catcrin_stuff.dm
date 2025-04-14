@@ -230,6 +230,49 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	can_adjust = FALSE
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////РИГ(И?)
+
+/obj/item/clothing/head/helmet/space/hardsuit/security/mark46_sec
+	name = "Mk.46-SH"
+	desc = "Mark 46 based on the previous version. This space suit is designed specifically for combat in space, capable of providing protection from both weapons and vacuum."
+	icon = 'modular_bluemoon/oni3288/icons/mob/icons/mark45.dmi'
+	mob_overlay_icon = 'modular_bluemoon/oni3288/icons/mob/clothing/mark45.dmi'
+	anthro_mob_worn_overlay = 'modular_bluemoon/oni3288/icons/mob/clothing/mark45.dmi'
+	icon_state = "hardsuit0-sec_mark46"
+	item_state = "hardsuit0-sec_mark46"
+	hardsuit_type = "sec_mark46"
+
+/obj/item/clothing/suit/space/hardsuit/security/mark46_sec
+	name = "Mk.46-SS"
+	desc = "Mark 46 based on the previous version. This space suit is designed specifically for combat in space, capable of providing protection from both weapons and vacuum."
+	icon = 'modular_bluemoon/oni3288/icons/mob/icons/mark45.dmi'
+	mob_overlay_icon = 'modular_bluemoon/oni3288/icons/mob/clothing/mark45.dmi'
+	anthro_mob_worn_overlay = 'modular_bluemoon/oni3288/icons/mob/clothing/mark45.dmi'
+	lefthand_file = 'modular_bluemoon/oni3288/icons/mob/inhands/mark45_lefthand.dmi'
+	righthand_file = 'modular_bluemoon/oni3288/icons/mob/inhands/mark45_righthand.dmi'
+	icon_state = "hardsuit-sec_mark46"
+	item_state = "hardsuit-sec_mark46"
+	tail_suit_worn_overlay = 'modular_bluemoon/icons/mob/clothing/tails_digi.dmi'
+	tail_state = "sec_mark46_catcrin"
+	hardsuit_type = "sec_mark46"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/mark46_sec
+
+/obj/item/clothing/suit/space/hardsuit/security/mark46_sec/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+    var/mob/living/carbon/human/M = loc
+    if(ishuman(loc) && !isinhands)
+        var/datum/dna/D = M.dna
+        if(D.features["mam_tail"] == "Leopard Tail")
+            tail_state = "sec_mark46_catcrin"
+        else
+            tail_state = "sec_mark46_vulp"
+    . = ..()
+
+/obj/item/modkit/mark46_kit
+	name = "Catcrin space suit"
+	desc = "A modkit for making a security hardsuit into a Mark 46 Catcrin armor."
+	product = /obj/item/clothing/suit/space/hardsuit/security/mark46_sec
+	fromitem = list(/obj/item/clothing/suit/space/hardsuit/security)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////Длинноствол.
 
 /obj/item/gun/energy/e_gun/hos/karabiner_m13
@@ -648,6 +691,7 @@
 	new /obj/item/modkit/magrrinei_kit(src)
 	new /obj/item/modkit/ffshield(src)
 	new /obj/item/modkit/hopesh_kit(src)
+	new /obj/item/modkit/mark46_kit(src)
 
 // Закину коробку с постерами для спратера сюда, чтоб особо не срать.
 

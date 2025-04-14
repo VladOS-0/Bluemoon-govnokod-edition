@@ -568,7 +568,8 @@
 	held_icon = "juda"
 	unique_pet = TRUE
 	gender = MALE
-	speak = list("*growl", "*rawr2", "Булькает", "Булькает гениально", "Надувает пузырь", "Крутится вокруг себя")
+	speak = list("*growl", "*rawr2")
+	emote_see = list("Булькает", "Булькает гениально", "Надувает пузырь", "Крутится вокруг себя")
 	icon = 'modular_bluemoon/kovac_shitcode/icons/animals.dmi'
 
 /mob/living/simple_animal/pet/dog/corgi/Lisa/zlatchek
