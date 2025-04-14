@@ -31,3 +31,6 @@
 #define TRAIT_BLUEMOON_DEATH_FORGETFULNESS	"bm_death_forget"
 // Названия для мудов от квирков
 #define QMOOD_BONDAGE		"mood_bondage"
+
+/// Mob does not remember its death, due to one of DEATH_FORGETFULLNESS_REASONs
+#define TRAIT_BLUEMOON_DEATH_FORGETFULNESS	"bm_death_forget"
