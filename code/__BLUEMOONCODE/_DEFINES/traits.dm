@@ -25,3 +25,6 @@
 
 // Трейты для профессий
 #define QUALIFIED_ROBOTIC_MAINTER			"qualified_robotic_maintner"
+
+/// Mob does not remember its death, due to one of DEATH_FORGETFULLNESS_REASONs
+#define TRAIT_BLUEMOON_DEATH_FORGETFULNESS	"bm_death_forget"
