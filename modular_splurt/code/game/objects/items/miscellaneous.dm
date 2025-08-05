@@ -4,6 +4,15 @@
 /obj/item/choice_beacon/copgun
 	name = "personal weapon beacon"
 	desc = "Use this to summon your personal Security issued sidearm!"
+	var/uses = 2
+
+/obj/item/choice_beacon/copgun/spawn_option(choice, mob/living/M)
+	//I don't wanna recode two different procs just for it to do the same as doing this
+	if(uses > 1)
+		var/obj/item/choice_beacon/copgun/replace = new
+		replace.uses = uses - 1
+		M.put_in_hands(replace)
+	. = ..()
 
 /obj/item/choice_beacon/copgun/generate_display_names()
 	var/static/list/cop_gun_list
