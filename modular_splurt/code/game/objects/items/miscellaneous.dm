@@ -4,7 +4,7 @@
 /obj/item/choice_beacon/copgun
 	name = "personal weapon beacon"
 	desc = "Use this to summon your personal Security issued sidearm!"
-	var/uses = 2
+	var/uses = 1
 
 /obj/item/choice_beacon/copgun/spawn_option(choice, mob/living/M)
 	//I don't wanna recode two different procs just for it to do the same as doing this
