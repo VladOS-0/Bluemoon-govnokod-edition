@@ -116,6 +116,7 @@
 	to_chat(owner, "<span class='warning'>Странное покалывание пробегает по вашей коже... и вдруг весь мир начинает вращаться вокруг вас!</span>")
 	balloon_alert_to_viewers("КРЯК!!!")
 	new /obj/effect/gibspawner/generic/animal (owner.loc)
+	owner.emote("realagony")
 
 	if(infection_completed && !QDELETED(src))
 		qdel(src)
