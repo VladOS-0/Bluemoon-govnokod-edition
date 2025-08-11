@@ -71,7 +71,6 @@
 	name = "brig physician's locker"
 	req_access = list(ACCESS_BRIGDOC)
 	icon_state = "brigdoc"
-	icon = 'modular_splurt/icons/obj/closet.dmi'
 
 /obj/structure/closet/secure_closet/brigdoc/PopulateContents()
 	..()
@@ -96,7 +95,6 @@
 	name = "blueshield's locker"
 	req_access = list(ACCESS_BLUESHIELD)
 	icon_state = "bs"
-	icon = 'modular_splurt/icons/obj/closet.dmi'
 	var/pack_amount = 2
 
 /obj/structure/closet/secure_closet/blueshield/PopulateContents()
@@ -114,7 +112,6 @@
 	name = "bridge officer's locker"
 	req_access = list(ACCESS_BRIDGE_OFFICER)
 	icon_state = "bridge"
-	icon = 'modular_splurt/icons/obj/closet.dmi'
 
 /obj/structure/closet/secure_closet/bridgesec/PopulateContents()
 	..()
