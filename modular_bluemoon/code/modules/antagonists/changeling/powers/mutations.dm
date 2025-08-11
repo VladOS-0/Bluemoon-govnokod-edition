@@ -12,6 +12,40 @@
 /datum/action/changeling/sting/sleepy/sting_action(mob/user, mob/target)
 	log_combat(user, target, "sting", "sleepy sting")
 	if(target.reagents)
-		target.reagents..add_reagent(/datum/reagent/toxin/chloralhydrate, 20)
-		target.reagents..add_reagent(/datum/reagent/toxin/staminatoxin, 10)
+		target.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 20)
+		target.reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 	return TRUE
+
+/datum/action/changeling/gloves/gauntlets/extended
+	name = "Soft Bone Gauntlets"
+	glove_type = /obj/item/clothing/gloves/krav_maga/combatglovesplus/extended // just punch his head off dude
+	gamemode_restriction_type = ANTAG_EXTENDED
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus/extended
+	name = "Soft Bone Gauntlets"
+	icon_state = "ling_gauntlets"
+	item_state = "ling_gauntlets"
+	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching people, not so much for firearms."
+	transfer_prints = TRUE
+	item_flags = DROPDEL // whoops
+	body_parts_covered = ARMS|HANDS
+	cold_protection = ARMS|HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 35, BIO = 35, RAD = 35, FIRE = 0, ACID = 0)
+	inherited_trait = TRAIT_CHUNKYFINGERS // how do you expect to shoot anyone with bone covered hands
+	secondary_trait = TRAIT_MAULER // just punch them idiot
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus/extended/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus/extended/equipped(mob/user, slot)
+	. = ..()
+	if(current_equipped_slot == ITEM_SLOT_GLOVES)
+		to_chat(user, "<span class='notice'>With [src] formed around our arms, we are ready to fight.</span>")
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus/extended/dropped(mob/user)
+	. = ..()
+	if(wornonce)
+		to_chat(user, "<span class='warning'>With [src] assimilated, we feel less ready to punch things.</span>")
