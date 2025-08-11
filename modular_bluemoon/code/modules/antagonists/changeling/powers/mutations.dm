@@ -33,8 +33,6 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 35, BIO = 35, RAD = 35, FIRE = 0, ACID = 0)
-	inherited_trait = TRAIT_CHUNKYFINGERS // how do you expect to shoot anyone with bone covered hands
-	secondary_trait = TRAIT_MAULER // just punch them idiot
 
 /obj/item/clothing/gloves/krav_maga/combatglovesplus/extended/Initialize(mapload)
 	. = ..()
@@ -44,8 +42,3 @@
 	. = ..()
 	if(current_equipped_slot == ITEM_SLOT_GLOVES)
 		to_chat(user, "<span class='notice'>With [src] formed around our arms, we are ready to fight.</span>")
-
-/obj/item/clothing/gloves/krav_maga/combatglovesplus/extended/dropped(mob/user)
-	. = ..()
-	if(wornonce)
-		to_chat(user, "<span class='warning'>With [src] assimilated, we feel less ready to punch things.</span>")
