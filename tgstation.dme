@@ -4280,6 +4280,7 @@
 #include "modular_bluemoon\code\game\objects\effects\decals\turfdecal\markings.dm"
 #include "modular_bluemoon\code\game\objects\effects\spawners\lootdrop.dm"
 #include "modular_bluemoon\code\game\objects\effects\temporary_visuals\miscellaneous.dm"
+#include "modular_bluemoon\code\game\objects\effects\miasm.dm"
 #include "modular_bluemoon\code\game\objects\items\ashtray.dm"
 #include "modular_bluemoon\code\game\objects\items\cards_ids.dm"
 #include "modular_bluemoon\code\game\objects\items\cooling_device.dm"

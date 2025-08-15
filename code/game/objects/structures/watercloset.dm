@@ -13,6 +13,8 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
+	var/flush_cooldown = 150
+	var/next_flush = 0
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
@@ -143,6 +145,18 @@
 		playsound(src, 'sound/effects/Glassbr2.ogg', 70, TRUE)
 		unbuckle_mob(M, TRUE)
 		deconstruct(FALSE)
+
+//Смыв воды для иммерсивности и smeshnoe
+/obj/structure/toilet/AltClick(mob/living/M)
+	. = ..()
+	add_fingerprint(M)
+	if(world.time <= next_flush)
+		to_chat(M, "<span class='warning'>[src] is filling with water. Please wait [DisplayTimeText(next_flush - world.time)].</span>")
+		return
+	next_flush = world.time + flush_cooldown
+	playsound(src, pick('modular_bluemoon/sound/items/Unitaz.ogg'), 30, rand(0.90,1.10),3)
+	visible_message(span_warning("[M] pressed the flush button and flushed the toilet!"))
+
 // BLUEMOON ADD END
 
 /obj/structure/toilet/secret
