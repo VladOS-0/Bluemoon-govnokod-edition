@@ -14,7 +14,7 @@
 	ears = /obj/item/radio/headset/headset_cent/alt
 
 	internals_slot = ITEM_SLOT_RPOCKET
-	l_pocket = /obj/item/storage/bag/security
+	l_pocket = /obj/item/extinguisher/mini
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	suit_store = /obj/item/gun/energy/e_gun/nuclear/ert
 

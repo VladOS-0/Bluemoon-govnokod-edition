@@ -134,6 +134,33 @@ mob/living/proc/ghost_cafe_traits(switch_on = FALSE, additional_area)
 	mob_name = "Wendigo"
 	mob_type = /mob/living/simple_animal/wendigo
 
+/datum/outfit/job/actor_changeling
+	name = "Actor Changeling"
+
+	id = /obj/item/card/id/syndicate/advanced
+
+	glasses = /obj/item/clothing/glasses/hud/slaver
+	uniform = /obj/item/clothing/under/syndicate/combat
+	shoes = /obj/item/clothing/shoes/jackboots/tall
+	belt = /obj/item/storage/belt/utility/atmostech
+	gloves = /obj/item/clothing/gloves/combat
+	l_pocket = /obj/item/extinguisher/mini
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+
+	accessory = /obj/item/clothing/accessory/permit/special/deviant/lust/changeling
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+
+	implants = list(
+		/obj/item/implant/mindshield,
+		/obj/item/implant/deathrattle/centcom,
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/radio/centcom,
+		)
+
 /obj/effect/mob_spawn/human/changeling_extended //not grief antag u little shits
 	name = "Changeling - The Horny Creature"
 	desc = "An ancient tomb designed for long-term stasis. This one has the word HORNY scratched all over the surface!"
@@ -150,14 +177,14 @@ mob/living/proc/ghost_cafe_traits(switch_on = FALSE, additional_area)
 	can_load_appearance = TRUE
 	loadout_enabled = TRUE
 	use_outfit_name = TRUE
-	outfit = /datum/outfit/job/stowaway/syndicate/changeling
+	outfit = /datum/outfit/job/actor_changeling
 	category = "special"
 
 /obj/effect/mob_spawn/human/changeling_extended/attack_ghost(mob/user, latejoinercalling)
 	if(GLOB.master_mode == "Extended")
 		return . = ..()
 	else
-		return to_chat(user, "<span class='warning'>Игра за ЕРП-антагонистов допускается лишь в Режим Extended!</span>")
+		return to_chat(user, "<span class='warning'>Игра за ЕРП-антагонистов допускается лишь в режим Extended!</span>")
 
 /obj/effect/mob_spawn/human/changeling_extended/special(mob/living/new_spawn)
 	. = ..()
