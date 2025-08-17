@@ -1749,6 +1749,13 @@
 	ckeywhitelist = list("herobrine998")
 	subcategory = LOADOUT_SUBCATEGORIES_DON02
 
+/datum/gear/donator/bm/moonflower
+	name = "Moonflower"
+	path = /obj/item/reagent_containers/food/snacks/grown/moonflower
+	slot = ITEM_SLOT_HEAD
+	ckeywhitelist = list("herobrine998")
+	subcategory = LOADOUT_SUBCATEGORIES_DON02
+
 /datum/gear/donator/bm/saareuni
 	name = "SAARE BDU G3"
 	slot = ITEM_SLOT_OCLOTHING
