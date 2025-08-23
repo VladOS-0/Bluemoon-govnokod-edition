@@ -209,6 +209,7 @@
 
 /obj/item/organ/tongue/alien/hybrid
 	name = "xenohybrid tongue"
+	initial_accents = null
 
 // /obj/item/organ/tongue/alien/hybrid/Initialize(mapload)
 // 	. = ..()

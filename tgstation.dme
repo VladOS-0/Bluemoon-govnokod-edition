@@ -4503,6 +4503,8 @@
 #include "modular_bluemoon\code\modules\mob\living\carbon\human\damage_procs.dm"
 #include "modular_bluemoon\code\modules\mob\living\carbon\human\human_defines.dm"
 #include "modular_bluemoon\code\modules\mob\living\carbon\human\self_gulp_size.dm"
+#include "modular_bluemoon\code\modules\mob\living\carbon\human\species\species.dm"
+#include "modular_bluemoon\code\modules\mob\living\carbon\human\species\xeno.dm"
 #include "modular_bluemoon\code\modules\mob\living\simple_animal\simple_animal.dm"
 #include "modular_bluemoon\code\modules\mob\living\simple_animal\wendigo.dm"
 #include "modular_bluemoon\code\modules\mob\living\simple_animal\friendly\gaslamp.dm"

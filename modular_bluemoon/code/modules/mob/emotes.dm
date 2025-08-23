@@ -558,3 +558,145 @@
 	message = "шипит!"
 	sound = 'modular_bluemoon/sound/emotes/felinid_hiss.ogg'
 	emote_cooldown = 1 SECONDS
+
+/*
+ * XENO EMOTES START
+ */
+
+/datum/emote/sound/human/alien_hiss_1
+	key = "ahiss1"
+	key_third_person = "ahiss1"
+	message = "шипит!"
+	message_mime = null
+	sound = 'sound/mobs/non-humanoids/hiss/hiss1.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_hiss_2
+	key = "ahiss2"
+	key_third_person = "ahiss2"
+	message = "гортанно шипит..."
+	message_mime = null
+	sound = 'sound/mobs/non-humanoids/hiss/hiss2.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_hiss_2/run_emote(mob/user, params)
+	sound = pick(
+	'sound/mobs/non-humanoids/hiss/hiss2.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss3.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss4.ogg')
+	. = ..()
+
+/datum/emote/sound/human/alien_hiss_3
+	key = "ahiss3"
+	key_third_person = "ahiss3"
+	message = "агрессивно шипит!"
+	message_mime = null
+	sound = 'sound/mobs/non-humanoids/hiss/hiss5.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_hiss_4
+	key = "ahiss4"
+	key_third_person = "ahiss4"
+	message = "шипит на выдохе..."
+	message_mime = null
+	sound = 'sound/mobs/non-humanoids/hiss/lowHiss1.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_hiss_4/run_emote(mob/user, params)
+	sound = pick(
+	'sound/mobs/non-humanoids/hiss/lowHiss1.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss4.ogg')
+	. = ..()
+
+/datum/emote/sound/human/alien_scream
+	key = "ascream"
+	key_third_person = "ascream"
+	message = "агрессивно кричит!"
+	sound = 'sound/alien/Voice/screech1.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_scream/run_emote(mob/user, params)
+	sound = pick(
+	'sound/alien/Voice/screech1.ogg',
+	'sound/alien/Voice/screech2.ogg',
+	'sound/alien/Voice/screech3.ogg',
+	'sound/alien/Voice/screech4.ogg')
+	. = ..()
+
+/datum/emote/sound/human/alien_scream_pain
+	key = "apscream"
+	key_third_person = "apscream"
+	message = "кричит!"
+	sound = 'sound/alien/Voice/hurt1.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_scream_pain/run_emote(mob/user, params)
+	sound = pick(
+	'sound/alien/Voice/hurt1.ogg',
+	'sound/alien/Voice/hurt2.ogg')
+	. = ..()
+
+/datum/emote/sound/human/alien_sigh
+	key = "asigh"
+	key_third_person = "asigh"
+	message = "раздражённо выдыхает!"
+	message_mime = null
+	sound = 'sound/alien/Voice/gnarl1.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_growl_1
+	key = "agrowl1"
+	key_third_person = "agrowl1"
+	message = "агрессивно шипит, клацнув зубами!"
+	message_mime = null
+	sound = 'sound/alien/Voice/growl1.ogg'
+	emote_cooldown = 6 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_growl_2
+	key = "agrowl2"
+	key_third_person = "agrowl2"
+	message = "недовольно рычит."
+	message_mime = null
+	sound = 'sound/alien/Voice/growl2.ogg'
+	emote_cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_growl_2/run_emote(mob/user, params)
+	sound = pick(
+	'sound/alien/Voice/growl2.ogg',
+	'sound/alien/Voice/growl9.ogg',
+	'sound/alien/Voice/growl10.ogg',)
+	. = ..()
+
+/datum/emote/sound/human/alien_growl_3
+	key = "agrowl3"
+	key_third_person = "agrowl3"
+	message = "агрессивно рычит!"
+	message_mime = null
+	sound = 'sound/alien/Voice/growl3.ogg'
+	emote_cooldown = 6 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/alien_growl_3/run_emote(mob/user, params)
+	sound = pick(
+	'sound/alien/Voice/growl3.ogg',
+	'sound/alien/Voice/growl4.ogg',
+	'sound/alien/Voice/growl5.ogg',
+	'sound/alien/Voice/growl6.ogg',
+	'sound/alien/Voice/growl7.ogg',
+	'sound/alien/Voice/growl8.ogg')
+	. = ..()
+
+/*
+ * XENO EMOTES END
+ */
