@@ -2,6 +2,7 @@ GLOBAL_VAR_INIT(bluemoon_criminal_quirk_warden_name, "") // имя для вар
 GLOBAL_VAR_INIT(bluemoon_criminal_quirk_sergeants_names, "")
 GLOBAL_VAR_INIT(bluemoon_criminal_quirk_hos_name, "")
 GLOBAL_VAR_INIT(bluemoon_criminal_quirk_commander_name, "")
+GLOBAL_LIST_EMPTY(bluemoon_criminal_characters)
 
 #define ISSUER_TYPE_SECURITY_OFFICER 	1 // типы написания для корректировки послесловий, чтобы коммандер не писал "я увольняюсь"
 #define ISSUER_TYPE_SECURITY_WARDEN		2
@@ -29,8 +30,16 @@ GLOBAL_VAR_INIT(bluemoon_criminal_quirk_commander_name, "")
 
 	var/mob/living/carbon/human/H = quirk_holder
 	var/time_before_creating_crimes = 1 MINUTES
+	if(quirk_holder.real_name in GLOB.bluemoon_criminal_characters)
+		qdel(src) // Предотвращает повторную выдачу квирка, если персонажа актуализируют
+		return
 	H.start_create_security_crime_timer(time_before_creating_crimes)
 	addtimer(CALLBACK(src, PROC_REF(on_crime_creation)), time_before_creating_crimes + 10 SECONDS, TIMER_DELETE_ME) // Если вызвать qdel сразу после объявления таймера, будет рантайм
+
+/datum/quirk/bluemoon_criminal/Destroy()
+	if(!(quirk_holder.real_name in GLOB.bluemoon_criminal_characters))
+		GLOB.bluemoon_criminal_characters += quirk_holder.name
+	. = ..()
 
 /datum/quirk/bluemoon_criminal/proc/on_crime_creation()
 	qdel(src)
@@ -81,7 +90,7 @@ GLOBAL_VAR_INIT(bluemoon_criminal_quirk_commander_name, "")
 	target_records.fields["criminal"] = SEC_RECORD_STATUS_ARREST
 	sec_hud_set_security_status()
 
-	to_chat(src, span_info("OOC: Наличие квирка нарушителя НЕ ЯВЛЯЕТСЯ оправданием для самоантагонизма. Он создан для интересных ситуаций и взаимодействию СБ с персоналом на почве нарушений вне станции. Be cool."))
+	to_chat(src, span_info("OOC: Наличие квирка нарушителя НЕ ЯВЛЯЕТСЯ оправданием для самоантагонизма. Он создан для интересных ситуаций и взаимодействия СБ с персоналом на почве нарушений вне станции. Be cool."))
 
 	var/know_about_crime_title = pick( // заголовок
 	"Вы нарушили закон!", "За вами охотятся арбитры!", "Ваши нарушения не остались без внимания!", "О вас не забыли!", "О вас не забудут!", \
