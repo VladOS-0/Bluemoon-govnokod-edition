@@ -69,7 +69,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/mech_beacons
-	id = "mech_medigax"
+	id = "mech_beacons"
 	display_name = "EXOSUIT: Medical-Spec Gygax"
 	description = "Medical-Spec Gygax designs"
 	prereq_ids = list("mech_gygax", "mecha_odysseus", "mech_durand", "adv_mecha")
