@@ -5,15 +5,15 @@
 	slot = ITEM_SLOT_BACKPACK
 	path = /obj/item/bikehorn/golden
 	category = LOADOUT_CATEGORY_DONATOR
-	subcategory = LOADOUT_SUBCATEGORIES_DON01
-	donator_group_id = DONATOR_GROUP_TIER_3
+	subcategory = LOADOUT_SUBCATEGORIES_DON02
+	donator_group_id = DONATOR_GROUP_TIER_2
 
 /datum/gear/donator/summon_pie
 	name = "Book: Summon Pie"
 	slot = ITEM_SLOT_BACKPACK
 	path = /obj/item/book/granter/spell/summon_pie
 	cost = 6
-	subcategory = LOADOUT_SUBCATEGORIES_DON03
+	subcategory = LOADOUT_SUBCATEGORIES_DON02
 	donator_group_id = DONATOR_GROUP_TIER_3
 
 /datum/gear/donator/foam_lmg
@@ -21,7 +21,7 @@
 	slot = ITEM_SLOT_BACKPACK
 	path = /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	cost = 6
-	subcategory = LOADOUT_SUBCATEGORIES_DON03
+	subcategory = LOADOUT_SUBCATEGORIES_DON02
 	donator_group_id = DONATOR_GROUP_TIER_3
 
 /datum/gear/donator/foam_lmg_ammo
@@ -29,7 +29,7 @@
 	slot = ITEM_SLOT_BACKPACK
 	path = /obj/item/ammo_box/magazine/toy/m762/riot
 	cost = 2
-	subcategory = LOADOUT_SUBCATEGORIES_DON03
+	subcategory = LOADOUT_SUBCATEGORIES_DON02
 	donator_group_id = DONATOR_GROUP_TIER_3
 
 /datum/gear/donator/cleanercloak
