@@ -86,6 +86,73 @@
 
 ////////////////////////
 
+/obj/item/clothing/neck/hateredsoul_dogtag
+	name = "Combat Dogtag"
+	desc = "Связка боевых жетонов с резиновым ободком по их краям. Выполнены из прочного и износостойкого сплава, с маленьким весом, от чего стали практически незаметными для самого носителя. На правом жетоне выбиты основные данные его владельца, в виде полного имени, группы крови и принадлежности к подразделению. На левом жетоне выбита дополнительная информация и очертания владельца."
+	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
+	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/accessories.dmi'
+	icon_state = "hateredsoul_dogtag"
+	item_state = "hateredsoul_dogtag"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
+	unique_reskin = list(
+		"Combat dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_1",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag"
+		),
+		"Combat Dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_2",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag"
+		)
+	)
+
+/obj/item/clothing/neck/hateredsoul_dogtag/nt
+	name = "NT Combat Dogtag"
+	desc = "Связка боевых жетонов с резиновым ободком по их краям. Выполнены из прочного и износостойкого сплава, с маленьким весом, от чего стали практически незаметными для самого носителя. На правом жетоне выбиты основные данные его владельца, в виде полного имени, группы крови и принадлежности к подразделению. На левом жетоне изображён логотип корпорации NanoTrasen."
+	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
+	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/accessories.dmi'
+	icon_state = "hateredsoul_dogtag_nt"
+	item_state = "hateredsoul_dogtag_nt"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
+	unique_reskin = list(
+		"NT Combat Dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_nt_1",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag_nt"
+		),
+		"NT Combat dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_nt_2",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag_nt"
+		),
+		"NT combat dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_nt_3",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag_nt"
+		)
+	)
+
+/obj/item/clothing/neck/hateredsoul_dogtag/syndie
+	name = "Syndie Combat Dogtag"
+	desc = "Связка боевых жетонов с резиновым ободком по их краям. Выполнены из прочного и износостойкого сплава, с маленьким весом, от чего стали практически незаметными для самого носителя. На правом жетоне выбиты основные данные его владельца, в виде полного имени, группы крови и принадлежности к подразделению. На левом жетоне изображена трёхглавая змея Синдиката."
+	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
+	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/accessories.dmi'
+	icon_state = "hateredsoul_dogtag_syndie"
+	item_state = "hateredsoul_dogtag_syndie"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
+	unique_reskin = list(
+		"Syndie Combat Dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_syndie_1",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag_syndie"
+		),
+		"Syndie Combat dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_syndie_2",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag_syndie"
+		),
+		"Syndie combat dogtag" = list(
+			RESKIN_ICON_STATE = "hateredsoul_dogtag_syndie_3",
+			RESKIN_ITEM_STATE = "hateredsoul_dogtag_syndie"
+		)
+	)
+
+////////////////////////
+
 /obj/item/clothing/neck/tie/dogtag
 	name = "Dog tag"
 	desc = "The first tag indicates personal number - AG-003288 and affiliation with the AC mercenaries.  The second tag contains the first and last name - Althea Gantia, along with the blood type."
