@@ -213,7 +213,7 @@
 		"Fox" = /mob/living/simple_animal/pet/fox,
 		"Red Panda" = /mob/living/simple_animal/pet/redpanda,
 		"Possum" = /mob/living/simple_animal/opossum,
-		"Moro" = /mob/living/simple_animal/pet/fox/emma)
+		"Emma" = /mob/living/simple_animal/pet/fox/emma)
 
 /obj/item/choice_beacon/pet/jruttie
 	pets = list("Jruttie" = /mob/living/simple_animal/pet/cat/jruttie)
