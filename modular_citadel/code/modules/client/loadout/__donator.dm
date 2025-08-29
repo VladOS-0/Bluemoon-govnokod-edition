@@ -14,7 +14,7 @@
 	path = /obj/item/book/granter/spell/summon_pie
 	cost = 6
 	subcategory = LOADOUT_SUBCATEGORIES_DON02
-	donator_group_id = DONATOR_GROUP_TIER_3
+	donator_group_id = DONATOR_GROUP_TIER_2
 
 /datum/gear/donator/foam_lmg
 	name = "Foam LMG"
@@ -22,7 +22,7 @@
 	path = /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	cost = 6
 	subcategory = LOADOUT_SUBCATEGORIES_DON02
-	donator_group_id = DONATOR_GROUP_TIER_3
+	donator_group_id = DONATOR_GROUP_TIER_2
 
 /datum/gear/donator/foam_lmg_ammo
 	name = "Foam LMG Ammo"
@@ -30,7 +30,7 @@
 	path = /obj/item/ammo_box/magazine/toy/m762/riot
 	cost = 2
 	subcategory = LOADOUT_SUBCATEGORIES_DON02
-	donator_group_id = DONATOR_GROUP_TIER_3
+	donator_group_id = DONATOR_GROUP_TIER_2
 
 /datum/gear/donator/cleanercloak
 	name = "Teshari Cleaner Cloak"
