@@ -4640,6 +4640,7 @@
 #include "modular_bluemoon\fluffs\code\storage.dm"
 #include "modular_bluemoon\fluffs\code\suit.dm"
 #include "modular_bluemoon\fluffs\code\under.dm"
+#include "modular_bluemoon\fluffs\code\underwear.dm"
 #include "modular_bluemoon\fluffs\code\wrists.dm"
 #include "modular_bluemoon\Gardelin0\code\clothing\accessories.dm"
 #include "modular_bluemoon\Gardelin0\code\clothing\back.dm"
