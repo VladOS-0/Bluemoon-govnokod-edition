@@ -60,26 +60,31 @@ SUBSYSTEM_DEF(events)
 		return
 
 	var/gamemode = SSticker.mode.config_tag
-	var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
+	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// Only alive, non-AFK human players count towards this.
 
-	var/list/event_roster = list()
-
-	for(var/datum/round_event_control/event_to_check in control)
-		if(!event_to_check.canSpawnEvent(players_amt, gamemode))
+	var/sum_of_weights = 0
+	for(var/datum/round_event_control/E in control)
+		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		if(event_to_check.weight < 0) //for round-start events etc.
-			var/res = TriggerEvent(event_to_check)
+		if(E.weight < 0)						//for round-start events etc.
+			var/res = TriggerEvent(E)
 			if(res == EVENT_INTERRUPTED)
-				continue //like it never happened
+				continue	//like it never happened
 			if(res == EVENT_CANT_RUN)
 				return
-		else
-			event_roster[event_to_check] = event_to_check.weight
+		sum_of_weights += E.weight
 
-	var/datum/round_event_control/event_to_run = pickweight(event_roster)
-	if(event_to_run)
-		TriggerEvent(event_to_run)
+	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
+
+	for(var/datum/round_event_control/E in control)
+		if(!E.canSpawnEvent(players_amt, gamemode))
+			continue
+		sum_of_weights -= E.weight
+
+		if(sum_of_weights <= 0)				//we've hit our goal
+			if(TriggerEvent(E))
+				return
 
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
 	. = E.preRunEvent()

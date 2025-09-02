@@ -542,7 +542,7 @@ BLUEMOON REMOVAL END*/
 	var/round_start_budget_left = round_start_budget
 
 	while (round_start_budget_left > 0)
-		var/datum/dynamic_ruleset/roundstart/ruleset = pickweight(drafted_rules)
+		var/datum/dynamic_ruleset/roundstart/ruleset = pickweightAllowZero(drafted_rules)
 		if (isnull(ruleset))
 			log_game("DYNAMIC: No more rules can be applied, stopping with [round_start_budget] left.")
 			break
