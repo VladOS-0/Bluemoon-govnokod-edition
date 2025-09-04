@@ -8,7 +8,8 @@ import {
   Table,
   Dropdown,
   Flex,
-  ProgressBar
+  ProgressBar,
+  Input
 } from '../components';
 import { Window } from '../layouts';
 
@@ -35,9 +36,6 @@ export const TicketStatsPanel = (props, context) => {
     loading,
     stats_data,
     error_message,
-    current_year,
-    current_month,
-    current_date,
     default_start_date,
     default_end_date,
     available_columns,
@@ -50,14 +48,12 @@ export const TicketStatsPanel = (props, context) => {
       {/* Filters Section */}
       <FilterControls
         act={act}
-        current_year={current_year}
-        current_month={current_month}
-        current_date={current_date}
         default_start_date={default_start_date}
         default_end_date={default_end_date}
         grouping_options={grouping_options}
         admin_list={admin_list}
         available_columns={available_columns}
+        loading={loading}
       />
 
       {/* Loading State */}
@@ -78,11 +74,17 @@ export const TicketStatsPanel = (props, context) => {
       )}
 
       {/* Results Display */}
-      {!loading && stats_data && (
+      {!loading && stats_data && stats_data.length > 0 && (
         <StatsResults
           stats_data={stats_data}
           available_columns={available_columns}
         />
+      )}
+
+      {!loading && stats_data && stats_data.length === 0 && (
+        <NoticeBox info>
+          No data found for the selected criteria.
+        </NoticeBox>
       )}
     </Section>
   );
@@ -91,14 +93,12 @@ export const TicketStatsPanel = (props, context) => {
 export const FilterControls = (props, context) => {
   const {
     act,
-    current_year,
-    current_month,
-    current_date,
     default_start_date,
     default_end_date,
     grouping_options,
     admin_list,
-    available_columns
+    available_columns,
+    loading
   } = props;
 
   const [startDate, setStartDate] = useLocalState(context, 'startDate', default_start_date);
@@ -108,6 +108,8 @@ export const FilterControls = (props, context) => {
   const [selectedColumns, setSelectedColumns] = useLocalState(context, 'selectedColumns',
     available_columns.map(col => col.key)
   );
+  const [sortColumn, setSortColumn] = useLocalState(context, 'sortColumn', 'admin_name');
+  const [sortOrder, setSortOrder] = useLocalState(context, 'sortOrder', 'ASC');
 
   const handleFetchStats = () => {
     act('fetch_stats', {
@@ -116,6 +118,8 @@ export const FilterControls = (props, context) => {
       admin_filter: adminFilter,
       grouping: grouping,
       selected_columns: selectedColumns,
+      sort_column: sortColumn,
+      sort_order: sortOrder,
     });
   };
 
@@ -127,24 +131,46 @@ export const FilterControls = (props, context) => {
     );
   };
 
+  const handleSortChange = (column) => {
+    if (sortColumn === column) {
+      setSortOrder(sortOrder === 'ASC' ? 'DESC' : 'ASC');
+    } else {
+      setSortColumn(column);
+      setSortOrder('ASC');
+    }
+  };
+
+  const clearAdminFilter = () => {
+    setAdminFilter('');
+  };
+
+  // Get display name for sort column
+  const getSortColumnName = () => {
+    if (sortColumn === 'admin_name') return 'Admin Name';
+    const column = available_columns.find(col => col.key === sortColumn);
+    return column ? column.name : sortColumn;
+  };
+
   return (
     <Box>
       {/* Date Range */}
       <LabeledList>
         <LabeledList.Item label="Start Date">
-          <input
+          <Input
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={(e, value) => setStartDate(value)}
             style={{ width: '200px' }}
+            disabled={loading}
           />
         </LabeledList.Item>
         <LabeledList.Item label="End Date">
-          <input
+          <Input
             type="date"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            onChange={(e, value) => setEndDate(value)}
             style={{ width: '200px' }}
+            disabled={loading}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -152,12 +178,25 @@ export const FilterControls = (props, context) => {
       {/* Admin Filter */}
       <LabeledList>
         <LabeledList.Item label="Filter by Admin">
-          <Dropdown
-            width="200px"
-            selected={adminFilter || "All Admins"}
-            options={['', ...admin_list]}
-            onSelected={(value) => setAdminFilter(value)}
-          />
+          <Flex>
+            <Dropdown
+              width="180px"
+              selected={adminFilter || "All Admins"}
+              options={['', ...admin_list]}
+              onSelected={(value) => setAdminFilter(value)}
+              disabled={loading}
+            />
+            {adminFilter && (
+              <Button
+                icon="times"
+                color="bad"
+                onClick={clearAdminFilter}
+                tooltip="Clear filter"
+                ml={1}
+                disabled={loading}
+              />
+            )}
+          </Flex>
         </LabeledList.Item>
       </LabeledList>
 
@@ -170,7 +209,33 @@ export const FilterControls = (props, context) => {
             options={grouping_options.map(opt => opt.key)}
             displayText={grouping_options.find(opt => opt.key === grouping)?.name}
             onSelected={(value) => setGrouping(value)}
+            disabled={loading}
           />
+        </LabeledList.Item>
+      </LabeledList>
+
+      {/* Sort Options */}
+      <LabeledList>
+        <LabeledList.Item label="Sort By">
+          <Dropdown
+            width="200px"
+            selected={sortColumn}
+            options={['admin_name', ...available_columns.map(col => col.key)]}
+            displayText={getSortColumnName()}
+            onSelected={(value) => handleSortChange(value)}
+            disabled={loading}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Sort Order">
+          <Button
+            icon={sortOrder === 'ASC' ? 'sort-amount-up' : 'sort-amount-down'}
+            selected
+            onClick={() => setSortOrder(sortOrder === 'ASC' ? 'DESC' : 'ASC')}
+            tooltip={sortOrder === 'ASC' ? 'Ascending' : 'Descending'}
+            disabled={loading}
+          >
+            {sortOrder === 'ASC' ? 'ASC ↑' : 'DESC ↓'}
+          </Button>
         </LabeledList.Item>
       </LabeledList>
 
@@ -183,6 +248,7 @@ export const FilterControls = (props, context) => {
               selected={selectedColumns.includes(column.key)}
               onClick={() => toggleColumn(column.key)}
               m={0.5}
+              disabled={loading}
             >
               {column.name}
             </Button>
@@ -195,10 +261,10 @@ export const FilterControls = (props, context) => {
         icon="search"
         color="good"
         onClick={handleFetchStats}
-        disabled={selectedColumns.length === 0}
+        disabled={selectedColumns.length === 0 || loading}
         tooltip={selectedColumns.length === 0 ? "Select at least one column" : ""}
       >
-        Fetch Statistics
+        {loading ? "Loading..." : "Fetch Statistics"}
       </Button>
     </Box>
   );
@@ -206,14 +272,6 @@ export const FilterControls = (props, context) => {
 
 export const StatsResults = (props, context) => {
   const { stats_data, available_columns } = props;
-
-  if (stats_data.length === 0) {
-    return (
-      <NoticeBox info>
-        No data found for the selected criteria.
-      </NoticeBox>
-    );
-  }
 
   // Get all possible column keys from the first row
   const allColumns = Object.keys(stats_data[0] || {});
