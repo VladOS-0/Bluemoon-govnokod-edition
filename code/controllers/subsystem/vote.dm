@@ -1,14 +1,5 @@
 #define VOTE_COOLDOWN 10
 
-// BLUEMOON ADD START - дефайны для нужного количества игроков на режимы динамика, чтобы не дублировать
-#define ROUNDTYPE_PLAYERCOUNT_EXTENDED_MAX 14
-#define ROUNDTYPE_PLAYERCOUNT_DYNAMIC_LOWPOP_MIN 15
-#define ROUNDTYPE_PLAYERCOUNT_DYNAMIC_LOWPOP_MAX 40
-#define ROUNDTYPE_PLAYERCOUNT_DYNAMIC_MEDIUMPOP_MIN 41
-#define ROUNDTYPE_PLAYERCOUNT_DYNAMIC_MEDIUMPOP_MAX 71
-#define ROUNDTYPE_PLAYERCOUNT_DYNAMIC_HIGHPOP_MIN 71
-// BLUEMOON ADD END
-
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
@@ -418,7 +409,10 @@ SUBSYSTEM_DEF(vote)
 					// if(SSpersistence.last_dynamic_gamemode in list(ROUNDTYPE_DYNAMIC_TEAMBASED, ROUNDTYPE_DYNAMIC_HARD))
 					// 	last_dynamic_type = list(ROUNDTYPE_DYNAMIC_TEAMBASED, ROUNDTYPE_DYNAMIC_HARD)
 
-					. = pick_dynamic_type_by_chaos(GLOB.player_list)
+					if(. == ROUNDTYPE_EXTENDED)
+						. == ROUNDTYPE_EXTENDED
+					else
+						. = pick_dynamic_type_by_chaos(GLOB.player_list)
 					SSpersistence.RecordDynamicType(.)
 
 					GLOB.round_type = .
@@ -953,10 +947,13 @@ SUBSYSTEM_DEF(vote)
 	// var/list/available_medium = list(ROUNDTYPE_DYNAMIC_MEDIUM, ROUNDTYPE_DYNAMIC_LIGHT) - last_dynamic_type
 
 	var/dynamic_type
-	if(total_chaos >= CONFIG_GET(number/chaos_for_a_hard_dynamic) && length(available_hard))
-		dynamic_type = pick(available_hard)
+	if(get_total_player_count() >= 20)
+		if(total_chaos >= CONFIG_GET(number/chaos_for_a_hard_dynamic) && length(available_hard))
+			dynamic_type = pick(available_hard)
+		else
+			dynamic_type = pick(available_medium)
 	else
-		dynamic_type = pick(available_medium)
+		dynamic_type = ROUNDTYPE_DYNAMIC_LIGHT
 
 	// Логируем детали выбора
 	message_admins("Выбранный Динамик: [dynamic_type]. Количество игроков - [players.len]. \
@@ -965,12 +962,3 @@ SUBSYSTEM_DEF(vote)
 	Уровень хаоса от игроков - [total_chaos]. [CONFIG_GET(number/chaos_for_a_hard_dynamic)] было нужно для Хард-Динамика.")
 
 	return dynamic_type
-
-// BLUEMOON ADD START - дефайны для нужного количества игроков на режимы динамика, чтобы не дублировать
-#undef ROUNDTYPE_PLAYERCOUNT_EXTENDED_MAX
-#undef ROUNDTYPE_PLAYERCOUNT_DYNAMIC_LOWPOP_MIN
-#undef ROUNDTYPE_PLAYERCOUNT_DYNAMIC_LOWPOP_MAX
-#undef ROUNDTYPE_PLAYERCOUNT_DYNAMIC_MEDIUMPOP_MIN
-#undef ROUNDTYPE_PLAYERCOUNT_DYNAMIC_MEDIUMPOP_MAX
-#undef ROUNDTYPE_PLAYERCOUNT_DYNAMIC_HIGHPOP_MIN
-// BLUEMOON ADD END
