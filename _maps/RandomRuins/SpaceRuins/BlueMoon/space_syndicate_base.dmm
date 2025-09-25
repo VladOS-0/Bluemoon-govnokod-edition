@@ -7760,7 +7760,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/ammo_box/a357,
 /obj/item/gun/ballistic/revolver/mateba,
-/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/winter,
+/obj/item/clothing/suit/toggle/captains_parade/syndicate/winter,
 /obj/item/clothing/accessory/medal/gold{
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of an Admiral to the Sothran Syndicate, and their undisputable authority over their crew.";
 	name = "medal of admiralty"
@@ -7768,7 +7768,7 @@
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/radio/headset/ds2/command,
 /obj/item/clothing/under/rank/captain/utility/syndicate,
-/obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
+/obj/item/clothing/suit/toggle/captains_parade/syndicate,
 /obj/item/clothing/head/HoS/beret/syndicate,
 /obj/item/clothing/head/HoS/syndicate,
 /obj/effect/mapping_helpers/network_builder/power_cable/auto,
