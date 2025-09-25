@@ -79,6 +79,7 @@
 	unique_reskin = list(
 		"Syndicate Officer Coat" = list("icon_state" = "str"),
 		"Trenchcoat" = list("icon_state" = "detective"),
+		"CentCom Officer Coat" = list("icon_state" = "centcom_coat"),
 		"Red Coat" = list("icon_state" = "armadyne_trench")
 	)
 

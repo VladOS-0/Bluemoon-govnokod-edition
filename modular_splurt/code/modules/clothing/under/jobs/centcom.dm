@@ -3,6 +3,7 @@
 	desc = "Shouldn't be seing this, and not just cause it's CC's!"
 	icon = 'modular_splurt/icons/obj/clothing/centcom.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/centcom.dmi'
+	anthro_mob_worn_overlay = 'modular_splurt/icons/mob/clothing/centcom_digi.dmi'
 	icon_state = "debug"
 	item_state = "debug"
 
