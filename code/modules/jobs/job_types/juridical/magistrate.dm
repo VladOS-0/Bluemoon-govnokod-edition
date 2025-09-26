@@ -50,19 +50,6 @@
 		/obj/item/book/manual/wiki/security_space_law
 	)
 
-/obj/item/radio/headset/heads/ntr
-	name = "\proper the NanoTrasen Representative headset"
-	desc = "The headset of the lead station's judge."
-	icon_state = "com_headset"
-	keyslot = new /obj/item/encryptionkey/headset_ntr
-
-/obj/item/radio/headset/heads/ntr/equipped(mob/user, slot)
-	..()
-	if((slot == ITEM_SLOT_EARS_LEFT) || (slot == ITEM_SLOT_EARS_RIGHT))
-		user.typing_indicator_state = /obj/effect/overlay/typing_indicator/additional/law
-	else
-		user.typing_indicator_state = /obj/effect/overlay/typing_indicator
-
 /obj/item/pda/heads/ntr
 	name = "NanoTrasen Representative PDA"
 	default_cartridge = /obj/item/cartridge/hos
@@ -113,7 +100,7 @@
 
 	belt = /obj/item/pda/heads/ntr
 	id = /obj/item/card/id/silver
-	ears = /obj/item/radio/headset/heads/ntr
+	ears = /obj/item/radio/headset/headset_cent/ntr
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/black/alt
@@ -142,7 +129,7 @@
 
 	//belt = /obj/item/pda/syndicate/no_deto
 
-	ears = /obj/item/radio/headset/heads/ntr
+	ears = /obj/item/radio/headset/headset_cent/ntr
 	gloves = /obj/item/clothing/gloves/combat
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/black/alt
