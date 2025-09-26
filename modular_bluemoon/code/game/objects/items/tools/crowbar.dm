@@ -24,6 +24,7 @@
 	lefthand_file = 'modular_bluemoon/icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'modular_bluemoon/icons/mob/inhands/equipment/tools_righthand.dmi'
 	toolspeed = 0.5
+	can_force_powered = FALSE
 
 /obj/item/crowbar/power/science/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
