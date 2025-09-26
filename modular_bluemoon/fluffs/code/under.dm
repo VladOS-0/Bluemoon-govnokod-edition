@@ -438,3 +438,8 @@
 	item_state = "saare"
 	can_adjust = TRUE
 
+/obj/item/clothing/under/donator/bm/kladmen_dress
+	name = "Gothic Dress"
+	desc = " Long gothic dress decorated with lace patterns ."
+	icon_state = "kladmen_dress"
+	item_state = "kladmen_dress"
