@@ -901,3 +901,9 @@
 	desc = "A modkit for making a .38 Mars Special into a RSH-Future."
 	product = /obj/item/gun/ballistic/revolver/detective/rsh_future
 	fromitem = list (/obj/item/gun/ballistic/revolver/detective)
+
+/obj/item/modkit/modsuit_syndicate
+	name = "Syndicate Modsuit Modkit"
+	desc = "A modkit for making a Security Modsuit into a Syndicate Modsuit."
+	product = /obj/item/mod/control/pre_equipped/security/syndicate
+	fromitem = list (/obj/item/mod/control/pre_equipped/security)
