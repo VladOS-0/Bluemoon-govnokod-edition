@@ -1870,8 +1870,8 @@
 	subcategory = LOADOUT_SUBCATEGORIES_DON03
 
 /datum/gear/donator/bm/modsuit_syndicate
-	name = "Syndicate Modsuit Modkit"
+	name = "Syndicate Modsuit"
 	slot = ITEM_SLOT_BACKPACK
-	path = /obj/item/modkit/modsuit_syndicate
+	path = /obj/item/mod/control/pre_equipped/security/syndicate
 	ckeywhitelist = list("domilion")
 	subcategory = LOADOUT_SUBCATEGORIES_DON03
