@@ -409,12 +409,12 @@ SUBSYSTEM_DEF(vote)
 					// if(SSpersistence.last_dynamic_gamemode in list(ROUNDTYPE_DYNAMIC_TEAMBASED, ROUNDTYPE_DYNAMIC_HARD))
 					// 	last_dynamic_type = list(ROUNDTYPE_DYNAMIC_TEAMBASED, ROUNDTYPE_DYNAMIC_HARD)
 
-					if(. == ROUNDTYPE_EXTENDED)
-						. == ROUNDTYPE_EXTENDED
-					else
-						. = pick_dynamic_type_by_chaos(GLOB.player_list)
+					. = pick_dynamic_type_by_chaos(GLOB.player_list)
 					SSpersistence.RecordDynamicType(.)
-
+					GLOB.round_type = .
+					GLOB.master_mode = .
+				else
+					SSpersistence.RecordDynamicType(.)
 					GLOB.round_type = .
 					GLOB.master_mode = .
 
