@@ -459,7 +459,7 @@
 
 /datum/mod_theme/security/syndicate
 	ui_theme = "syndicate"
-	default_skin = "security"
+	default_skin = "syndicate"
 	skins = list(
 		"syndicate" = list(
 			HELMET_LAYER = null,
