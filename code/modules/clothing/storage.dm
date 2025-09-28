@@ -60,7 +60,7 @@
 
 /obj/item/storage/garment_case/hos/PopulateContents() // Я не знаю почему тут было закоменченно, но факт того что отдел был пустой заставил меня плакать.
 	new /obj/item/clothing/neck/cloak/hos(src)
-	new /obj/item/clothing/suit/toggle/armor/hos/hos_formal(src)
+	new /obj/item/clothing/suit/toggle/captains_parade/hos_formal(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade(src)
 	new /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/hoscorp(src)
