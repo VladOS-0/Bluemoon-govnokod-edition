@@ -24496,7 +24496,7 @@
 /obj/item/clothing/suit/ianshirt,
 /obj/item/clothing/under/rank/civilian/head_of_personnel/parade/female,
 /obj/item/clothing/under/rank/civilian/head_of_personnel/parade,
-/obj/item/clothing/suit/toggle/armor/hop/hop_formal,
+/obj/item/clothing/suit/toggle/captains_parade/hop_formal,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
