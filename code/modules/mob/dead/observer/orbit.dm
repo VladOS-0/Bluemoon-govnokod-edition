@@ -117,8 +117,10 @@
 						assignment = "[ckey(card.get_job_name())]"
 
 				else if(issilicon(M) || isdrone(M)) // Для отображения иконок силиконов в orbit
-					if(iscyborg(M) || isdrone(M))
+					if(iscyborg(M))
 						assignment = "cyborg"
+					else if(isdrone(M))
+						assignment = "drone"
 					else if(ispAI(M))
 						assignment = "pai"
 					else if(isAI(M))
@@ -127,8 +129,15 @@
 				else if(isalien(M))
 					assignment = "alien"
 
-				else if(isterrorspider(M))
-					assignment = "terrorspider"
+				else if(ishostile(M) || iscameramob(M))
+					if(isterrorspider(M))
+						assignment = "terrorspider"
+					else if(isswarmer(M))
+						assignment = "swarmer"
+					else if(isovermind(M))
+						assignment = "blobmind"
+					else if(isblobmonster(M))
+						assignment = "blobbernaut"
 
 				serialized["assignment"] = assignment
 

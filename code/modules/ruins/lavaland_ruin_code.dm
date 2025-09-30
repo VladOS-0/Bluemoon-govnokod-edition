@@ -120,7 +120,8 @@
 ///Syndicate Listening Post
 
 /obj/effect/mob_spawn/human/lavaland_syndicate
-	name = "Lavaland Syndicate Specialist"
+	name = "DS-1 Lavaland Specialist"
+	mob_name = "a Syndicate 'Dune' Researcher"
 	roundstart = FALSE
 	death = FALSE
 	job_description = "Off-station Syndicate Specialist"
@@ -155,14 +156,15 @@
 		/obj/item/crowbar/red = 1,
 		)
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/syndicate/anyone
+	id = /obj/item/card/id/syndicate/advanced/ds/lavaland/researcher
 	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor, /obj/item/implant/deathrattle/deepspacecrew)
 
 /datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/shaft
-	name = "Syndicate Security Specialist"
+	name = "DS-1 Security Agent"
+	mob_name = "a Syndicate 'Dune' Combatant"
 	roundstart = FALSE
 	death = FALSE
 	job_description = "Syndicate Security Specialist"
@@ -191,7 +193,7 @@
 		/obj/item/crowbar/red = 1,
 		)
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/syndicate/anyone/shaft
+	id = /obj/item/card/id/syndicate/advanced/ds/lavaland/security
 	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor, /obj/item/implant/deathrattle/deepspacecrew)
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
@@ -259,13 +261,14 @@
 	command = TRUE
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/medic
-	name = "Lavaland Medical Specialist"
+	name = "DS-1 Bioweapon Researcher"
+	mob_name = "a Syndicate 'Dune' Virologist"
 	roundstart = FALSE
 	death = FALSE
 	job_description = "Off-station Syndicate Medical Specialist"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	short_desc = "Вы Медицинский Специалист Синдиката, работающий на Аванпосту Лаваленда и изучающий вирусное воздействие на организмы живых существ."
+	short_desc = "Вы Медицинский Специалист и Вирусолог Синдиката, работающий на Аванпосту Лаваленда и изучающий вирусное воздействие на организмы живых существ."
 	flavour_text = "К сожалению это или к счастью, но сотрудники вашего партнёра, Nanotrasen, начали добычу полезных ископаемых в этом секторе. Продолжайте свои исследования как можно лучше и старайтесь особо не высовываться, и не провоцировать этих же самых сотрудников."
 	important_info = "Вы не антагонист."
 	outfit = /datum/outfit/lavaland_syndicate/medic
@@ -288,11 +291,12 @@
 		/obj/item/storage/firstaid/tactical = 1,
 		)
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/syndicate/anyone
+	id = /obj/item/card/id/syndicate/advanced/ds/lavaland/virologist
 	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor, /obj/item/implant/deathrattle/deepspacecrew)
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/engineer
-	name = "Lavaland Nuсlear Reactor Specialist"
+	name = "DS-1 Nuсlear Reactor Specialist"
+	mob_name = "a Syndicate 'Dune' Nuclear Technician"
 	roundstart = FALSE
 	death = FALSE
 	job_description = "Off-station Syndicate Nuсlear Reactor Specialist"
@@ -319,17 +323,18 @@
 		/obj/item/crowbar/red = 1,
 		)
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/syndicate/anyone
+	id = /obj/item/card/id/syndicate/advanced/ds/lavaland/nucleartech
 	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor, /obj/item/implant/deathrattle/deepspacecrew)
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/Mime
-	name = "Lavaland Mime operative"
+	name = "DS-1 Mime Operative"
+	mob_name = "a Syndicate 'Dune' Mime"
 	roundstart = FALSE
 	death = FALSE
 	job_description = "Off-station Syndicate Mime operative"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	short_desc = "Вы Мим Синдиката, работающий на Аванпосту Лаваленда и исполняющий обязоности разнорабочего. Удоволетворите потребности персонала. И помните - ни слова."
+	short_desc = "Вы Мим Синдиката, работающий на Аванпосту Лаваленда и исполняющий обязанности разнорабочего. Удоволетворите потребности персонала. И помните - ни слова."
 	flavour_text = "К сожалению это или к счастью, но сотрудники вашего партнёра, Nanotrasen, начали добычу полезных ископаемых в этом секторе. Продолжайте свои исследования как можно лучше и старайтесь особо не высовываться, и не провоцировать этих же самых сотрудников."
 	important_info = "Вы не антагонист."
 	outfit = /datum/outfit/lavaland_syndicate/mime
@@ -342,6 +347,7 @@
 	r_hand = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing
 	uniform = /obj/item/clothing/under/rank/civilian/mime
+	suit = null
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/ds1
@@ -351,5 +357,39 @@
 		/obj/item/crowbar/red = 1,
 		)
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/syndicate/anyone
+	id = /obj/item/card/id/syndicate/advanced/ds/lavaland/mime
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor, /obj/item/implant/deathrattle/deepspacecrew)
+
+/obj/effect/mob_spawn/human/lavaland_syndicate/offcomm
+	name = "DS-1 Communications Officer"
+	mob_name = "a Syndicate 'Dune' Leader"
+	roundstart = FALSE
+	death = FALSE
+	job_description = "Off-station Syndicate Communications Officer"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper_s"
+	short_desc = "Вы Офицер Коммуникаций, работающий на Аванпосту Лаваленда и руководящий объектом. Обеспечьте функционирование ввереного вам аванпоста, поддерживайте связь с адмиралом и представителем Триглава, дислоцированных на объекте DS-2. Проводите отчётную деятельность."
+	flavour_text = "К сожалению это или к счастью, но сотрудники вашего партнёра, Nanotrasen, начали добычу полезных ископаемых в этом секторе. Продолжайте свои исследования как можно лучше и старайтесь особо не высовываться, и не провоцировать этих же самых сотрудников."
+	important_info = "Вы не антагонист. Вы стоите ниже представителя Триглава и Адмирала DS-2 в иерархии."
+	outfit = /datum/outfit/lavaland_syndicate/offcomm
+	assignedrole = "Lavaland Syndicate"
+	can_load_appearance = TRUE
+	loadout_enabled = TRUE
+
+/datum/outfit/lavaland_syndicate/offcomm
+	name = "Off-station Syndicate Communications Officer"
+	r_hand = /obj/item/melee/transforming/energy/sword/saber
+	uniform = /obj/item/clothing/under/syndicate/enclave_alt
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	ears = /obj/item/radio/headset/ds1/comms
+	back = /obj/item/storage/backpack/duffelbag/syndie
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+		/obj/item/crowbar/red = 1,
+		/obj/item/lighter/gonzofist = 1
+		)
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol
+	id = /obj/item/card/id/syndicate/advanced/ds/gold/offcomm
 	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/anchor, /obj/item/implant/deathrattle/deepspacecrew)
