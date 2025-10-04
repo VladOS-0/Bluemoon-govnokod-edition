@@ -112,7 +112,7 @@
 /datum/design/board/default
 	name = "Core Module Design (NT OS Safeguard V1.0)"
 	desc = "Allows for the construction of an NT OS Safeguard V1.0 AI Core Module."
-	id = "safeguard_module"
+	id = "nt_safeguard_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
 	build_path = /obj/item/ai_module/core/full/safeguard
 	category = list("AI Modules")
