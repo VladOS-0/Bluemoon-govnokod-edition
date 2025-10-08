@@ -60,26 +60,69 @@
 
 /////////////////////////////////////////////////////
 
-/obj/item/clothing/mask/gas/syndicate/legion_mask
-	name = "Legion mask"
+/obj/item/clothing/mask/gas/syndicate/legion_mask_frank
+	name = "Frank mask"
 	desc = "A mad smile that haunts its victims in their nightmares."
 	icon_state = "frank"
 	item_state = "frank"
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	unique_reskin = list(
-		"Frank" = list(
+		"Snout" = list(
+			RESKIN_ICON_STATE = "frank_snout",
+			RESKIN_ITEM_STATE = "frank_snout"
+		),
+		"Basic" = list(
 			RESKIN_ICON_STATE = "frank",
 			RESKIN_ITEM_STATE = "frank"
 		),
-		"Julie" = list(
+	)
+
+/obj/item/clothing/mask/gas/syndicate/legion_mask_julie
+	name = "Julie mask"
+	desc = "A mad smile that haunts its victims in their nightmares."
+	icon_state = "julie"
+	item_state = "julie"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	unique_reskin = list(
+		"Snout" = list(
+			RESKIN_ICON_STATE = "julie_snout",
+			RESKIN_ITEM_STATE = "julie_snout"
+		),
+		"Basic" = list(
 			RESKIN_ICON_STATE = "julie",
 			RESKIN_ITEM_STATE = "julie"
 		),
-		"Joey" = list(
+	)
+
+/obj/item/clothing/mask/gas/syndicate/legion_mask_joey
+	name = "Joey mask"
+	desc = "A mad smile that haunts its victims in their nightmares."
+	icon_state = "joey"
+	item_state = "joey"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	unique_reskin = list(
+		"Snout" = list(
+			RESKIN_ICON_STATE = "joey_snout",
+			RESKIN_ITEM_STATE = "joey_snout"
+		),
+		"Basic" = list(
 			RESKIN_ICON_STATE = "joey",
 			RESKIN_ITEM_STATE = "joey"
 		),
-		"Susie" = list(
+	)
+
+/obj/item/clothing/mask/gas/syndicate/legion_mask_susie
+	name = "Susie mask"
+	desc = "A mad smile that haunts its victims in their nightmares."
+	icon_state = "susie"
+	item_state = "susie"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	unique_reskin = list(
+		"Snout" = list(
+			RESKIN_ICON_STATE = "susie_snout",
+			RESKIN_ITEM_STATE = "susie_snout"
+		),
+		"Basic" = list(
 			RESKIN_ICON_STATE = "susie",
 			RESKIN_ITEM_STATE = "susie"
 		),

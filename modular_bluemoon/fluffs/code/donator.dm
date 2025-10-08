@@ -110,6 +110,12 @@
 	path = /obj/item/modkit/shigu_kit
 	ckeywhitelist = list("lakomkin0911")
 
+/datum/gear/donator/bm/kukri_kit
+	name = "Kukri Kit"
+	slot = ITEM_SLOT_BACKPACK
+	path = /obj/item/modkit/kukri_kit
+	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv", "ordinarylife", "milidead")
+
 /datum/gear/donator/bm/Advanced_Tracksuit
 	name = "Advanced Tracksuit"
 	slot = ITEM_SLOT_BACKPACK
@@ -671,20 +677,26 @@
 /datum/gear/donator/bm/hateredsoul_dogtag
 	name = "Combat Dogtag"
 	slot = ITEM_SLOT_NECK
-	path = /obj/item/clothing/neck/hateredsoul_dogtag
-	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv")
+	path = /obj/item/clothing/accessory/hateredsoul_dogtag
+	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv", "ordinarylife", "milidead")
 
 /datum/gear/donator/bm/hateredsoul_dogtag_nt
 	name = "NT Combat Dogtag"
 	slot = ITEM_SLOT_NECK
-	path = /obj/item/clothing/neck/hateredsoul_dogtag/nt
-	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv")
+	path = /obj/item/clothing/accessory/hateredsoul_dogtag/nt
+	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv", "ordinarylife", "milidead")
 
 /datum/gear/donator/bm/hateredsoul_dogtag_syndie
 	name = "Syndie Combat Dogtag"
 	slot = ITEM_SLOT_NECK
-	path = /obj/item/clothing/neck/hateredsoul_dogtag/syndie
-	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv")
+	path = /obj/item/clothing/accessory/hateredsoul_dogtag/syndie
+	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv", "ordinarylife", "milidead")
+
+/datum/gear/donator/bm/h_soul_coat
+	name = "Black coat"
+	slot = ITEM_SLOT_NECK
+	path = /obj/item/clothing/neck/tie/h_soul_coat
+	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv", "ordinarylife", "milidead")
 
 /datum/gear/donator/bm/pedantcape
 	name = "Corvus Pendant"
@@ -1004,6 +1016,14 @@
 	ckeywhitelist = list("akinight")
 	restricted_desc = "Head of Security, Warden, Detective, Security Officer, Brig Physician, Peacekeeper, Blueshield."
 	restricted_roles = list("Head of Security", "Warden", "Detective", "Security Officer", "Brig Physician", "Peacekeeper", "Blueshield")
+
+/datum/gear/donator/bm/ipai
+	name = "I.P.A.I. helmet Dawn Dome"
+	slot = ITEM_SLOT_BACKPACK
+	path = /obj/item/clothing/head/helmet/sec/ipai
+	ckeywhitelist = list("hateredsoul", "ggishka", "arion1234", "swgitty", "sw00ty", "kingdeaths", "sierraiv", "ordinarylife", "milidead")
+	restricted_desc = "Head of Security, Warden, Detective, Security Officer, Brig Physician, Peacekeeper, Blueshield, Ghostroles."
+	restricted_roles = list("Head of Security", "Warden", "Detective", "Security Officer", "Brig Physician", "Peacekeeper", "Blueshield", "Ghostroles")
 
 /datum/gear/donator/bm/soviet_coat
     name = "Soviet coat"
@@ -1613,10 +1633,28 @@
 	slot = ITEM_SLOT_BACKPACK
 	ckeywhitelist = list("xaeshkavd")
 
-/datum/gear/donator/bm/legion_mask
-	name = "Legion mask"
+/datum/gear/donator/bm/legion_mask_frank
+	name = "Frank mask"
 	slot = ITEM_SLOT_MASK
-	path = /obj/item/clothing/mask/gas/syndicate/legion_mask
+	path = /obj/item/clothing/mask/gas/syndicate/legion_mask_frank
+	ckeywhitelist = list("dimofon", "devildeadspace", "dimakr", "oroshimuraiori", "troubleneko17th", "dcp9371", "oni3288")
+
+/datum/gear/donator/bm/legion_mask_julie
+	name = "Julie mask"
+	slot = ITEM_SLOT_MASK
+	path = /obj/item/clothing/mask/gas/syndicate/legion_mask_julie
+	ckeywhitelist = list("dimofon", "devildeadspace", "dimakr", "oroshimuraiori", "troubleneko17th", "dcp9371", "oni3288")
+
+/datum/gear/donator/bm/legion_mask_joey
+	name = "Joey mask"
+	slot = ITEM_SLOT_MASK
+	path = /obj/item/clothing/mask/gas/syndicate/legion_mask_joey
+	ckeywhitelist = list("dimofon", "devildeadspace", "dimakr", "oroshimuraiori", "troubleneko17th", "dcp9371", "oni3288")
+
+/datum/gear/donator/bm/legion_mask_susie
+	name = "Susie mask"
+	slot = ITEM_SLOT_MASK
+	path = /obj/item/clothing/mask/gas/syndicate/legion_mask_susie
 	ckeywhitelist = list("dimofon", "devildeadspace", "dimakr", "oroshimuraiori", "troubleneko17th", "dcp9371", "oni3288")
 
 /datum/gear/donator/bm/kladmen_dress

@@ -86,13 +86,14 @@
 
 ////////////////////////
 
-/obj/item/clothing/neck/hateredsoul_dogtag
+/obj/item/clothing/accessory/hateredsoul_dogtag
 	name = "Combat Dogtag"
 	desc = "Связка боевых жетонов с резиновым ободком по их краям. Выполнены из прочного и износостойкого сплава, с маленьким весом, от чего стали практически незаметными для самого носителя. На правом жетоне выбиты основные данные его владельца, в виде полного имени, группы крови и принадлежности к подразделению. На левом жетоне выбита дополнительная информация и очертания владельца."
 	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
 	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/accessories.dmi'
 	icon_state = "hateredsoul_dogtag_1"
 	item_state = "hateredsoul_dogtag_1"
+	slot_flags = ITEM_SLOT_NECK
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
 	var/tagname = null
 	unique_reskin = list(
@@ -106,11 +107,11 @@
 		)
 	)
 
-/obj/item/clothing/neck/hateredsoul_dogtag/attack_self(mob/user)
+/obj/item/clothing/accessory/hateredsoul_dogtag/attack_self(mob/user)
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new tag", tagname, MAX_NAME_LEN)
 	name = tagname ? "[initial(name)] - [tagname]" : initial(name)
 
-/obj/item/clothing/neck/hateredsoul_dogtag/nt
+/obj/item/clothing/accessory/hateredsoul_dogtag/nt
 	name = "NT Combat Dogtag"
 	desc = "Связка боевых жетонов с резиновым ободком по их краям. Выполнены из прочного и износостойкого сплава, с маленьким весом, от чего стали практически незаметными для самого носителя. На правом жетоне выбиты основные данные его владельца, в виде полного имени, группы крови и принадлежности к подразделению. На левом жетоне изображён логотип корпорации NanoTrasen."
 	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
@@ -132,7 +133,7 @@
 		)
 	)
 
-/obj/item/clothing/neck/hateredsoul_dogtag/syndie
+/obj/item/clothing/accessory/hateredsoul_dogtag/syndie
 	name = "Syndie Combat Dogtag"
 	desc = "Связка боевых жетонов с резиновым ободком по их краям. Выполнены из прочного и износостойкого сплава, с маленьким весом, от чего стали практически незаметными для самого носителя. На правом жетоне выбиты основные данные его владельца, в виде полного имени, группы крови и принадлежности к подразделению. На левом жетоне изображена трёхглавая змея Синдиката."
 	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
@@ -307,6 +308,16 @@
 	icon_state = "pier"
 	slot_flags = ITEM_SLOT_SOCKS
 	body_parts_covered = 0
+
+////////////////////////
+
+/obj/item/clothing/neck/tie/h_soul_coat
+	name = "Black coat"
+	desc = "Обычное чёрное пальто, выполненное из высококачественного материла, хоть и выглядящим старым, но всё ещё приятное на вид и даже на ощупь, однако всё ещё слишком длинное, чтобы его носить как обычно, но что мешает его продолжать носить иным способом, верно? Во внутреннем кармане пальто заметен логотив в виде чёрной розы и надпись Black Rose atelier."
+	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/accessories.dmi'
+	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/accessories.dmi'
+	icon_state = "h_soul_coat"
+	item_state = "h_soul_coat"
 
 ////////////////////////
 

@@ -218,3 +218,18 @@
 	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/head.dmi'
 	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/head.dmi'
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/////////////////////////////////////////////////////
+
+/obj/item/clothing/head/helmet/sec/ipai
+	name = "I.P.A.I. helmet Dawn Dome"
+	desc = "Уникальная разработка ателье Чёрная Роза в области защиты и маскировки. Данный экземпляр, в виде шлема, является очевидным индивидуальным заказом, однако на шлеме отсутствуют какие-либо инициалы его владельца, только неизвестный штрихкод и логотип производителя, в виде всё той же чёрной розы. Шлем гермитичен, часть корпуса имеет возможность снятия для установки бронепластин, порт для подключения кислородного баллона, а также специально STEAL-s покрытие, которое припятствует считыванию данных о внешности и личности носителя. Во внутренней части имеется маленькая табличка со знаком предупреждения и надписью - ВНИМАНИЕ! В СЛУЧАЕ ВОЗНИКНОВЕНИЯ НЕОПРЕДЕЛЁННЫХ ЗВУКОВ ИЗ ДИНАМИКОВ ПЕРЕДАЧИ ЗВУКОВЫХ ДАННЫХ ВНЕШНЕЙ СРЕДЫ, НАПОМИНАЮЩИЕ ГОЛОСА ИЛИ КРИКИ - СЛЕДУЕТ НЕМЕДЛЕННО ПРЕКРАТИТЬ НОШЕНИЕ И ДОНЕСТИ ИНФОРМАЦИЮ ДО БЛИЖАЙШЕГО ОФИСА АТЕЛЬЕ ЧЁРНАЯ РОЗА"
+	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/head.dmi'
+	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/head.dmi'
+	icon_state = "ipai"
+	item_state = "ipai"
+	icon = 'modular_bluemoon/fluffs/icons/obj/clothing/head.dmi'
+	mob_overlay_icon = 'modular_bluemoon/fluffs/icons/mob/clothing/head.dmi'
+	clothing_flags = ALLOWINTERNALS
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	unique_reskin = null

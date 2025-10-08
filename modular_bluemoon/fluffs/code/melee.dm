@@ -11,6 +11,23 @@
 
 //////////////////////////////////////////////////
 
+/obj/item/modkit/kukri_kit
+	name = "Kukri Kit"
+	desc = "A modkit for making an combat knife into a Kukri."
+	product = /obj/item/kitchen/knife/combat/kukri
+	fromitem = list(/obj/item/kitchen/knife/combat)
+
+/obj/item/kitchen/knife/combat/kukri
+	name = "Кукри-мачете"
+	desc = "Традиционное кукри, с разительным отличием, что делает его похожим на мачете, благодаря своему изогнутому клинку и функционалу как режущего инструмента и оружия. Из-за той же формы лещвия с изгибом центр тяжести смещён к острию, что делает его более эффективным для рубки. На рукояти изображён логотип, напоминающий чёрную розу и круговая надпись Black Rose atelier"
+	item_state = "kukri"
+	icon_state = "kukri"
+	icon = 'modular_bluemoon/fluffs/icons/obj/melee.dmi'
+	lefthand_file = 'modular_bluemoon/fluffs/icons/mob/inhands/melee_lefthand.dmi'
+	righthand_file = 'modular_bluemoon/fluffs/icons/mob/inhands/melee_righthand.dmi'
+
+//////////////////////////////////////////////////
+
 /obj/item/modkit/impactbaton_kit
 	name = "Impact Baton Kit"
 	desc = "A modkit for making a police baton into a jitte baton."
