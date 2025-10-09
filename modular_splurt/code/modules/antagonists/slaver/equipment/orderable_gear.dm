@@ -127,13 +127,6 @@ GLOBAL_LIST_INIT(slaver_gear, subtypesof(/datum/slaver_gear))
 	category = "Firearms"
 	cost = 12000
 
-//datum/slaver_gear/smg
-//	name = "SMG Kit"
-//	description = "WT-550 Semi-Automatic SMG. Spare magazine x 3."
-//	build_path = /obj/item/storage/backpack/duffelbag/syndie/smg
-//	category = "Firearms"
-//	cost = 15000
-
 /datum/slaver_gear/smg_rubber
 	name = "SMG Kit (rubber)"
 	description = "WT-550 Semi-Automatic SMG with rubber munitions. Spare magazine x 3."
@@ -176,6 +169,42 @@ GLOBAL_LIST_INIT(slaver_gear, subtypesof(/datum/slaver_gear))
 	category = "Implants"
 	cost = 15000
 
+/datum/slaver_gear/implant_heart
+	name = "Biomorphed Heart"
+	description = "Экспериментальный орган, что используется некоторыми отрядами супер-солдат в различных 'чёрных операциях'. Даёт усиленную регенерацию, и защиту от сердечного приступа."
+	build_path = /datum/uplink_item/implants/biomorphedheart
+	category = "Implants"
+	cost = 10000
+
+/datum/slaver_gear/implant_liver
+	name = "Biomorphed Liver"
+	description = "Экспериментальный орган, что используется некоторыми отрядами супер-солдат в различных 'чёрных операциях'. Даёт усиленное восстановление от токсинов и уменьшает изнурение."
+	build_path = /datum/uplink_item/implants/biomorphedliver
+	category = "Implants"
+	cost = 10000
+
+/datum/slaver_gear/implant_lungs
+	name = "Biomorphed Lungs"
+	description = "Экспериментальный орган, что используется некоторыми отрядами супер-солдат в различных 'чёрных операциях'. Даёт усиленное восстановление от изнурения и частичную защиту от атмосферных угроз для дыхания."
+	build_path = /datum/uplink_item/implants/biomorphedlungs
+	category = "Implants"
+	cost = 10000
+
+/datum/slaver_gear/implant_thrusters
+	name = "Implantable Thrusters Set"
+	description = "An implantable set of thruster ports. They use the gas from environment or subject's internals for propulsion in zero-gravity areas. \
+	Unlike regular jetpacks, this device has no stabilization system."
+	build_path = /obj/item/organ/cyberimp/chest/thrusters
+	category = "Implants"
+	cost = 10000
+
+/datum/slaver_gear/implant_thrusters
+	name = "Revitalizing Cortex"
+	description = "This attachable to the torso cortex optimizes the body's processes in order to preserve the body. Provides overall basic mending."
+	build_path = /obj/item/organ/cyberimp/chest/revitilzer
+	category = "Implants"
+	cost = 25000
+
 /datum/slaver_gear/borg_generic
 	name = "Cyborg (Generic)"
 	description = "A hacked cyborg, capable of using any module."
@@ -196,13 +225,6 @@ GLOBAL_LIST_INIT(slaver_gear, subtypesof(/datum/slaver_gear))
 	build_path = /obj/item/storage/backpack/duffelbag/syndie/smg22
 	category = "Firearms"
 	cost = 10000
-
-//datum/slaver_gear/garandlethal
-//	name = "Mars Service Rifle Kit (Lethal)"
-//	description = "Mars Semi-Automatic Service rifle with lehtal munitions. Spare clips x 6."
-//	build_path = /obj/item/storage/backpack/duffelbag/syndie/garand_lethal
-//	category = "Firearms"
-//	cost = 15000
 
 /datum/slaver_gear/garandrubber
 	name = "Mars Service Rifle Kit (Rubber)"
@@ -243,7 +265,7 @@ GLOBAL_LIST_INIT(slaver_gear, subtypesof(/datum/slaver_gear))
 /datum/slaver_gear/synd_magboots
 	name = "Blood-Red Magboots"
 	description = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's 'Advanced Magboots' not slow you down in simulated-gravity environments and provide protection against slipping on the space lube"
-	build_path = /obj/item/clothing/shoes/magboots/syndie/advance 
+	build_path = /obj/item/clothing/shoes/magboots/syndie/advance
 	category = "Advanced"
 	cost = 7500
 
