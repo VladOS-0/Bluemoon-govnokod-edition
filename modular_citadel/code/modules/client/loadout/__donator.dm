@@ -32,6 +32,14 @@
 	subcategory = LOADOUT_SUBCATEGORIES_DON02
 	donator_group_id = DONATOR_GROUP_TIER_2
 
+/datum/gear/donator/money
+	name = "Тысяча Денег (красивое)"
+	slot = ITEM_SLOT_BACKPACK
+	path = /obj/item/stack/spacecash/c1000
+	ckeywhitelist = list()
+	donator_group_id = DONATOR_GROUP_TIER_2
+	subcategory = LOADOUT_SUBCATEGORIES_DON02
+
 /datum/gear/donator/cleanercloak
 	name = "Teshari Cleaner Cloak"
 	slot = ITEM_SLOT_NECK
@@ -101,14 +109,6 @@
 	path = /obj/item/storage/box/mre/menu1/safe
 	ckeywhitelist = list()
 	donator_group_id = DONATOR_GROUP_TIER_1
-
-/datum/gear/donator/money
-	name = "Тысяча Денег (красивое)"
-	slot = ITEM_SLOT_BACKPACK
-	path = /obj/item/stack/spacecash/c1000
-	ckeywhitelist = list()
-	donator_group_id = DONATOR_GROUP_TIER_2
-	subcategory = LOADOUT_SUBCATEGORIES_DON02
 
 /datum/gear/donator/gasmask_syndicate
 	name = "The Syndicate Mask"
