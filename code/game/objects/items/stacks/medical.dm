@@ -25,13 +25,15 @@
 	var/sanitization
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
+	var/heal_dead = FALSE //can we heal dead body
+	var/heal_dead_multiplier = 1 // The effectiveness of treating the dead
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(try_heal), M, user)
 
 /obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
-	if(!M.can_inject(user, TRUE))
+	if(!M.can_inject(user, TRUE) || INTERACTING_WITH(user, M))
 		return
 	if(M == user)
 		if(!silent)
@@ -88,9 +90,12 @@
 	amount = 1
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
+	var/efficiency = 1
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.ru_na()]!</span>")
-		return
+		if(!heal_dead)
+			to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.ru_na()]!</span>")
+			return
+		efficiency = heal_dead_multiplier
 	if(isanimal(M))
 		var/mob/living/simple_animal/critter = M
 		if (!(critter.healable))
@@ -102,10 +107,10 @@
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
 		if(AmBloodsucker(M))
 			return
-		M.heal_bodypart_damage((heal_brute/2))
+		M.heal_bodypart_damage((heal_brute/2)*efficiency)
 		return TRUE
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, heal_burn)
+		return heal_carbon(M, user, heal_brute*efficiency, heal_burn*efficiency)
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 	to_chat(user, "<span class='notice'>You can't heal [M] with the \the [src]!</span>")
 
@@ -122,8 +127,8 @@
 	heal_brute = 5
 	self_delay = 50
 	other_delay = 20
-	amount = 10
-	max_amount = 10
+	amount = 15
+	max_amount = 15
 	absorption_rate = 0.25
 	absorption_capacity = 5
 	splint_factor = 0.35
@@ -199,17 +204,18 @@
 	other_delay = 30
 	absorption_rate = 0.15
 	absorption_capacity = 4
+	splint_factor = 0.15
 
 /obj/item/stack/medical/gauze/adv
 	name = "sterilized medical gauze"
 	singular_name = "sterilized medical gauze"
 	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding and covering burns."
-	heal_brute = 6
+	heal_brute = 7
 	self_delay = 45
 	other_delay = 15
 	absorption_rate = 0.5
 	absorption_capacity = 12
-	splint_factor = 0.15
+	splint_factor = 0.5
 
 /obj/item/stack/medical/gauze/adv/one
 	amount = 1
@@ -231,14 +237,14 @@
 	amount = 15
 	max_amount = 15
 	repeating = TRUE
-	heal_brute = 10
+	heal_brute = 13
 	stop_bleeding = 0.6
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/suture/emergency
 	name = "emergency suture"
 	desc = "A value pack of cheap sutures, not very good at repairing damage, but still decent at stopping bleeding."
-	heal_brute = 5
+	heal_brute = 10
 	amount = 5
 	max_amount = 5
 
@@ -252,19 +258,28 @@
 	name = "medicated suture"
 	icon_state = "suture_purp"
 	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
-	heal_brute = 15
+	heal_brute = 20
+	stop_bleeding = 1
 	grind_results = list(/datum/reagent/medicine/polypyr = 2)
+	heal_dead = TRUE
+	heal_dead_multiplier = 0.65
+
+/obj/item/stack/medical/suture/medicated/one
+	amount = 1
 
 /obj/item/stack/medical/suture/one
 	amount = 1
 
 /obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
 	. = ..()
+	var/efficiency = 1
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
-		return
+		if(!heal_dead)
+			to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
+			return
+		efficiency = heal_dead_multiplier
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, 0)
+		return heal_carbon(M, user, heal_brute*efficiency, 0*efficiency)
 	if(isanimal(M))
 		var/mob/living/simple_animal/critter = M
 		if (!(critter.healable))
@@ -274,7 +289,7 @@
 			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
 			return FALSE
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
-		M.heal_bodypart_damage(heal_brute)
+		M.heal_bodypart_damage(heal_brute*efficiency)
 		return TRUE
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
@@ -291,17 +306,20 @@
 	self_delay = 40
 	other_delay = 20
 
-	heal_burn = 5
+	heal_burn = 10
 	flesh_regeneration = 2.5
-	sanitization = 0.3
+	sanitization = 0.4
 	grind_results = list(/datum/reagent/medicine/kelotane = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
+	var/efficiency = 1
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
-		return
+		if(!heal_dead)
+			to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
+			return
+		efficiency = heal_dead_multiplier
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, heal_burn)
+		return heal_carbon(M, user, heal_brute*efficiency, heal_burn*efficiency)
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
@@ -318,7 +336,7 @@
 	other_delay = 10
 	amount = 15
 	max_amount = 15
-	heal_burn = 10
+	heal_burn = 13
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3
@@ -337,8 +355,12 @@
 	gender = PLURAL
 	singular_name = "advanced regenerative mesh"
 	icon_state = "aloe_mesh"
-	heal_burn = 15
+	heal_burn = 20
+	sanitization = 1.25
+	flesh_regeneration = 5
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+	heal_dead = TRUE
+	heal_dead_multiplier = 0.65
 
 /obj/item/stack/medical/mesh/advanced/one
 	amount = 1
@@ -363,11 +385,14 @@
 
 /obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
 	. = ..()
+	var/efficiency = 1
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
-		return
+		if(!heal_dead)
+			to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
+			return
+		efficiency = heal_dead_multiplier
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, heal_burn)
+		return heal_carbon(M, user, heal_brute*efficiency, heal_burn*efficiency)
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 
@@ -460,11 +485,14 @@
 
 /obj/item/stack/medical/aloe/heal(mob/living/M, mob/user)
 	. = ..()
+	var/efficiency = 1
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
-		return FALSE
+		if(!heal_dead)
+			to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.ru_na()].</span>")
+			return FALSE
+		efficiency = heal_dead_multiplier
 	if(iscarbon(M))
-		return heal_carbon(M, user, heal, heal)
+		return heal_carbon(M, user, heal*efficiency, heal*efficiency)
 	if(isanimal(M))
 		var/mob/living/simple_animal/critter = M
 		if (!(critter.healable))
@@ -474,7 +502,7 @@
 			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
 			return FALSE
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
-		M.heal_bodypart_damage(heal, heal)
+		M.heal_bodypart_damage(heal*efficiency, heal*efficiency)
 		return TRUE
 
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")

@@ -14,6 +14,8 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0 //You can do this on anyone, but it won't really be useful on people without augments.
 	ignore_clothes = TRUE
+	icon_state = "robot_healing"
+	radial_priority = SURGERY_RADIAL_PRIORITY_HEAL_BASE_COMBO
 	var/healing_step_type
 	var/antispam = FALSE
 
@@ -47,7 +49,7 @@
 				/datum/surgery_step/mechanic_close)
 
 /datum/surgery_step/robot_heal
-	name = "Отремонтировать (Сварочный Аппарат или Кабель)"
+	name = "Отремонтировать"
 	implements = list(TOOL_WELDER = 100, /obj/item/stack/cable_coil = 100)
 	repeatable = TRUE
 	time = 15
@@ -144,7 +146,7 @@
 /***************************STEPS***************************/
 
 /datum/surgery_step/robot_heal/basic
-	name = "repair damage"
+	name = "Починить повреждения"
 	brutehealing = 10
 	burnhealing = 10
 	missinghpbonus = 15

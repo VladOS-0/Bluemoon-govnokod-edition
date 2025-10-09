@@ -18,6 +18,9 @@
 			/datum/surgery_step/mechanic_close)
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living/carbon/human)
+	icon = 'modular_bluemoon/phenyamomota/icon/obj/tools.dmi'
+	icon_state = "multitool_yellow"
+	radial_priority = SURGERY_RADIAL_PRIORITY_HEAL_ADDITIONAL
 
 /datum/surgery/robot_purge_reagents/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	. = ..()
@@ -71,7 +74,7 @@
 
 
 /datum/surgery_step/eject_reagents
-	name = "Открыть люк сброса реагентов (Мультитул)"
+	name = "Открыть люк сброса реагентов"
 	implements = list(TOOL_MULTITOOL = 95, TOOL_HEMOSTAT = 25, TOOL_CROWBAR = 25)
 	time = 40
 	preop_sound = 'sound/machines/doorclick.ogg'

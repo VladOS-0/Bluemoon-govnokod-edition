@@ -18,6 +18,9 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 			/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey) //If admins made a monkey into a robotic supersoldier or something.
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "patch7"
+	radial_priority = SURGERY_RADIAL_PRIORITY_HEAL_EXTRA
 
 /datum/surgery/purge_corruption/robotic
 	requires_bodypart_type = BODYPART_ROBOTIC
@@ -41,7 +44,7 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 		return FALSE
 
 /datum/surgery_step/override_safeties
-	name = "Отменить Встроенные Защиты (Мультитул)"
+	name = "Отменить Встроенные Защиты"
 	implements = list(TOOL_MULTITOOL = 100, TOOL_WIRECUTTER = 20)
 	time = 50
 
@@ -63,7 +66,7 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 	return FALSE
 
 /datum/surgery_step/remove_corruption
-	name = "Запустить Очистку Системы (Мультитул)"
+	name = "Запустить Очистку Системы"
 	implements = list(TOOL_MULTITOOL = 95, TOOL_WIRECUTTER = 10) //You are relatively safe just using a multitool, but you should use sterilizer or simillar success chance increasing chems regardless.
 	time = 80 //Takes a l o n g time, but completely purges system corruption
 

@@ -1,5 +1,6 @@
 /datum/surgery/robot_brain_surgery
 	name = "Reset posibrain logic (Brain surgery)"
+	desc = "A surgical procedure that restores the default behavior logic and personality matrix of an IPC posibrain."
 	steps = list(
 	/datum/surgery_step/mechanic_open,
 	/datum/surgery_step/mechanic_unwrench,
@@ -11,10 +12,11 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
-	desc = "A surgical procedure that restores the default behavior logic and personality matrix of an IPC posibrain."
+	icon_state = "posibrain-ipc"
+	radial_priority = SURGERY_RADIAL_PRIORITY_HEAL_STATIC
 
 /datum/surgery_step/fix_robot_brain
-	name = "Отремонтировать Пози-Мозг (Мультитул)"
+	name = "Отремонтировать Пози-Мозг"
 	implements = list(TOOL_MULTITOOL = 100, TOOL_HEMOSTAT = 35, TOOL_SCREWDRIVER = 15)
 	time = 120 //long and complicated
 
