@@ -2516,6 +2516,7 @@
 #include "code\modules\events\living_entity\cat_surgeon.dm"
 #include "code\modules\events\living_entity\deathclaw.dm"
 #include "code\modules\events\living_entity\gigachad_inteq.dm"
+#include "code\modules\events\misc\pizza_time.dm"
 #include "code\modules\events\wizard\aid.dm"
 #include "code\modules\events\wizard\blobies.dm"
 #include "code\modules\events\wizard\curseditems.dm"
