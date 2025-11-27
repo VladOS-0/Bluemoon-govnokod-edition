@@ -24828,7 +24828,6 @@
 /area/maintenance/starboard/fore)
 "itq" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/anvil/obtainable/basic,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "itB" = (

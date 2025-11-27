@@ -968,7 +968,7 @@
 	icon_state = "2sheath"
 	item_state = "katana" //this'll do.
 	w_class = WEIGHT_CLASS_BULKY
-	fitting_swords = list(/obj/item/melee/smith/wakizashi, /obj/item/melee/smith/twohand/katana, /obj/item/melee/bokken, /obj/item/katana)
+	fitting_swords = list(/obj/item/melee/bokken, /obj/item/katana)
 	starting_sword = null
 
 /obj/item/storage/belt/sabre/twin/ComponentInitialize()
@@ -978,29 +978,6 @@
 	STR.max_w_class = WEIGHT_CLASS_BULKY + WEIGHT_CLASS_NORMAL //katana and waki.
 	STR.max_combined_w_class = 7
 
-/obj/item/melee/smith/twohand/katana/on_exit_storage(datum/component/storage/S)
-	var/obj/item/storage/belt/sabre/twin/B = S.parent
-	if(istype(B))
-		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
-	. = ..()
-
-/obj/item/melee/smith/twohand/katana/on_enter_storage(datum/component/storage/S)
-	var/obj/item/storage/belt/sabre/twin/B = S.parent
-	if(istype(B))
-		playsound(B, 'sound/items/sheath.ogg', 25, 1)
-	. = ..()
-
-/obj/item/melee/smith/wakizashi/on_exit_storage(datum/component/storage/S)
-	var/obj/item/storage/belt/sabre/twin/B = S.parent
-	if(istype(B))
-		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
-	. = ..()
-
-/obj/item/melee/smith/wakizashi/on_enter_storage(datum/component/storage/S)
-	var/obj/item/storage/belt/sabre/twin/B = S.parent
-	if(istype(B))
-		playsound(B, 'sound/items/sheath.ogg', 25, 1)
-	. = ..()
 
 /obj/item/melee/bokken/on_exit_storage(datum/component/storage/S)
 	var/obj/item/storage/belt/sabre/twin/B = S.parent

@@ -4296,7 +4296,6 @@
 /area/ruin/space/has_grav/bluemoon/hotel/guestroom)
 "tm" = (
 /obj/structure/table,
-/obj/item/melee/baton/stunsword/smithed,
 /obj/item/electropack/shockcollar,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{

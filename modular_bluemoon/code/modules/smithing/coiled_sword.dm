@@ -1,3 +1,4 @@
+/* Переработать под новую систему чуть позже
 /obj/item/smithing/coiled_sword
 	name = "raw coiled sword"
 	icon = 'modular_bluemoon/icons/obj/smith/coiled_sword.dmi'
@@ -88,3 +89,4 @@
 			var/mob/living/carbon/C = target
 			C.adjust_fire_stacks(flame_power)
 			C.IgniteMob()
+*/

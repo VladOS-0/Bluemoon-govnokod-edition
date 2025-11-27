@@ -14,11 +14,13 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
+/* Переделать под новую кузню. "Откопали" пишется с "о", бтв
 /datum/supply_pack/misc/anvil
 	name = "Anvil Crate"
 	desc = "Наковальня в ящике, мы откапали это на старом складе. На ней есть колесики, так что вы можете ее передвигать."
 	cost = 7500
 	contains = list(/obj/structure/anvil/obtainable/basic)
+*/
 
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"

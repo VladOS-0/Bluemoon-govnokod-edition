@@ -1246,7 +1246,6 @@
 	dir = 8
 	},
 /obj/structure/table/wood/fancy/blackred,
-/obj/item/melee/baton/stunsword/smithed,
 /obj/item/storage/photo_album,
 /obj/item/camera_bug,
 /obj/item/camera_bug,

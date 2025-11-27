@@ -6642,7 +6642,6 @@
 /turf/closed/indestructible/rock,
 /area/space/nearstation)
 "zj" = (
-/obj/item/stick,
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
 "zk" = (

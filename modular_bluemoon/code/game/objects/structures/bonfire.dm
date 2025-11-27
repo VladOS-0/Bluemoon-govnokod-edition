@@ -1,3 +1,4 @@
+/* Переработать под новую систему чуть позже
 // check PROCESSING_SUBSYSTEM_DEF(aura)
 #define BONFIRE_HEALING_POWER_SMALL 0.17	// ~ 0.5 hp per second
 #define BONFIRE_HEALING_POWER_MEDIUM 0.33  	// ~ 1 hp per second
@@ -115,3 +116,4 @@
 #undef BONFIRE_HEALING_POWER_SMALL
 #undef BONFIRE_HEALING_POWER_MEDIUM
 #undef BONFIRE_HEALING_POWER_HIGH
+*/

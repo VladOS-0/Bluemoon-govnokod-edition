@@ -1,3 +1,5 @@
+// По большей части текущая печка, в процессе переделки
+
 /obj/structure/furnace
 	name = "furnace"
 	desc = "A furnace."
@@ -8,11 +10,11 @@
 	var/debug = FALSE //debugging only
 	var/working = TRUE
 	var/fueluse = 1
+	var/obj/machinery/portable_atmospherics/canister/internal_tank
 
 
 /obj/structure/furnace/Initialize(mapload)
 	. = ..()
-	create_reagents(250, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/furnace/Destroy()
@@ -32,6 +34,7 @@
 		icon_state = "furnace0"
 
 /obj/structure/furnace/attackby(obj/item/I, mob/user)
+/*
 	if(istype(I, /obj/item/ingot))
 		var/obj/item/ingot/notsword = I
 		if(working)
@@ -40,11 +43,22 @@
 		else
 			to_chat(user, "The furnace isn't working!.")
 	else
-		..()
+		..()*/
 
 /obj/structure/furnace/wrench_act(mob/living/user, obj/item/I)
 	..()
-	default_unfasten_wrench(user, I, 5)
+	if (default_unfasten_wrench(user, I, 5) == SUCCESSFUL_UNFASTEN)
+		// Пробуем отсоединить или присоединить порт от внутреннего танка
+		if (anchored)
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
+			if(internal_tank.connect(possible_port))
+				balloon_alert(user, "Подключено к порту!")
+				log_message("Connected to gas port.", LOG_GAME)
+			else
+				to_chat(user, "<span class='warning'>Unable to connect with air system port!</span>")
+				return FALSE
+		else
+
 	return TRUE
 
 /obj/structure/furnace/attackby(obj/item/W, mob/user, params)
@@ -64,12 +78,3 @@
 	name = "fuelless furnace"
 	debug = TRUE
 	icon_state = "ratfurnace"
-
-
-/obj/structure/furnace/infinite/ratvar
-	name = "brass furnace"
-	desc = "A brass furnace. Powered by... something, but seems otherwise safe." //todo:sprites they're safe for noncultists because you're just putting ingots in them. also there';s a reason to steal them ig
-
-/obj/structure/furnace/infinite/narsie
-	name = "rune furnace"
-	desc = "A runed furnace. Powered by... something, but seems otherwise safe."

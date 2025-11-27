@@ -3297,7 +3297,6 @@
 	},
 /area/mine/xenoarch_area_c)
 "cAe" = (
-/obj/structure/anvil/obtainable/basalt,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "cAF" = (
@@ -16337,7 +16336,6 @@
 /turf/open/floor/plating,
 /area/mine/maintenance)
 "mME" = (
-/obj/structure/furnace,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "mMH" = (
@@ -29630,7 +29628,6 @@
 /turf/open/floor/plasteel/dark/textured/half,
 /area/mine/xenoarch_area_c)
 "xcc" = (
-/obj/item/melee/smith/hammer,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "xdb" = (

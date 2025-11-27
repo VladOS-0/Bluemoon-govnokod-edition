@@ -113,7 +113,6 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("diamond tile", /obj/item/stack/tile/mineral/diamond, 1, 4, 20),  \
-	new/datum/stack_recipe("diamond ingot", /obj/item/ingot/diamond, 6, time = 100), \
     ))
 
 /obj/item/stack/sheet/mineral/diamond/get_main_recipes()
@@ -140,7 +139,6 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("uranium tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20), \
-	new/datum/stack_recipe("uranium ingot", /obj/item/ingot/uranium, 6, time = 100), \
 	))
 
 /obj/item/stack/sheet/mineral/uranium/get_main_recipes()
@@ -176,7 +174,6 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20), \
 	new/datum/stack_recipe("plasma plant", /obj/item/kirbyplants/plasma, 15, time = 50, on_floor = TRUE), \
-//	new/datum/stack_recipe("plasma ingot", /obj/item/ingot/plasma, 6, time = 100), \ no
 	))
 
 /obj/item/stack/sheet/mineral/plasma/get_main_recipes()
@@ -222,7 +219,6 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("gold tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20), \
 	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/crown, 5), \
-	new/datum/stack_recipe("gold ingot", /obj/item/ingot/gold, 6, time = 100), \
 	))
 
 /obj/item/stack/sheet/mineral/gold/get_main_recipes()
@@ -249,7 +245,6 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("silver tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20), \
-	new/datum/stack_recipe("silver ingot", /obj/item/ingot/silver, 6, time = 100), \
 	))
 
 /obj/item/stack/sheet/mineral/silver/get_main_recipes()
@@ -278,7 +273,6 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 
 GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \
-	new/datum/stack_recipe("hilarious ingot", /obj/item/ingot/bananium, 6, time = 100), \
 	))
 
 /obj/item/stack/sheet/mineral/bananium/get_main_recipes()
@@ -307,7 +301,6 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
-	new/datum/stack_recipe("titanic ingot", /obj/item/ingot/titanium, 6, time = 100), \
 	new/datum/stack_recipe("shuttle seat", /obj/structure/chair/comfy/shuttle, 2, one_per_turf = TRUE, on_floor = TRUE), \
 	))
 
@@ -356,7 +349,6 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
  */
 GLOBAL_LIST_INIT(adamantine_recipes, list(
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1),
-	new/datum/stack_recipe("adamant ingot", /obj/item/ingot/adamantine, 6, time = 100), \
 	))
 
 /obj/item/stack/sheet/mineral/adamantine

@@ -5141,7 +5141,6 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ty" = (
-/obj/structure/anvil,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyengine)
 "tB" = (
@@ -5639,7 +5638,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/furnace,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyengine)
 "xI" = (

@@ -13069,7 +13069,6 @@
 /obj/item/stack/ore/slag,
 /obj/item/stack/ore/slag,
 /obj/item/stack/ore/slag,
-/obj/item/melee/smith/hammer/toolbox,
 /turf/open/floor/plating/ashplanet/ash,
 /area/awaymission/complex/janitorial)
 "loi" = (

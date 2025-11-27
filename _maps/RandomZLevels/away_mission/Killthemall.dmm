@@ -1032,7 +1032,6 @@
 	},
 /obj/item/autosurgeon/syndicate/inteq/revitilzer,
 /obj/item/autosurgeon/syndicate/anti_drop,
-/obj/structure/anvil/obtainable/basalt,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "o2=19;n2=32;TEMP=293.15"
 	},
@@ -1821,7 +1820,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/Killthemall/Level)
 "DR" = (
-/obj/structure/anvil,
 /obj/item/nullrod/papal_staff{
 	pixel_x = 8
 	},
@@ -2023,7 +2021,6 @@
 /turf/open/indestructible,
 /area/awaymission/Killthemall/start)
 "Gm" = (
-/obj/structure/furnace,
 /turf/open/indestructible/cobble,
 /area/awaymission/Killthemall/Level)
 "Gv" = (
@@ -2476,7 +2473,6 @@
 /turf/open/floor/plasteel/cult,
 /area/awaymission/Killthemall/Boss)
 "NK" = (
-/obj/structure/anvil,
 /obj/item/nullrod/tribal_knife{
 	pixel_x = 7;
 	pixel_y = 8
@@ -2484,7 +2480,6 @@
 /turf/open/floor/festive/alleyway/safe,
 /area/awaymission/Killthemall/Level)
 "NV" = (
-/obj/structure/anvil,
 /obj/item/nullrod/hammmer{
 	pixel_x = 8;
 	pixel_y = 8
@@ -2587,7 +2582,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/Killthemall/Level)
 "Px" = (
-/obj/structure/anvil,
 /turf/open/indestructible/cobble,
 /area/awaymission/Killthemall/Level)
 "PA" = (

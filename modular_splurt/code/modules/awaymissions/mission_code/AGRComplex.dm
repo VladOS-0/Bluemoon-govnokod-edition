@@ -668,7 +668,7 @@
 	display_name = "Clockwork Engineering"
 	description = "Designs ripped and modified from Ratvarian technology."
 	prereq_ids = list("adv_engi", "adv_weaponry", "syndicate_basic")
-	design_ids = list("brass", "geis_capacitor", "vanguard_manipulator", "replicant_matterbin", "ansible_laser", "ocular_scanningmodule", "borg_clockwork_module", "tinder_trident", "sentinel_stim", "gear_suit", "clock_ingot")
+	design_ids = list("brass", "geis_capacitor", "vanguard_manipulator", "replicant_matterbin", "ansible_laser", "ocular_scanningmodule", "borg_clockwork_module", "tinder_trident", "sentinel_stim", "gear_suit")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	hidden = TRUE
 
@@ -952,16 +952,6 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/datum/design/clockingot
-	name = "Brass Ingot"
-	desc = "Due to the magical restriction to utilizing most clockwork materials, this ingot can only be produced this way through utilizing a spray of ignited zinc."
-	id = "clock_ingot"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/brass=12000)
-	reagents_list = list(/datum/reagent/empoweredzinc = 20)
-	build_path = /obj/item/ingot/ratvar
-	category = list("Stock Parts")
-
 // Blood Stuff
 
 /datum/techweb_node/bloodcult
@@ -969,7 +959,7 @@
 	display_name = "Occult Designs"
 	description = "Equipment and weaponry reverse-engineered from Narsian technology."
 	prereq_ids = list("adv_engi", "adv_weaponry", "syndicate_basic")
-	design_ids = list("runed_metal", "construct_shell", "pure_shard", "eldritch_constructor", "flagellants_cuirass", "crystal_wire", "cult_ingot")
+	design_ids = list("runed_metal", "construct_shell", "pure_shard", "eldritch_constructor", "flagellants_cuirass", "crystal_wire")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	hidden = TRUE
 
@@ -1122,16 +1112,6 @@
 					crit_wound.apply_wound(bodypart)
 					L.apply_damage(trap_damage, BRUTE)
 	..()
-
-/datum/design/cultingot
-	name = "Runed Ingot"
-	desc = "Due to the magical restriction to utilizing most cult materials, this ingot can only be produced this way through utilizing a spray of ignited hemogen."
-	id = "cult_ingot"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/runedmetal=12000)
-	reagents_list = list(/datum/reagent/exaltedhemogen = 20)
-	build_path = /obj/item/ingot/cult
-	category = list("Stock Parts")
 
 //Plants and Food
 

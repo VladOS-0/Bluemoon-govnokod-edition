@@ -5,7 +5,7 @@
 	antagpanel_category = "Clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
-	skill_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/level/dwarfy/blacksmithing)
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	ui_name = "AntagInfoClockwork"
 	var/datum/action/innate/hierophant/hierophant_network = new
 	threat = 3

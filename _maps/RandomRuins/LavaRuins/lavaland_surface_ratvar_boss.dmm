@@ -1487,7 +1487,6 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/obj/structure/anvil/obtainable/bronze,
 /obj/structure/window/reinforced/clockwork{
 	dir = 8
 	},

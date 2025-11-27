@@ -363,7 +363,6 @@
 	},
 /area/hallway/secondary/service)
 "ahr" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/pizza/meat,
 /obj/item/reagent_containers/food/snacks/pizza/meat,
 /turf/open/floor/carpet/red,
@@ -3617,7 +3616,6 @@
 /turf/open/floor/plasteel/cult,
 /area/awaymission)
 "bpa" = (
-/obj/item/melee/baton/stunsword/smithed,
 /turf/open/floor/carpet/purple,
 /area/maintenance/starboard/aft)
 "bpY" = (
@@ -6143,7 +6141,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "cir" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
@@ -15080,7 +15077,6 @@
 	},
 /area/awaymission)
 "fsO" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/pizza/arnold,
 /obj/item/reagent_containers/food/snacks/pizza/meat,
 /turf/open/floor/carpet/red,
@@ -15753,7 +15749,6 @@
 /turf/open/floor/wood/wood_diagonal,
 /area/service/park)
 "fJa" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/burger/cumburger,
 /obj/item/reagent_containers/food/snacks/burger/fish,
 /turf/open/floor/carpet/red,
@@ -21980,7 +21975,6 @@
 /turf/open/floor/wood,
 /area/commons/toilet/restrooms)
 "hTK" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/pizza/pineapple/anomaly,
 /turf/open/floor/carpet/red,
 /area/security/office)
@@ -45110,7 +45104,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "qaE" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/pizza/arnold,
 /obj/item/reagent_containers/food/snacks/pizza/arnold,
 /turf/open/floor/carpet/red,
@@ -45954,7 +45947,6 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/engineering/supermatter)
 "qrZ" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/pizza/arnold,
 /turf/open/floor/carpet/red,
 /area/security/office)
@@ -47909,7 +47901,6 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "reG" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/burger/soylent,
 /obj/item/reagent_containers/food/snacks/burger/soylent,
 /turf/open/floor/carpet/red,
@@ -50970,7 +50961,6 @@
 /turf/open/floor/plating/abductor,
 /area/awaymission)
 "sjy" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/breadslice/meat,
 /obj/item/reagent_containers/food/snacks/breadslice/meat,
 /obj/item/reagent_containers/food/snacks/breadslice/meat,
@@ -63666,7 +63656,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig/brig_medical)
 "wVn" = (
-/obj/structure/anvil/obtainable/table,
 /obj/item/reagent_containers/food/snacks/burger/fish,
 /turf/open/floor/carpet/red,
 /area/security/office)

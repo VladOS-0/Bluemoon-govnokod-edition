@@ -258,18 +258,3 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	levels = list("Basic", "Trained", "Experienced", "Master")
 	competency_thresholds = list(THRESHOLD_COMPETENT = JOB_SKILL_TRAINED, THRESHOLD_EXPERT = JOB_SKILL_EXPERT, THRESHOLD_MASTER = JOB_SKILL_MASTER)
 	associative = TRUE
-
-//quite the reference, no?
-/datum/skill/level/dwarfy
-	abstract_type = /datum/skill/level/dwarfy
-	standard_xp_lvl_up = DORF_XP_LVL_UP
-	xp_lvl_multiplier = DORF_XP_LVL_MULTI
-	max_levels = DORF_MAX_LVL
-	level_up_method = DWARFY_LEVEL_UP
-	levels = list("Novice", "Adequate", "Competent", "Skilled",
-				"Proficient", "Talented", "Adept", "Expert",
-				"Professional", "Accomplished", "Great", "Master",
-				"High Master", "Grand Master", "Legendary")
-	competency_thresholds = list(THRESHOLD_COMPETENT = DORF_SKILL_COMPETENT, THRESHOLD_EXPERT = DORF_SKILL_EXPERT, THRESHOLD_MASTER = DORF_SKILL_MASTER)
-	associative = TRUE
-	unskilled_tier = "Dabbling"

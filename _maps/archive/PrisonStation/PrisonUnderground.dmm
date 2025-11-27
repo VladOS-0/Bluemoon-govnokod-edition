@@ -4531,7 +4531,6 @@
 /turf/closed/mineral/random/volcanic,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "gJS" = (
-/obj/structure/anvil/obtainable/basalt,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "gKk" = (
@@ -6675,7 +6674,6 @@
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "jZl" = (
-/obj/item/melee/smith/hammer,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "jZV" = (
@@ -10449,7 +10447,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "qwA" = (
-/obj/structure/furnace,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/lavaland/unpowered/ash_walkers)
 "qwI" = (

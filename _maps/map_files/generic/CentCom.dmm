@@ -9761,7 +9761,6 @@
 	},
 /area/centcom/holding)
 "bhn" = (
-/obj/structure/furnace,
 /turf/open/floor/grass/grass0,
 /area/centcom/holding)
 "bhy" = (
@@ -11529,7 +11528,6 @@
 /area/centcom/control)
 "cNb" = (
 /obj/structure/table/wood,
-/obj/item/smithing/stundild,
 /obj/item/pneumatic_cannon/dildo,
 /turf/open/floor/wood,
 /area/centcom)
@@ -20628,7 +20626,6 @@
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "kGh" = (
-/obj/structure/anvil/obtainable/basic,
 /turf/open/floor/grass/grass0,
 /area/centcom/holding)
 "kHs" = (
@@ -23563,7 +23560,6 @@
 "nrl" = (
 /obj/structure/sacrificealtar,
 /obj/item/dildo/flared/gigantic,
-/obj/item/smithing/stundild,
 /turf/open/floor/plating/dirt/dark/jungle{
 	initial_gas_mix = "o2=21.78;n2=82.36;TEMP=293.15"
 	},
@@ -23679,7 +23675,6 @@
 /turf/open/floor/grass/grass2,
 /area/centcom/control)
 "nva" = (
-/obj/structure/anvil/obtainable/dwarfvil,
 /turf/open/floor/grass/grass0,
 /area/centcom/holding)
 "nwc" = (
@@ -33973,7 +33968,6 @@
 /area/syndicate_mothership/control)
 "wGK" = (
 /obj/structure/flora/grass/jungle/b,
-/obj/structure/anvil,
 /turf/open/floor/grass/grass0,
 /area/centcom/holding)
 "wGP" = (

@@ -28,7 +28,6 @@
 /turf/open/floor/clockwork/reebe,
 /area/ruin/space/has_grav/powered/clockworkhaven)
 "hL" = (
-/obj/structure/furnace/infinite/ratvar,
 /turf/open/floor/clockwork/reebe,
 /area/ruin/space/has_grav/powered/clockworkhaven)
 "hN" = (
@@ -63,7 +62,6 @@
 /turf/open/floor/clockwork/reebe,
 /area/ruin/space/has_grav/powered/clockworkhaven)
 "mN" = (
-/obj/structure/anvil/obtainable/ratvar,
 /turf/open/floor/clockwork/reebe,
 /area/ruin/space/has_grav/powered/clockworkhaven)
 "oc" = (
