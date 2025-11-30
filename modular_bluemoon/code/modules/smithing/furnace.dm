@@ -1,39 +1,15 @@
-// По большей части текущая печка, в процессе переделки
 
-/obj/structure/furnace
-	name = "furnace"
+/// Печь для плавки сплавов для кузнечного дела
+/obj/machinery/atmospherics/components/unary/blast_furnace
+	name = "blast furnace"
 	desc = "A furnace."
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "furnace0"
+	icon = 'modular_bluemoon/icons/obj/smith/furnace.dmi'
+	icon_state = "furnace"
 	density = TRUE
 	anchored = TRUE
-	var/debug = FALSE //debugging only
-	var/working = TRUE
-	var/fueluse = 1
-	var/obj/machinery/portable_atmospherics/canister/internal_tank
+	var/debug = FALSE
 
-
-/obj/structure/furnace/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/furnace/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/structure/furnace/process()
-	if(debug)
-		reagents.add_reagent(/datum/reagent/fuel, 1)
-		return TRUE
-	if(reagents.remove_reagent(/datum/reagent/fuel, fueluse))
-		working = TRUE
-		if(icon_state == "furnace0")
-			icon_state = "furnace1"
-	else
-		working = FALSE
-		icon_state = "furnace0"
-
-/obj/structure/furnace/attackby(obj/item/I, mob/user)
+/obj/machinery/atmospherics/components/unary/blast_furnace/attackby(obj/item/I, mob/user)
 /*
 	if(istype(I, /obj/item/ingot))
 		var/obj/item/ingot/notsword = I
@@ -45,36 +21,19 @@
 	else
 		..()*/
 
-/obj/structure/furnace/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if (default_unfasten_wrench(user, I, 5) == SUCCESSFUL_UNFASTEN)
-		// Пробуем отсоединить или присоединить порт от внутреннего танка
-		if (anchored)
-			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
-			if(internal_tank.connect(possible_port))
-				balloon_alert(user, "Подключено к порту!")
-				log_message("Connected to gas port.", LOG_GAME)
-			else
-				to_chat(user, "<span class='warning'>Unable to connect with air system port!</span>")
-				return FALSE
-		else
-
-	return TRUE
-
-/obj/structure/furnace/attackby(obj/item/W, mob/user, params)
+/obj/machinery/atmospherics/components/unary/blast_furnace/attackby(obj/item/W, mob/user, params)
 	if(W.reagents)
 		W.reagents.trans_to(src, 250)
 	else
 		return ..()
 
-/obj/structure/furnace/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, "<span class='notice'>You start furiously plunging [name].")
-	if(do_after(user, 30, target = src))
-		to_chat(user, "<span class='notice'>You finish plunging the [name].")
-		reagents.reaction(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
-
-/obj/structure/furnace/infinite
-	name = "fuelless furnace"
+/obj/machinery/atmospherics/components/unary/blast_furnace/debug
+	name = "Fabricator-General's Foundry"
+	desc = "This furnace has a powerful machine spirit \"Modus Debugus\" inside. ALL HAIL THE OMNISSIAH!"
 	debug = TRUE
-	icon_state = "ratfurnace"
+
+/obj/item/deployer/blast_furnace
+	name = "Blast Furnace Deployer"
+	desc = "This thing feels kinda hot."
+	icon_state = "smithing-furnace"
+	deployed_type = /obj/machinery/atmospherics/components/unary/blast_furnace

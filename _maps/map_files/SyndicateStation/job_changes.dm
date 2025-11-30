@@ -190,6 +190,11 @@
 	MAP_JOB_CHECK
 	outfit = /datum/outfit/job/cargo_tech/syndicate
 
+/datum/job/metallurgist/New()
+	..()
+	MAP_JOB_CHECK
+	outfit = /datum/outfit/job/metallurgist/syndicate
+
 /datum/job/mining/New()
 	..()
 	MAP_JOB_CHECK
