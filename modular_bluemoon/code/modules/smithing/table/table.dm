@@ -12,7 +12,7 @@
 
 /obj/machinery/smithing_table/debug
 	name = "Fabricator-General's Workbench"
-	desc = "This smithing table has a powerful machine spirit \"Modus Debugus\" inside. ALL HAIL THE OMNISSIAH!"
+	desc = "This smithing table contains a powerful machine spirit \"Modus Debugus\". ALL HAIL THE OMNISSIAH!"
 	debug = TRUE
 
 /obj/item/deployer/smithing_table
