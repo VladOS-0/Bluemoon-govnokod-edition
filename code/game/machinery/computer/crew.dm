@@ -66,6 +66,7 @@ GLOBAL_DATUM_INIT(crewmonitor_command, /datum/crewmonitor/command, new)
 	jobs["Quartermaster"] = 50
 	jobs["Shaft Miner"] = 51
 	jobs["Cargo Technician"] = 52
+	jobs["Metallurgist"] = 53 // BLUEMOON ADD
 	// Service
 	jobs["Head of Personnel"] = 60
 	jobs["Bartender"] = 61

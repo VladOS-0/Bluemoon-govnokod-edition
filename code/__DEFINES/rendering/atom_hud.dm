@@ -102,6 +102,7 @@
 #define SECHUD_LAWYER "hudlawyer"
 #define SECHUD_NTR "hudnanotrasenrepresentative"
 #define SECHUD_MEDICAL_DOCTOR "hudmedicaldoctor"
+#define SECHUD_METALLURGIST "hudcargotechnician" // BLUEMOON ADD - *временно* такой же, какой у карготеха
 #define SECHUD_MIME "hudmime"
 #define SECHUD_PARAMEDIC "hudparamedic"
 #define SECHUD_PRISONER "hudprisoner"

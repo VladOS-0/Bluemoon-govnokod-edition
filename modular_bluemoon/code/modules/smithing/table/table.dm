@@ -3,7 +3,7 @@
 	desc = "Contact your local dwarf for his very important opinion on all these flashy new technologies."
 	icon = 'modular_bluemoon/icons/obj/smith/table.dmi'
 	icon_state = "table"
-	bound_width = 32 * 3
+	bound_width = 32 * 2
 	base_pixel_x = -32
 	density = TRUE
 	anchored = TRUE
@@ -20,3 +20,4 @@
 	desc = "This table will be kinda large, make sure you have enough space for it!"
 	icon_state = "smithing-table"
 	deployed_type = /obj/machinery/smithing_table
+	right_padding = 1

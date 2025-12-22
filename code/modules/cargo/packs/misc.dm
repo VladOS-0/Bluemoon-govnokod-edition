@@ -18,7 +18,7 @@
 	name = "Blacksmith Crate"
 	desc = "Набор для начинающего кузнеца. Содержит в себе распаковывающиеся доменную печь и кузнечный станок. НЕ СПРАШИВАЙТЕ, КАК МЫ ЭТО ТУДА ЗАТОЛКАЛИ!!!"
 	cost = 15000
-	contains = list(/obj/structure/anvil/obtainable/basic)
+	contains = list(/obj/item/storage/box/metallurgist)
 
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"

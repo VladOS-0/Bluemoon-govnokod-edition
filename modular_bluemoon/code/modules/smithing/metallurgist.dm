@@ -1,5 +1,6 @@
 /datum/job/metallurgist
 	title = "Metallurgist"
+	alt_titles = list("Materials Engineer", "Fabricator", "Blacksmith", "Smith", "Ringmaker", "Alloy Alchemist", "Forgemaster")
 	flag = METALLURGIST
 	department_head = list("Quartermaster")
 	department_flag = CIVILIAN
