@@ -534,6 +534,23 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return TRUE
 	return FALSE
 
+// BLUEMOON ADD START
+/// Возвращает мешающий (`density == TRUE`) атом, если находит таковой на указанном турфе `T`. Если не находит, то
+/// возвращает `null`. Сам `T` также может быть возвращён, если он плотный (например, если это стена). В целом, идентично
+/// `/proc/is_blocked_turf()`, просто возвращает препятствие, а не булеан.
+/// * `T` - турф, на котором будут искаться препятствия
+/// * `exclude_mobs` - если `TRUE`, то мобы не будут считаться препятствием
+/proc/find_obstacle_in_turf(turf/T, exclude_mobs)
+	RETURN_TYPE(/atom)
+	if(T.density)
+		return T
+	for(var/i in T)
+		var/atom/A = i
+		if(A.density && (!exclude_mobs || !ismob(A)))
+			return A
+	return null
+// BLUEMOON ADD END
+
 /proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
 	if(T.density)
 		return TRUE

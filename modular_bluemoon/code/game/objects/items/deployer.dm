@@ -80,15 +80,16 @@
 	for(var/x = 0; x <= left + right; x++)
 		for(var/y = 0; y <= upper + lower; y++)
 			var/turf/turf_to_check = locate(left_lower_corner.x + x, left_lower_corner.y + y, left_lower_corner.z)
-			if(!check_tile(turf_to_check))
+			if(!check_turf(turf_to_check))
 				return FALSE
 
 	return TRUE
 
-/obj/item/deployer/proc/check_tile(turf/tile_to_check)
-	if (!isturf(tile_to_check))
+/obj/item/deployer/proc/check_turf(turf/turf_to_check)
+	if (!isturf(turf_to_check))
 		return FALSE
-	if (tile_to_check.density || locate(/obj/structure) in tile_to_check || locate(/obj/machinery) in tile_to_check)
+	var/atom/obstacle = find_obstacle_in_turf(turf_to_check, TRUE)
+	if(!isnull(obstacle))
+		visible_message(span_warning("[obstacle] мешает развёртыванию!"), vision_distance = 1)
 		return FALSE
-
 	return TRUE
