@@ -3,7 +3,6 @@
 #define FURNACE_STATE_CLOSED 3
 #define FURNACE_STATE_OPENING 4
 
-
 /// Печь для плавки сплавов для кузнечного дела
 /obj/machinery/atmospherics/components/unary/blast_furnace
 	name = "blast furnace"
@@ -12,6 +11,11 @@
 	icon_state = "furnace"
 	density = TRUE
 	anchored = TRUE
+
+	power_channel = EQUIP
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 200
 
 	/// Является ли эта печь дебаговой. Дебаговые печи имеют имбовые способности для проверки механик.
 	var/debug = FALSE
@@ -40,6 +44,20 @@
 	/// Бикер для хранения реагентов для крафтов
 	var/obj/item/reagent_containers/beaker = null
 
+	// Объекты для визуальных эффектов
+	var/obj/effect/furnace_overlay/furnace_handle
+	var/obj/effect/furnace_overlay/furnace_tigel
+	var/obj/effect/furnace_overlay/furnace_plasma
+	var/obj/effect/furnace_overlay/furnace_smoke
+
+/obj/effect/furnace_overlay
+	name = ""
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	layer = FLOAT_LAYER
+	plane = FLOAT_PLANE
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
+
 /*
 
 	ОСНОВА
@@ -50,14 +68,41 @@
 	. = ..()
 	AddComponent(/datum/component/material_container, list(/datum/material/plasma), plasma_storage_capacity)
 
-	var/mutable_appearance/handle_off_overlay = mutable_appearance(icon, icon_state = "handle-off", layer = FURNACE_HANDLE_LAYER)
-	add_overlay(handle_off_overlay)
+	furnace_handle = new()
+	furnace_handle.icon = icon
+	furnace_handle.icon_state = "handle-off"
+	furnace_handle.layer = FURNACE_HANDLE_LAYER
+
+	furnace_tigel = new()
+	furnace_tigel.icon = icon
+	furnace_tigel.icon_state = "tigel-on"
+	furnace_tigel.layer = FURNACE_TIGEL_LAYER
+
+	furnace_plasma = new()
+	furnace_plasma.icon = icon
+	furnace_plasma.icon_state = "plasma"
+	furnace_plasma.layer = FURNACE_PLASMA_LAYER
+	// Начинаем с невидимого
+	furnace_plasma.alpha = 0
+
+	furnace_smoke = new()
+	furnace_smoke.icon = icon
+	furnace_smoke.icon_state = "smoke"
+	furnace_smoke.layer = WALL_OBJ_LAYER + 0.1
+	// Начинаем с невидимого
+	furnace_smoke.alpha = 0
 
 /obj/machinery/atmospherics/components/unary/blast_furnace/Destroy()
 	stop_recipe(FALSE)
 	if(!isnull(beaker))
 		beaker.forceMove(loc)
 		beaker = null
+
+	// Удаляем объекты визуальных эффектов
+	QDEL_NULL(furnace_handle)
+	QDEL_NULL(furnace_tigel)
+	QDEL_NULL(furnace_plasma)
+	QDEL_NULL(furnace_smoke)
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
@@ -69,32 +114,87 @@
 		return
 	toggle_active(TRUE)
 
+	if(!isnull(active_recipe))
+		playsound(src, 'sound/effects/comfyfire.ogg', 40, 0, 0, 1)
+
 /*
 
 	ИКОНКИ
 
 */
 
-/obj/machinery/atmospherics/components/unary/blast_furnace/update_appearance(updates)
+/obj/machinery/atmospherics/components/unary/blast_furnace/update_icon(updates=ALL)
 	. = ..()
-	// update_overlays - полностью нерабочий кусок говнокода, поэтому мы делаем это здесь
-	if(active)
-		set_light(1.8, 0.7, LIGHT_COLOR_PURPLE)
-	else
-		set_light(0)
+	// Я НЕНАВИЖУ АТМОС, Я НЕНАВИЖУ АТМОС, Я НЕНАВИЖУ АТМОС
+	if(updates & UPDATE_OVERLAYS)
+		if(LAZYLEN(managed_vis_overlays))
+			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+
+		var/list/new_overlays = update_overlays(updates)
+		if(managed_overlays)
+			cut_overlay(managed_overlays)
+			managed_overlays = null
+		if(length(new_overlays))
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
+			add_overlay(new_overlays)
+		. |= UPDATE_OVERLAYS
 
 /obj/machinery/atmospherics/components/unary/blast_furnace/update_icon_state()
-	icon_state = (machine_stat & NOPOWER) ? "furnace-off" : "furnace"
+	if(machine_stat & NOPOWER)
+		icon_state = "furnace-off"
+	else
+		icon_state = "furnace"
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/blast_furnace/update_overlays()
 	. = ..()
-	var/mutable_appearance/smoke_overlay = mutable_appearance(icon, icon_state = "smoke")
-	var/mutable_appearance/plasma_overlay = mutable_appearance(icon, icon_state = "plasma", layer = FURNACE_PLASMA_LAYER)
+
+	// Очищаем vis_contents
+	vis_contents.Cut()
+
+	// Добавляем объекты в визуальное содержимое в зависимости от состояния
+	switch(current_state)
+		if(FURNACE_STATE_OPENED)
+			furnace_handle.icon_state = "handle-off"
+			vis_contents += furnace_handle
+			furnace_tigel.alpha = 0
+		if(FURNACE_STATE_CLOSING)
+			furnace_handle.icon_state = "handle-engage"
+			furnace_tigel.icon_state = "tigel-engage"
+			furnace_tigel.alpha = 255
+			vis_contents += furnace_handle
+			vis_contents += furnace_tigel
+		if(FURNACE_STATE_CLOSED)
+			furnace_handle.icon_state = "handle-on"
+			furnace_tigel.icon_state = "tigel-on"
+			furnace_tigel.alpha = 255
+			vis_contents += furnace_handle
+			vis_contents += furnace_tigel
+		if(FURNACE_STATE_OPENING)
+			furnace_handle.icon_state = "handle-disengage"
+			furnace_tigel.icon_state = "tigel-disengage"
+			furnace_tigel.alpha = 255
+			vis_contents += furnace_handle
+			vis_contents += furnace_tigel
+
+	// Управляем плазмой
 	if(active)
-		. += plasma_overlay
+		furnace_plasma.alpha = 255
+		vis_contents += furnace_plasma
+		set_light(2.2, 0.8, LIGHT_COLOR_PURPLE)
+	else
+		furnace_plasma.alpha = 0
+		set_light(0)
+
+	// Управляем дымом
 	if(!isnull(active_recipe))
-		. += smoke_overlay
+		furnace_smoke.alpha = 255
+		vis_contents += furnace_smoke
+	else
+		furnace_smoke.alpha = 0
 
 /// Прок, который проигрывает анимацию и звуки закрытия печи. По факту просто враппер над
 /// `set_furnace_state(FURNACE_STATE_CLOSING)`, чтобы не выделять всю эту муть с закрытием/открытием в глобальные дефайны.
@@ -106,31 +206,21 @@
 /// системы одна точка входа - при начале крафта печь закрывается и дальше всё работает через муть с коллбеками, пока она не
 /// откроется снова. Если вы не добавляли новых точек входа, то НЕ ИСПОЛЬЗУЙТЕ этот прок, а просто вызывайте `close()`.
 /obj/machinery/atmospherics/components/unary/blast_furnace/proc/set_furnace_state(new_state)
-	var/mutable_appearance/tigel_on_overlay = mutable_appearance(icon, icon_state = "tigel-on", layer = FURNACE_TIGEL_LAYER)
-	var/mutable_appearance/tigel_engage_overlay = mutable_appearance(icon, icon_state = "tigel-engage", layer = FURNACE_TIGEL_LAYER)
-	var/mutable_appearance/tigel_disengage_overlay = mutable_appearance(icon, icon_state = "tigel-disengage", layer = FURNACE_TIGEL_LAYER)
-	var/mutable_appearance/handle_off_overlay = mutable_appearance(icon, icon_state = "handle-off", layer = FURNACE_HANDLE_LAYER)
-	var/mutable_appearance/handle_on_overlay = mutable_appearance(icon, icon_state = "handle-on", layer = FURNACE_HANDLE_LAYER)
-	var/mutable_appearance/handle_engage_overlay = mutable_appearance(icon, icon_state = "handle-engage", layer = FURNACE_HANDLE_LAYER)
-	var/mutable_appearance/handle_disengage_overlay = mutable_appearance(icon, icon_state = "handle-disengage", layer = FURNACE_HANDLE_LAYER)
-
 	switch(new_state)
 		if(FURNACE_STATE_OPENED)
 			// Открытие -> Открыто
 			if(current_state == FURNACE_STATE_OPENING)
-				cut_overlay(handle_disengage_overlay)
-				cut_overlay(tigel_disengage_overlay)
-				add_overlay(handle_off_overlay)
 				current_state = FURNACE_STATE_OPENED
+				update_appearance()
 
 		if(FURNACE_STATE_CLOSING)
 			switch(current_state)
 				// Открыто -> Закрытие
 				if(FURNACE_STATE_OPENED)
-					cut_overlay(handle_off_overlay)
-					add_overlay(handle_engage_overlay)
-					add_overlay(tigel_engage_overlay)
 					current_state = FURNACE_STATE_CLOSING
+					playsound(src, 'modular_bluemoon/sound/effects/opening-gears.ogg', 70)
+					playsound(src, 'modular_bluemoon/sound/smith/hydraulic.ogg', 40)
+					update_appearance()
 					// Завершим анимацию закрытия через пару секунд
 					addtimer(CALLBACK(src, PROC_REF(set_furnace_state), FURNACE_STATE_CLOSED), 5 SECONDS)
 				// Открытие -> Закрытие
@@ -142,11 +232,8 @@
 		if(FURNACE_STATE_CLOSED)
 			// Закрытие -> Закрыто
 			if(current_state == FURNACE_STATE_CLOSING)
-				cut_overlay(handle_engage_overlay)
-				cut_overlay(tigel_engage_overlay)
-				add_overlay(handle_on_overlay)
-				add_overlay(tigel_on_overlay)
 				current_state = FURNACE_STATE_CLOSED
+				update_appearance()
 				// Мы успешно закрылись, откроемся через 15 секунд, если не будет активных крафтов
 				addtimer(CALLBACK(src, PROC_REF(set_furnace_state), FURNACE_STATE_OPENING), 15 SECONDS)
 
@@ -158,11 +245,10 @@
 					if(!isnull(active_recipe))
 						addtimer(CALLBACK(src, PROC_REF(set_furnace_state), FURNACE_STATE_OPENING), 10 SECONDS)
 						return
-					cut_overlay(handle_on_overlay)
-					cut_overlay(tigel_on_overlay)
-					add_overlay(handle_disengage_overlay)
-					add_overlay(tigel_disengage_overlay)
 					current_state = FURNACE_STATE_OPENING
+					playsound(src, 'modular_bluemoon/sound/effects/opening-gears.ogg', 70)
+					playsound(src, 'modular_bluemoon/sound/smith/hydraulic.ogg', 40)
+					update_appearance()
 					// Завершим анимацию открытия через пару секунд
 					addtimer(CALLBACK(src, PROC_REF(set_furnace_state), FURNACE_STATE_OPENED), 5 SECONDS)
 				// Закрытие -> Открытие
@@ -170,7 +256,6 @@
 					// Печь закрывается, пускай снова попробует открыться через 10 секунд
 					addtimer(CALLBACK(src, PROC_REF(set_furnace_state), FURNACE_STATE_OPENING), 10 SECONDS)
 					return
-
 
 /*
 
@@ -184,11 +269,13 @@
 	if(active == new_active)
 		return
 	if(new_active)
-		visible_message(span_smallnotice("[src] вновь разгорается!"), "", span_smallnotice("Вы слышите звук потрескивания плазмы..."))
+		visible_message(span_smallnotice("[src] разгорается!"), "", span_smallnotice("Вы слышите звук потрескивания плазмы..."))
+		playsound(src, 'sound/effects/comfyfire.ogg', 60, 0, 0, 1)
 		active = TRUE
 		update_appearance()
 	else
 		visible_message(span_smallnotice("[src] затухает!"), "", span_smallnotice("Звук потрескивание плазмы затихает..."))
+		playsound(loc, 'sound/machines/synth_no.ogg', 40)
 		active = FALSE
 		update_appearance()
 		stop_recipe(TRUE)
@@ -249,7 +336,17 @@
 /obj/machinery/atmospherics/components/unary/blast_furnace/proc/stop_recipe(safe = TRUE)
 	if(isnull(active_recipe))
 		return
+	use_power = IDLE_POWER_USE
+	active_recipe = null
+	update_appearance()
 	// TODO
+
+/obj/machinery/atmospherics/components/unary/blast_furnace/proc/start_recipe()
+	// TODO: нормальная логика рецептов, а не этот мок
+	use_power = ACTIVE_POWER_USE
+	active_recipe = 1
+	close()
+	addtimer(CALLBACK(src, PROC_REF(stop_recipe)), 15 SECONDS)
 
 /*
 
